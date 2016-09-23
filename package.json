@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/versatile-s/hyperspace/issues"
   },
-  "homepage": "https://github.com/versatile-s/hyperspace#readme"
+  "homepage": "https://github.com/versatile-s/hyperspace#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
 }
