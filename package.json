@@ -1,0 +1,19 @@
+{
+  "name": "hyperspace",
+  "version": "1.0.0",
+  "description": "Thesis project of Versatile-S",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/versatile-s/hyperspace.git"
+  },
+  "author": "Versatile-S",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/versatile-s/hyperspace/issues"
+  },
+  "homepage": "https://github.com/versatile-s/hyperspace#readme"
+}
