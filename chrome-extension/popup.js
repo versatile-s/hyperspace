@@ -42,11 +42,7 @@ var getCurrentTabUrl = function (callback) {
     xhr.open('POST', 'http://127.0.0.1:3000/link', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send(params);
-
   });
-
-
-
-}
+};
 
 getCurrentTabUrl();
