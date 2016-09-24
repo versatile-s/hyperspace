@@ -69,6 +69,7 @@ router.route('/addTag')
 router.route('/link')
   .post(function (req, res) {
     console.log('Received POST at /link');
+    console.log('Youre adding this link:', req.body);
     res.send('Received POST at /link');
 });
 
