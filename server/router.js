@@ -1,4 +1,5 @@
 var router = require('express').Router();
+var utils = require('./utilities');
 
 // homepage
 router.route('/')
@@ -11,14 +12,15 @@ router.route('/')
 router.route('/signup')
   .post(function (req, res) {
     console.log('Received POST at /signup');
-    res.send('Received POST at /signup');
+    utils.createUser(req.body.username, req.body.password);
+    res.send('User created');
 });
 
 // existing user login
 router.route('/login')
   .post(function (req, res) {
     console.log('Received POST at /login');
-    res.send('Received POST at /login');
+    utils.loginUser(req, res);
 });
 
 // view categories
