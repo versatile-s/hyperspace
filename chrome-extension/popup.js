@@ -39,7 +39,7 @@ var getCurrentTabUrl = function (callback) {
     // must used XMLHttpRequest in extension 
     var xhr = new XMLHttpRequest();
     var params = url;
-    xhr.open('POST', 'localhost:3000/link', true);
+    xhr.open('POST', 'http://127.0.0.1:3000/link', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send(params);
 
