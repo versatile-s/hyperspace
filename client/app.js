@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
 import {Router, Route} from 'react-router';
 import Test from './test';
+import Login from './login';
+import Signup from './signup';
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <p>ROUTER BABY</p>
-        <Router>
-          <Route path='/' component={Hi} />
-          <Route path='/secret' component={Secret} />
-          <Route path='/test' component={Test} />
 
-        </Router>
-      </div>
+      <Router>
+        <Route path='/login' component={Login} />
+        <Route path='/signup' component={Signup} />
+        <Route path='/secret' component={Secret} />
+        <Route path='/test' component={Test} />
+
+      </Router>
     );
   }
 }
