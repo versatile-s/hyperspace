@@ -1,0 +1,41 @@
+{
+  "name": "hyperspace",
+  "version": "1.0.0",
+  "description": "Curate hyperlinks and share them with others",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "babel": "babel",
+    "webpack": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/versatile-s/hyperspace.git"
+  },
+  "keywords": [
+    "Homepage",
+    "bookmarks",
+    "Chrome",
+    "Extension",
+    "hyperlinks"
+  ],
+  "author": "versatile-s",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/versatile-s/hyperspace/issues"
+  },
+  "homepage": "https://github.com/versatile-s/hyperspace#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "webpack": "^1.13.2"
+  }
+}
