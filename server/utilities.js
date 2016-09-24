@@ -1,32 +1,32 @@
-var db = require('./db').sequelize;
-var User = require('./db').User;
+var db = require('./db/db').sequelize;
+var User = require('./db/db').User;
 
 var utils = {
 
-  var createUser = function (username, password) {
+  createUser: function (username, password) {
 
     User.sync()
-      .then(function (username, password) {
+      .then(function () {
         return User.create({
           username: username,
           password: password
         });
       });
 
-  };
+  },
 
-  var loginUser = function (username, password) {
+  loginUser: function (req, res) {
 
     db.query('SELECT * FROM Users WHERE username = :username AND password = :password',
-      {replacements: {username: username, password: password}, type: sequelize.QueryTypes.SELECT })
+      {replacements: {username: req.body.username, password: req.body.password}, type: db.QueryTypes.SELECT })
       .then(function (results) {
         if (results.length === 1) {
-          return true;
+          res.send('Login successful!');
         } else {
-          return false;
+          res.status(400).send('Information provided does not match records.');
         }
       });
-  };
+  }
 
 };
 
