@@ -1,15 +1,18 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-var ReactBox = React.createClass({
-  render: function(){
+class ReactBox extends React.Component {
+  constructor(props) {
+    super(props);
+  }  
+  render() {
     return (
       <div className="box">
         We're Live, Bitches.
       </div>
     );
   }
-});
+}
 
 ReactDOM.render(
   <ReactBox />,
