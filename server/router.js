@@ -94,9 +94,9 @@ router.route('/preferences')
 
 // set preferences
 router.route('/preferences')
-  .post(function (req, res) {
-    console.log('Received POST at /preferences');
-    res.send('Received POST at /preferences');
+  .put(function (req, res) {
+    console.log('Received PUT at /preferences');
+    res.send('Received PUT at /preferences');
 });
 
 // 404
