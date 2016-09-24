@@ -8,7 +8,7 @@
  * @param {function(string)} callback - called when the URL of the current tab
  *   is found.
  */
-function getCurrentTabUrl (callback) {
+var getCurrentTabUrl = function (callback) {
   // Query filter to be passed to chrome.tabs.query - see
   // https://developer.chrome.com/extensions/tabs#method-query
   var queryInfo = {
@@ -34,11 +34,19 @@ function getCurrentTabUrl (callback) {
     // "url" properties.
     console.assert(typeof url == 'string', 'tab.url should be a string');
 
-    callback(url);
+    console.log('CURRENT TABS URL IS', url);
+
+    // must used XMLHttpRequest in extension 
+    var xhr = new XMLHttpRequest();
+    var params = url;
+    xhr.open('POST', 'localhost:3000/link', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.send(params);
+
   });
 
-  // send the url to our server
 
-  
 
 }
+
+getCurrentTabUrl();
