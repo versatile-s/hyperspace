@@ -1,17 +1,24 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React, {Component} from 'react';
+import {Router, Route} from 'react-router';
+import Test from './test';
 
-var ReactBox = React.createClass({
-  render: function(){
+class App extends Component {
+  render() {
     return (
-      <div className="box">
-        We're Live, Bitches.
+      <div>
+        <p>ROUTER BABY</p>
+        <Router>
+          <Route path='/' component={Hi} />
+          <Route path='/secret' component={Secret} />
+          <Route path='/test' component={Test} />
+
+        </Router>
       </div>
     );
   }
-});
+}
 
-ReactDOM.render(
-  <ReactBox />,
-  document.getElementById('content')
-);
+var Hi = () => <h1>Hi Haters</h1>;
+var Secret = () => <h1>secretssssssss</h1>;
+
+export default App;
