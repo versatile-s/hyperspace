@@ -1,4 +1,5 @@
 var router = require('express').Router();
+var utils = require('./utilities');
 
 // homepage
 router.route('/')
@@ -11,6 +12,7 @@ router.route('/')
 router.route('/signup')
   .post(function (req, res) {
     console.log('Received POST at /signup');
+    
     res.send('Received POST at /signup');
 });
 
