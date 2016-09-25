@@ -20,3 +20,5 @@ sequelize.authenticate()
 
 module.exports.sequelize = sequelize;
 module.exports.User = User;
+
+//test
