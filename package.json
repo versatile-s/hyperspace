@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "babel",
+    "start": "node ./server/server.js",
     "webpack": "webpack"
   },
   "repository": {
@@ -30,7 +31,7 @@
     "express": "^4.14.0",
     "react-router": "^2.8.1",
     "mysql": "^2.11.1",
-    "sequelize": "^3.24.3",
+    "sequelize": "^3.24.3"
   },
   "devDependencies": {
     "babel-core": "^6.14.0",
