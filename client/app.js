@@ -5,16 +5,23 @@ import Login from './login';
 import Signup from './signup';
 
 class App extends Component {
+  constructor (props) {
+    super(props);
+    
+    
+  } 
   render() {
     return (
+      
 
       <Router>
-        <Route path='/login' component={Login} />
+        <Route path='/login' url={this.props.url} component={Login} />
         <Route path='/signup' component={Signup} />
         <Route path='/secret' component={Secret} />
         <Route path='/test' component={Test} />
 
       </Router>
+
     );
   }
 }
