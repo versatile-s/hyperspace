@@ -42,7 +42,7 @@ window.onload = function() {
 
       console.log('CURRENT TABS URL IS', url);
 
-      // must used XMLHttpRequest in extension 
+      // must used XMLHttpRequest in extension
       var xhr = new XMLHttpRequest();
       xhr.open('POST', 'http://127.0.0.1:3000/link', true);
       xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -60,9 +60,10 @@ window.onload = function() {
     var authenticated = false;
 
     var toSend = {username: username, password: password};
-    
+
     // second, true argument below means send async
     xhr.open('POST', 'http://127.0.0.1:3000/login', true);
+
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send(encodeURI('username=' + username + '&password=' + password));
     // xhr.send(JSON.stringify({username: username, password: password}));
@@ -79,7 +80,7 @@ window.onload = function() {
       }
     };
     if (authenticated) {
-      // display next interace 
+      // display next interace
       console.log('we are now in the auth stage');
     }
   };

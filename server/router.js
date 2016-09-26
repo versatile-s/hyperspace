@@ -64,11 +64,12 @@ router.route('/addTag')
     res.send('Received POST at /addTag');
 });
 
-// add link
+// This adds the hyper to the database.
 router.route('/link')
   .post(function (req, res) {
     console.log('Received POST at /link');
     console.log('Youre adding this link:', req.body);
+    // ADD THE HYPER TO DATABASE
     res.send('Received POST at /link');
 });
 
