@@ -30,10 +30,14 @@ class Login extends Component {
 
       })
     }).then((response) => {
-      console.log(response);
+      response.text().then((res) => {
+        console.log(res);
+      }); 
     })
     .catch((error) => {
-      console.log('error: ', error);
+      error.text().then((err) => {
+        console.log(err);
+      }); 
     });
   }
 
@@ -42,15 +46,14 @@ class Login extends Component {
     this.setState({
       username: name.target.value
     });
-    console.log(this.state);
 
   }
+
   handlePass(pass) {
 
     this.setState({
       password: pass.target.value
     });
-    console.log(this.state);
 
   }
 
@@ -59,12 +62,12 @@ class Login extends Component {
     return (
       <div>
         <p>Login Sissy</p>
-        <form >
-          <input onChange={this.handleUsername} value= {this.state.username} type="text" placeholder= "username" />
-          <input onChange={this.handlePass} value= {this.state.password} type="text" placeholder= "password"/>
-        </form>
+    
+        <input onChange={this.handleUsername} value= {this.state.username} type="text" placeholder= "username" />
+        <input onChange={this.handlePass} value= {this.state.password} type="text" placeholder= "password"/>
+      
 
-        <input type="button" value="POST at /login" onClick={this.login}/>
+        <input type="button" value="login" onClick={this.login}/>
 
       </div>
     );
