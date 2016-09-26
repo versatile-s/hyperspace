@@ -7,6 +7,12 @@ var User = sequelize.define('User', {
   password: Sequelize.STRING
 });
 
+var Hyper = sequelize.define('Hyper', {
+  url: Sequelize.STRING,
+  title: Sequelize.STRING,
+  description: Sequelize.STRING
+});
+
 // deletes and creates User table
 // User.sync({force: true})
 //   .then();
@@ -21,3 +27,4 @@ sequelize.authenticate()
 
 module.exports.sequelize = sequelize;
 module.exports.User = User;
+module.exports.Hyper = Hyper;
