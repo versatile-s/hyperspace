@@ -4,7 +4,15 @@ class Signup extends Component {
 
   constructor (props) {
     super(props);
-  }  
+    this.signup = this.signup.bind(this);
+    this.handleUsername = this.handleUsername.bind(this);
+    this.handlePass = this.handlePass.bind(this);
+    this.state = {
+      username:'',
+      password:''
+    };
+
+  }
   
   signup (e) {
     e.preventDefault();
