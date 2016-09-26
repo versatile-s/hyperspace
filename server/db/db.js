@@ -3,14 +3,18 @@ var Sequelize = require('sequelize');
 var sequelize = new Sequelize('hyperspace', 'root', '');
 
 var User = sequelize.define('User', {
-  username: Sequelize.STRING,
-  password: Sequelize.STRING
+  username: { type: Sequelize.STRING },
+  password: { type: Sequelize.STRING }
 });
 
 var Hyper = sequelize.define('Hyper', {
-  url: Sequelize.STRING,
-  title: Sequelize.STRING,
-  description: Sequelize.STRING
+  url: { type: Sequelize.STRING },
+  title: { type: Sequelize.STRING },
+  description: { type: Sequelize.STRING },
+  image: { type: Sequelize.STRING },
+  // Datatype of array only available in postgres so need to find work around.
+  // tags: { type: Sequelize.ARRAY },
+  // widgets: { type: Sequelize.ARRAY }
 });
 
 // deletes and creates User table
