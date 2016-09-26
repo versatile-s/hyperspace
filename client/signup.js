@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 class Signup extends Component {
 
-
   constructor (props) {
     super(props);
     this.signup = this.signup.bind(this);
@@ -13,7 +12,7 @@ class Signup extends Component {
       password:''
     };
 
-  } 
+  }
 
 
 
@@ -64,11 +63,11 @@ class Signup extends Component {
       <div>
         <p>Login Sissy</p>
     
-        <input onChange={this.handleUsername} value= {this.state.username} type="text" placeholder= "username" />
-        <input onChange={this.handlePass} value= {this.state.password} type="text" placeholder= "password"/>
+        <input onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
+        <input onChange={this.handlePass} value={this.state.password} type="text" placeholder="password" />
       
 
-        <input type="button" value="signup" onClick={this.signup}/>
+        <input type="button" value="signup" onClick={this.signup} />
 
       </div>
     );
