@@ -16,7 +16,7 @@ class App extends Component {
 
       <Router>
         <Route path='/login' url={this.props.url} component={Login} />
-        <Route path='/signup' component={Signup} />
+        <Route path='/signup' url={this.props.url} component={Signup} />
         <Route path='/secret' component={Secret} />
         <Route path='/test' component={Test} />
 
