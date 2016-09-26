@@ -52,18 +52,19 @@ class Signup extends Component {
     this.setState({
       password: pass.target.value
     });
-    
+
   }
 
 
   render() {
     return (
       <div>
-        <p>Login Sissy</p>
-    
-        <input onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
-        <input onChange={this.handlePass} value={this.state.password} type="text" placeholder="password" />
-      
+
+        <p>Signup Sissy</p>
+
+        <input onChange={this.handleUsername} value= {this.state.username} type="text" placeholder= "username" />
+        <input onChange={this.handlePass} value= {this.state.password} type="text" placeholder= "password"/>
+
 
         <input type="button" value="signup" onClick={this.signup} />
       </div>
