@@ -46,3 +46,27 @@ var getCurrentTabUrl = function (callback) {
 };
 
 getCurrentTabUrl();
+
+var authenticateUser = function () {
+  var xhr = new XMLHttpRequest();
+  var username = document.getElementById('username').value;
+  var password = document.getElementById('password').value;
+  var authenticated = false;
+  
+  xhr.open('POST', 'http://127.0.0.1:3000/login');
+  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  xhr.send({username: username, password: password}, function(response) {
+    console.log(response);
+  });
+
+
+  if (authenticated) {
+  } else {
+
+  }
+
+  console.log('username and pass are', username + password);
+
+};
+
+setInterval(authenticateUser, 2000);

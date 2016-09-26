@@ -11,6 +11,10 @@
 	  "default_title": "add to hyperspace!"
 	},
 
+	// "background": {
+ //      "scripts" ["", ]
+	// }, 
+
 	"permissions": [
 		"activeTab", 
 		"https://ajax.googleapis.com/"
