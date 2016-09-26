@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize('hyperspace', 'root', 'hi');
+var sequelize = new Sequelize('hyperspace', 'root', '1111');
 
 var User = sequelize.define('User', {
   username: Sequelize.STRING,

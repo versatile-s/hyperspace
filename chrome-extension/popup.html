@@ -4,7 +4,12 @@
  "browser_action" field in manifest.json contains the "default_popup" key with
  value "popup.html".
  -->
-<html>
+<html style="height:150px; width: 350px; 
+
+background: #FF5F6D; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #FF5F6D , #FFC371); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #FF5F6D , #FFC371); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+         color: #fff">
   <head>
     <title>Getting Started Extension's Popup</title>
     <style>
@@ -30,8 +35,13 @@
     <script src="popup.js"></script>
   </head>
   <body>
-    <div id="text">Congratulations, you've added the current link to your hyperspace. Feel free to customize.</div>
+    <div id="text">Welcome to hyperspace. Please login.</div>
     <div id="status"></div>
+    <form class="">
+      <input id="username" value="" placeholder="your username" type="text">
+      <input id="password" value="" placeholder="password" type="password">
+      <button class="submit" id="submit">log in :)</button>
+    </form>
     <img id="image-result" hidden>
   </body>
 </html>
