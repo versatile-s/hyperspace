@@ -1,32 +1,29 @@
 import React, {Component} from 'react';
-import {Router, Route} from 'react-router';
+import {Router, Route, useRouterHistory} from 'react-router';
 import Test from './test';
 import Login from './login';
 import Signup from './signup';
+import {createHashHistory} from 'history';
+
+const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 
 class App extends Component {
   constructor (props) {
-    super(props);
-    
-    
-  } 
+    super(props); 
+  }
+
   render() {
     return (
-      
 
-      <Router>
+      <Router history={appHistory} >
+        <Route path='/' url={this.props.url} component={Login} />
         <Route path='/login' url={this.props.url} component={Login} />
         <Route path='/signup' url={this.props.url} component={Signup} />
-        <Route path='/secret' component={Secret} />
         <Route path='/test' component={Test} />
-
       </Router>
 
     );
   }
 }
-
-var Hi = () => <h1>Hi Haters</h1>;
-var Secret = () => <h1>secretssssssss</h1>;
 
 export default App;

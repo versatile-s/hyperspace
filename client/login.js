@@ -14,8 +14,6 @@ class Login extends Component {
 
   } 
 
-
-
   login (e) {
     e.preventDefault();
     fetch(this.props.route.url + '/login', {
@@ -27,7 +25,6 @@ class Login extends Component {
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password
-
       })
     }).then((response) => {
       response.text().then((res) => {
@@ -57,17 +54,14 @@ class Login extends Component {
 
   }
 
-
   render() {
     return (
       <div>
         <p>Login Sissy</p>
-    
-        <input onChange={this.handleUsername} value= {this.state.username} type="text" placeholder= "username" />
-        <input onChange={this.handlePass} value= {this.state.password} type="text" placeholder= "password"/>
-      
 
-        <input type="button" value="login" onClick={this.login}/>
+        <input onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
+        <input onChange={this.handlePass} value={this.state.password} type="text" placeholder="password" />
+        <input type="button" value="login" onClick={this.login} />
 
       </div>
     );
