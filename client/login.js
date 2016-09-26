@@ -14,8 +14,6 @@ class Login extends Component {
 
   } 
 
-
-
   login (e) {
     e.preventDefault();
     fetch(this.props.route.url + '/login', {
@@ -27,13 +25,16 @@ class Login extends Component {
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password
-
       })
     }).then((response) => {
-      console.log(response);
+      response.text().then((res) => {
+        console.log(res);
+      }); 
     })
     .catch((error) => {
-      console.log('error: ', error);
+      error.text().then((err) => {
+        console.log(err);
+      }); 
     });
   }
 
@@ -42,29 +43,25 @@ class Login extends Component {
     this.setState({
       username: name.target.value
     });
-    console.log(this.state);
 
   }
+
   handlePass(pass) {
 
     this.setState({
       password: pass.target.value
     });
-    console.log(this.state);
 
   }
-
 
   render() {
     return (
       <div>
         <p>Login Sissy</p>
-        <form >
-          <input onChange={this.handleUsername} value= {this.state.username} type="text" placeholder= "username" />
-          <input onChange={this.handlePass} value= {this.state.password} type="text" placeholder= "password"/>
-        </form>
 
-        <input type="button" value="POST at /login" onClick={this.login}/>
+        <input onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
+        <input onChange={this.handlePass} value={this.state.password} type="text" placeholder="password" />
+        <input type="button" value="login" onClick={this.login} />
 
       </div>
     );
