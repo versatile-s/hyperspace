@@ -55,18 +55,16 @@ var authenticateUser = function () {
   
   xhr.open('POST', 'http://127.0.0.1:3000/login');
   xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-  xhr.send({username: username, password: password}, function(response) {
-    console.log(response);
+  xhr.send(JSON.stringify({username: username, password: password}), function(response) {
+    console.log('RESPONSE IS', response);
   });
 
 
-  if (authenticated) {
-  } else {
-
-  }
-
   console.log('username and pass are', username + password);
 
+  if (authenticated) {
+    
+  }
 };
 
 setInterval(authenticateUser, 2000);
