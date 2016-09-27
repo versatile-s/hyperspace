@@ -5,6 +5,7 @@ import Login from './login';
 import Signup from './signup';
 import {createHashHistory} from 'history';
 import Category from './category';
+import Side from './side';
 
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 

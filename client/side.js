@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router';
+import Router, { Link } from 'react-router';
 
-class SideMenu extends Component {
+class Side extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -14,6 +14,7 @@ class SideMenu extends Component {
   handleClick (e) {
     e.preventDefault();
     var categoryTitle = e.target.value;
+    console.log(categoryTitle);
     // send user to their category of categoryTitle
   }
 
@@ -29,7 +30,7 @@ class SideMenu extends Component {
             <div className="side-menu-search">
               Tag:<input className="side-menu-text-box" type="text" defaultValue="enter Category here" />
             </div>
-            <Link className="side-menu-link" to='/category'><button text="Link'd to /category" /></Link>
+            <Link className="side-menu-link" to='/category'><button>Link'd to /category</button></Link>
           </div>
           <div className="side-menu category-list">
             <table>
@@ -50,3 +51,5 @@ class SideMenu extends Component {
     );
   }
 }
+
+export default Side;
