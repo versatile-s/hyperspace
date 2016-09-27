@@ -49,7 +49,7 @@ var utils = {
     .then(function () {
       return CategoryPage.create({
         name: req.body.name,
-        parentCategories: req.body.parents
+        parentCategory: req.body.parents
       });
     });
   }
