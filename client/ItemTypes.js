@@ -1,3 +1,4 @@
-export default{
+export default {
+  KNIGHT: 'knight',
   BOX: 'box'
 };

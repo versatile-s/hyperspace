@@ -4,6 +4,8 @@ import Test from './test';
 import Login from './login';
 import Signup from './signup';
 import Home from './home';
+import Layout from './layoutTest';
+
 import {createHashHistory} from 'history';
 
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -29,6 +31,7 @@ class App extends Component {
         <Route path='/home' url={this.props.url} component={Home} />
         <Route path='/test' component={Test} />
         <Route path='/category' component={Category} />
+        <Route path='/layout' component= {Layout} />
       </Router>
 
     );
