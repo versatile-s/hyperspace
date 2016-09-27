@@ -30,16 +30,14 @@ var utils = {
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
-    console.log('SAVEHYPER BEING CALLED!! and here is req ', req.body);
     Hyper.sync()
-    .then(function (req, res) {
+    .then(function () {
       return Hyper.create({
-        url: 'TESTER!!',
-        title: '',
+        url: req.body.url,
+        title: req.body.title,
         description: '',
         image: ''
       });
-      console.log('great we added a hyper and the request body was, ', req.body);
     });
   }
 

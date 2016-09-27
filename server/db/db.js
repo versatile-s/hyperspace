@@ -12,21 +12,21 @@ var Hyper = sequelize.define('Hyper', {
   title: { type: Sequelize.STRING },
   description: { type: Sequelize.STRING },
   image: { type: Sequelize.STRING },
-  // Datatype of array only available in postgres so need to find work around.
+  // Datatype of array only available in postgres so need to find a work around.
   // tags: { type: Sequelize.ARRAY },
   // widgets: { type: Sequelize.ARRAY }
 });
 
-Hyper.sync()
-  .then(function() {
-    console.log('ok we have created the Hyper database');
-    return Hyper.create({
-      url: 'peh',
-      title: 'nada',
-      description: 'nada',
-      image: 'nada'
-    });
-  });
+// Hyper.sync()
+//   .then(function() {
+//     console.log('ok we have created the Hyper database');
+//     return Hyper.create({
+//       url: 'peh',
+//       title: 'nada',
+//       description: 'nada',
+//       image: 'nada'
+//     });
+//   });
 // //deletes and creates User table
 // User.sync({force: true})
 //   .then();
