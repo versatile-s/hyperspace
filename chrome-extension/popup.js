@@ -30,6 +30,9 @@ window.onload = function() {
       // A tab is a plain object that provides information about the tab.
       // See https://developer.chrome.com/extensions/tabs#type-Tab
       var url = tab.url;
+      var title = tab.title;
+      var category = null;
+      var tags = null;
 
       // tab.url is only available if the "activeTab" permission is declared.
       // If you want to see the URL of other tabs (e.g. after removing active:true
@@ -41,28 +44,47 @@ window.onload = function() {
 
       // must used XMLHttpRequest in extension 
       var xhr = new XMLHttpRequest();
-      var params = url;
       xhr.open('POST', 'http://127.0.0.1:3000/link', true);
       xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-      xhr.send(params);
+      xhr.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags));
     });
   };
 
   getCurrentTabUrl();
 
+  // pipe authentication to our server + db
   var authenticateUser = function () {
     var xhr = new XMLHttpRequest();
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     var authenticated = false;
+
+    var toSend = {username: username, password: password};
     
-    xhr.open('POST', 'http://127.0.0.1:3000/login');
+    // second, true argument below means send async
+    xhr.open('POST', 'http://127.0.0.1:3000/login', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send(encodeURI('username=' + username + '&password=' + password));
+    // xhr.send(JSON.stringify({username: username, password: password}));
+
+    console.log('username and pass are', username + password);
+    xhr.onreadystatechange = function () {
+      console.log('status here is', this.status);
+      console.log('we received a change in status!');
+      if (this.status === 200 ) {
+        authenticated = true;
+        console.log('authenticated val is now', authenticated);
+      } else {
+        console.log ('authenticated val is now', authenticated);
+      }
+    };
     if (authenticated) {
+      // display next interace 
+      console.log('we are now in the auth stage');
     }
   };
 
+  // when submit is clicked, authenticate the user
   document.getElementById('submit').onclick = function(e) {
     e.preventDefault();
     authenticateUser();
