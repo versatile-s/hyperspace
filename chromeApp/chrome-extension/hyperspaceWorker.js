@@ -5,6 +5,16 @@ class HyperspaceWorker extends Component {
     super(props);
   }
 
+  sendLink () {
+    let url = tab.url;
+    let title = tab.title;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://127.0.0.1:3000/link', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags));
+  }
+
   render () {
     return (
       <div className="workerBody">
