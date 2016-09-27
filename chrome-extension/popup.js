@@ -58,12 +58,7 @@ window.onload = function() {
     
     xhr.open('POST', 'http://127.0.0.1:3000/login');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send(JSON.stringify({username: username, password: password}), function(response) {
-      console.log('RESPONSE IS', response);
-    });
-
-    console.log('username and pass are', username + password);
-
+    xhr.send(encodeURI('username=' + username + '&password=' + password));
     if (authenticated) {
     }
   };
