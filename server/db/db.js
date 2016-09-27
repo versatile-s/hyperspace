@@ -17,20 +17,6 @@ var Hyper = sequelize.define('Hyper', {
   // widgets: { type: Sequelize.ARRAY }
 });
 
-// Hyper.sync()
-//   .then(function() {
-//     console.log('ok we have created the Hyper database');
-//     return Hyper.create({
-//       url: 'peh',
-//       title: 'nada',
-//       description: 'nada',
-//       image: 'nada'
-//     });
-//   });
-// //deletes and creates User table
-// User.sync({force: true})
-//   .then();
-
 sequelize.authenticate()
   .then(function(err) {
     console.log('Connection has been made successfully.');

@@ -40,7 +40,7 @@ window.onload = function() {
       // "url" properties.
       console.assert(typeof url == 'string', 'tab.url should be a string');
 
-      console.log('CURRENT TABS URL IS', url);
+      console.log('CURRENT TAB OBJECT IS', tab);
 
       // must used XMLHttpRequest in extension
       var xhr = new XMLHttpRequest();
