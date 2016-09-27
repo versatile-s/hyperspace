@@ -16,6 +16,21 @@ var utils = {
       });
   },
 
+  updateUser: function (req, res) {
+    console.log('ok at least updateUser is being called');
+    User.findById(1)
+    .then(function(selectedUser) {
+      selectedUser.update({
+        username: req.body.username,
+        password: req.body.password,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        photo: req.body.photo,
+        categoryPages: req.body.categoryPages,
+        email: 'pehman@gmail.com'
+      });
+    });
+  },
 
 
   loginUser: function (req, res) {
@@ -59,7 +74,6 @@ var utils = {
   // This will update a category page. On the front end it is important that the req object has all of the fields.
   // Any fields that have not been changed need to remain as they were but still include in the request object.
   updateCategoryPage: function (req, res) {
-    console.log('ok at least updateCategory is being called');
     CategoryPage.findById(req.body.id)
     .then(function(selectedPage) {
       selectedPage.update({

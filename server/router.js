@@ -27,6 +27,13 @@ router.route('/login')
     utils.loginUser(req, res);
   });
 
+router.route('/users')
+  .put(function (req, res) {
+    console.log('Received PUT at /users');
+    utils.updateUser(req, res);
+    console.log('User updated');
+  });
+
 /*********************************/
 /*********************************/
       //CATEGORY PAGES//
