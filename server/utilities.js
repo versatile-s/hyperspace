@@ -16,6 +16,8 @@ var utils = {
       });
   },
 
+
+
   loginUser: function (req, res) {
 
     db.query('SELECT * FROM Users WHERE username = :username AND password = :password',
