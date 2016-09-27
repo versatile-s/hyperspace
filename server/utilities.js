@@ -42,14 +42,14 @@ var utils = {
     });
   },
 
+  // This will save a category page. It only needs a name property at time of creation and potentially parentCategories
   saveCategoryPage: function (req, res) {
+    console.log('ok getting IT BOY, and req is ', req.body);
     CategoryPage.sync()
     .then(function () {
       return CategoryPage.create({
-        url: req.body.url,
-        title: req.body.title,
-        description: '',
-        image: ''
+        name: req.body.name,
+        parentCategories: req.body.parents
       });
     });
   }
