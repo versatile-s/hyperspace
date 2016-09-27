@@ -1,13 +1,18 @@
 var router = require('express').Router();
 var utils = require('./utilities');
 
-// homepage
+         // HOMEPAGE //
 router.route('/')
   .get(function (req, res) {
     console.log('Received GET at /');
     res.send('Received GET at /');
   });
 
+/*********************************/
+/*********************************/
+           //USERS//
+/*********************************/
+/*********************************/
 // new user signup
 router.route('/signup')
   .post(function (req, res) {
@@ -22,6 +27,11 @@ router.route('/login')
     utils.loginUser(req, res);
   });
 
+/*********************************/
+/*********************************/
+      //CATEGORY PAGES//
+/*********************************/
+/*********************************/
 // view categories
 router.route('/categories')
   .get(function (req, res) {
@@ -51,6 +61,11 @@ router.route('/category')
     res.send('Received PUT at /category');
   });
 
+/*********************************/
+/*********************************/
+           //TAGS//
+/*********************************/
+/*********************************/
 // add tag to category
 router.route('/addTag')
   .post(function (req, res) {
@@ -58,15 +73,19 @@ router.route('/addTag')
     res.send('Received POST at /addTag');
   });
 
+/*********************************/
+/*********************************/
+           //HYPERS//
+/*********************************/
+/*********************************/
 //This adds the hyper to the database.
 router.route('/link')
   .post(function (req, res) {
     console.log('Youre adding this link:', req.body);
     utils.saveHyper(req, res);
     res.send('Received POST at /link');
-  });
+  })
   // edit link
-router.route('/link')
   .put(function (req, res) {
     console.log('Received PUT at /link');
     res.send('Received PUT at /link');
@@ -79,6 +98,12 @@ router.route('/searchLinks')
     res.send('Received POST at /searchLinks');
   });
 
+
+/*********************************/
+/*********************************/
+           //PREFERENCES//
+/*********************************/
+/*********************************/
 // view preferences
 router.route('/preferences')
   .get(function (req, res) {
@@ -91,7 +116,7 @@ router.route('/preferences')
     res.send('Received PUT at /preferences');
   });
 
-// 404
+// 404 Fallback
 router.use('*', function(req, res) {
   res.status(404).send('404, Sari Gurl');
 });
