@@ -13,9 +13,7 @@ class Signup extends Component {
     };
 
   }
-
-
-
+  
   signup (e) {
     e.preventDefault();
     fetch(this.props.route.url + '/signup', {
@@ -68,11 +66,9 @@ class Signup extends Component {
       
 
         <input type="button" value="signup" onClick={this.signup} />
-
       </div>
     );
   }
-
 }
 
 

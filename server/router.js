@@ -19,7 +19,6 @@ router.route('/signup')
 // existing user login
 router.route('/login')
   .post(function (req, res) {
-    console.log('Received POST at /login: ', req.body);
     utils.loginUser(req, res);
 });
 
