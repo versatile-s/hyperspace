@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Side from './side';
 
 class Category extends Component {
   constructor (props) {
@@ -40,6 +41,7 @@ class Category extends Component {
               </div>
             );
           })}
+        <Side />
       </div>
     );
   }
