@@ -12,7 +12,7 @@ class UserSignIn extends Component {
         <form>
           <input id="username"/>
           <input id="password"/>
-          <button className="submit">log in</button>
+          <button onCLick={authenticateUser()} className="submit">log in</button>
         </form>
       </div>
     );
