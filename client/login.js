@@ -38,7 +38,6 @@ class Login extends Component {
             failedLogin: true
           });
         }
-        console.log(res);
       });
     })
     .catch((error) => {
