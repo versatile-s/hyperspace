@@ -30,6 +30,9 @@ window.onload = function() {
       // A tab is a plain object that provides information about the tab.
       // See https://developer.chrome.com/extensions/tabs#type-Tab
       var url = tab.url;
+      var title = null;
+      var category = null;
+      var tags = null;
 
       // tab.url is only available if the "activeTab" permission is declared.
       // If you want to see the URL of other tabs (e.g. after removing active:true
@@ -41,10 +44,9 @@ window.onload = function() {
 
       // must used XMLHttpRequest in extension 
       var xhr = new XMLHttpRequest();
-      var params = url;
       xhr.open('POST', 'http://127.0.0.1:3000/link', true);
       xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-      xhr.send(params);
+      xhr.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags));
     });
   };
 
