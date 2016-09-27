@@ -67,8 +67,9 @@ window.onload = function() {
 
     console.log('username and pass are', username + password);
     xhr.onreadystatechange = function () {
+      console.log('status here is', this.status);
       console.log('we received a change in status!');
-      if (this.status == 200 ) {
+      if (this.status === 200 ) {
         console.log('login validated');
       } else {
         console.log ('not going to work');
