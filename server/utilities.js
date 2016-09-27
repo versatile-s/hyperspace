@@ -1,6 +1,7 @@
 var db = require('./db/db').sequelize;
 var User = require('./db/db').User;
 var Hyper = require('./db/db').Hyper;
+var CategoryPage = require('./db/db').CategoryPage;
 
 var utils = {
 
@@ -33,6 +34,18 @@ var utils = {
     Hyper.sync()
     .then(function () {
       return Hyper.create({
+        url: req.body.url,
+        title: req.body.title,
+        description: '',
+        image: ''
+      });
+    });
+  },
+
+  saveCategoryPage: function (req, res) {
+    CategoryPage.sync()
+    .then(function () {
+      return CategoryPage.create({
         url: req.body.url,
         title: req.body.title,
         description: '',

@@ -17,8 +17,9 @@ var Hyper = sequelize.define('Hyper', {
   // widgets: { type: Sequelize.ARRAY }
 });
 
-var CategoryPage = sequelize.define('Hyper', {
+var CategoryPage = sequelize.define('CategoryPage', {
   name: { type: Sequelize.STRING },
+  parentCategories: { type: Sequelize.STRING },
   subCategories: { type: Sequelize.STRING },
   hypers: { type: Sequelize.STRING },
   widgets: { type: Sequelize.STRING },
@@ -36,5 +37,6 @@ sequelize.authenticate()
 module.exports.sequelize = sequelize;
 module.exports.User = User;
 module.exports.Hyper = Hyper;
+module.exports.CategoryPage = CategoryPage;
 
 
