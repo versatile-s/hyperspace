@@ -59,13 +59,21 @@ window.onload = function() {
 
     var toSend = {username: username, password: password};
     
-    xhr.open('POST', 'http://127.0.0.1:3000/login');
+    // second, true argument below means send async
+    xhr.open('POST', 'http://127.0.0.1:3000/login', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send(encodeURI('username=' + username + '&password=' + password));
     // xhr.send(JSON.stringify({username: username, password: password}));
 
     console.log('username and pass are', username + password);
-
+    xhr.onreadystatechange = function () {
+      console.log('we received a change in status!');
+      if (this.status == 200 ) {
+        console.log('login validated');
+      } else {
+        console.log ('not going to work');
+      }
+    };
     if (authenticated) {
       // display next interace 
     }
