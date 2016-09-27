@@ -4,7 +4,6 @@ class Login extends Component {
 
   constructor (props) {
     super(props);
-    console.log(props);
     this.login = this.login.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
@@ -14,7 +13,10 @@ class Login extends Component {
       failedLogin: false
     };
 
-  } 
+    this.login = this.login.bind(this);
+    this.handleUsername = this.handleUsername.bind(this);
+    this.handlePass = this.handlePass.bind(this);
+  }
 
   login (e) {
     e.preventDefault();
@@ -40,12 +42,12 @@ class Login extends Component {
           });
         }
         console.log(res);
-      }); 
+      });
     })
     .catch((error) => {
       error.text().then((err) => {
         console.log(err);
-      }); 
+      });
     });
   }
 
@@ -54,7 +56,6 @@ class Login extends Component {
     this.setState({
       username: name.target.value
     });
-
   }
 
   handlePass(pass) {
@@ -62,7 +63,6 @@ class Login extends Component {
     this.setState({
       password: pass.target.value
     });
-
   }
 
   render() {
