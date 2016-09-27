@@ -30,7 +30,7 @@ window.onload = function() {
       // A tab is a plain object that provides information about the tab.
       // See https://developer.chrome.com/extensions/tabs#type-Tab
       var url = tab.url;
-      var title = null;
+      var title = tab.title;
       var category = null;
       var tags = null;
 
