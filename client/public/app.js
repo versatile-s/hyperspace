@@ -1,15 +1,20 @@
 import React, {Component} from 'react';
 import {Router, Route, useRouterHistory} from 'react-router';
-import Test from './test';
-import Login from './login';
-import Signup from './signup';
-import Home from './home';
-import Dashboard from './dashboard';
+import Test from './components/test';
+import Login from './components/login';
+import Signup from './components/signup';
+import Home from './components/home';
+
+import Layout from './components/layoutTest';
+
+
+import Dashboard from './components/dashboard';
+
 import {createHashHistory} from 'history';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
-import Category from './category';
-import Side from './side';
+import Category from './components/category';
+import Side from './components/side';
 
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 appHistory.url = "http://localhost:3000";
@@ -28,7 +33,11 @@ class App extends Component {
         <Route path='/home' component={Home} />
         <Route path='/test' component={Test} />
         <Route path='/category' component={Category} />
+
+        <Route path='/layout' component= {Layout} />
+
         <Route path='/dashboard' component={Dashboard} />
+
       </Router>
     );
   }
