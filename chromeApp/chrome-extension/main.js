@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import UserSignIn from './userSignIn.js';
+import HyperspaceWorker from './hyperSpaceWorker.js';
 
 
 class ChromeApp extends Component {
@@ -13,14 +14,12 @@ class ChromeApp extends Component {
 
   }
 
-
-
   render () {
     return (
       <div>
         <h1>WE R NOW RENDERING REACT IN R EXTENSION :) </h1>
         <UserSignIn />
-        <Worker />
+        <HyperspaceWorker />
       </div>
     );
   }
