@@ -1,0 +1,36 @@
+
+.hyper{
+  position: relative;
+  display: flex; 
+  height: 200px;
+  width: 200px;
+}
+
+.hyperTitle{
+  position: absolute;
+  z-index: 5;
+  top:0;
+  left:0;
+
+}
+.hyperUrl{
+  position: absolute;
+  z-index: 4;
+  top:50px;
+  left:0;
+}
+.hyperDescription{
+  position: absolute;
+  z-index: 3;
+  bottom:0;
+  left:0;
+
+}
+.hyperImage{
+  z-index: 2;
+  position: absolute;
+  top:0;
+  left:0;
+  width: 200px;
+
+}
