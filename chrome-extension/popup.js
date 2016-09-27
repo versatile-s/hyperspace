@@ -50,24 +50,28 @@ window.onload = function() {
 
   getCurrentTabUrl();
 
+  // pipe authentication to our server + db
   var authenticateUser = function () {
     var xhr = new XMLHttpRequest();
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     var authenticated = false;
+
+    var toSend = {username: username, password: password};
     
     xhr.open('POST', 'http://127.0.0.1:3000/login');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send(JSON.stringify({username: username, password: password}), function(response) {
-      console.log('RESPONSE IS', response);
-    });
+    xhr.send(encodeURI('username=' + username + '&password=' + password));
+    // xhr.send(JSON.stringify({username: username, password: password}));
 
     console.log('username and pass are', username + password);
 
     if (authenticated) {
+      // display next interace 
     }
   };
 
+  // when submit is clicked, authenticate the user
   document.getElementById('submit').onclick = function(e) {
     e.preventDefault();
     authenticateUser();
