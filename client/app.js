@@ -12,6 +12,7 @@ import Category from './category';
 import Side from './side';
 
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
+appHistory.url = "http://localhost:3000";
 
 class App extends Component {
   constructor (props) {
@@ -22,13 +23,13 @@ class App extends Component {
     return (
 
       <Router history={appHistory} >
-        <Route path='/' url={this.props.url} router={Router} component={Login} />
-        <Route path='/login' url={this.props.url} router={Router} component={Login} />
-        <Route path='/signup' url={this.props.url} router={Router} component={Signup} />
-        <Route path='/home' url={this.props.url} router={Router} component={Home} />
-        <Route path='/test' url={this.props.url} router={Router} component={Test} />
-        <Route path='/category' url={this.props.url} router={Router} component={Category} />
-        <Route path='/dashboard' url={this.props.url} router={Router} component={Dashboard} />
+        <Route path='/' component={Login} />
+        <Route path='/login' component={Login} />
+        <Route path='/signup' component={Signup} />
+        <Route path='/home' component={Home} />
+        <Route path='/test' component={Test} />
+        <Route path='/category' component={Category} />
+        <Route path='/dashboard' component={Dashboard} />
       </Router>
 
     );

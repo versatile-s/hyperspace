@@ -4,7 +4,7 @@ class Login extends Component {
 
   constructor (props) {
     super(props);
-    console.log(props.history, 'PROPS======');
+    console.log(props);
     this.login = this.login.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
@@ -19,7 +19,7 @@ class Login extends Component {
   login (e) {
     e.preventDefault();
     var context = this;
-    fetch(this.props.route.url + '/login', {
+    fetch(this.props.history.url + '/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -31,6 +31,7 @@ class Login extends Component {
       })
     }).then((response) => {
       response.text().then((res) => {
+        console.log(res, ' response==========');
         if (res === 'Login successful!') {
           context.props.history.push('/dashboard');
         } else {
