@@ -70,10 +70,8 @@ router.route('/link')
     console.log('Youre adding this link:', req.body);
     utils.saveHyper(req, res);
     res.send('Received POST at /link');
-  });
-
-// edit link
-router.route('/link')
+  })
+  // edit link
   .put(function (req, res) {
     console.log('Received PUT at /link');
     res.send('Received PUT at /link');
@@ -91,10 +89,8 @@ router.route('/preferences')
   .get(function (req, res) {
     console.log('Received GET at /preferences');
     res.send('Received GET at /preferences');
-  });
-
-// set preferences
-router.route('/preferences')
+  })
+  // set preferences
   .put(function (req, res) {
     console.log('Received PUT at /preferences');
     res.send('Received PUT at /preferences');
