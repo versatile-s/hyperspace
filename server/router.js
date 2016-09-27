@@ -33,17 +33,16 @@ router.route('/login')
 /*********************************/
 /*********************************/
 // view categories
-router.route('/categories')
-  .get(function (req, res) {
-    console.log('Received GET at /categories');
-    res.send('Received GET at /categories');
-  })
-// search categories
-  .post(function (req, res) {
-    console.log('Received POST at /categories');
-    utils.saveCategoryPage(req, res);
-    res.send('Received POST at /categories');
-  });
+// router.route('/categories')
+//   .get(function (req, res) {
+//     console.log('Received GET at /categories');
+//     res.send('Received GET at /categories');
+//   })
+// // search categories
+//   .post(function (req, res) {
+//     console.log('Received POST at /categories');
+//     res.send('Received POST at /categories');
+//   });
 
 // view category
 router.route('/category')
@@ -54,9 +53,10 @@ router.route('/category')
 // add category
   .post(function (req, res) {
     console.log('Received POST at /category');
+    utils.saveCategoryPage(req, res);
     res.send('Received POST at /category');
   })
-// remove link from category
+// update a category
   .put(function (req, res) {
     console.log('Received PUT at /category');
     res.send('Received PUT at /category');
