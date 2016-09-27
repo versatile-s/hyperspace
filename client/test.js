@@ -9,6 +9,7 @@ export default class Test extends Component {
     };
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
+    this.putUsers = this.putUsers.bind(this);
     this.getCategories = this.getCategories.bind(this);
     this.postCategories = this.postCategories.bind(this);
     this.getCategory = this.getCategory.bind(this);
@@ -44,6 +45,22 @@ export default class Test extends Component {
     e.preventDefault();
     fetch(this.state.url + '/login', {
       method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log('error: ', error);
+    });
+  }
+
+  putUsers (e) {
+    e.preventDefault();
+    fetch(this.state.url + '/users', {
+      method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -133,6 +150,7 @@ export default class Test extends Component {
       console.log('error: ', error);
     });
   }
+
 
   addTag (e) {
     e.preventDefault();
@@ -264,6 +282,7 @@ export default class Test extends Component {
       <div>
         <input type="button" value="POST at /signup" onClick={this.signup} />
         <input type="button" value="POST at /login" onClick={this.login} />
+        <input type="button" value="PUT at /users" onClick={this.putUsers} />
         <input type="button" value="GET at /categories" onClick={this.getCategories} />
         <input type="button" value="POST at /categories" onClick={this.postCategories} />
         <input type="button" value="GET at /category" onClick={this.getCategory} />
