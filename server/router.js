@@ -59,6 +59,7 @@ router.route('/category')
 // update a category
   .put(function (req, res) {
     console.log('Received PUT at /category');
+    utils.updateCategoryPage(req, res);
     res.send('Received PUT at /category');
   });
 
