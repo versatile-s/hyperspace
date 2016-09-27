@@ -1,6 +1,7 @@
 var db = require('./db/db').sequelize;
 var User = require('./db/db').User;
 var Hyper = require('./db/db').Hyper;
+var CategoryPage = require('./db/db').CategoryPage;
 
 var utils = {
 
@@ -37,6 +38,17 @@ var utils = {
         title: req.body.title,
         description: '',
         image: ''
+      });
+    });
+  },
+
+  // This will save a category page. It only needs a name property at time of creation and potentially parentCategories
+  saveCategoryPage: function (req, res) {
+    CategoryPage.sync()
+    .then(function () {
+      return CategoryPage.create({
+        name: req.body.name,
+        parentCategory: req.body.parents
       });
     });
   }
