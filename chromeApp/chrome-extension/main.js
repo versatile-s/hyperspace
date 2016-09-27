@@ -11,9 +11,12 @@ class ChromeApp extends Component {
     this.state = {
       authenticated: false
     };
+
+    this.authenticateUser = this.authenticateUser.bind(this);
   }
+
   
-  authenticateUser() {
+  authenticateUser(e) {
     var xhr = new XMLHttpRequest();
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
@@ -32,21 +35,26 @@ class ChromeApp extends Component {
       console.log('status here is', this.status);
       console.log('we received a change in status!');
       if (this.status === 200 ) {
-        authenticated = true;
-        console.log('authenticated val is now', authenticated);
+        this.setState({
+          authenticated: true 
+        });
+        console.log('authenticated val is now', this.state.authenticated);
       } else {
-        console.log ('authenticated val is now', authenticated);
+        console.log ('authenticated val is now', this.state.authenticated);
       }
     };
-  };
+  }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    authenticateUser();
   }
 
   render () {
     return (
       <div>
         <h1>WE R NOW RENDERING REACT IN R EXTENSION :) </h1>
-        {this.state.authenticated ? <HyperspaceWorker/> : <UserSignIn authenticateUser={authenticateUser}/>}
+        {this.state.authenticated ? <HyperspaceWorker/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser}/>}
       </div>
     );
   }

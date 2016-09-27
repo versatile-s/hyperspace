@@ -56,7 +56,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <p>Login Sissy</p>
+        <p>Welcome to hyperspace. Login:</p>
 
         <input onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
         <input onChange={this.handlePass} value={this.state.password} type="text" placeholder="password" />

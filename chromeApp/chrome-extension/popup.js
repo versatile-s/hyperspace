@@ -9,7 +9,7 @@
  *   is found.
  */
 
-window.onload = function() {
+/*window.onload = function() {
 
   var getCurrentTabUrl = function (callback) {
     // Query filter to be passed to chrome.tabs.query - see
@@ -93,4 +93,4 @@ window.onload = function() {
     authenticateUser();
   };
 
-};
+};*/
