@@ -17,7 +17,7 @@ const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 
 class App extends Component {
   constructor (props) {
-    super(props); 
+    super(props);
   }
 
   render() {

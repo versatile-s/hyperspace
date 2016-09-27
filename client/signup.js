@@ -13,7 +13,7 @@ class Signup extends Component {
     };
 
   }
-  
+
   signup (e) {
     e.preventDefault();
     fetch(this.props.route.url + '/signup', {

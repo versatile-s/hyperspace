@@ -6,7 +6,7 @@ var utils = {
 
   // USERS
   createUser: function (username, password) {
-
+    console.log('CREATE USER BEING CALLED');
     User.sync()
       .then(function () {
         return User.create({
@@ -14,7 +14,6 @@ var utils = {
           password: password
         });
       });
-
   },
 
   loginUser: function (req, res) {
@@ -32,6 +31,7 @@ var utils = {
 
   // HYPERS
   saveHyper: function (req, res) {
+    console.log('SAVEHYPER BEING CALLED!!');
     Hyper.sync()
     .then(function () {
       return Hyper.create({
@@ -42,6 +42,7 @@ var utils = {
       })
       .then(function(req, res) {
         res.send('great we added hyper: ');
+        console.log('great we added a hyper and the request body was, ', req.body);
       });
     });
   }
