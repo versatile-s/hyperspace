@@ -7,12 +7,8 @@ class HyperspaceWorker extends Component {
 
   render () {
     return (
-      <div className="authBody">
-        <form>
-          <input id="username"/>
-          <input id="password"/>
-          <button className="submit">log in</button>
-        </form>
+      <div className="workerBody">
+        this right here is our worker body
       </div>
     );
   }

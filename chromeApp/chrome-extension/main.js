@@ -8,9 +8,9 @@ class ChromeApp extends Component {
   constructor (props) {
     super(props);
   
-  this.state = {
-    authenticated: false;
-  };
+    this.state = {
+      authenticated: true
+    };
 
   }
 
@@ -18,8 +18,7 @@ class ChromeApp extends Component {
     return (
       <div>
         <h1>WE R NOW RENDERING REACT IN R EXTENSION :) </h1>
-        <UserSignIn />
-        <HyperspaceWorker />
+        {this.state.authenticated ? <HyperspaceWorker/> : <UserSignIn/>}
       </div>
     );
   }
