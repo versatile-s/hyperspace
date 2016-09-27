@@ -21,7 +21,6 @@ class App extends Component {
 
   render() {
     return (
-
       <Router history={appHistory} >
         <Route path='/' component={Login} />
         <Route path='/login' component={Login} />
@@ -31,7 +30,6 @@ class App extends Component {
         <Route path='/category' component={Category} />
         <Route path='/dashboard' component={Dashboard} />
       </Router>
-
     );
   }
 }

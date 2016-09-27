@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
 class Login extends Component {
-
   constructor (props) {
     super(props);
     this.login = this.login.bind(this);
@@ -12,7 +11,6 @@ class Login extends Component {
       password:'',
       failedLogin: false
     };
-
     this.login = this.login.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
@@ -33,7 +31,6 @@ class Login extends Component {
       })
     }).then((response) => {
       response.text().then((res) => {
-        console.log(res, ' response==========');
         if (res === 'Login successful!') {
           context.props.history.push('/dashboard');
         } else {
@@ -52,14 +49,12 @@ class Login extends Component {
   }
 
   handleUsername(name) {
-
     this.setState({
       username: name.target.value
     });
   }
 
   handlePass(pass) {
-
     this.setState({
       password: pass.target.value
     });
@@ -69,15 +64,12 @@ class Login extends Component {
     return (
       <div>
         {this.state.failedLogin ? <p>The given information doesn't match our records, please enter information again.</p> : <p>Login Sissy</p>}
-
         <input onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
         <input onChange={this.handlePass} value={this.state.password} type="text" placeholder="password" />
         <input type="button" value="login" onClick={this.login} />
-
       </div>
     );
   }
 }
-
 
 export default Login;
