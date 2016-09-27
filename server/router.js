@@ -27,10 +27,8 @@ router.route('/categories')
   .get(function (req, res) {
     console.log('Received GET at /categories');
     res.send('Received GET at /categories');
-  });
-
+  })
 // search categories
-router.route('/categories')
   .post(function (req, res) {
     console.log('Received POST at /categories');
     res.send('Received POST at /categories');
@@ -41,17 +39,13 @@ router.route('/category')
   .get(function (req, res) {
     console.log('Received GET at /category');
     res.send('Received GET at /category');
-  });
-
+  })
 // add category
-router.route('/category')
   .post(function (req, res) {
     console.log('Received POST at /category');
     res.send('Received POST at /category');
-  });
-
+  })
 // remove link from category
-router.route('/category')
   .put(function (req, res) {
     console.log('Received PUT at /category');
     res.send('Received PUT at /category');
@@ -64,14 +58,15 @@ router.route('/addTag')
     res.send('Received POST at /addTag');
   });
 
-// This adds the hyper to the database.
+//This adds the hyper to the database.
 router.route('/link')
   .post(function (req, res) {
     console.log('Youre adding this link:', req.body);
     utils.saveHyper(req, res);
     res.send('Received POST at /link');
-  })
+  });
   // edit link
+router.route('/link')
   .put(function (req, res) {
     console.log('Received PUT at /link');
     res.send('Received PUT at /link');

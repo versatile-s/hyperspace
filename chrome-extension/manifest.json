@@ -13,10 +13,10 @@
 
 	// "background": {
  //      "scripts" ["", ]
-	// }, 
+	// },
 
 	"permissions": [
-		"activeTab", 
+		"activeTab",
 		"https://ajax.googleapis.com/",
 		"*://*/*"
 	]
