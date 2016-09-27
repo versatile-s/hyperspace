@@ -17,6 +17,14 @@ var Hyper = sequelize.define('Hyper', {
   // widgets: { type: Sequelize.ARRAY }
 });
 
+var CategoryPage = sequelize.define('Hyper', {
+  name: { type: Sequelize.STRING },
+  subCategories: { type: Sequelize.STRING },
+  hypers: { type: Sequelize.STRING },
+  widgets: { type: Sequelize.STRING },
+  preferences: { type: Sequelize.STRING }
+});
+
 sequelize.authenticate()
   .then(function(err) {
     console.log('Connection has been made successfully.');
