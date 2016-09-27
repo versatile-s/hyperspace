@@ -27,7 +27,7 @@ Hyper.sync()
       image: 'nada'
     });
   });
-//deletes and creates User table
+// //deletes and creates User table
 // User.sync({force: true})
 //   .then();
 

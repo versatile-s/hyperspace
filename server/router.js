@@ -69,7 +69,6 @@ router.route('/link')
   .post(function (req, res) {
     console.log('Youre adding this link:', req.body);
     utils.saveHyper(req, res);
-    // ADD THE HYPER TO DATABASE
     res.send('Received POST at /link');
   });
 
