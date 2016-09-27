@@ -11,17 +11,20 @@ class Category extends Component {
         {
           title: 'Eloquent JS',
           url: 'http://eloquentjavascript.net/',
-          description: 'An introduction to higher order functions!'
+          description: 'An introduction to higher order functions!',
+          imgUrl: 'https://codepo8.github.io/canvas-images-and-pixels/img/horse.png'
         },
         {
           title: 'React Router tutorial',
           url: 'https://www.youtube.com/watch?v=1iAG6h9ff5s',
-          description: 'Thorough explanation on React Router'
+          description: 'Thorough explanation on React Router',
+          imgUrl: 'http://cdn.arstechnica.net/wp-content/uploads/2016/02/5718897981_10faa45ac3_b-640x624.jpg'
         },
         {
           title: 'The best SO question / Answer ever',
           url: 'http://stackoverflow.com/questions/2485423/is-using-var-to-declare-variables-optional',
-          description: 'The answer to the question everyone has been wondering.'
+          description: 'The answer to the question everyone has been wondering.',
+          imgUrl: 'http://kaposiadays.org/wp-content/uploads/hot-dog-pic.png'
         }
       ]
     };
@@ -38,6 +41,7 @@ class Category extends Component {
                 <h2>{item.title}</h2>
                 <a href={item.url}><h3>Link here</h3></a>
                 <h4>{item.description}</h4>
+                <img src={item.imgUrl}/>
               </div>
             );
           })}
