@@ -70,13 +70,15 @@ window.onload = function() {
       console.log('status here is', this.status);
       console.log('we received a change in status!');
       if (this.status === 200 ) {
-        console.log('login validated');
+        authenticated = true;
+        console.log('authenticated val is now', authenticated);
       } else {
-        console.log ('not going to work');
+        console.log ('authenticated val is now', authenticated);
       }
     };
     if (authenticated) {
       // display next interace 
+      console.log('we are now in the auth stage');
     }
   };
 

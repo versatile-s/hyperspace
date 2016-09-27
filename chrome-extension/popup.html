@@ -11,7 +11,7 @@ background: -webkit-linear-gradient(to left, #FF5F6D , #FFC371); /* Chrome 10-25
 background: linear-gradient(to left, #FF5F6D , #FFC371); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
          color: #fff">
   <head>
-    <title>Getting Started Extension's Popup</title>
+    <title>hyperspace chrome extension</title>
     <style>
       body {
         font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
@@ -24,6 +24,15 @@ background: linear-gradient(to left, #FF5F6D , #FFC371); /* W3C, IE 10+/ Edge, F
         overflow: hidden;
         max-width: 400px;
       }
+
+
+button#submit:hover {
+    background: #000 !important;
+    color: #fff;
+    cursor: pointer;
+}
+
+
     </style>
 
     <!--
@@ -35,14 +44,37 @@ background: linear-gradient(to left, #FF5F6D , #FFC371); /* W3C, IE 10+/ Edge, F
     <script src="popup.js"></script>
   </head>
   <body>
-    <div id="text">Welcome to hyperspace. Please login.</div>
-    <div id="status"></div>
-    <form class="">
-      <input id="username" value="" placeholder="your username" type="text">
-      <input id="password" value="" placeholder="password" type="password">
-      <button class="submit" id="submit">log in :)</button>
-    </form>
-    <img id="image-result" hidden>
+    <div class="authBody" style="margin-top:30px; text-align:center;">
+      <div id="text" style="font-weight: 100 !Important; font-family: Roboto; text-align: center;">Welcome to hyperspace. Please login.</div>
+      <div id="status"></div>
+      <form class="userLogin" style="margin-top:30px;">
+        <input id="username" value="" placeholder="your username" type="text" style="line-height: 24px;
+    font-size: 16px;
+    width: 240px;
+    text-align: center;
+    font-family: Roboto;
+    font-weight: 400;
+    border-radius: 32px;
+    border: none; height: 40px;">
+        <input id="password" value="" placeholder="password" type="password" style="line-height: 24px;
+    font-size: 16px;
+    width: 240px;
+    text-align: center;
+    font-family: Roboto;
+    font-weight: 400;
+    border-radius: 32px;
+    border: none; height: 40px; margin-top: 15px;">
+      <div class="submit" style="text-align:right;">
+        <button class="submit" id="submit" style="    border-radius: 0px !important;
+    background: none;
+    border: 1px solid #000;
+    padding: 7px 20px;
+    margin-right: 40px;
+    margin-top: 20px; margin-bottom: 20px;">log in :)</button>
+      </div>
+      </form>
+      <img id="image-result" hidden>
+    </div>
   </body>
 </html>
 
