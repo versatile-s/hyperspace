@@ -2,9 +2,12 @@ var express = require('express');
 var router = require('./router');
 var bodyParser = require('body-parser');
 var path = require('path');
+var history = require('connect-history-api-fallback');
 
 
 var server = express();
+
+server.use(history());
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));

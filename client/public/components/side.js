@@ -21,7 +21,7 @@ class Side extends Component {
     var categoryTitle = e.target.innerHTML;
     console.log(categoryTitle);
     // send user to their category of categoryTitle
-    fetch('http://localhost:3000' + '/category', {
+    fetch('/category', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

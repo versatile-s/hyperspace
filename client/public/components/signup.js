@@ -16,7 +16,7 @@ class Signup extends Component {
   signup (e) {
     e.preventDefault();
     var context = this;
-    fetch(this.props.history.url + '/signup', {
+    fetch('/signup', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
