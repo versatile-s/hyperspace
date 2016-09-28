@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 
-var sequelize = new Sequelize('hyperspace', 'root', '1111');
+var sequelize = new Sequelize('hyperspace', 'root', 'hi');
 
 var User = sequelize.define('User', {
   username: { type: Sequelize.STRING },
@@ -17,6 +17,7 @@ var Hyper = sequelize.define('Hyper', {
   title: { type: Sequelize.STRING },
   description: { type: Sequelize.STRING },
   image: { type: Sequelize.STRING },
+  username: { type: Sequelize.STRING }
   // Datatype of array only available in postgres so need to find a work around.
   // tags: { type: Sequelize.ARRAY },
   // widgets: { type: Sequelize.ARRAY }
@@ -30,6 +31,13 @@ var CategoryPage = sequelize.define('CategoryPage', {
   widgets: { type: Sequelize.STRING },
   preferences: { type: Sequelize.STRING }
 });
+
+CategoryPage.belongsTo(User);
+Hyper.belongsTo(CategoryPage);
+
+User.sync({force: true});
+CategoryPage.sync({force: true});
+Hyper.sync({force: true});
 
 sequelize.authenticate()
   .then(function(err) {
