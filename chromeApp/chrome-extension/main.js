@@ -56,7 +56,7 @@ class ChromeApp extends Component {
     return (
       <div>
         <h1>WE R NOW RENDERING REACT IN R EXTENSION :) </h1>
-        {this.state.authenticated ? <HyperspaceWorker/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser}/>}
+        {this.state.authenticated ? <HyperspaceWorker/> : <UserSignIn props={this.props} />}
       </div>
     );
   }

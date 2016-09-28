@@ -29,7 +29,7 @@ class HyperspaceWorker extends Component {
         <form className="addLinkForm">
           <input id="category"/>
           <input id="tags"/>
-          <button onCLick={this.props.authenticateUser} className="addTo">add to hyperspace</button>
+          <button className="addTo">add to hyperspace</button>
         </form>
       </div>
     );
