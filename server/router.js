@@ -41,6 +41,7 @@ router.route('/categories')
 // search categories
   .post(function (req, res) {
     console.log('Received POST at /categories');
+    utils.saveCategoryPage(req, res);
     res.send('Received POST at /categories');
   });
 
