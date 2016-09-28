@@ -16,20 +16,20 @@ class HyperspaceWorker extends Component {
 
   sendLink (e) {
     e.preventDefault();
-    var getCurrentTabUrl = function (callback) {
-      var queryInfo = {
+    let getCurrentTabUrl = function (callback) {
+      let queryInfo = {
         active: true,
         currentWindow: true
       };
 
       chrome.tabs.query(queryInfo, function (tabs) {
-        var tab = tabs[0];
-        var url = tab.url;
-        var title = tab.title;
-        var category = null;
-        var tags = null;
+        let tab = tabs[0];
+        let url = tab.url;
+        let title = tab.title;
+        let category = document.getElementById('category').value;
+        let tags = document.getElementById('tags').value;
 
-        var request = new XMLHttpRequest();
+        let request = new XMLHttpRequest();
         request.open('POST', 'http://127.0.0.1:3000/link', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags));
