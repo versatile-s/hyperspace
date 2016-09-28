@@ -30,6 +30,7 @@ class Category extends Component {
     };
   }
 
+//hello
   render () {
     return (
       <div>
