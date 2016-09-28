@@ -17,8 +17,7 @@ var utils = {
   },
 
   updateUser: function (req, res) {
-    console.log('ok at least updateUser is being called');
-    User.findById(1)
+    User.findById(req.body.id)
     .then(function(selectedUser) {
       selectedUser.update({
         username: req.body.username,
@@ -27,7 +26,7 @@ var utils = {
         lastName: req.body.lastName,
         photo: req.body.photo,
         categoryPages: req.body.categoryPages,
-        email: 'pehman@gmail.com'
+        email: req.body.email
       });
     });
   },

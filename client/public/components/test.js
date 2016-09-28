@@ -73,6 +73,21 @@ export default class Test extends Component {
     });
   }
 
+  getCategories (e) {
+    e.preventDefault();
+    fetch(this.state.url + '/categories', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log('error: ', error);
+    });
+  }
+
   postCategories (e) {
     e.preventDefault();
     fetch(this.state.url + '/categories', {

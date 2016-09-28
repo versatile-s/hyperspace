@@ -16,7 +16,7 @@ import { DragDropContext } from 'react-dnd';
 import Category from './components/category';
 import Side from './components/side';
 
-const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
+const appHistory = useRouterHistory(createHashHistory)({ queryKey: true });
 appHistory.url = "http://localhost:3000";
 
 class App extends Component {
