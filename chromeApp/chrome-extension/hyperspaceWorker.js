@@ -3,6 +3,13 @@ import React, {Component} from 'react';
 class HyperspaceWorker extends Component {
   constructor (props) {
     super(props);
+
+    this.state = {
+      url: tab.url,
+      title: tab.title,
+      category: '',
+      tags: ''
+    };
   }
 
   sendLink () {
@@ -19,6 +26,11 @@ class HyperspaceWorker extends Component {
     return (
       <div className="workerBody">
         this right here is our worker body
+        <form className="addLinkForm">
+          <input id="category"/>
+          <input id="tags"/>
+          <button onCLick={this.props.authenticateUser()} className="addTo">add to hyperspace</button>
+        </form>
       </div>
     );
   }

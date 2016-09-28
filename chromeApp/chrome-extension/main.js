@@ -9,7 +9,8 @@ class ChromeApp extends Component {
     super(props);
   
     this.state = {
-      authenticated: false
+      authenticated: false,
+      username: ''
     };
 
     this.authenticateUser = this.authenticateUser.bind(this);
@@ -36,7 +37,8 @@ class ChromeApp extends Component {
       console.log('we received a change in status!');
       if (this.status === 200 ) {
         this.setState({
-          authenticated: true 
+          authenticated: true,
+          username: username
         });
         console.log('authenticated val is now', this.state.authenticated);
       } else {
