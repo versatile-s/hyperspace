@@ -10,11 +10,13 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import Category from './components/category';
 import Side from './components/side';
-
+ 
 class App extends Component {
   constructor (props) {
     super(props);
   }
+
+
 
   render() {
     return (

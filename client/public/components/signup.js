@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router';
 
 class Signup extends Component {
   constructor (props) {
@@ -62,6 +63,7 @@ class Signup extends Component {
         <input onChange={this.handleUsername} value= {this.state.username} type="text" placeholder= "username" />
         <input onChange={this.handlePass} value= {this.state.password} type="password" placeholder= "password"/>
         <input type="button" value="signup" onClick={this.signup} />
+        <Link to="/login"><button className="btn">Login Screen</button></Link>
       </div>
     );
   }
