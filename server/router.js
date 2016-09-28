@@ -135,7 +135,8 @@ router.route('/preferences')
 
 // 404 Fallback
 router.use('*', function(req, res) {
-  res.status(404).send('404, Sari Gurl');
+  // res.status(404).send('404, Sari Gurl');
+  res.sendFile(__dirname + '/../client/index.html' );
 });
 
 module.exports = router;
