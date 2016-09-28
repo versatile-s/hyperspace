@@ -60,7 +60,7 @@ class Signup extends Component {
       <div>
       {this.state.failedSignup ? <p>The username you entered is taken, please try another username.</p> : <p>Signup Sissy</p>}
         <input onChange={this.handleUsername} value= {this.state.username} type="text" placeholder= "username" />
-        <input onChange={this.handlePass} value= {this.state.password} type="text" placeholder= "password"/>
+        <input onChange={this.handlePass} value= {this.state.password} type="password" placeholder= "password"/>
         <input type="button" value="signup" onClick={this.signup} />
       </div>
     );

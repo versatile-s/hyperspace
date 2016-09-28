@@ -4,7 +4,12 @@ var sequelize = new Sequelize('hyperspace', 'root', 'hr47');
 
 var User = sequelize.define('User', {
   username: { type: Sequelize.STRING },
-  password: { type: Sequelize.STRING }
+  password: { type: Sequelize.STRING },
+  firstName: { type: Sequelize.STRING },
+  lastName: { type: Sequelize.STRING },
+  photo: { type: Sequelize.STRING },
+  categoryPages: { type: Sequelize.STRING },
+  email: { type: Sequelize.STRING }
 });
 
 var Hyper = sequelize.define('Hyper', {
