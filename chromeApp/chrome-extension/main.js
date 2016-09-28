@@ -9,7 +9,7 @@ class ChromeApp extends Component {
     super(props);
   
     this.state = {
-      authenticated: false,
+      authenticated: false, 
       username: ''
     };
 
