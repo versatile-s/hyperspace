@@ -16,6 +16,20 @@ class ChromeApp extends Component {
     this.authenticateUser = this.authenticateUser.bind(this);
   }
 
+  componentWillMount() {
+    console.log('CHROME STORAGE ON LOAD IS', chrome.storage.local);
+    // check if username is stored in local storage
+      // if so, set authenticated to true + username to stored username
+  }
+
+  saveToLocalStorage() {
+    var context = this;
+    var username = this.state.username;
+    console.log('we are saving this username to local storage', username);
+    chrome(storage.sync.set({'username': context.state.username}, function () {
+      console.log('local storage here is', chrome.storage.local);
+    }));
+  }
   
   authenticateUser(e) {
     e.preventDefault();
@@ -41,6 +55,7 @@ class ChromeApp extends Component {
           username: username
         });
         console.log('authenticated val is now', context.state.authenticated);
+        context.saveToLocalStorage();
       } else {
         console.log ('authenticated val is now', context.state.authenticated);
       }
@@ -50,7 +65,7 @@ class ChromeApp extends Component {
   render () {
     return (
       <div>
-        {this.state.authenticated ? <HyperspaceWorker/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>}
+        {this.state.authenticated ? <HyperspaceWorker/> : <UserSignIn props={this.props} username={this.state.username} authenticateUser={this.authenticateUser.bind(this)}/>}
       </div>
     );
   }
