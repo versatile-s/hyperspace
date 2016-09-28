@@ -65,7 +65,7 @@ class ChromeApp extends Component {
   render () {
     return (
       <div>
-        {this.state.authenticated ? <HyperspaceWorker/> : <UserSignIn props={this.props} username={this.state.username} authenticateUser={this.authenticateUser.bind(this)}/>}
+        {this.state.authenticated ? <HyperspaceWorker props={this.props} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>}
       </div>
     );
   }

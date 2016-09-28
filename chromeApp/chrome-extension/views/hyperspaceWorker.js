@@ -12,14 +12,21 @@ class HyperspaceWorker extends Component {
       category: '',
       tags: ''
     };
+
+    this.sendLink = this.sendLink.bind(this);
   }
 
   componentWillMount() {
-    console.log('in login, username state is', this.props.username);
+    this.setState({
+      username: this.props.username
+    });
   }
 
   sendLink (e) {
     e.preventDefault();
+    
+    let username = this.state.username;
+
     let getCurrentTabUrl = function () {
       let queryInfo = {
         active: true,
@@ -36,9 +43,10 @@ class HyperspaceWorker extends Component {
         let request = new XMLHttpRequest();
         request.open('POST', 'http://127.0.0.1:3000/link', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags));
+        request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags + '&username=' + username));
       });
     };
+
     getCurrentTabUrl();
   }
 
