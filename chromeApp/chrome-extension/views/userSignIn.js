@@ -9,29 +9,27 @@ class UserSignIn extends Component {
       authenticated: false,
       username: ''
     };
-
-    this.authenticateUser = this.authenticateUser.bind(this);
   }
 
-  authenticateUser(e) {
+  componentWillMount() {
+    console.log('mounted', this.props.testingThis);
+  }
+
+  /*authenticateUser(e) {
     var context = this;
-    console.log('CONTEXT HERE IS', this);
     e.preventDefault();
-    var xhr = new XMLHttpRequest();
+    var request = new XMLHttpRequest();
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
-    var authenticated = false;
-
-    var toSend = {username: username, password: password};
     
     // second, true argument below means send async
-    xhr.open('POST', 'http://127.0.0.1:3000/login', true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send(encodeURI('username=' + username + '&password=' + password));
-    // xhr.send(JSON.stringify({username: username, password: password}));
+    request.open('POST', 'http://127.0.0.1:3000/login', true);
+    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    request.send(encodeURI('username=' + username + '&password=' + password));
+    
 
     console.log('username and pass are', username + password);
-    xhr.onreadystatechange = function () {
+    request.onreadystatechange = function () {
       console.log('status here is', this.status);
       console.log('we received a change in status!');
       if (this.status === 200 ) {
@@ -48,7 +46,7 @@ class UserSignIn extends Component {
         console.log ('authenticated val is now', context.state.authenticated);
       }
     };
-  }
+  }*/
 
   render () {
     return (
@@ -57,7 +55,7 @@ class UserSignIn extends Component {
         <form className="authForm">
           <input id="username"/>
           <input id="password" type="password"/>
-          <button onClick={this.authenticateUser} className="submit">log in</button>
+          <button onClick={this.props.authenticateUser} className="submit">log in</button>
         </form>
       </div>
     );

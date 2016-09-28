@@ -5,21 +5,21 @@ class HyperspaceWorker extends Component {
     super(props);
 
     this.state = {
-      url: tab.url,
-      title: tab.title,
+      url: null,
+      title: null,
       category: '',
       tags: ''
     };
   }
 
   sendLink () {
-    let url = tab.url;
-    let title = tab.title;
-
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://127.0.0.1:3000/link', true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags));
+ /*   let url = tab.url;
+    let title = tab.title;*/
+/*
+    let request = new XMLHttpRequest();
+    request.open('POST', 'http://127.0.0.1:3000/link', true);
+    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags));*/
   }
 
   render () {
