@@ -86,6 +86,10 @@ var utils = {
     });
   }
 
+  getCategoryData: function () {
+    console.log('getting cat data');
+  }
+
 };
 
 module.exports = utils;

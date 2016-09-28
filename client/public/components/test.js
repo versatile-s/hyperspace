@@ -4,9 +4,6 @@ import ReactDOM from 'react-dom';
 export default class Test extends Component {
   constructor (props) {
     super(props);
-    this.state = {
-      url: "http://localhost:3000"
-    };
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
     this.putUsers = this.putUsers.bind(this);
@@ -27,7 +24,7 @@ export default class Test extends Component {
 
   signup (e) {
     e.preventDefault();
-    fetch(this.state.url + '/signup', {
+    fetch('/signup', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -43,7 +40,7 @@ export default class Test extends Component {
 
   login (e) {
     e.preventDefault();
-    fetch(this.state.url + '/login', {
+    fetch('/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -59,7 +56,7 @@ export default class Test extends Component {
 
   putUsers (e) {
     e.preventDefault();
-    fetch(this.state.url + '/users', {
+    fetch('/users', {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -75,7 +72,7 @@ export default class Test extends Component {
 
   getCategories (e) {
     e.preventDefault();
-    fetch(this.state.url + '/categories', {
+    fetch('/categories', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -90,7 +87,7 @@ export default class Test extends Component {
 
   postCategories (e) {
     e.preventDefault();
-    fetch(this.state.url + '/categories', {
+    fetch('/categories', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -106,7 +103,7 @@ export default class Test extends Component {
 
   getCategory (e) {
     e.preventDefault();
-    fetch(this.state.url + '/category', {
+    fetch('/category', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -121,7 +118,7 @@ export default class Test extends Component {
 
   postCategory (e) {
     e.preventDefault();
-    fetch(this.state.url + '/category', {
+    fetch('/category', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -137,7 +134,7 @@ export default class Test extends Component {
 
   putCategory (e) {
     e.preventDefault();
-    fetch(this.state.url + '/category', {
+    fetch('/category', {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -153,7 +150,7 @@ export default class Test extends Component {
 
   addTag (e) {
     e.preventDefault();
-    fetch(this.state.url + '/addTag', {
+    fetch('/addTag', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -169,7 +166,7 @@ export default class Test extends Component {
 
   addLink (e) {
     e.preventDefault();
-    fetch(this.state.url + '/link', {
+    fetch('/link', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -185,7 +182,7 @@ export default class Test extends Component {
 
   editLink (e) {
     e.preventDefault();
-    fetch(this.state.url + '/link', {
+    fetch('/link', {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -201,7 +198,7 @@ export default class Test extends Component {
 
   searchLinks (e) {
     e.preventDefault();
-    fetch(this.state.url + '/searchLinks', {
+    fetch('/searchLinks', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -217,7 +214,7 @@ export default class Test extends Component {
 
   getHome (e) {
     e.preventDefault();
-    fetch(this.state.url + '/', {
+    fetch('/', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -232,7 +229,7 @@ export default class Test extends Component {
 
   viewPreferences (e) {
     e.preventDefault();
-    fetch(this.state.url + '/preferences', {
+    fetch('/preferences', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -247,7 +244,7 @@ export default class Test extends Component {
 
   editPreferences (e) {
     e.preventDefault();
-    fetch(this.state.url + '/preferences', {
+    fetch('/preferences', {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -263,7 +260,7 @@ export default class Test extends Component {
 
   else (e) {
     e.preventDefault();
-    fetch(this.state.url + '/kiraknowsbest', {
+    fetch('/kiraknowsbest', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
