@@ -53,6 +53,7 @@ line-height: 24px;
     font-weight: 400;
     border-radius: 32px;
     border: none; height: 40px;
+    margin-bottom:5px;
 }
 
 #password {
@@ -84,4 +85,30 @@ button .submit {
     font-weight: 100;
     font-size: 12px;
     margin-bottom: 20px;
+}
+
+button.submit:hover {
+    background: black;
+    color: white;
+    cursor: pointer;
+}
+
+.submit button {
+    margin-top: 21px;
+    margin-right: 47px;
+    border-radius: 0px;
+    /* height: 24px; */
+    border: none;
+    padding: 10px 30px;
+    background: #ffc271;
+    margin-bottom: 10px;
+}
+
+button.submit {
+    color: #fff;
+    font-weight: 600;
+    text-shadow: 0 1px 0 rgba(0,0,0,.1);
+    background: linear-gradient(#123159,#0f294d);
+    border-radius: 12px;
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
