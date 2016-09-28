@@ -62,7 +62,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        {this.state.failedLogin ? <p>The given information doesn't match our records, please enter information again.</p> : <p>Login Sissy</p>}
+        {this.state.failedLogin ? <p>The given information doesn't match our records, please enter information again.</p> : <p>Welcome to hyperspace. Login:</p>}
         <input onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
         <input onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
         <input type="button" value="login" onClick={this.login} />

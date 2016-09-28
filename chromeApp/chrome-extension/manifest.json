@@ -1,0 +1,19 @@
+{
+	"manifest_version": 2,
+
+	"name": "hyperspace_scraper",
+	"description": "this adds hyperlinks to a user's hyperspace, pulling link, image, and title from the current page.",
+	"version": "0.1",
+
+	"browser_action": {
+	  "default_icon": "./assets/icon.png",
+	  "default_popup": "popup.html",
+	  "default_title": "hyperspace!"
+	},
+
+	"permissions": [
+		"activeTab",
+		"https://ajax.googleapis.com/",
+		"*://*/*"
+	]
+}
