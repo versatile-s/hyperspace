@@ -37,11 +37,11 @@ class Category extends Component {
         <h2>by: {this.state.username}</h2>
           {this.state.hardcoded.map((item) => {
             return (
-              <div className="hyper" style={{display: 'flex', height: 200, width: 200}}>
-                <h2>{item.title}</h2>
-                <a href={item.url}><h3>Link here</h3></a>
-                <h4>{item.description}</h4>
-                <img style= {{top:0, right:0, width: 200}}src={item.imgUrl}/>
+              <div className="hyper">
+                <h2 className="hyperTitle">{item.title}</h2>
+                <a className="hyperUrl" href={item.url}><h3>Link here</h3></a>
+                <h4 className="hyperDescription">{item.description}</h4>
+                <img className="hyperImage" src={item.imgUrl}/>
               </div>
             );
           })}
