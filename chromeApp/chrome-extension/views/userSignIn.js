@@ -12,7 +12,7 @@ class UserSignIn extends Component {
   }
 
   componentWillMount() {
-    console.log('mounted');
+    console.log('mounted2');
   }
 
   render () {
@@ -22,7 +22,9 @@ class UserSignIn extends Component {
         <form className="authForm">
           <input id="username" placeholder="your username"/>
           <input id="password" placeholder="password" type="password"/>
-          <button onClick={this.props.authenticateUser} className="submit">log in</button>
+          <div className="submit">
+            <button onClick={this.props.authenticateUser} className="submit">log in</button>
+          </div>
         </form>
       </div>
     );

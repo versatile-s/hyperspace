@@ -30,11 +30,16 @@ class Category extends Component {
     };
   }
 
+  categoryCall () {
+    fetch();
+  }
+
   render () {
     return (
       <div>
         <h3>YOUR USERNAME IS: {this.props.params.user}</h3>
         <h3>YOUR CATEGORY IS: {this.props.params.category}</h3>
+        <h3>{console.log(window.location.path, 'PARAMS')}</h3>
 
         <h1>{this.state.categoryTitle}</h1>
         <h2>by: {this.state.username}</h2>

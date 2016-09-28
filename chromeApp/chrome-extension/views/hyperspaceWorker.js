@@ -14,6 +14,10 @@ class HyperspaceWorker extends Component {
     };
   }
 
+  componentWillMount() {
+    console.log('in login, username state is', this.props.username);
+  }
+
   sendLink (e) {
     e.preventDefault();
     let getCurrentTabUrl = function () {
