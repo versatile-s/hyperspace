@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 
 class Login extends Component {
-
   constructor (props) {
     super(props);
-
+    this.login = this.login.bind(this);
+    this.handleUsername = this.handleUsername.bind(this);
+    this.handlePass = this.handlePass.bind(this);
     this.state = {
-      username: '',
-      password: ''
+      username:'',
+      password:'',
+      failedLogin: false
     };
-
     this.login = this.login.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
@@ -17,7 +18,8 @@ class Login extends Component {
 
   login (e) {
     e.preventDefault();
-    fetch(this.props.route.url + '/login', {
+    var context = this;
+    fetch(this.props.history.url + '/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -29,7 +31,13 @@ class Login extends Component {
       })
     }).then((response) => {
       response.text().then((res) => {
-        console.log(res);
+        if (res === 'Login successful!') {
+          context.props.history.push('/dashboard');
+        } else {
+          context.setState({
+            failedLogin: true
+          });
+        }
       });
     })
     .catch((error) => {
@@ -40,14 +48,12 @@ class Login extends Component {
   }
 
   handleUsername(name) {
-
     this.setState({
       username: name.target.value
     });
   }
 
   handlePass(pass) {
-
     this.setState({
       password: pass.target.value
     });
@@ -56,16 +62,13 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <p>Welcome to hyperspace. Login:</p>
-
+        {this.state.failedLogin ? <p>The given information doesn't match our records, please enter information again.</p> : <p>Welcome to hyperspace. Login:</p>}
         <input onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
-        <input onChange={this.handlePass} value={this.state.password} type="text" placeholder="password" />
+        <input onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
         <input type="button" value="login" onClick={this.login} />
-
       </div>
     );
   }
 }
-
 
 export default Login;

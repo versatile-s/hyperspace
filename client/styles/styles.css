@@ -1,0 +1,85 @@
+
+.hyper{
+  position: relative;
+  display: flex; 
+  height: 200px;
+  width: 200px;
+}
+
+.hyperTitle{
+  position: absolute;
+  z-index: 5;
+  top:0;
+  left:0;
+
+}
+.hyperUrl{
+  position: absolute;
+  z-index: 4;
+  top:50px;
+  left:0;
+}
+.hyperDescription{
+  position: absolute;
+  z-index: 3;
+  bottom:0;
+  left:0;
+
+}
+.hyperImage{
+  z-index: 2;
+  position: absolute;
+  top:0;
+  left:0;
+  width: 200px;
+
+}
+.knob{
+  z-index: 100;
+  width: 30px;
+  height: 30px;
+  background-color: black;
+  position: fixed;
+  top:50px;
+  right: 100px;
+}
+.side-menu{
+  position: fixed;
+  top:50px;
+  right: 100px;
+  width:200px;
+  height: 400px;
+
+}
+.side-menu-title{
+  width: 100%;
+  height: 100%;
+}
+.side-menu-search-container{
+  width:100%;
+  height: 50%;
+}
+.side-menu-category-list{
+  width:50%;
+  height: 50%;
+  text-align: right;
+}
+.blank{
+  display: none;
+}
+.side-menu-text-box{
+  width:100%;
+  height: 20%;
+}
+.side-menu-link{
+  width: 100%;
+  height: 20%;
+}
+.side-menu-category{
+  width: 100%;
+  height: 20%;
+}
+.category-table{
+  width: 100%;
+  height: 100%;
+}
