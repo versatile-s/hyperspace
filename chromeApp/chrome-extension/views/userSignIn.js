@@ -12,7 +12,7 @@ class UserSignIn extends Component {
         <form className="authForm">
           <input id="username"/>
           <input id="password"/>
-          <button onCLick={this.props.authenticateUser()} className="submit">log in</button>
+          <button onCLick={this.props.authenticateUser} className="submit">log in</button>
         </form>
       </div>
     );

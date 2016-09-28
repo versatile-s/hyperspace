@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import UserSignIn from './userSignIn.js';
-import HyperspaceWorker from './hyperSpaceWorker.js';
+import UserSignIn from './views/userSignIn.js';
+import HyperspaceWorker from './views/hyperSpaceWorker.js';
 
 
 class ChromeApp extends Component {
