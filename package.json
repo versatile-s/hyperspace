@@ -30,10 +30,11 @@
     "express": "^4.14.0",
     "history": "^4.2.0",
     "mysql": "^2.11.1",
+    "nodemon": "^1.10.2",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
-    "nodemon": "^1.10.2",
     "react-router": "^2.8.1",
+    "sass": "^0.5.0",
     "sequelize": "^3.24.3"
   },
   "devDependencies": {
