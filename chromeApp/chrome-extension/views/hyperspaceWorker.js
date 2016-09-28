@@ -37,7 +37,3 @@ class HyperspaceWorker extends Component {
 }
 
 export default HyperspaceWorker;
-
-
-
-

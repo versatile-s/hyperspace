@@ -2,17 +2,18 @@ import React, {Component} from 'react';
 
 
 class UserSignIn extends Component {
-  constructor (props) {
+  constructor (props, {authenticateUser}) {
     super(props);
   }
 
   render () {
     return (
       <div className="authBody">
+        <h2>Welcome to hyperspace. Please login.</h2>
         <form className="authForm">
           <input id="username"/>
           <input id="password"/>
-          <button onCLick={this.props.authenticateUser} className="submit">log in</button>
+          <button onCLick={authenticateUser} className="submit">log in</button>
         </form>
       </div>
     );
@@ -20,9 +21,6 @@ class UserSignIn extends Component {
 }
 
 export default UserSignIn;
-
-
-
 
 
 
