@@ -33,6 +33,9 @@ class Category extends Component {
   render () {
     return (
       <div>
+        <h3>YOUR USERNAME IS: {this.props.params.user}</h3>
+        <h3>YOUR CATEGORY IS: {this.props.params.category}</h3>
+
         <h1>{this.state.categoryTitle}</h1>
         <h2>by: {this.state.username}</h2>
           {this.state.hardcoded.map((item) => {
@@ -45,7 +48,6 @@ class Category extends Component {
               </div>
             );
           })}
-        <Side />
       </div>
     );
   }

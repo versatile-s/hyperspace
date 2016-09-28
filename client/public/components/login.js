@@ -19,7 +19,7 @@ class Login extends Component {
   login (e) {
     e.preventDefault();
     var context = this;
-    fetch(this.props.history.url + '/login', {
+    fetch('/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
