@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Router, Route, useRouterHistory} from 'react-router';
+// import {Router, Route, useRouterHistory} from 'react-router';
+import {Router, Route, browserHistory} from 'react-router';
 import Test from './components/test';
 import Login from './components/login';
 import Signup from './components/signup';
@@ -16,8 +17,8 @@ import { DragDropContext } from 'react-dnd';
 import Category from './components/category';
 import Side from './components/side';
 
-const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
-appHistory.url = "http://localhost:3000";
+// const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
+// appHistory.url = "http://localhost:3000";
 
 class App extends Component {
   constructor (props) {
@@ -26,13 +27,13 @@ class App extends Component {
 
   render() {
     return (
-      <Router history={appHistory} >
+      <Router history={browserHistory} >
         <Route path='/' component={Login} />
         <Route path='/login' component={Login} />
         <Route path='/signup' component={Signup} />
         <Route path='/home' component={Home} />
         <Route path='/test' component={Test} />
-        <Route path='/category' component={Category} />
+        <Route path='/:user/:category' component={Category} />
 
         <Route path='/layout' component= {Layout} />
 
