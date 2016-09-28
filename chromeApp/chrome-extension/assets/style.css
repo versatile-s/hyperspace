@@ -79,3 +79,9 @@ button .submit {
     margin-top: 20px; margin-bottom: 20px;">log in :)</button>
     
 }
+
+.authBody h2 {
+    font-weight: 100;
+    font-size: 12px;
+    margin-bottom: 20px;
+}

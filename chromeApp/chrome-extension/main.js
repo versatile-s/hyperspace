@@ -16,6 +16,18 @@ class ChromeApp extends Component {
     this.authenticateUser = this.authenticateUser.bind(this);
   }
 
+  componentWillMount() {
+    // check if username is stored in local storage
+      // if so, set authenticated to true + username to stored username
+  }
+
+  saveToLocalStorage() {
+    var username = this.state.username;
+    console.log('we are saving this username to local storage', username);
+    chrome(storage.sync.set({'username': this.state.username}, function () {
+      console.log('local storage here is', chrome.storage.local);
+    }));
+  }
   
   authenticateUser(e) {
     e.preventDefault();
@@ -41,6 +53,7 @@ class ChromeApp extends Component {
           username: username
         });
         console.log('authenticated val is now', context.state.authenticated);
+        this.saveToLocalStorage();
       } else {
         console.log ('authenticated val is now', context.state.authenticated);
       }
