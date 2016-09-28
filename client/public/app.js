@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Router, Route, IndexRoute, browserHistory} from 'react-router';
+import {Router, Route, browserHistory} from 'react-router';
 import Test from './components/test';
 import Login from './components/login';
 import Signup from './components/signup';
@@ -19,14 +19,14 @@ class App extends Component {
   render() {
     return (
       <Router history={browserHistory} >
-        <IndexRoute path='/' component={Login} />
-          <Route path='/login' component={Login} />
-          <Route path='/signup' component={Signup} />
-          <Route path='/home' component={Home} />
-          <Route path='/layout' component= {Layout} />
-          <Route path='/dashboard' component={Dashboard} />
-          <Route path='/:user/:category' component={Category} />
-          <Route path='/test' component={Test} />
+        <Route path='/' component={Login} />
+        <Route path='/login' component={Login} />
+        <Route path='/signup' component={Signup} />
+        <Route path='/home' component={Home} />
+        <Route path='/layout' component= {Layout} />
+        <Route path='/dashboard' component={Dashboard} />
+        <Route path='/:user/:category' component={Category} />
+        <Route path='/test' component={Test} />
       </Router>
     );
   }
