@@ -11,10 +11,6 @@
 	  "default_title": "hyperspace!"
 	},
 
-	// "background": {
- //      "scripts" ["", ]
-	// },
-
 	"permissions": [
 		"activeTab",
 		"https://ajax.googleapis.com/",

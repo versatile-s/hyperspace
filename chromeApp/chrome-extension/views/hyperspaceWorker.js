@@ -16,7 +16,7 @@ class HyperspaceWorker extends Component {
 
   sendLink (e) {
     e.preventDefault();
-    let getCurrentTabUrl = function (callback) {
+    let getCurrentTabUrl = function () {
       let queryInfo = {
         active: true,
         currentWindow: true
@@ -36,14 +36,6 @@ class HyperspaceWorker extends Component {
       });
     };
     getCurrentTabUrl();
-
- /*   let url = tab.url;
-    let title = tab.title;*/
-/*
-    let request = new XMLHttpRequest();
-    request.open('POST', 'http://127.0.0.1:3000/link', true);
-    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags));*/
   }
 
   render () {
