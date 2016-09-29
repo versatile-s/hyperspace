@@ -54,10 +54,10 @@ router.route('/users')
 router.route('/categoryData')
   .post(function (req, res) {
     console.log('Searching for categoryData');
-    utils.getCategoryData(req.body.username, req.body.categoryTitle).then(function (data) {
-      res.send(data);
-    })
-  })
+    utils.getCategoryData(req, res);
+
+    
+  });
 
 // view category
 router.route('/category')
