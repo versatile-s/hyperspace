@@ -51,7 +51,6 @@ var utils = {
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
-<<<<<<< 2062af49960adbe2e0e2f8731d2cfbc40c9fa4fb
 
     User.findOne({
       where: {
@@ -75,19 +74,7 @@ var utils = {
             CategoryPageId: category.id
           });
         });
-      });  
-=======
-    Hyper.sync({force: true})
-    .then(function () {
-      return Hyper.create({
-        url: req.body.url,
-        category: req.body.category,
-        title: req.body.title,
-        description: '',
-        image: '',
-        tags: req.body.tags
       });
->>>>>>> Removed unneccessary chrome extension files and added /logout route on back end
     });
   },
 
@@ -107,7 +94,7 @@ var utils = {
           parentCategory: req.body.parents,
           UserId: user.id
         });
-      });   
+      });
     });
   },
 
@@ -150,7 +137,7 @@ var utils = {
         });
       });
     });
-  }  
+  }
 };
 
 module.exports = utils;
