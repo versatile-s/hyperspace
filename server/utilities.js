@@ -31,13 +31,26 @@ var utils = {
     });
   },
 
+  createSession (req, res, newUser) {
+    return req.session.regenerate(function() {
+      req.session.user = newUser;
+      //res.redirect('/');
+    });
+  },
 
   loginUser: function (req, res) {
-
+    // req.session.regenerate(function(err) {
+    //   console.log('generated initial session');
+    // });
+    // console.log('OK SESSION IS GOING ', req.session);
     db.query('SELECT * FROM Users WHERE username = :username AND password = :password',
       {replacements: {username: req.body.username, password: req.body.password}, type: db.QueryTypes.SELECT })
       .then(function (results) {
+        console.log('HERE ARE THE RESULTS ', results);
         if (results.length === 1) {
+          req.session.regenerate(function(err) {
+            console.log('OK SESSION IS GOING ', req.session);
+          });
           res.send('Login successful!');
         } else {
           res.status(400).send('Information provided does not match records.');
