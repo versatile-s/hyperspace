@@ -123,7 +123,7 @@ var utils = {
           UserId: user.id
         }
       }).then(function(category) {
-        Hyper.find({
+        Hyper.findAll({
           where: {
             username: req.body.username,
             CategoryPageId: category.id
