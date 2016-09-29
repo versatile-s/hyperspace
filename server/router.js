@@ -133,6 +133,21 @@ router.route('/preferences')
     res.send('Received PUT at /preferences');
   });
 
+
+/************************************************************/
+//       Authentication routes
+/************************************************************/
+
+router.route('/logout')
+  .get(function (req, res) {
+    console.log('Received GET at /logout');
+    req.session.destroy(function() {
+      res.redirect('/login');
+    });
+    res.send('Received GET at /logout');
+  });
+
+
 // 404 Fallback
 router.use('*', function(req, res) {
   // res.status(404).send('404, Sari Gurl');
