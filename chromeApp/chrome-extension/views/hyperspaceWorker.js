@@ -53,12 +53,15 @@ class HyperspaceWorker extends Component {
   render () {
     return (
       <div className="workerBody">
-        this right here is our worker body
+        <h5 className="welcome">welcome, {this.state.username}</h5>
+        <p className="workerPrompt">add to your hyperspace:</p>
+        <h3 className="hyperUrl"></h3>
         <form className="addLinkForm">
           <input id="category" placeholder="hyper category" />
           <input id="tags" placeholder="hyper tags"/>
           <button onClick={this.sendLink} className="addTo">add to hyperspace</button>
         </form>
+        <button className="logOut" onClick={this.props.logOutUser}>logout</button>
       </div>
     );
   }

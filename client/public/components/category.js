@@ -39,13 +39,13 @@ class Category extends Component {
     });
   }
 
+
   render () {
     return (
       <div>
 
         <h3>YOUR USERNAME IS: {this.state.username}</h3>
         <h3>YOUR CATEGORY IS: {this.state.categoryTitle}</h3>
-          {console.log('==============', (Array.isArray(this.state.data)))}
           {this.state.data.map(function (item) {
             return (
               <div className="hyper">
