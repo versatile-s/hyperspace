@@ -51,6 +51,14 @@ router.route('/users')
 //     res.send('Received POST at /categories');
 //   });
 
+router.route('/categoryData')
+  .post(function (req, res) {
+    console.log('Searching for categoryData');
+    utils.getCategoryData(req, res);
+
+    
+  });
+
 // view category
 router.route('/category')
   .get(function (req, res) {

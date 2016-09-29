@@ -47,26 +47,50 @@ var utils = {
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
-    Hyper.sync()
-    .then(function () {
-      return Hyper.create({
-        url: req.body.url,
-        title: req.body.title,
-        description: '',
-        image: ''
-      });
+
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function (user) {
+      CategoryPage.findOne({
+        where: {
+          name: req.body.name,
+          UserId: user.id
+        }
+      }).then(function(category) {
+        Hyper.sync()
+        .then(function() {
+          return Hyper.create({
+            url: req.body.url,
+            title: req.body.title,
+            description: req.body.description,
+            image: req.body.image,
+            username: req.body.username,
+            CategoryPageId: category.id
+          });
+        });
+      });  
     });
   },
 
 
   // This will save a category page. It only needs a name property at time of creation and potentially parentCategories
   saveCategoryPage: function (req, res) {
-    CategoryPage.sync()
-    .then(function () {
-      return CategoryPage.create({
-        name: req.body.name,
-        parentCategory: req.body.parents
-      });
+
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function (user) {
+      CategoryPage.sync()
+      .then(function () {
+        return CategoryPage.create({
+          name: req.body.name,
+          parentCategory: req.body.parents,
+          UserId: user.id
+        });
+      });   
     });
   },
 
@@ -84,8 +108,32 @@ var utils = {
         preferences: req.body.preferences
       });
     });
-  }
+  },
 
+  getCategoryData: function (req, res) {
+    console.log("username/categorytitle", req.body.username,req.body.categoryTitle);
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function (user) {
+      CategoryPage.findOne({
+        where: {
+          name: req.body.categoryTitle,
+          UserId: user.id
+        }
+      }).then(function(category) {
+        Hyper.find({
+          where: {
+            username: req.body.username,
+            CategoryPageId: category.id
+          }
+        }).then(function(hypers) {
+          res.send(hypers);
+        });
+      });
+    });
+  }  
 };
 
 module.exports = utils;
