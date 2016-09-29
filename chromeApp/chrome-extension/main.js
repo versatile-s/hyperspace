@@ -10,7 +10,8 @@ class ChromeApp extends Component {
   
     this.state = {
       authenticated: false, 
-      username: ''
+      username: '',
+      failedLogin: false
     };
 
     this.authenticateUser = this.authenticateUser.bind(this);
@@ -69,6 +70,9 @@ class ChromeApp extends Component {
         context.persistToLocalStorage();
       } else {
         console.log ('authenticated val is now', context.state.authenticated);
+        context.setState({
+          failedLogin: true
+        });
       }
     };
   }
@@ -77,6 +81,7 @@ class ChromeApp extends Component {
     return (
       <div>
         {this.state.authenticated ? <HyperspaceWorker props={this.props} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>}
+        {this.state.failedLogin ? <p className="failedLoginPrompt">Sorry, the login you entered is incorrect. Register for your own hyperspace here.</p> : null}
       </div>
     );
   }

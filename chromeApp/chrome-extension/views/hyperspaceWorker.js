@@ -54,7 +54,7 @@ class HyperspaceWorker extends Component {
     return (
       <div className="workerBody">
         <h5 className="welcome">welcome, {this.state.username}</h5>
-        add to your hyperspace:
+        <p className="workerPrompt">add to your hyperspace:</p>
         <h3 className="hyperUrl"></h3>
         <form className="addLinkForm">
           <input id="category" placeholder="hyper category" />
