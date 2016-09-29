@@ -61,6 +61,7 @@ class HyperspaceWorker extends Component {
           <input id="tags" placeholder="hyper tags"/>
           <button onClick={this.sendLink} className="addTo">add to hyperspace</button>
         </form>
+        <button className="logOut" onClick={this.props.logOutUser}>logout</button>
       </div>
     );
   }

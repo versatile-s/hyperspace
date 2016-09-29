@@ -15,6 +15,7 @@ class ChromeApp extends Component {
     };
 
     this.authenticateUser = this.authenticateUser.bind(this);
+    this.logOutUser = this.logOutUser.bind(this);
   }
 
   componentWillMount() {
@@ -77,10 +78,20 @@ class ChromeApp extends Component {
     };
   }
 
+  logOutUser(e) {
+    e.preventDefault();
+    console.log('trying 2 logout')
+    var context = this;
+
+    context.setState({
+      authenticated: false
+    });
+  }
+
   render () {
     return (
       <div>
-        {this.state.authenticated ? <HyperspaceWorker props={this.props} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>}
+        {this.state.authenticated ? <HyperspaceWorker props={this.props} logOutUser={this.logOutUser.bind(this)} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>}
         {this.state.failedLogin ? <p className="failedLoginPrompt">Sorry, the login you entered is incorrect. Register for your own hyperspace here.</p> : null}
       </div>
     );
