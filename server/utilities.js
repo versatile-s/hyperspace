@@ -31,14 +31,18 @@ var utils = {
     });
   },
 
+  isAuth: function (req, res) {
+    return (req.session) ? true : false;
+  },
 
   loginUser: function (req, res) {
-
     db.query('SELECT * FROM Users WHERE username = :username AND password = :password',
       {replacements: {username: req.body.username, password: req.body.password}, type: db.QueryTypes.SELECT })
       .then(function (results) {
         if (results.length === 1) {
-          res.send('Login successful!');
+          req.session.regenerate(function(err) {
+            res.send('Login successful!');
+          });
         } else {
           res.status(400).send('Information provided does not match records.');
         }
@@ -70,7 +74,7 @@ var utils = {
             CategoryPageId: category.id
           });
         });
-      });  
+      });
     });
   },
 
@@ -90,7 +94,7 @@ var utils = {
           parentCategory: req.body.parents,
           UserId: user.id
         });
-      });   
+      });
     });
   },
 
@@ -133,7 +137,7 @@ var utils = {
         });
       });
     });
-  }  
+  }
 };
 
 module.exports = utils;
