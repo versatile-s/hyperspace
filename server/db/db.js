@@ -35,12 +35,12 @@ var CategoryPage = sequelize.define('CategoryPage', {
   preferences: { type: Sequelize.STRING }
 });
 
+
 User.sync();
 CategoryPage.belongsTo(User, {forignKey: 'UserId'});
 CategoryPage.sync();
 Hyper.belongsTo(CategoryPage, {forignKey: 'CategoryPageId'});
 Hyper.sync();
-
 
 sequelize.authenticate()
   .then(function(err) {
