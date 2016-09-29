@@ -53,7 +53,8 @@ class HyperspaceWorker extends Component {
   render () {
     return (
       <div className="workerBody">
-        this right here is our worker body
+        add to your hyperspace:
+        <h3 className="hyperUrl"></h3>
         <form className="addLinkForm">
           <input id="category" placeholder="hyper category" />
           <input id="tags" placeholder="hyper tags"/>
