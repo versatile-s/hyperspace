@@ -1,3 +1,4 @@
+
 var db = require('./db/db').sequelize;
 var User = require('./db/db').User;
 var Hyper = require('./db/db').Hyper;

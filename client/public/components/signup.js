@@ -30,6 +30,7 @@ class Signup extends Component {
     }).then((response) => {
       response.text().then((res)=>{
         if (res === 'User created') {
+          context.props.history.username = context.state.username;
           context.props.history.push('/dashboard');
         } else {
 
