@@ -29,7 +29,6 @@ var CategoryPage = sequelize.define('CategoryPage', {
   name: { type: Sequelize.STRING },
   parentCategory: { type: Sequelize.STRING },
   subCategories: { type: Sequelize.STRING },
-  hypers: { type: Sequelize.STRING },
   widgets: { type: Sequelize.STRING },
   preferences: { type: Sequelize.STRING }
 });
@@ -37,9 +36,9 @@ var CategoryPage = sequelize.define('CategoryPage', {
 CategoryPage.belongsTo(User);
 Hyper.belongsTo(CategoryPage);
 
-User.sync({force: true});
-CategoryPage.sync({force: true});
-Hyper.sync({force: true});
+// User.sync({force: true});
+// CategoryPage.sync({force: true});
+// Hyper.sync({force: true});
 
 sequelize.authenticate()
   .then(function(err) {

@@ -5,14 +5,28 @@ class Dashboard extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      username: props.username
+      username: 'fart'
     };
     this.createHome = this.createHome.bind(this);
   }
   createHome() {
-    browserHistory.push("/" + this.state.username + "/home");
+    fetch('/category', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        name: 'home'
+      })
+    }).then(browserHistory.push("/" + this.state.username + "/home"));
+
+
+    // browserHistory.push("/" + this.state.username + "/home");
 
   }
+
   render () {
     return (
       <div className="container">
