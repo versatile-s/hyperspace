@@ -53,6 +53,7 @@ class HyperspaceWorker extends Component {
   render () {
     return (
       <div className="workerBody">
+        <h5 className="welcome">welcome, {this.state.username}</h5>
         add to your hyperspace:
         <h3 className="hyperUrl"></h3>
         <form className="addLinkForm">
