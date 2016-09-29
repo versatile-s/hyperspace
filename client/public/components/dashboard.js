@@ -5,9 +5,11 @@ class Dashboard extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      username: ''
+      username: this.props.history.username,
+      category: 'home'
     };
     this.createHome = this.createHome.bind(this);
+
   }
   createHome() {
     fetch('/category', {
@@ -18,7 +20,7 @@ class Dashboard extends Component {
       },
       body: JSON.stringify({
         username: this.state.username,
-        name: 'home'
+        name: this.state.category
       })
     }).then(browserHistory.push("/" + this.state.username + "/home"));
 
@@ -28,10 +30,12 @@ class Dashboard extends Component {
   }
 
   render () {
+    {console.log(this);}
     return (
       <div className="container">
         <div className="logo-space">
           <h2>hyperspace</h2>
+
           <h4>hyper storage for a hyper user</h4>
           <p>welcome to hyperspace. please install our chrome extension. once installed press the button below to make your first homepage</p>
           <button onClick={this.createHome}>make new home page</button>
