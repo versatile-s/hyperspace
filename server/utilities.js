@@ -23,8 +23,8 @@ var utils = {
       selectedUser.update({
         username: req.body.username,
         password: req.body.password,
-        // firstName: req.body.firstName,
-        // lastName: req.body.lastName,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         photo: req.body.photo,
         categoryPages: req.body.categoryPages,
         email: req.body.email
@@ -70,7 +70,7 @@ var utils = {
             url: req.body.url,
             title: req.body.title,
             description: req.body.description,
-            // image: req.body.image,
+            image: req.body.image,
             username: req.body.username,
             CategoryPageId: category.id
           });
