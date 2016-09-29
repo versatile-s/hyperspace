@@ -19,9 +19,18 @@ server.use(cookieParser('secret'));
 server.use(session({
   secret: 'Our Secret',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  // store: new (require('express-sessions'))({
+  //   storage: 'redis',
+  //   instance: client, // optional
+  //   host: 'localhost', // optional
+  //   port: 6379, // optional
+  //   collection: 'sessions', // optional
+  //   expire: 86400 // optional
+  // })
 }));
 server.use('/', router);
+// We may not need cookie parser or router
 
 var port = process.env.port || 3000;
 

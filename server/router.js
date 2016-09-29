@@ -99,6 +99,11 @@ router.route('/addTag')
 router.route('/link')
   .post(function (req, res) {
     console.log('Youre adding this link:', req.body);
+    if (req.session) {
+      console.log('awesome we have a req session!');
+    } else {
+      console.log('no req session');
+    }
     utils.saveHyper(req, res);
     res.send('Received POST at /link');
   })
@@ -150,8 +155,8 @@ router.route('/logout')
 
 // 404 Fallback
 router.use('*', function(req, res) {
-  // res.status(404).send('404, Sari Gurl');
-  res.sendFile(__dirname + '/../client/index.html' );
+  res.status(404).send('404, Sari Gurl');
+  //res.sendFile(__dirname + '/../client/index.html' );
 });
 
 module.exports = router;
