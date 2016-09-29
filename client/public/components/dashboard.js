@@ -5,7 +5,7 @@ class Dashboard extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      username: 'fart'
+      username: 'kira'
     };
     this.createHome = this.createHome.bind(this);
   }

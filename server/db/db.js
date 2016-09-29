@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 
 
-var sequelize = new Sequelize('hyperspace', 'root', 'hr47');
+var sequelize = new Sequelize('hyperspace', 'root', 'hi');
 
 
 var User = sequelize.define('User', {
@@ -33,8 +33,10 @@ var CategoryPage = sequelize.define('CategoryPage', {
   preferences: { type: Sequelize.STRING }
 });
 
+
 CategoryPage.belongsTo(User);
 Hyper.belongsTo(CategoryPage);
+
 
 // User.sync({force: true});
 // CategoryPage.sync({force: true});
