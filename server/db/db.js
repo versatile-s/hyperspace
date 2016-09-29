@@ -19,12 +19,9 @@ var Hyper = sequelize.define('Hyper', {
   title: { type: Sequelize.STRING },
   description: { type: Sequelize.STRING },
   image: { type: Sequelize.STRING },
-<<<<<<< 2062af49960adbe2e0e2f8731d2cfbc40c9fa4fb
-  username: { type: Sequelize.STRING }
-=======
+  username: { type: Sequelize.STRING },
   tags: { type: Sequelize.STRING }
 
->>>>>>> Removed unneccessary chrome extension files and added /logout route on back end
   // Datatype of array only available in postgres so need to find a work around.
   // tags: { type: Sequelize.ARRAY },
   // widgets: { type: Sequelize.ARRAY }
