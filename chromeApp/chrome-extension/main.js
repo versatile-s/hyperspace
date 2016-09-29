@@ -17,18 +17,29 @@ class ChromeApp extends Component {
   }
 
   componentWillMount() {
-    console.log('CHROME STORAGE ON LOAD IS', chrome.storage.local);
-    // check if username is stored in local storage
-      // if so, set authenticated to true + username to stored username
+    var context = this;
+
+    // check if username is already stored in local storage
+    chrome.storage.sync.get(['username'], function (storageObj) {
+      if ( storageObj.username ) {
+        var username = storageObj.username;
+        context.setState({
+          authenticated: true,
+          username: username
+        });
+      }
+    });
   }
 
   saveToLocalStorage() {
-    var context = this;
     var username = this.state.username;
-    console.log('we are saving this username to local storage', username);
-    chrome(storage.sync.set({'username': context.state.username}, function () {
-      console.log('local storage here is', chrome.storage.local);
-    }));
+    var context = this;
+
+    chrome.storage.sync.set({'username': context.state.username}, function () {
+      chrome.storage.sync.get(['username'], function(storageObj) {
+        console.log('confirming that username is now in localStorage:', storageObj.username);
+      });
+    });
   }
   
   authenticateUser(e) {
