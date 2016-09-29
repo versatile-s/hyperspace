@@ -47,6 +47,7 @@ var utils = {
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
+    req.body.categoryTitle = req.body.categoryTitle || 'home';
     Hyper.sync()
     .then(function () {
       return Hyper.create({
@@ -84,9 +85,11 @@ var utils = {
         preferences: req.body.preferences
       });
     });
-  }
+  },
 
-  getCategoryData: function () {
+  getCategoryData: function (username, categoryTitle) {
+    
+
     console.log('getting cat data');
   }
 
