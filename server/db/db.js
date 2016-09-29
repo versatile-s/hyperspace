@@ -1,8 +1,7 @@
 var Sequelize = require('sequelize');
+var dbPassword = require('./dbConfig.js');
 
-
-var sequelize = new Sequelize('hyperspace', 'root', 'hr47');
-
+var sequelize = new Sequelize('hyperspace', 'root', dbPassword);
 
 var User = sequelize.define('User', {
   username: { type: Sequelize.STRING },
