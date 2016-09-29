@@ -1,3 +1,3 @@
-var dbPassword = '1111';
+var dbPassword = 'hi';
 
 module.exports = dbPassword;
