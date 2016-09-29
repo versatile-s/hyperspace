@@ -6,7 +6,7 @@ var sequelize = new Sequelize('hyperspace', 'root', dbPassword);
 var User = sequelize.define('User', {
   username: { type: Sequelize.STRING },
   password: { type: Sequelize.STRING },
-  firstName: { type: Sequelize.STRING },
+  // firstName: { type: Sequelize.STRING },
   lastName: { type: Sequelize.STRING },
   photo: { type: Sequelize.STRING },
   categoryPages: { type: Sequelize.STRING },
@@ -32,12 +32,14 @@ var CategoryPage = sequelize.define('CategoryPage', {
   preferences: { type: Sequelize.STRING }
 });
 
+
 CategoryPage.belongsTo(User);
 Hyper.belongsTo(CategoryPage);
 
-// User.sync({force: true});
-// CategoryPage.sync({force: true});
-// Hyper.sync({force: true});
+// User.sync();
+// CategoryPage.sync();
+// Hyper.sync();
+
 
 sequelize.authenticate()
   .then(function(err) {

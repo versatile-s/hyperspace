@@ -43,7 +43,7 @@ class HyperspaceWorker extends Component {
         let request = new XMLHttpRequest();
         request.open('POST', 'http://127.0.0.1:3000/link', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags + '&username=' + username));
+        request.send(encodeURI('url=' + url + '&title=' + title + '&name=' + category + '&tags=' + tags + '&username=' + username));
       });
     };
 
