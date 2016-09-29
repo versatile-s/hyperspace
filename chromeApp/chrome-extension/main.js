@@ -31,7 +31,7 @@ class ChromeApp extends Component {
     });
   }
 
-  saveToLocalStorage() {
+  persistToLocalStorage() {
     var username = this.state.username;
     var context = this;
 
@@ -66,7 +66,7 @@ class ChromeApp extends Component {
           username: username
         });
         console.log('authenticated val is now', context.state.authenticated);
-        context.saveToLocalStorage();
+        context.persistToLocalStorage();
       } else {
         console.log ('authenticated val is now', context.state.authenticated);
       }
