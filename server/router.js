@@ -87,11 +87,11 @@ module.exports = (router) => {
 
   // pull categories for given user
   router.route('/userCategories') 
-    .get(function (req, res) {
-      console.log('Received GET at /userCategories');
-      utils.getUserCategories(req, res);
+    .post(function (req, res) {
+      console.log('Received GET at /userCategories', req.body);
+      // utils.getUserCategories(req, res);
       res.send('Received GET at /userCategories');   
-    }
+    });
 
   /*********************************/
   /*********************************/
@@ -165,11 +165,11 @@ module.exports = (router) => {
     res.sendFile(path.join(__dirname, '../client/bundle.js'));
   });
 
-  // 404 Fallback
+/*  // 404 Fallback
   router.get('*', function(req, res) {
     // res.status(404).send('404, Sari Gurl');
     // console.log('HELLO THERE!');
     res.sendFile(path.join(__dirname, '../client/index.html' ));
-  });
+  });*/
   return router;
 };
