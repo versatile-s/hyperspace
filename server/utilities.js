@@ -52,12 +52,14 @@ var utils = {
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
-
+    var userId = 0;
     User.findOne({
       where: {
         username: req.body.username
       }
     }).then(function (user) {
+      console.log(req.body.category);
+      userId = user.id;
       var name = req.body.category || 'home';
       CategoryPage.findOne({
         where: {
@@ -65,8 +67,29 @@ var utils = {
           UserId: user.id
         }
       }).then(function(category) {
-        Hyper.sync()
-        .then(function() {
+        if (!category) {
+          CategoryPage.create({
+            name: name,
+            parentCategory: req.body.parents,
+            UserId: userId
+          }).then(function () {
+            return CategoryPage.findOne({
+              where: {
+                name: name,
+                UserId: userId
+              }
+            }).then(function (category) {
+              return Hyper.create({
+                url: req.body.url,
+                title: req.body.title,
+                description: req.body.description,
+                image: req.body.image,
+                username: req.body.username,
+                CategoryPageId: category.id
+              });
+            });
+          });
+        } else {
           return Hyper.create({
             url: req.body.url,
             title: req.body.title,
@@ -75,7 +98,7 @@ var utils = {
             username: req.body.username,
             CategoryPageId: category.id
           });
-        });
+        }
       });
     });
   },
@@ -89,13 +112,22 @@ var utils = {
         username: req.body.username
       }
     }).then(function (user) {
-      CategoryPage.sync()
-      .then(function () {
-        return CategoryPage.create({
-          name: req.body.name,
-          parentCategory: req.body.parents,
-          UserId: user.id
-        });
+      CategoryPage.findOne({
+        where: {
+          UserId: user.id,
+          name: req.body.name
+        }
+      }).then(function (result) {
+        if (!result) {
+          CategoryPage.sync()
+          .then(function () {
+            return CategoryPage.create({
+              name: req.body.name,
+              parentCategory: req.body.parents,
+              UserId: user.id
+            });
+          });
+        }
       });
     });
   },

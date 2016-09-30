@@ -17,6 +17,8 @@ class App extends Component {
     super(props);
   }
 
+   // onEnter={requireAuth}
+
   render() {
     return (
       <Router history={browserHistory} >
@@ -25,7 +27,7 @@ class App extends Component {
         <Route path='/signup' component={Signup} />
         <Route path='/home' component={Home} />
         <Route path='/layout' component= {Layout} />
-        <Route path='/dashboard' component={Dashboard} />
+        <Route path='/dashboard' component={Dashboard}/>
         <Route path='/:user/:category' component={Category} />
         <Route path='/test' component={Test} />
       </Router>
