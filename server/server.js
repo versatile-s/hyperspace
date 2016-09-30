@@ -34,12 +34,16 @@ server.get('/login', function(req, res) {
   if (utils.isAuth(req, res) === true) {
     res.redirect('/dashboard');
     console.log('YOU ARE BEING REDIRECTED');
+  } else {
+    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
   }
 });
 server.get('/signup', function(req, res) {
   if (utils.isAuth(req, res) === true) {
     res.redirect('/dashboard');
     console.log('YOU ARE BEING REDIRECTED');
+  } else {
+    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
   }
 });
 server.get('/dashboard', function(req, res) {
