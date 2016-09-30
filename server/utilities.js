@@ -53,12 +53,13 @@ var utils = {
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
     var userId = 0;
+
     User.findOne({
       where: {
         username: req.body.username
       }
     }).then(function (user) {
-      console.log(req.body.category);
+      console.log("user:", user);
       userId = user.id;
       var name = req.body.category || 'home';
       CategoryPage.findOne({
@@ -67,6 +68,7 @@ var utils = {
           UserId: user.id
         }
       }).then(function(category) {
+        console.log("category found:", category);
         if (!category) {
           CategoryPage.create({
             name: name,
