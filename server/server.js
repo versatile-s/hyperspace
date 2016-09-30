@@ -5,8 +5,7 @@ var path = require('path');
 var history = require('connect-history-api-fallback');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
-var utils = require('./utilities');
-
+var authRouter = require('./authenticationRoutes');
 
 var server = express();
 
@@ -30,38 +29,12 @@ server.use(session({
   //API CALLS FOR AUTHENTICATION//
 /*********************************/
 /*********************************/
-server.get('/login', function(req, res) {
-  if (utils.isAuth(req, res) === true) {
-    res.redirect('/dashboard');
-    console.log('YOU ARE BEING REDIRECTED');
-  } else {
-    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-  }
-});
-server.get('/signup', function(req, res) {
-  if (utils.isAuth(req, res) === true) {
-    res.redirect('/dashboard');
-    console.log('YOU ARE BEING REDIRECTED');
-  } else {
-    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-  }
-});
-server.get('/dashboard', function(req, res) {
-  if (utils.isAuth(req, res) === false) {
-    res.redirect('/login');
-    console.log('YOU ARE BEING REDIRECTED');
-  } else {
-    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-  }
-});
+server.use('/', authRouter);
 
 server.use(history());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));
 server.use(express.static(path.join(__dirname, '../client')));
-
-
-
 
 
 
