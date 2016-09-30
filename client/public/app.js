@@ -18,14 +18,16 @@ class App extends Component {
     super(props);
   }
 
-  requireAuth(nextState, replace) {
-    if (Util.isAuth() === false) {
-      replace({
-        pathname: '/login',
-        state: { nextPathname: nextState.location.pathname }
-      });
-    }
-  }
+  // requireAuth(nextState, replace) {
+  //   if (Util.isAuth() === false) {
+  //     replace({
+  //       pathname: '/login',
+  //       state: { nextPathname: nextState.location.pathname }
+  //     });
+  //   }
+  // }
+
+   // onEnter={requireAuth}
 
   render() {
     return (
@@ -35,7 +37,7 @@ class App extends Component {
         <Route path='/signup' component={Signup} />
         <Route path='/home' component={Home} />
         <Route path='/layout' component= {Layout} />
-        <Route path='/dashboard' component={Dashboard} onEnter={requireAuth}/>
+        <Route path='/dashboard' component={Dashboard}/>
         <Route path='/:user/:category' component={Category} />
         <Route path='/test' component={Test} />
       </Router>

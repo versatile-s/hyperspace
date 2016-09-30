@@ -42,6 +42,14 @@ server.get('/signup', function(req, res) {
     console.log('YOU ARE BEING REDIRECTED');
   }
 });
+server.get('/dashboard', function(req, res) {
+  if (utils.isAuth(req, res) === false) {
+    res.redirect('/login');
+    console.log('YOU ARE BEING REDIRECTED');
+  } else {
+    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
+  }
+});
 
 server.use(history());
 server.use(bodyParser.json());
