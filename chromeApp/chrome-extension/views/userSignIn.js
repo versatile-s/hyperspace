@@ -12,7 +12,7 @@ class UserSignIn extends Component {
   }
 
   componentWillMount() {
-    console.log('mounted2');
+
   }
 
   render () {

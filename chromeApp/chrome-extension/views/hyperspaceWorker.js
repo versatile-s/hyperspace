@@ -20,6 +20,17 @@ class HyperspaceWorker extends Component {
     this.setState({
       username: this.props.username
     });
+
+    // hit DB and pull categories for given user
+    let request = new XMLHttpRequest();
+    let url = 'http://127.0.0.1:3000/usercategories';
+    let params = 'username=' + this.props.username;
+
+    request.open('GET', url + params, true);
+    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    request.onreadystatechange = function () {
+      console.log('we performed GET req and this is what we are receiving in return:', request.responseText);
+    };
   }
 
   sendLink (e) {
