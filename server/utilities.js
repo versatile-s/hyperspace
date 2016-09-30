@@ -139,7 +139,15 @@ var utils = {
         });
       });
     });
+  },
+
+  getUserCategories: function (req, res) {
+    console.log('fetching categories for this user', req.body.username);
+  /*  User.findOne({
+      where
+    })*/
   }
+
 };
 
 module.exports = utils;

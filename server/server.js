@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser');
 
 var server = express();
 
+server.use('/', router);
 server.use(history());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));
@@ -29,7 +30,6 @@ server.use(express.static(path.join(__dirname, '../client')));
 //   //   expire: 86400 // optional
 //   // })
 // }));
-server.use('/', router);
 // We may not need cookie parser or router
 
 var port = process.env.port || 3000;

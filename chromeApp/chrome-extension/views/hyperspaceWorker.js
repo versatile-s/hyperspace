@@ -27,7 +27,6 @@ class HyperspaceWorker extends Component {
     let params = 'username=' + this.props.username;
 
     request.open('GET', url + params, true);
-    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.onreadystatechange = function () {
       console.log('we performed GET req and this is what we are receiving in return:', request.responseText);
     };

@@ -97,8 +97,8 @@ router.route('/category')
 router.route('/usercategories')
   .get(function (req, res) {
     console.log('Received a GET at /usercategories');
-    utils.getUserCategories(req, res);
     res.send('Received GET at /usercategories');
+    utils.getUserCategories(req, res);
   });
 
 /*********************************/
