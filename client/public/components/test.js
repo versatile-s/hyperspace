@@ -6,6 +6,7 @@ export default class Test extends Component {
     super(props);
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
     this.putUsers = this.putUsers.bind(this);
     this.getCategories = this.getCategories.bind(this);
     this.postCategories = this.postCategories.bind(this);
@@ -42,6 +43,22 @@ export default class Test extends Component {
     e.preventDefault();
     fetch('/login', {
       method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log('error: ', error);
+    });
+  }
+
+  logout (e) {
+    e.preventDefault();
+    fetch('/logut', {
+      method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -277,6 +294,7 @@ export default class Test extends Component {
     return (
       <div>
         <input type="button" value="POST at /signup" onClick={this.signup} />
+        <input type="button" value="POST at /login" onClick={this.login} />
         <input type="button" value="POST at /login" onClick={this.login} />
         <input type="button" value="PUT at /users" onClick={this.putUsers} />
         <input type="button" value="GET at /categories" onClick={this.getCategories} />
