@@ -6,6 +6,7 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var utils = require('./utilities');
 
+
 var server = express();
 
 server.use(cookieParser('secret'));
@@ -80,6 +81,7 @@ server.use(history());
 
 server.use(express.static(path.join(__dirname, '../client/')));
 require('./router.js')(server);
+
 
 var port = process.env.port || 3000;
 
