@@ -85,6 +85,14 @@ module.exports = (router) => {
       res.send('Received PUT at /category');
     });
 
+  // pull categories for given user
+  router.route('/userCategories') 
+    .get(function (req, res) {
+      console.log('Received GET at /userCategories');
+      utils.getUserCategories(req, res);
+      res.send('Received GET at /userCategories');   
+    }
+
   /*********************************/
   /*********************************/
              //TAGS//
@@ -164,4 +172,4 @@ module.exports = (router) => {
     res.sendFile(path.join(__dirname, '../client/index.html' ));
   });
   return router;
-}
+};
