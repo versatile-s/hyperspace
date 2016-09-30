@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Router, Route, browserHistory} from 'react-router';
+import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 
 import Test from './components/test';
 import Login from './components/login';
@@ -15,6 +15,7 @@ import Side from './components/side';
 class App extends Component {
   constructor (props) {
     super(props);
+    console.log('constructing app');
   }
 
    // onEnter={requireAuth}
