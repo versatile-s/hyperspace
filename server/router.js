@@ -55,24 +55,11 @@ router.route('/users')
       //CATEGORY PAGES//
 /*********************************/
 /*********************************/
-// view categories
-// router.route('/categories')
-//   .get(function (req, res) {
-//     console.log('Received GET at /categories');
-//     res.send('Received GET at /categories');
-//   })
-// // search categories
-//   .post(function (req, res) {
-//     console.log('Received POST at /categories');
-//     res.send('Received POST at /categories');
-//   });
 
 router.route('/categoryData')
   .post(function (req, res) {
     console.log('Searching for categoryData');
     utils.getCategoryData(req, res);
-
-
   });
 
 // view category
@@ -166,6 +153,7 @@ router.route('/logout')
 // 404 Fallback
 router.use('*', function(req, res) {
   res.status(404).send('404, Sari Gurl');
+  console.log('HELLO THERE!');
   //res.sendFile(__dirname + '/../client/index.html' );
 });
 
