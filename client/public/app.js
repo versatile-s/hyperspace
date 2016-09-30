@@ -11,21 +11,11 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import Category from './components/category';
 import Side from './components/side';
-import Util from '../../server/utilities.js';
 
 class App extends Component {
   constructor (props) {
     super(props);
   }
-
-  // requireAuth(nextState, replace) {
-  //   if (Util.isAuth() === false) {
-  //     replace({
-  //       pathname: '/login',
-  //       state: { nextPathname: nextState.location.pathname }
-  //     });
-  //   }
-  // }
 
    // onEnter={requireAuth}
 
