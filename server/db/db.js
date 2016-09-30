@@ -15,7 +15,6 @@ var User = sequelize.define('User', {
 
 var Hyper = sequelize.define('Hyper', {
   url: { type: Sequelize.STRING },
-  category: { type: Sequelize.STRING },
   title: { type: Sequelize.STRING },
   description: { type: Sequelize.STRING },
   image: { type: Sequelize.STRING },
@@ -35,12 +34,13 @@ var CategoryPage = sequelize.define('CategoryPage', {
   preferences: { type: Sequelize.STRING }
 });
 
-
-User.sync();
-CategoryPage.belongsTo(User, {forignKey: 'UserId'});
-CategoryPage.sync();
-Hyper.belongsTo(CategoryPage, {forignKey: 'CategoryPageId'});
-Hyper.sync();
+User.sync().then(function () {
+  CategoryPage.belongsTo(User, {foreignKey: 'UserId'});
+  CategoryPage.sync().then(function () {
+    Hyper.belongsTo(CategoryPage, {foreignKey: 'CategoryPageId'});
+    Hyper.sync();
+  });
+});
 
 sequelize.authenticate()
   .then(function(err) {

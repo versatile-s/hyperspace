@@ -33,6 +33,7 @@ class Login extends Component {
     }).then((response) => {
       response.text().then((res) => {
         if (res === 'Login successful!') {
+          context.props.history.username = context.state.username;
           context.props.history.push('/dashboard');
         } else {
           context.setState({
