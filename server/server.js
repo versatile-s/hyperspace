@@ -10,11 +10,6 @@ var utils = require('./utilities');
 
 var server = express();
 
-server.use(history());
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ 'extended': false }));
-server.use(express.static(path.join(__dirname, '../client')));
-
 server.use(cookieParser('secret'));
 server.use(session({
   secret: 'Our Secret',
@@ -35,22 +30,30 @@ server.use(session({
   //API CALLS FOR AUTHENTICATION//
 /*********************************/
 /*********************************/
+server.get('/login', function(req, res) {
+  if (utils.isAuth(req, res) === true) {
+    res.redirect('/dashboard');
+    console.log('YOU ARE BEING REDIRECTED');
+  }
+});
+server.get('/signup', function(req, res) {
+  if (utils.isAuth(req, res) === true) {
+    res.redirect('/dashboard');
+    console.log('YOU ARE BEING REDIRECTED');
+  }
+});
+
+server.use(history());
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ 'extended': false }));
+server.use(express.static(path.join(__dirname, '../client')));
+
+
+
+
+
 
 server.use('/', router);
-
-
-// server.get('/login', function(req, res) {
-//   if (utils.isAuth(req, res) === true) {
-//     res.redirect('/category');
-//     console.log('YOU ARE BEING REDIRECTED');
-//   } else {
-//     console.log('not redirected child here is req.session ', req.session);
-//   }
-//   res.send('NEW ONE');
-// });
-
-
-
 
 var port = process.env.port || 3000;
 
