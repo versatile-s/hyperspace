@@ -41,9 +41,9 @@ var utils = {
       {replacements: {username: req.body.username, password: req.body.password}, type: db.QueryTypes.SELECT })
       .then(function (results) {
         if (results.length === 1) {
-          req.session.regenerate(function(err) {
-            res.send('Login successful!');
-          });
+          // req.session.regenerate(function(err) {
+          res.send('Login successful!');
+          // });
         } else {
           res.status(400).send('Information provided does not match records.');
         }
@@ -58,9 +58,10 @@ var utils = {
         username: req.body.username
       }
     }).then(function (user) {
+      var name = req.body.category || 'home';
       CategoryPage.findOne({
         where: {
-          name: req.body.name,
+          name: name,
           UserId: user.id
         }
       }).then(function(category) {
