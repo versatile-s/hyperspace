@@ -5,10 +5,10 @@ var utils = require('./utilities');
 router.route('/')
   .get(function (req, res) {
     console.log('Received GET at /');
-    if (utils.isAuth(req, res)) {
-      res.redirect('/dashboard');
-      console.log('redirect to dashboard');
-    }
+    // if (utils.isAuth(req, res)) {
+    //   res.redirect('/dashboard');
+    //   console.log('redirect to dashboard');
+    // }
     // The above is not doing anything at the moment because we are using routers
     res.send('Received GET at /');
   });
@@ -22,10 +22,10 @@ router.route('/')
 router.route('/signup')
   .post(function (req, res) {
     console.log('Received POST at /signup');
-    if (utils.isAuth(req, res)) {
-      res.redirect('/dashboard');
-      console.log('redirect to dashboard');
-    }
+    // if (utils.isAuth(req, res)) {
+    //   res.redirect('/dashboard');
+    //   console.log('redirect to dashboard');
+    // }
     utils.createUser(req.body.username, req.body.password);
     res.send('User created');
   });
@@ -157,10 +157,9 @@ router.route('/preferences')
 router.route('/logout')
   .get(function (req, res) {
     console.log('Received GET at /logout');
-    req.session.destroy(function() {
-      res.redirect('/login');
-    });
-    res.send('Received GET at /logout');
+    // req.session.destroy(function() {
+    res.redirect('/login');
+    // });
   });
 
 

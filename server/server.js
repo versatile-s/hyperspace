@@ -15,20 +15,20 @@ server.use(bodyParser.urlencoded({ 'extended': false }));
 server.use(express.static(path.join(__dirname, '../client')));
 
 
-server.use(cookieParser('secret'));
-server.use(session({
-  secret: 'Our Secret',
-  resave: false,
-  saveUninitialized: true,
-  // store: new (require('express-sessions'))({
-  //   storage: 'redis',
-  //   instance: client, // optional
-  //   host: 'localhost', // optional
-  //   port: 6379, // optional
-  //   collection: 'sessions', // optional
-  //   expire: 86400 // optional
-  // })
-}));
+// server.use(cookieParser('secret'));
+// server.use(session({
+//   secret: 'Our Secret',
+//   resave: false,
+//   saveUninitialized: true,
+//   // store: new (require('express-sessions'))({
+//   //   storage: 'redis',
+//   //   instance: client, // optional
+//   //   host: 'localhost', // optional
+//   //   port: 6379, // optional
+//   //   collection: 'sessions', // optional
+//   //   expire: 86400 // optional
+//   // })
+// }));
 server.use('/', router);
 // We may not need cookie parser or router
 
