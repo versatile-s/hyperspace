@@ -24,11 +24,7 @@ server.use(session({
   // })
 }));
 
-/*********************************/
-/*********************************/
-  //API CALLS FOR AUTHENTICATION//
-/*********************************/
-/*********************************/
+// API Calls for AUTH Redirects
 server.use('/', authRouter);
 
 server.use(history());
