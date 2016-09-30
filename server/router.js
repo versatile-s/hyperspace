@@ -94,6 +94,11 @@ router.route('/category')
     res.send('Received PUT at /category');
   });
 
+router.route('/usercategories')
+  .get(function (req, res) {
+    console.log('Received a GET at /usercategories');
+  });
+
 /*********************************/
 /*********************************/
            //TAGS//
