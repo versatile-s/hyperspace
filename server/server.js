@@ -9,12 +9,12 @@ var cookieParser = require('cookie-parser');
 
 var server = express();
 
-server.use('/', router);
 server.use(history());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));
 server.use(express.static(path.join(__dirname, '../client')));
 
+server.use('/', router);
 
 // server.use(cookieParser('secret'));
 // server.use(session({
