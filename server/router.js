@@ -72,7 +72,7 @@ router.route('/categoryData')
     console.log('Searching for categoryData');
     utils.getCategoryData(req, res);
 
-    
+
   });
 
 // view category

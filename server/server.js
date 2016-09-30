@@ -30,7 +30,6 @@ server.use(express.static(path.join(__dirname, '../client')));
 //   // })
 // }));
 server.use('/', router);
-// We may not need cookie parser or router
 
 var port = process.env.port || 3000;
 
