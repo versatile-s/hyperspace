@@ -20,6 +20,12 @@ class HyperspaceWorker extends Component {
     this.setState({
       username: this.props.username
     });
+
+    // hit DB and pull categories for given user
+    let request = new XMLHttpRequest();
+    request.open('POST', 'http://127.0.0.1:3000/userCategories', true);
+    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    request.send(encodeURI('username=' + this.props.username)); 
   }
 
   sendLink (e) {
