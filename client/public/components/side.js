@@ -26,25 +26,22 @@ class Side extends Component {
 
   }
 
-  // componentDidMount() {
-  //   this.getCategories();
-  // }
+  componentDidMount() {
+    this.getCategories();
+  }
 
   getCategories () {
     var context = this;
-    fetch('/userCategories', {
-      method: 'POST',
+    fetch('/userCategories/?username=' + this.state.username, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        username: this.state.username,
-      })
-
     }).then(function (response) {
+      console.log('resoponse from api call',response);
       response.json()
         .then(function(categoryData) {
+          console.log('categoryData', categoryData);
           context.setState({
             categories: categoryData
           });

@@ -171,7 +171,12 @@ var utils = {
         }).then(function(hypers) {
           res.send(hypers);
         });
+      }).catch(function(err){
+        console.log("server error:",err);
+        res.send(err);
       });
+
+   
     });
   },
 

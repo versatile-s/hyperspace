@@ -48,10 +48,16 @@ class Category extends Component {
       })
     }).then((response) => {
       response.json().then(function (data) {
-        console.log("data from category call",data);
-        context.setState({
-          data: data
-        });
+        if (Array.isArray(data)) {
+          console.log("data from category call",data);
+          context.setState({
+            data: data
+          });
+        } else {
+          context.setState({
+            data: [{title: "This category doesnt seem to exist for this user"}]
+          });
+        }  
       });
     });
   }
@@ -66,10 +72,11 @@ class Category extends Component {
           {this.state.data.map(function (item) {
             return (
               <div className="hyper">
-                <h2 className="hyperTitle">{item.title}</h2>
-                <a className="hyperUrl" href={item.url} target="_blank"><h3>Link here</h3></a>
-                <h4 className="hyperDescription">{item.description}</h4>
-                <img className="hyperImage" src={item.imgUrl}/>
+                <a href={item.url} target="_blank">
+                  <h2 className="hyperTitle">{item.title}</h2>
+                  <h4 className="hyperDescription">{item.description}</h4>
+                  <img className="hyperImage" src={item.imgUrl}/>
+                </a>
               </div>
             );
           })}
