@@ -88,12 +88,13 @@ var utils = {
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
     var userId = 0;
+
     User.findOne({
       where: {
         username: req.body.username
       }
     }).then(function (user) {
-      console.log(req.body.category);
+      console.log("user:", user);
       userId = user.id;
       var name = req.body.category || 'home';
       CategoryPage.findOne({
@@ -102,6 +103,7 @@ var utils = {
           UserId: user.id
         }
       }).then(function(category) {
+        console.log("category found:", category);
         if (!category) {
           CategoryPage.create({
             name: name,
@@ -184,7 +186,7 @@ var utils = {
   },
 
   getCategoryData: function (req, res) {
-    console.log("username/categorytitle", req.body.username,req.body.categoryTitle);
+    console.log("username/categorytitle", req.body.username, req.body.categoryTitle);
     User.findOne({
       where: {
         username: req.body.username
@@ -204,7 +206,12 @@ var utils = {
         }).then(function(hypers) {
           res.send(hypers);
         });
+      }).catch(function(err){
+        console.log("server error:",err);
+        res.send(err);
       });
+
+   
     });
   },
 
@@ -224,10 +231,9 @@ var utils = {
         }
       }).then(function(categories) {
         var catArray = [];
-        categories.forEach(function (val) {
-          catArray.push(val.dataValues.name);
+        categories.forEach(function (category) {
+          catArray.push(category.dataValues.name);
         });
-        console.log(catArray);
         res.send(JSON.stringify(catArray));
       });
     });

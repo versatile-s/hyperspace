@@ -31,6 +31,12 @@ server.use(bodyParser.urlencoded({ 'extended': false }));
   //API CALLS FOR AUTHENTICATION//
 /*********************************/
 /*********************************/
+server.get('*/reset.css', function (req, res) {
+  res.sendFile(path.join(__dirname, '../client/styles/reset.css'));
+});
+server.get('*/styles.css', function (req, res) {
+  res.sendFile(path.join(__dirname, '../client/styles/styles.css'));
+});
 server.get('/login', function(req, res) {
   if (utils.isAuth(req, res) === true) {
     console.log('YOU ARE BEING REDIRECTED');

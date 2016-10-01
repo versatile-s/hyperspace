@@ -10,30 +10,52 @@ class HyperspaceWorker extends Component {
       url: null,
       title: null,
       category: '',
-      tags: ''
+      tags: '',
+      selections: []
     };
-
     this.sendLink = this.sendLink.bind(this);
+    console.log(1);
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this.setState({
       username: this.props.username
     });
 
+    let context = this;
     // hit DB and pull categories for given user
     let request = new XMLHttpRequest();
     let url = 'http:127.0.0.1:3000/usercategories';
     let params = '?username=' + this.props.username;
-    console.log('USERNAME BEING SENT TO /USERCAT IS', params);
-    console.log('sending GET on willMount');
+    
+    
+    let categoryContainer = [];
+    
     request.onreadystatechange = function () {
-      console.log('we performed GET req and this is what we are receiving in return:', this.responseText);
+      // remove brackets, quotation marks and split on the comma to create new array
+      let newThing = this.responseText.slice(1, -1).replace(/['"]+/g, '').split(',');
+      
+      // check categories received, push to selections if not already there
+      newThing.forEach(function(category) {
+        categoryContainer.indexOf(category) === -1 ? categoryContainer.push(category) : null;
+      });
     };
+
+    this.setState({
+      selections: categoryContainer
+    });
+    
     request.open('GET', url + params, true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    request.send(encodeURI());
+    request.send();
+    console.log('STATE SELECT IN WILL MOUNT IS', this.state.selections);
+    console.log(2);
+  }
 
+  componentDidMount () {
+    console.log('MOUNTED AND WE HAVE', this.state.selections);
+    this.render();
+    console.log(3);
   }
 
   sendLink (e) {
@@ -65,12 +87,23 @@ class HyperspaceWorker extends Component {
   }
 
   render () {
+    console.log(4);
+    console.log(this.state.selections);
+    var localArray = this.state.selections;
+    console.log('local array here is ', this.state.selections);
     return (
       <div className="workerBody">
         <h5 className="welcome">welcome, {this.state.username}</h5>
         <p className="workerPrompt">add to your hyperspace:</p>
         <h3 className="hyperUrl"></h3>
         <form className="addLinkForm">
+          <select> 
+          {
+            this.state.selections.map(function(category) {
+              return <option> {category} </option>;
+            })
+          }
+          </select>
           <input id="category" placeholder="hyper category" />
           <input id="tags" placeholder="hyper tags"/>
           <button onClick={this.sendLink} className="addTo">add to hyperspace</button>

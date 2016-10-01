@@ -40,8 +40,12 @@
   height: 30px;
   background-color: black;
   position: fixed;
-  top:50px;
-  right: 100px;
+  top: 0px;
+  right: 0px;
+}
+.knob-title{
+  color:white;
+  font-size: 10px;
 }
 .side-menu{
   position: fixed;
