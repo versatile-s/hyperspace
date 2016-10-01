@@ -58,7 +58,7 @@ export default class Test extends Component {
   logout (e) {
     e.preventDefault();
     fetch('/logout', {
-      method: 'GET',
+      method: 'DELETE',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

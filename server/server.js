@@ -9,20 +9,29 @@ var utils = require('./utilities');
 
 var server = express();
 
-server.use(cookieParser('secret'));
-server.use(session({
-  secret: 'Our Secret',
-  resave: false,
-  saveUninitialized: true,
-  // store: new (require('express-sessions'))({
-  //   storage: 'redis',
-  //   instance: client, // optional
-  //   host: 'localhost', // optional
-  //   port: 6379, // optional
-  //   collection: 'sessions', // optional
-  //   expire: 86400 // optional
-  // })
-}));
+// var sequelize = new Sequelize(
+//   'hyperspace',
+//   'root',
+//   dbPassword, {
+//     'dialect': 'mysql',
+//     //'storage': './session.mysql'
+//   });
+
+require('./middleware.js')(server, express);
+
+
+// server.use(cookieParser('Our Secret'));
+// server.use(session({
+//   secret: 'Our Secret',
+//   resave: false,
+//   saveUninitialized: true,
+//   store: new SequelizeStore({
+//     db: sequelize,
+//     // table is optional
+//     table: 'Session'
+//   }),
+//   proxy: true
+// }));
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));

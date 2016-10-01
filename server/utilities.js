@@ -2,6 +2,7 @@
 var db = require('./db/db').sequelize;
 var User = require('./db/db').User;
 var Hyper = require('./db/db').Hyper;
+var path = require('path');
 var CategoryPage = require('./db/db').CategoryPage;
 var bcrypt = require('bcrypt');
 var axios = require('axios');
@@ -74,8 +75,13 @@ var utils = {
   },
 
   isAuth: function (req, res) {
-    return (req.session) ? true : false;
+    if (req.session.login === true) {
+      return true;
+    } else {
+      return false;
+    }
   },
+
 
   loginUser: function (req, res) {
     db.query('SELECT * FROM Users WHERE username = :username',
@@ -84,7 +90,6 @@ var utils = {
         if (results.length === 1) {
           // if user exists, compare passwords
           comparePasswords(req, res, results[0].password);
-
         } else {
           res.status(400).send('Username not found');
         }
@@ -93,10 +98,16 @@ var utils = {
 
   logoutUser: function (req, res) {
     console.log('ok we are in here logout user and req.session is ', req.session);
-    req.session.destroy(function() {
-      console.log('ok destroyed');
+    // req.session.login = false;
+    // res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
+    return req.session.regenerate(function() {
+      req.session.username = req.body.username;
+      req.session.login = false;
+      console.log('inside regenerated req.session ', req.session);
     });
+    console.log('ok destroyed here is req.session ', req.session);
   },
+
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
