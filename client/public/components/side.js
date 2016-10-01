@@ -10,11 +10,14 @@ class Side extends Component {
 
       categories: ['Visual Kei', 'Javascript', 'The Gazette'],
       toggled: false,
+      newCategory:''
  
     };
 
     this.clickCategory = this.clickCategory.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.makeNewCategory = this.makeNewCategory.bind(this);
 
   }
 
@@ -53,6 +56,32 @@ class Side extends Component {
     e.target.value = '';
   }
 
+  handleChange(event) {
+    this.setState({newCategory: event.target.value});
+  }
+
+  makeNewCategory(){
+    var context = this;
+    fetch('/category', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        name: this.state.newCategory
+      })
+
+    }).then(function(){
+      browserHistory.push('/' + context.state.username + "/"+context.state.newCategory);
+
+    });
+
+
+  }
+
+
 
   toggleMenu(){
     console.log("clicked");
@@ -76,16 +105,6 @@ class Side extends Component {
         </div>
         <div className={this.state.toggled ? "side-menu" : "blank"}>
           <div className="side-menu-title">
-            Options
-            <div className="side-menu-search-container">
-              <div className="side-menu-search">
-                Category:<input className="side-menu-text-box" type="text" defaultValue="enter Category here" onFocus={this.focused} />
-              </div>
-              <div className="side-menu-search">
-                Tag:<input className="side-menu-text-box" type="text" defaultValue="enter Tag here" onFocus={this.focused}/>
-              </div>
-              <Link className="side-menu-link" to='/category'><button>Link'd to /category</button></Link>
-            </div>
             <div className="side-menu-category-list">
               <table className="category-table">
                 <tr>
@@ -99,6 +118,13 @@ class Side extends Component {
                   );
                 })}
               </table>
+            </div>
+            <div className="side-menu-search-container">
+            Add new Category
+              <div className="side-menu-search">
+                <input className="side-menu-text-box" onChange={this.handleChange} type="text" defaultValue="New Category Title" onFocus={this.focused} />
+              </div>
+              <button onClick={this.makeNewCategory}>Create new category page</button>
             </div>
           </div>
         </div>

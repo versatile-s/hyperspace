@@ -55,7 +55,7 @@ class Category extends Component {
           });
         } else {
           context.setState({
-            data: [{title: "This category doesnt seem to exist for this user"}]
+            data: [{title: "This category doesnt seem to have any links yet!"}]
           });
         }  
       });
