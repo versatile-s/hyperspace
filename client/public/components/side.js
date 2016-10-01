@@ -75,7 +75,8 @@ class Side extends Component {
 
     }).then(function(){
       browserHistory.push('/' + context.state.username + "/"+context.state.newCategory);
-
+      context.props.setCategory(context.state.newCategory);
+      context.getCategories();
     });
 
 
