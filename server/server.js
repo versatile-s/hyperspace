@@ -56,11 +56,10 @@ server.get('/dashboard', function(req, res) {
   }
 });
 
-server.get('/userCategories', function (req, res) {
-    console.log('Received GET at /userCategories', req.body);
-    // utils.getUserCategories(req, res);
-    res.send('Received GET at /userCategories');   
-  });
+server.get('/userCategories*', function (req, res) {
+  console.log('Received GET @ /userCategories', req.body);
+  utils.getUserCategories(req, res);
+});
 
 server.use(history());
 
