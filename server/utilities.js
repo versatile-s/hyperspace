@@ -95,16 +95,12 @@ var utils = {
       });
   },
 
-  logoutUser: function (req, res) {
-    console.log('ok we are in here logout user and req.session is ', req.session);
-    // req.session.login = false;
-    // res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-    return req.session.regenerate(function() {
-      req.session.username = req.body.username;
-      req.session.login = false;
-      console.log('inside regenerated req.session ', req.session);
+
+  logoutUser: (req, res) => {
+    req.session.destroy(() => {
+      console.log('ok you are logged out! and req.session is ', req.session);
+      res.status(200).send('Great you are logged out');
     });
-    console.log('ok destroyed here is req.session ', req.session);
   },
 
 
