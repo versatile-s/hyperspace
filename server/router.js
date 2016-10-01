@@ -20,6 +20,7 @@ var path = require('path');
 /*********************************/
 /*********************************/
 // new user signup
+
 module.exports = (router) => {
 
   router.route('/signup')
@@ -163,4 +164,4 @@ module.exports = (router) => {
     res.sendFile(path.join(__dirname, '../client/index.html' ));
   });
   return router;
-}
+};

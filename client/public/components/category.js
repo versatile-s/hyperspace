@@ -50,7 +50,7 @@ class Category extends Component {
             return (
               <div className="hyper">
                 <h2 className="hyperTitle">{item.title}</h2>
-                <a className="hyperUrl" href={item.url}><h3>Link here</h3></a>
+                <a className="hyperUrl" href={item.url} target="_blank"><h3>Link here</h3></a>
                 <h4 className="hyperDescription">{item.description}</h4>
                 <img className="hyperImage" src={item.imgUrl}/>
               </div>

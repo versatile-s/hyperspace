@@ -171,6 +171,31 @@ var utils = {
         });
       });
     });
+  },
+
+  getUserCategories: function (req, res) {
+    // now using req.query to access, so params method chaining below is unnecessary
+    // var username = req.params[0].split('').slice(10).join('');
+    console.log('fetching categories for this user', req.query.username);
+    var username = req.query.username;
+    User.findOne({
+      where: {
+        username: username
+      }
+    }).then(function (user) {
+      CategoryPage.findAll({
+        where: {
+          userId: user.id,
+        }
+      }).then(function(categories) {
+        var catArray = [];
+        categories.forEach(function (val) {
+          catArray.push(val.dataValues.name);
+        });
+        console.log(catArray);
+        res.send(JSON.stringify(catArray));
+      });
+    });
   }
 };
 
