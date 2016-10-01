@@ -151,7 +151,7 @@ var utils = {
   },
 
   getCategoryData: function (req, res) {
-    console.log("username/categorytitle", req.body.username,req.body.categoryTitle);
+    console.log("username/categorytitle", req.body.username, req.body.categoryTitle);
     User.findOne({
       where: {
         username: req.body.username
@@ -196,10 +196,9 @@ var utils = {
         }
       }).then(function(categories) {
         var catArray = [];
-        categories.forEach(function (val) {
-          catArray.push(val.dataValues.name);
+        categories.forEach(function (category) {
+          catArray.push(category.dataValues.name);
         });
-        console.log(catArray);
         res.send(JSON.stringify(catArray));
       });
     });
