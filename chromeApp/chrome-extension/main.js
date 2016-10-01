@@ -100,7 +100,8 @@ class ChromeApp extends Component {
           <Snackbar
           open={this.state.failedLogin && !this.state.authenticated}
           message="Sorry, the login you entered is incorrect."
-          autoHideDuration={2000}
+          autoHideDuration={20000}
+          className="invalidPass"
         />
         </div>
       </MuiThemeProvider>
