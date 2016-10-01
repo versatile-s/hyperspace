@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import UserSignIn from './views/userSignIn.js';
 import HyperspaceWorker from './views/hyperSpaceWorker.js';
-
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 
 class ChromeApp extends Component {
   constructor (props) {
@@ -91,10 +94,16 @@ class ChromeApp extends Component {
 
   render () {
     return (
-      <div>
-        {this.state.authenticated ? <HyperspaceWorker props={this.props} logOutUser={this.logOutUser.bind(this)} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>}
-        {this.state.failedLogin && !this.state.authenticated ? <p className="failedLoginPrompt">Sorry, the login you entered is incorrect. Register for your own hyperspace here.</p> : null}
-      </div>
+      <MuiThemeProvider>
+        <div>
+          {this.state.authenticated ? <HyperspaceWorker props={this.props} logOutUser={this.logOutUser.bind(this)} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>}
+          <Snackbar
+          open={this.state.failedLogin && !this.state.authenticated}
+          message="Sorry, the login you entered is incorrect."
+          autoHideDuration={2000}
+        />
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

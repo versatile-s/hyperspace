@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class UserSignIn extends Component {
   constructor (props) {
@@ -20,10 +21,10 @@ class UserSignIn extends Component {
       <div className="authBody">
         <h2>Welcome to hyperspace. Please login.</h2>
         <form className="authForm">
-          <input id="username" placeholder="your username"/>
-          <input id="password" placeholder="password" type="password"/>
+          <TextField floatingLabelText="your username" id="username"/>
+          <TextField floatingLabelText="password" id="password" type="password"/>
           <div className="submit">
-            <button onClick={this.props.authenticateUser} className="submit">log in</button>
+            <RaisedButton onClick={this.props.authenticateUser} className="submit" label="log in" primary={true}/>
           </div>
         </form>
       </div>
