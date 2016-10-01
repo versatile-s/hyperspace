@@ -1,27 +1,38 @@
 import React, {Component} from 'react';
 import Router, { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 
 class Side extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      username: 'Kira',
+      username: this.props.username,
+
       categories: ['Visual Kei', 'Javascript', 'The Gazette'],
-      hover: false,
-      toggled: false
+      toggled: false,
+ 
     };
-    this.handleClick = this.handleClick.bind(this);
-    this.onMouseEnterHander = this.onMouseEnterHander.bind(this);
-    this.onMouseLeaveHandler = this.onMouseLeaveHandler.bind(this);
+
+    this.clickCategory = this.clickCategory.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
+
   }
 
-  handleClick (e) {
-    e.preventDefault();
-    var categoryTitle = e.target.innerHTML;
-    console.log(categoryTitle);
-    // send user to their category of categoryTitle
-    fetch('/category', {
+  clickCategory(e) {
+    console.log("thisdotstate.username", this.state.username);
+ 
+    browserHistory.push('/' + this.state.username + '/' + e.target.innerHTML);
+    this.props.setCategory(e.target.innerHTML);
+
+  }
+
+  // componentDidMount() {
+  //   this.getCategories();
+  // }
+
+  getCategories () {
+    var context = this;
+    fetch('/userCategories', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -29,33 +40,22 @@ class Side extends Component {
       },
       body: JSON.stringify({
         username: this.state.username,
-        categoryTitle: categoryTitle
       })
-    }).then((response) => {
-      response.text().then((res) => {
-        console.log(res);
-      }); 
-    })
-    .catch((error) => {
-      error.text().then((err) => {
-        console.log(err);
-      }); 
+
+    }).then(function (response) {
+      response.json()
+        .then(function(categoryData) {
+          context.setState({
+            categories: categoryData
+          });
+        });
     });
   }
 
   focused (e) {
     e.target.value = '';
   }
-  onMouseEnterHander() {
-    this.setState({
-      hover: true
-    });
-  }
-  onMouseLeaveHandler(){
-    this.setState({
-      hover: false
-    });
-  }
+
 
   toggleMenu(){
     console.log("clicked");
@@ -75,7 +75,7 @@ class Side extends Component {
     return (
       <div>
         <div className="knob" onClick={this.toggleMenu}>
-          <p>menu</p>
+          <p className="knob-title">menu</p>
         </div>
         <div className={this.state.toggled ? "side-menu" : "blank"}>
           <div className="side-menu-title">
@@ -97,7 +97,7 @@ class Side extends Component {
                 {this.state.categories.map((category) => {
                   return (
                     <tr>
-                      <td className="side-menu-category" onClick={this.handleClick} >{category}</td>
+                      <td className="side-menu-category" ref={category} onClick={this.clickCategory} >{category}</td>
                     </tr>
                   );
                 })}

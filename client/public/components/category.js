@@ -11,12 +11,29 @@ class Category extends Component {
     };
     
     this.categoryCall = this.categoryCall.bind(this);
+    this.setCategory = this.setCategory.bind(this);
   }
 
   componentWillMount () {
     this.categoryCall();
   }
 
+  setCategory(category){
+    var context=this;
+    console.log("category param",category);
+    this.setState({
+      categoryTitle: category
+    },
+    function() {
+      console.log("state",this.state.categoryTitle);
+      context.categoryCall();
+    });  
+    // console.log("this.state.categoryTitle", this.state.categoryTitle);
+    // this.categoryCall();
+    // console.log("this.state.categoryTitle", this.state.categoryTitle);
+  }
+
+ 
   categoryCall () {
     var context = this;
     fetch('/categoryData', {
@@ -31,7 +48,7 @@ class Category extends Component {
       })
     }).then((response) => {
       response.json().then(function (data) {
-        console.log(data);
+        console.log("data from category call",data);
         context.setState({
           data: data
         });
@@ -56,6 +73,7 @@ class Category extends Component {
               </div>
             );
           })}
+        <Side setCategory={this.setCategory} username={this.state.username}/>  
       </div>
     );
   }
