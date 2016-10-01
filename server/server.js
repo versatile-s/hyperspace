@@ -5,33 +5,11 @@ var history = require('connect-history-api-fallback');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var utils = require('./utilities');
-
-
 var server = express();
 
-// var sequelize = new Sequelize(
-//   'hyperspace',
-//   'root',
-//   dbPassword, {
-//     'dialect': 'mysql',
-//     //'storage': './session.mysql'
-//   });
+
 
 require('./middleware.js')(server, express);
-
-
-// server.use(cookieParser('Our Secret'));
-// server.use(session({
-//   secret: 'Our Secret',
-//   resave: false,
-//   saveUninitialized: true,
-//   store: new SequelizeStore({
-//     db: sequelize,
-//     // table is optional
-//     table: 'Session'
-//   }),
-//   proxy: true
-// }));
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));
