@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ChipInput from 'material-ui-chip-input';
 
 class HyperspaceWorker extends Component {
   constructor (props) {
@@ -105,9 +106,14 @@ class HyperspaceWorker extends Component {
           }
           </select>
           <input id="category" placeholder="hyper category" />
-          <input id="tags" placeholder="hyper tags"/>
+                 <ChipInput
+                   id="tags"
+                   onRequestAdd={(chip) => handleAddChip(chip)}
+                   onRequestDelete={(chip) => handleDeleteChip(chip)}
+                 />
           <button onClick={this.sendLink} className="addTo">add to hyperspace</button>
         </form>
+        
         <button className="logOut" onClick={this.props.logOutUser}>logout</button>
       </div>
     );
