@@ -6,7 +6,6 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var utils = require('./utilities');
 
-
 var server = express();
 
 server.use(cookieParser('secret'));
@@ -24,31 +23,40 @@ server.use(session({
   // })
 }));
 
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ 'extended': false }));
+
 /*********************************/
 /*********************************/
   //API CALLS FOR AUTHENTICATION//
 /*********************************/
 /*********************************/
+server.get('*/reset.css', function (req, res) {
+  res.sendFile(path.join(__dirname, '../client/styles/reset.css'));
+});
+server.get('*/styles.css', function (req, res) {
+  res.sendFile(path.join(__dirname, '../client/styles/styles.css'));
+});
 server.get('/login', function(req, res) {
   if (utils.isAuth(req, res) === true) {
-    res.redirect('/dashboard');
     console.log('YOU ARE BEING REDIRECTED');
+    res.redirect('/dashboard');
   } else {
     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
   }
 });
 server.get('/signup', function(req, res) {
   if (utils.isAuth(req, res) === true) {
-    res.redirect('/dashboard');
     console.log('YOU ARE BEING REDIRECTED');
+    res.redirect('/dashboard');
   } else {
     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
   }
 });
 server.get('/dashboard', function(req, res) {
   if (utils.isAuth(req, res) === false) {
-    res.redirect('/login');
     console.log('YOU ARE BEING REDIRECTED');
+    res.redirect('/login');
   } else {
     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
   }
@@ -59,15 +67,14 @@ server.get('/userCategories*', function (req, res) {
   utils.getUserCategories(req, res);
 });
 
-
 server.use(history());
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ 'extended': false }));
 
-server.use(express.static(path.join(__dirname, '../client')));
 require('./router.js')(server);
 
 var port = process.env.port || 3000;
+
+server.use(express.static(path.join(__dirname, '../client')));
+
 server.listen(port, function() {
   console.log('Server is listening on port ' + port + '!');
 });

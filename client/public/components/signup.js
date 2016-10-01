@@ -33,7 +33,9 @@ class Signup extends Component {
           context.props.history.username = context.state.username;
           context.props.history.push('/dashboard');
         } else {
-
+          context.setState({
+            failedSignup: true
+          });
         }
       });
     })

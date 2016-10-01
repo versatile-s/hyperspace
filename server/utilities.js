@@ -3,18 +3,53 @@ var db = require('./db/db').sequelize;
 var User = require('./db/db').User;
 var Hyper = require('./db/db').Hyper;
 var CategoryPage = require('./db/db').CategoryPage;
+var bcrypt = require('bcrypt');
+
+// // encrypts password & creates new user in database
+// var encrypt = function(req, res) {
+//   var password = req.body.password;
+
+//   // generates salt for hashing
+//   bcrypt.genSalt(10, function(err, salt) {
+//     // hashes password with salt
+//     bcrypt.hash(password, salt, function(err, hash) {
+//       // creates user in database with encrypted password
+//       User.sync()
+//         .then(function () {
+//           return User.create({
+//             username: req.body.username,
+//             password: hash
+//           });
+//         });
+//       // sends success response to client
+//       res.send('User created');
+//     });
+//   });
+// };
+
+// // compares passwords for login
+// bcrypt.compare(password, hashedPassword, function(err, res) {
+//     // res == true 
+// });
 
 var utils = {
 
   // USERS
-  createUser: function (username, password) {
-    User.sync()
-      .then(function () {
-        return User.create({
-          username: username,
-          password: password
-        });
-      });
+  createUser: function (req, res) {
+    User.find({
+      where: {
+        username: req.body.username
+      }
+    }).then(function(response) {
+      // if username doesn't exist
+      if (!response) {
+        // creates user
+        encrypt(req, res);
+      } else {
+        // returns unsuccessful name selection to client
+        res.send('Username exists');
+      }
+    });
   },
 
   updateUser: function (req, res) {
@@ -37,8 +72,8 @@ var utils = {
   },
 
   loginUser: function (req, res) {
-    db.query('SELECT * FROM Users WHERE username = :username AND password = :password',
-      {replacements: {username: req.body.username, password: req.body.password}, type: db.QueryTypes.SELECT })
+    db.query('SELECT * FROM Users WHERE username = :username',
+      {replacements: {username: req.body.username}, type: db.QueryTypes.SELECT })
       .then(function (results) {
         if (results.length === 1) {
           // req.session.regenerate(function(err) {
@@ -53,12 +88,13 @@ var utils = {
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
     var userId = 0;
+
     User.findOne({
       where: {
         username: req.body.username
       }
     }).then(function (user) {
-      console.log(req.body.category);
+      console.log("user:", user);
       userId = user.id;
       var name = req.body.category || 'home';
       CategoryPage.findOne({
@@ -67,6 +103,7 @@ var utils = {
           UserId: user.id
         }
       }).then(function(category) {
+        console.log("category found:", category);
         if (!category) {
           CategoryPage.create({
             name: name,
@@ -169,7 +206,12 @@ var utils = {
         }).then(function(hypers) {
           res.send(hypers);
         });
+      }).catch(function(err){
+        console.log("server error:",err);
+        res.send(err);
       });
+
+   
     });
   },
 
