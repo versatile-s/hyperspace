@@ -189,10 +189,9 @@ var utils = {
         }
       }).then(function(categories) {
         var catArray = [];
-        categories.forEach(function (val) {
-          catArray.push(val.dataValues.name);
+        categories.forEach(function (category) {
+          catArray.push(category.dataValues.name);
         });
-        console.log(catArray);
         res.send(JSON.stringify(catArray));
       });
     });
