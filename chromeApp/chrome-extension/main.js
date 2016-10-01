@@ -98,9 +98,9 @@ class ChromeApp extends Component {
         <div>
           {this.state.authenticated ? <HyperspaceWorker props={this.props} logOutUser={this.logOutUser.bind(this)} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>}
           <Snackbar
-          open={this.state.failedLogin}
+          open={this.state.failedLogin && !this.state.authenticated}
           message="Sorry, the login you entered is incorrect."
-          autoHideDuration={4000}
+          autoHideDuration={2000}
         />
         </div>
       </MuiThemeProvider>

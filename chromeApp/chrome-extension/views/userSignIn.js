@@ -22,7 +22,7 @@ class UserSignIn extends Component {
         <h2>Welcome to hyperspace. Please login.</h2>
         <form className="authForm">
           <TextField floatingLabelText="your username" id="username"/>
-          <TextField floatingLabelText="password" id="password" />
+          <TextField floatingLabelText="password" id="password" type="password"/>
           <div className="submit">
             <RaisedButton onClick={this.props.authenticateUser} className="submit" label="log in" primary={true}/>
           </div>

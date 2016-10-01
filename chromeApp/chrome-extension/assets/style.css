@@ -1,9 +1,13 @@
 html {
     height:150px; width: 350px; 
 
-background: #FF5F6D; /* fallback for old browsers */
-background: -webkit-linear-gradient(to left, #FF5F6D , #FFC371); /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to left, #FF5F6D , #FFC371); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+background: #005C97; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #005C97 , #363795); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #005C97 , #363795); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+              
          color: #fff;
 }
 
@@ -82,7 +86,7 @@ button .submit {
 .authBody h2 {
     font-weight: 100;
     font-size: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 button.submit:hover {
