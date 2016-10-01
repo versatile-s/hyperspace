@@ -3,18 +3,30 @@ var db = require('./db/db').sequelize;
 var User = require('./db/db').User;
 var Hyper = require('./db/db').Hyper;
 var CategoryPage = require('./db/db').CategoryPage;
+var bcrypt = require('bcrypt');
 
 var utils = {
 
   // USERS
-  createUser: function (username, password) {
-    User.sync()
-      .then(function () {
-        return User.create({
-          username: username,
-          password: password
-        });
-      });
+  createUser: function (req, res) {
+    User.find({
+      where: {
+        username: req.body.username
+      }
+    }).then(function(response) {
+      if (!response) {
+        User.sync()
+          .then(function () {
+            return User.create({
+              username: req.body.username,
+              password: req.body.password
+            });
+          });
+        res.send('User created');
+      } else {
+        res.send('Username exists');
+      }
+    });
   },
 
   updateUser: function (req, res) {

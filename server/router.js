@@ -30,8 +30,7 @@ module.exports = (router) => {
       //   res.redirect('/dashboard');
       //   console.log('redirect to dashboard');
       // }
-      utils.createUser(req.body.username, req.body.password);
-      res.send('User created');
+      utils.createUser(req, res);
     });
     // .get(function (req, res) {
     //   console.log('Received GET at /signup');
