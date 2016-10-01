@@ -22,7 +22,10 @@ class HyperspaceWorker extends Component {
   }
 
   componentWillMount () {
+<<<<<<< HEAD
     injectTapEventPlugin();
+=======
+>>>>>>> b83b20991928c264ba333d17dc659a056a2d570a
     let context = this;
     // hit DB and pull categories for given user
     let request = new XMLHttpRequest();

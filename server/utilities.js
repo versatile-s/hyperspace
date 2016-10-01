@@ -5,35 +5,48 @@ var Hyper = require('./db/db').Hyper;
 var CategoryPage = require('./db/db').CategoryPage;
 var bcrypt = require('bcrypt');
 
-// // encrypts password & creates new user in database
-// var encrypt = function(req, res) {
-//   var password = req.body.password;
+// encrypts password & creates new user in database
+var encrypt = function(req, res) {
+  var password = req.body.password;
 
-//   // generates salt for hashing
-//   bcrypt.genSalt(10, function(err, salt) {
-//     // hashes password with salt
-//     bcrypt.hash(password, salt, function(err, hash) {
-//       // creates user in database with encrypted password
-//       User.sync()
-//         .then(function () {
-//           return User.create({
-//             username: req.body.username,
-//             password: hash
-//           });
-//         });
-//       // sends success response to client
-//       res.send('User created');
-//     });
-//   });
-// };
+  // generates salt for hashing
+  bcrypt.genSalt(10, function(err, salt) {
+    // hashes password with salt
+    bcrypt.hash(password, salt, function(err, hash) {
+      // creates user in database with encrypted password
+      User.sync()
+        .then(function () {
+          return User.create({
+            username: req.body.username,
+            password: hash
+          });
+        });
+      // sends success response to client
+      res.send('User created');
+    });
+  });
+};
 
-// // compares passwords for login
-// bcrypt.compare(password, hashedPassword, function(err, res) {
-//     // res == true 
-// });
+var comparePasswords = function(req, res) {
+  // compares passwords for login
+  var password = req.body.password;
+  bcrypt.genSalt(10, function(err, salt) {
+    // hashes password with salt
+    bcrypt.hash(password, salt, function(err, hash) {
+      // creates user in database with encrypted password
+      bcrypt.compare(password, hash, function(err, result) {
+          if (result) {
+            // req.session.regenerate(function(err) {
+            res.send('Login successful!');
+          } else {
+            res.status(400).send('Information provided does not match records.');
+          }
+      });
+    });
+  });
+};
 
 var utils = {
-
   // USERS
   createUser: function (req, res) {
     User.find({
@@ -44,7 +57,7 @@ var utils = {
       // if username doesn't exist
       if (!response) {
         // creates user
-        encrypt(req, res);
+        encrypt(req, res);        
       } else {
         // returns unsuccessful name selection to client
         res.send('Username exists');
@@ -76,11 +89,10 @@ var utils = {
       {replacements: {username: req.body.username}, type: db.QueryTypes.SELECT })
       .then(function (results) {
         if (results.length === 1) {
-          // req.session.regenerate(function(err) {
-          res.send('Login successful!');
-          // });
+          // if user exists, compare passwords
+          comparePasswords(req, res);
         } else {
-          res.status(400).send('Information provided does not match records.');
+          res.status(400).send('Username not found');
         }
       });
   },
