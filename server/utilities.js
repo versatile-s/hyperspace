@@ -27,10 +27,24 @@ var encrypt = function(req, res) {
   });
 };
 
-// compares passwords for login
-bcrypt.compare(password, hashedPassword, function(err, res) {
-    // res == true 
-});
+var comparePasswords = function(req, res) {
+  // compares passwords for login
+  var password = req.body.password;
+  bcrypt.genSalt(10, function(err, salt) {
+    // hashes password with salt
+    bcrypt.hash(password, salt, function(err, hash) {
+      // creates user in database with encrypted password
+      bcrypt.compare(password, hash, function(err, result) {
+          if (result) {
+            // req.session.regenerate(function(err) {
+            res.send('Login successful!');
+          } else {
+            res.status(400).send('Information provided does not match records.');
+          }
+      });
+    });
+  });
+};
 
 var utils = {
 
@@ -44,7 +58,7 @@ var utils = {
       // if username doesn't exist
       if (!response) {
         // creates user
-        encrypt(req, res);
+        encrypt(req, res);        
       } else {
         // returns unsuccessful name selection to client
         res.send('Username exists');
@@ -72,15 +86,14 @@ var utils = {
   },
 
   loginUser: function (req, res) {
-    db.query('SELECT * FROM Users WHERE username = :username AND password = :password',
-      {replacements: {username: req.body.username, password: req.body.password}, type: db.QueryTypes.SELECT })
+    db.query('SELECT * FROM Users WHERE username = :username',
+      {replacements: {username: req.body.username}, type: db.QueryTypes.SELECT })
       .then(function (results) {
         if (results.length === 1) {
-          // req.session.regenerate(function(err) {
-          res.send('Login successful!');
-          // });
+          // if user exists, compare passwords
+          comparePasswords(req, res);
         } else {
-          res.status(400).send('Information provided does not match records.');
+          res.status(400).send('Username not found');
         }
       });
   },
