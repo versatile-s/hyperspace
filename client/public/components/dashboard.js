@@ -22,7 +22,7 @@ class Dashboard extends Component {
         username: this.state.username,
         name: this.state.category
       })
-    }).then(browserHistory.push("/" + this.state.username + "/home"));
+    }).then(browserHistory.push('/' + this.state.username + "/home"));
 
 
     // browserHistory.push("/" + this.state.username + "/home");
