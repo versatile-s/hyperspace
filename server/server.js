@@ -60,6 +60,12 @@ server.get('/dashboard', function(req, res) {
   }
 });
 
+server.get('/userCategories*', function (req, res) {
+  console.log('Received GET @ /userCategories', req.body);
+  utils.getUserCategories(req, res);
+});
+
+
 server.use(history());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));
@@ -67,10 +73,7 @@ server.use(bodyParser.urlencoded({ 'extended': false }));
 server.use(express.static(path.join(__dirname, '../client')));
 require('./router.js')(server);
 
-
-
 var port = process.env.port || 3000;
-
 server.listen(port, function() {
   console.log('Server is listening on port ' + port + '!');
 });
