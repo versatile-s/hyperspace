@@ -174,7 +174,10 @@ var utils = {
   },
 
   getUserCategories: function (req, res) {
-    console.log('fetching categories for this user', req.body.username);
+    // now using req.query to access, so params method chaining below is unnecessary
+    // var username = req.params[0].split('').slice(10).join('');
+    console.log('fetching categories for this user', req.query.username);
+    var username = req.query.username;
   /*  User.findOne({
       where
     })*/
