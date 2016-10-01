@@ -149,7 +149,7 @@ var utils = {
   },
 
   getCategoryData: function (req, res) {
-    console.log("username/categorytitle", req.body.username,req.body.categoryTitle);
+    console.log("username/categorytitle", req.body.username, req.body.categoryTitle);
     User.findOne({
       where: {
         username: req.body.username

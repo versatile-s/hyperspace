@@ -10,7 +10,8 @@ class HyperspaceWorker extends Component {
       url: null,
       title: null,
       category: '',
-      tags: ''
+      tags: '',
+      selections: []
     };
 
     this.sendLink = this.sendLink.bind(this);
@@ -21,19 +22,28 @@ class HyperspaceWorker extends Component {
       username: this.props.username
     });
 
+    let context = this;
+
     // hit DB and pull categories for given user
     let request = new XMLHttpRequest();
     let url = 'http:127.0.0.1:3000/usercategories';
     let params = '?username=' + this.props.username;
-    console.log('USERNAME BEING SENT TO /USERCAT IS', params);
-    console.log('sending GET on willMount');
+    
     request.onreadystatechange = function () {
-      console.log('we performed GET req and this is what we are receiving in return:', this.responseText);
+      
+      // remove brackets, quotation marks and split on the comma to create new array
+      let newThing = this.responseText.slice(1, -1).replace(/['"]+/g, '').split(',');
+      
+      // check categories received, push to selections if not already there
+      newThing.forEach(function(category) {
+        context.state.selections.indexOf(category) === -1 ? context.state.selections.push(category) : null;
+      });      
     };
+    
     request.open('GET', url + params, true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    request.send(encodeURI());
-
+    request.send();
+    console.log('STATE SELECT IS', this.state.selections);
   }
 
   sendLink (e) {
@@ -71,6 +81,14 @@ class HyperspaceWorker extends Component {
         <p className="workerPrompt">add to your hyperspace:</p>
         <h3 className="hyperUrl"></h3>
         <form className="addLinkForm">
+          <select>
+            <option
+              {this.state.selections.map(function (category) {
+                return category;
+              });
+              }
+            />
+          </select>
           <input id="category" placeholder="hyper category" />
           <input id="tags" placeholder="hyper tags"/>
           <button onClick={this.sendLink} className="addTo">add to hyperspace</button>
