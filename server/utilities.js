@@ -5,6 +5,33 @@ var Hyper = require('./db/db').Hyper;
 var CategoryPage = require('./db/db').CategoryPage;
 var bcrypt = require('bcrypt');
 
+// encrypts password & creates new user in database
+var encrypt = function(req, res) {
+  var password = req.body.password;
+
+  // generates salt for hashing
+  bcrypt.genSalt(10, function(err, salt) {
+    // hashes password with salt
+    bcrypt.hash(password, salt, function(err, hash) {
+      // creates user in database with encrypted password
+      User.sync()
+        .then(function () {
+          return User.create({
+            username: req.body.username,
+            password: hash
+          });
+        });
+      // sends success response to client
+      res.send('User created');
+    });
+  });
+};
+
+// compares passwords for login
+bcrypt.compare(password, hashedPassword, function(err, res) {
+    // res == true 
+});
+
 var utils = {
 
   // USERS
@@ -14,16 +41,12 @@ var utils = {
         username: req.body.username
       }
     }).then(function(response) {
+      // if username doesn't exist
       if (!response) {
-        User.sync()
-          .then(function () {
-            return User.create({
-              username: req.body.username,
-              password: req.body.password
-            });
-          });
-        res.send('User created');
+        // creates user
+        encrypt(req, res);
       } else {
+        // returns unsuccessful name selection to client
         res.send('Username exists');
       }
     });
