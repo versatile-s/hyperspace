@@ -1,8 +1,5 @@
-// const bodyParser = require('body-parser');
-//const Sequelize = require('sequelize');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-//const db = require('../../db/index.js');
 var sequelize = require('./db/db.js').sequelize;
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
