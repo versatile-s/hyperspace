@@ -82,7 +82,6 @@ var utils = {
     }
   },
 
-
   loginUser: function (req, res) {
     db.query('SELECT * FROM Users WHERE username = :username',
       {replacements: {username: req.body.username}, type: db.QueryTypes.SELECT })
