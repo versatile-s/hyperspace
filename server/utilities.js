@@ -3,32 +3,67 @@ var db = require('./db/db').sequelize;
 var User = require('./db/db').User;
 var Hyper = require('./db/db').Hyper;
 var CategoryPage = require('./db/db').CategoryPage;
+var bcrypt = require('bcrypt');
+
+// encrypts password & creates new user in database
+var encrypt = function(req, res) {
+  var password = req.body.password;
+
+  // generates salt for hashing
+  bcrypt.genSalt(10, function(err, salt) {
+    // hashes password with salt
+    bcrypt.hash(password, salt, function(err, hash) {
+      // creates user in database with encrypted password
+      User.sync()
+        .then(function () {
+          return User.create({
+            username: req.body.username,
+            password: hash
+          });
+        });
+      // sends success response to client
+      res.send('User created');
+    });
+  });
+};
+
+var comparePasswords = function(req, res) {
+  // compares passwords for login
+  var password = req.body.password;
+  bcrypt.genSalt(10, function(err, salt) {
+    // hashes password with salt
+    bcrypt.hash(password, salt, function(err, hash) {
+      // creates user in database with encrypted password
+      bcrypt.compare(password, hash, function(err, result) {
+          if (result) {
+            // req.session.regenerate(function(err) {
+            res.send('Login successful!');
+          } else {
+            res.status(400).send('Information provided does not match records.');
+          }
+      });
+    });
+  });
+};
 
 var utils = {
 
   // USERS
   createUser: function (req, res) {
-    User.findOne({
-      where:{
+    User.find({
+      where: {
         username: req.body.username
       }
-    }).then(function(user){
-      if(user){
-        res.send('user already exists');
+    }).then(function(response) {
+      // if username doesn't exist
+      if (!response) {
+        // creates user
+        encrypt(req, res);        
       } else {
-        User.sync()
-          .then(function () {
-            return User.create({
-              username: req.body.username,
-              password: req.body.password
-            });
-          }).then(function() {
-            res.send('User Created');
-          });
-        
+        // returns unsuccessful name selection to client
+        res.send('Username exists');
       }
     });
-
   },
 
   updateUser: function (req, res) {
@@ -51,15 +86,14 @@ var utils = {
   },
 
   loginUser: function (req, res) {
-    db.query('SELECT * FROM Users WHERE username = :username AND password = :password',
-      {replacements: {username: req.body.username, password: req.body.password}, type: db.QueryTypes.SELECT })
+    db.query('SELECT * FROM Users WHERE username = :username',
+      {replacements: {username: req.body.username}, type: db.QueryTypes.SELECT })
       .then(function (results) {
         if (results.length === 1) {
-          // req.session.regenerate(function(err) {
-          res.send('Login successful!');
-          // });
+          // if user exists, compare passwords
+          comparePasswords(req, res);
         } else {
-          res.status(400).send('Information provided does not match records.');
+          res.status(400).send('Username not found');
         }
       });
   },

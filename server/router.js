@@ -31,7 +31,7 @@ module.exports = (router) => {
       //   console.log('redirect to dashboard');
       // }
       utils.createUser(req, res);
-     
+
     });
     // .get(function (req, res) {
     //   console.log('Received GET at /signup');
