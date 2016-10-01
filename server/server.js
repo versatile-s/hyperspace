@@ -36,6 +36,7 @@ server.get('*/styles.css', function (req, res) {
   res.sendFile(path.join(__dirname, '../client/styles/styles.css'));
 });
 server.get('/login', function(req, res) {
+
   if (utils.isAuth(req, res) === true) {
     res.redirect('/dashboard');
     console.log('YOU ARE BEING REDIRECTED');

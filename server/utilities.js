@@ -7,14 +7,28 @@ var CategoryPage = require('./db/db').CategoryPage;
 var utils = {
 
   // USERS
-  createUser: function (username, password) {
-    User.sync()
-      .then(function () {
-        return User.create({
-          username: username,
-          password: password
-        });
-      });
+  createUser: function (req, res) {
+    User.findOne({
+      where:{
+        username: req.body.username
+      }
+    }).then(function(user){
+      if(user){
+        res.send('user already exists');
+      } else {
+        User.sync()
+          .then(function () {
+            return User.create({
+              username: req.body.username,
+              password: req.body.password
+            });
+          }).then(function() {
+            res.send('User Created');
+          });
+        
+      }
+    });
+
   },
 
   updateUser: function (req, res) {
