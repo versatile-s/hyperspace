@@ -1,4 +1,1 @@
-
-var dbPassword = null;
-
-module.exports = dbPassword;
+module.exports = 'hi';
