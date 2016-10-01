@@ -54,6 +54,12 @@ server.get('/dashboard', function(req, res) {
   }
 });
 
+server.get('/userCategories', function (req, res) {
+  console.log('Received GET @ /userCategories', req.body);
+  res.send('Received GET @ /userCategories');
+});
+
+
 server.use(history());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));
