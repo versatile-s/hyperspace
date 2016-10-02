@@ -19,13 +19,12 @@ class HyperspaceWorker extends Component {
       selections: []
     };
     this.sendLink = this.sendLink.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   componentWillMount () {
-<<<<<<< HEAD
     injectTapEventPlugin();
-=======
->>>>>>> b83b20991928c264ba333d17dc659a056a2d570a
+
     let context = this;
     // hit DB and pull categories for given user
     let request = new XMLHttpRequest();
@@ -49,6 +48,7 @@ class HyperspaceWorker extends Component {
   sendLink (e) {
     e.preventDefault();    
     let username = this.state.username;
+    let context = this;
 
     let getCurrentTabUrl = function () {
       let queryInfo = {
@@ -60,8 +60,9 @@ class HyperspaceWorker extends Component {
         let tab = tabs[0];
         let url = tab.url;
         let title = tab.title;
-        let category = document.getElementById('category').value;
-        let tags = document.getElementById('tags').value;
+        let category = 'cat';
+        let tags = context.state.tags;
+        console.log('TAGS TO BE SENT ARE', tags);
         let request = new XMLHttpRequest();
         request.open('POST', 'http://127.0.0.1:3000/link', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -71,21 +72,37 @@ class HyperspaceWorker extends Component {
 
     getCurrentTabUrl();
   }
+  
+  handleInputChange(e) {
+    this.setState({
+      tags: e
+    });
+  }
+
+  //  handleInputChange(e) {
+  //   console.log(e, 'E HERE IS ');
+  //   this.setState({
+  //     tags: e
+  //   });
+  //       console.log('STATE TAGS R', this.state.tags);
+  // }
 
   render () {
+    console.log('STATE CATEGORY IS', this.state.category);
+
     return (
       <div className="workerBody">
         <h5 className="welcome">welcome, {this.state.username}</h5>
         <p className="workerPrompt">add to your hyperspace:</p>
         <h3 className="hyperUrl"></h3>
         <form className="addLinkForm">
-          <SelectField>
+          <SelectField value={this.state.category} onChange={this.handleInputChange} selected={this.state.category}>
             {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
           </SelectField>
           <ChipInput
-             id="tags"
              onRequestAdd={(chip) => handleAddChip(chip)}
              onRequestDelete={(chip) => handleDeleteChip(chip)}
+             onChange={this.handleInputChange}
           />
           <button onClick={this.sendLink} className="addTo">add to hyperspace</button>
         </form>
