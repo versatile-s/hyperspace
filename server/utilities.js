@@ -83,12 +83,26 @@ var utils = {
   },
 
   loginUser: function (req, res) {
+<<<<<<< fcb265243e3c75c797a889ce81db952e55feb70c
     db.query('SELECT * FROM Users WHERE username = :username',
       {replacements: {username: req.body.username}, type: db.QueryTypes.SELECT })
       .then(function (results) {
         if (results.length === 1) {
           // if user exists, compare passwords
           comparePasswords(req, res, results[0].password);
+=======
+    // db.query('SELECT * FROM Users WHERE username = :username AND password = :password',
+    //   {replacements: {username: req.body.username, password: req.body.password}, type: db.QueryTypes.SELECT })
+    User.findOne({where: {username: req.body.username}})
+      .then(function (user) {
+        console.log('this is userID ', user.dataValues.id);
+        if (user) {
+          return req.session.regenerate(function(err) {
+            req.session.user = user.dataValues.id;
+            console.log('here is our session ', req.session);
+            res.send('Login successful!');
+          });
+>>>>>>> Starting to refactor towards passport
         } else {
           res.status(400).send('Username not found');
         }

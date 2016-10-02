@@ -1,7 +1,6 @@
 var Sequelize = require('sequelize');
 var dbPassword = require('./dbConfig.js');
-var sequelize = new Sequelize('hyperspace', 'root', dbPassword, {logging: false});
-
+var sequelize = new Sequelize('hyperspace', 'root', dbPassword);
 
 
 var User = sequelize.define('User', {
@@ -32,23 +31,23 @@ var CategoryPage = sequelize.define('CategoryPage', {
   preferences: { type: Sequelize.STRING }
 });
 
-var Session = sequelize.define('Session', {
-  sid: {
-    type: Sequelize.STRING,
-    primaryKey: true
-  },
-  //userId: Sequelize.STRING,
-  expires: Sequelize.DATE,
-  data: Sequelize.STRING
-});
+// var Session = sequelize.define('Session', {
+//   sid: {
+//     type: Sequelize.STRING,
+//     primaryKey: true
+//   },
+//   //userId: Sequelize.STRING,
+//   expires: Sequelize.DATE,
+//   data: Sequelize.STRING
+// });
 
 User.sync().then(function () {
   CategoryPage.belongsTo(User, {foreignKey: 'UserId'});
   CategoryPage.sync().then(function () {
     Hyper.belongsTo(CategoryPage, {foreignKey: 'CategoryPageId'});
     Hyper.sync().then(function() {
-      Session.belongsTo(User, {foreignKey: 'UserId'});
-      Session.sync();
+      // Session.belongsTo(User, {foreignKey: 'UserId'});
+      // Session.sync();
     });
   });
 });
@@ -65,5 +64,5 @@ module.exports.sequelize = sequelize;
 module.exports.User = User;
 module.exports.Hyper = Hyper;
 module.exports.CategoryPage = CategoryPage;
-module.exports.Session = Session;
+// module.exports.Session = Session;
 module.exports.sequelize = sequelize;

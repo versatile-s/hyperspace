@@ -9,7 +9,7 @@ module.exports = (app, express) => {
   app.use(session({
     secret: 'Our Secret',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { secure: false },
     store: new SequelizeStore({
       db: sequelize
