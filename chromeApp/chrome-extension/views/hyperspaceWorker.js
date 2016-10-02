@@ -20,6 +20,7 @@ class HyperspaceWorker extends Component {
     };
     this.sendLink = this.sendLink.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
   componentWillMount () {
@@ -79,13 +80,13 @@ class HyperspaceWorker extends Component {
     });
   }
 
-  //  handleInputChange(e) {
-  //   console.log(e, 'E HERE IS ');
-  //   this.setState({
-  //     tags: e
-  //   });
-  //       console.log('STATE TAGS R', this.state.tags);
-  // }
+  handleSelectChange(e) {
+    console.log(e.target.innerHTML, 'E HERE IS ');
+    this.setState({
+      category: e.target.innerHTML
+    });
+    console.log('STATE CAT IS', this.state.cateogry);
+  }
 
   render () {
     console.log('STATE CATEGORY IS', this.state.category);
@@ -96,7 +97,7 @@ class HyperspaceWorker extends Component {
         <p className="workerPrompt">add to your hyperspace:</p>
         <h3 className="hyperUrl"></h3>
         <form className="addLinkForm">
-          <SelectField value={this.state.category} onChange={this.handleInputChange} selected={this.state.category}>
+          <SelectField value={this.state.category} onChange={this.handleSelectChange} selected={this.state.category}>
             {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
           </SelectField>
           <ChipInput
