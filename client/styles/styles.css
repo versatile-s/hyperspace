@@ -103,3 +103,26 @@
 .loginHome{
   background-image: url(http://www.space.com/images/i/000/023/368/original/mimas-tiny-saturn.jpg?interpolation=lanczos-none&downsize=*:1000);
 }
+.dashboardPaperContainer{
+  display:flex;
+  justify-content: space-around;
+  background-image: url(http://www.azdeepskies.com/_Media/deconvolved_b33crop.jpeg);
+  background-size: 100%;
+
+}
+.dashboardPaperL{
+  height: 400px;
+  width: 400px;
+  
+
+  display:inline;
+
+}
+.dashboardPaperR{
+  height: 400px;
+  width: 400px;
+
+  display:inline;
+}
+.dashContainer{
+}
