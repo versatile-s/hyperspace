@@ -73,8 +73,9 @@ class HyperspaceWorker extends Component {
         request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags + '&username=' + username));
       });
     };
-
+    
     getCurrentTabUrl();
+    this.handleHighlightedText();
   }
   
   handleInputChange(e) {
@@ -89,6 +90,17 @@ class HyperspaceWorker extends Component {
       category: e.target.innerHTML
     });
     console.log('STATE CAT IS', this.state.cateogry);
+  }
+
+  handleHighlightedText() {
+    var selectedText;
+
+    chrome.tabs.executeScript({
+      code: 'window.getSelection().toString();' 
+    }, function (selection) {
+      selectedText = selection[0];
+      console.log('HIGHLIGHTED TEXT IS', selectedText);
+    });
   }
 
   render () {
