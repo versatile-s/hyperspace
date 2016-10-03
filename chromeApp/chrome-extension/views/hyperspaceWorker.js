@@ -3,6 +3,9 @@ import ChipInput from 'material-ui-chip-input';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import RaisedButton from 'material-ui/RaisedButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 
 class HyperspaceWorker extends Component {
@@ -105,9 +108,11 @@ class HyperspaceWorker extends Component {
              onRequestDelete={(chip) => handleDeleteChip(chip)}
              onChange={this.handleInputChange}
           />
-          <button onClick={this.sendLink} className="addTo">add to hyperspace</button>
-        </form>
+          <FloatingActionButton onClick={this.sendLink} className="addTo">
+             <ContentAdd />
+          </FloatingActionButton>
         
+        </form>
         <button className="logOut" onClick={this.props.logOutUser}>logout</button>
       </div>
     );
