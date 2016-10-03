@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import Snackbar from 'material-ui/Snackbar';
+import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
 
 class Login extends Component {
   constructor (props) {
@@ -10,11 +15,13 @@ class Login extends Component {
     this.state = {
       username:'',
       password:'',
-      failedLogin: false
+      failedLogin: false,
+      
     };
     this.login = this.login.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
+        this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   login (e) {
@@ -49,6 +56,12 @@ class Login extends Component {
     });
   }
 
+  handleRequestClose () {
+    this.setState({
+      open: false,
+    });
+  }
+
   handleUsername(name) {
     this.setState({
       username: name.target.value
@@ -64,11 +77,31 @@ class Login extends Component {
   render() {
     return (
       <div>
-        {this.state.failedLogin ? <p>The given information doesn't match our records, please enter information again.</p> : <p>Welcome to hyperspace. Login:</p>}
-        <input onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
-        <input onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
-        <input type="button" value="login" onClick={this.login} />
-        <Link to="/signup"><button className="btn">Signup Screen</button></Link>
+
+        <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
+        <div className="loginHome">
+          <Paper className="loginPaper" zDepth={5}>
+           <Snackbar
+              open={this.state.failedLogin}
+              message={"I'm sorry "+this.state.username+", you must have goofed something up."}
+              autoHideDuration={4000}
+              onRequestClose={this.handleRequestClose}
+            />
+            <Snackbar
+              open={!this.state.failedLogin && this.state.open}
+              message={"WELCOME TO HYPERSPACE " + this.state.username}
+              
+              onRequestClose={this.handleRequestClose}
+            />
+            <FlatButton label="LOGIN" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
+        
+
+            <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
+            <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
+            <RaisedButton type="button" fullWidth="true" label="Login" onClick={this.login} />
+            <Link to="/signup"><RaisedButton fullWidth="true" label="signup page"/></Link>
+          </Paper>  
+        </div>
       </div>
     );
   }
