@@ -26,7 +26,6 @@ var encrypt = function(req, res) {
     });
   });
 };
-
 var comparePasswords = function(req, res, storedPass) {
   // compares passwords for login
   if (bcrypt.compareSync(req.body.password, storedPass)) {
