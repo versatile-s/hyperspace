@@ -3,10 +3,10 @@
   right: 0;
 }
 .hyper{
-  position: relative;
   display: flex; 
-  height: 200px;
-  width: 200px;
+  height: 100px;
+  width: 100px;
+  margin: 10px 10px 10px 10px;
 }
 
 .hyperTitle{
@@ -30,11 +30,6 @@
 
 }
 .hyperImage{
-  z-index: 2;
-  position: absolute;
-  top:0;
-  left:0;
-  width: 200px;
 
 }
 .knob{
@@ -124,5 +119,8 @@
 
   display:inline;
 }
-.dashContainer{
+
+.categoryPageContainer{
+  background-image: url(http://wallpaperbeta.com/wallpaper_gray/gray_planet_surface_clouds_new_world_space_hd-wallpaper-36469.jpg);
+  background-size: 100%;
 }
