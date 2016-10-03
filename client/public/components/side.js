@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import Router, { Link } from 'react-router';
 import { browserHistory } from 'react-router';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 
 class Side extends Component {
