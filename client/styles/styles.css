@@ -1,9 +1,12 @@
-
+#content{
+  top:0;
+  right: 0;
+}
 .hyper{
-  position: relative;
   display: flex; 
-  height: 200px;
-  width: 200px;
+  height: 100px;
+  width: 100px;
+  margin: 10px 10px 10px 10px;
 }
 
 .hyperTitle{
@@ -27,11 +30,6 @@
 
 }
 .hyperImage{
-  z-index: 2;
-  position: absolute;
-  top:0;
-  left:0;
-  width: 200px;
 
 }
 .knob{
@@ -86,4 +84,43 @@
 .category-table{
   width: 100%;
   height: 100%;
+}
+.loginPaper{
+  height: 400px;
+  width: 400px;
+
+  margin: auto;
+
+  text-align: 'center';
+  display: 'flex';
+  align-content: 'center';
+}
+.loginHome{
+  background-image: url(http://www.space.com/images/i/000/023/368/original/mimas-tiny-saturn.jpg?interpolation=lanczos-none&downsize=*:1000);
+}
+.dashboardPaperContainer{
+  display:flex;
+  justify-content: space-around;
+  background-image: url(http://www.azdeepskies.com/_Media/deconvolved_b33crop.jpeg);
+  background-size: 100%;
+
+}
+.dashboardPaperL{
+  height: 400px;
+  width: 400px;
+  
+
+  display:inline;
+
+}
+.dashboardPaperR{
+  height: 400px;
+  width: 400px;
+
+  display:inline;
+}
+
+.categoryPageContainer{
+  background-image: url(http://wallpaperbeta.com/wallpaper_gray/gray_planet_surface_clouds_new_world_space_hd-wallpaper-36469.jpg);
+  background-size: 100%;
 }

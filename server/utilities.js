@@ -27,23 +27,15 @@ var encrypt = function(req, res) {
   });
 };
 
-var comparePasswords = function(req, res) {
+var comparePasswords = function(req, res, storedPass) {
   // compares passwords for login
-  var password = req.body.password;
-  bcrypt.genSalt(10, function(err, salt) {
-    // hashes password with salt
-    bcrypt.hash(password, salt, function(err, hash) {
-      // creates user in database with encrypted password
-      bcrypt.compare(password, hash, function(err, result) {
-          if (result) {
-            // req.session.regenerate(function(err) {
-            res.send('Login successful!');
-          } else {
-            res.status(400).send('Information provided does not match records.');
-          }
-      });
-    });
-  });
+  if (bcrypt.compareSync(req.body.password, storedPass)) {
+    // sends success response to client
+    res.send('Login successful!');
+  } else {
+    // sends unsuccessful response to client
+    res.status(400).send('Information provided does not match records.');
+  }
 };
 
 var utils = {
@@ -90,7 +82,7 @@ var utils = {
       .then(function (results) {
         if (results.length === 1) {
           // if user exists, compare passwords
-          comparePasswords(req, res);
+          comparePasswords(req, res, results[0].password);
         } else {
           res.status(400).send('Username not found');
         }

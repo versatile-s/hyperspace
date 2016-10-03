@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import Router, { Link } from 'react-router';
 import { browserHistory } from 'react-router';
 
+
 class Side extends Component {
   constructor (props) {
     super(props);
     this.state = {
       username: this.props.username,
 
-      categories: ['Visual Kei', 'Javascript', 'The Gazette'],
+      categories: [],
       toggled: false,
       newCategory:''
  
