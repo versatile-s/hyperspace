@@ -47,7 +47,6 @@ var comparePasswords = function(req, res) {
 };
 
 var utils = {
-
   // USERS
   createUser: function (req, res) {
     User.find({
