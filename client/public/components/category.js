@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
 import Side from './side';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import Snackbar from 'material-ui/Snackbar';
+import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 class Category extends Component {
   constructor (props) {
@@ -66,21 +72,33 @@ class Category extends Component {
   render () {
     return (
       <div>
-
-        <h3>YOUR USERNAME IS: {this.state.username}</h3>
-        <h3>YOUR CATEGORY IS: {this.state.categoryTitle}</h3>
-          {this.state.data.map(function (item) {
-            return (
-              <div className="hyper">
-                <a href={item.url} target="_blank">
-                  <h2 className="hyperTitle">{item.title}</h2>
-                  <h4 className="hyperDescription">{item.description}</h4>
-                  <img className="hyperImage" src={item.imgUrl}/>
-                </a>
-              </div>
-            );
-          })}
         <Side setCategory={this.setCategory} username={this.state.username}/>  
+        <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
+        <FlatButton label={this.state.username+"  -  "+this.state.categoryTitle} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
+        <div className="categoryPageContainer">
+            {this.state.data.map(function (item) {
+              return (
+                <div className="hyper">
+                  <a href={item.url} target="_blank">
+                    <Card containerStyle={{width:100, height: 100}}>
+                      <CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}}title={item.title} />
+                  
+                      
+                      <CardText>
+                        {item.description}
+                      </CardText>
+                    <CardMedia>  
+                      <img className="hyperImage" src={item.imgUrl}/>
+                    </CardMedia>
+                    </Card>
+                  </a>
+                </div>
+              );
+            })}
+        </div>
+        <div>  
+
+        </div>      
       </div>
     );
   }

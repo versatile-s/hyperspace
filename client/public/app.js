@@ -11,16 +11,19 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import Category from './components/category';
 import Side from './components/side';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
   constructor (props) {
     super(props);
+    injectTapEventPlugin();
   }
-
    // onEnter={requireAuth}
 
   render() {
     return (
+      <MuiThemeProvider>
       <Router history={browserHistory} >
         <Route path='/' component={Login} />
         <Route path='/login' component={Login} />
@@ -31,6 +34,7 @@ class App extends Component {
         <Route path='/:user/:category' component={Category} />
         <Route path='/test' component={Test} />
       </Router>
+      </MuiThemeProvider>
     );
   }
 }
