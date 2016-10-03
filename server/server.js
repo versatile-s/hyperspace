@@ -5,11 +5,15 @@ var history = require('connect-history-api-fallback');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var utils = require('./utilities');
+
 var server = express();
+var router = require('./router');
 
 
 
+// API Calls for AUTH Redirects
 require('./middleware.js')(server, express);
+require('./authenticationRoutes')(server, express);
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));
@@ -68,6 +72,7 @@ server.use(history());
 
 server.use(express.static(path.join(__dirname, '../client/')));
 require('./router.js')(server);
+
 
 
 var port = process.env.port || 3000;
