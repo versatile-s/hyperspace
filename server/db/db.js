@@ -19,7 +19,8 @@ var Hyper = sequelize.define('Hyper', {
   description: { type: Sequelize.STRING },
   image: { type: Sequelize.STRING },
   username: { type: Sequelize.STRING },
-  tags: { type: Sequelize.STRING }
+  tags: { type: Sequelize.STRING },
+  views: {type: Sequelize.INTEGER }
 
   // Datatype of array only available in postgres so need to find a work around.
   // tags: { type: Sequelize.ARRAY },

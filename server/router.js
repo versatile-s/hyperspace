@@ -112,6 +112,7 @@ module.exports = (router) => {
     // edit link
     .put(function (req, res) {
       console.log('Received PUT at /link');
+      utils.updateHyper(req, res);
       res.send('Received PUT at /link');
     });
 
