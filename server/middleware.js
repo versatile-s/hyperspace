@@ -1,4 +1,4 @@
-const morgan = require('morgan');
+// const morgan = require('morgan');
 //const cookieParser = require('cookie-parser');
 // cookieParser probably not needed
 const session = require('express-session');

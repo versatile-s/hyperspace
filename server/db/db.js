@@ -4,6 +4,7 @@ var sequelize = new Sequelize('hyperspace', 'root', dbPassword.dbPassword, {logg
 
 
 
+
 var User = sequelize.define('User', {
   username: { type: Sequelize.STRING },
   password: { type: Sequelize.STRING },
@@ -32,15 +33,15 @@ var CategoryPage = sequelize.define('CategoryPage', {
   preferences: { type: Sequelize.STRING }
 });
 
-var Session = sequelize.define('Session', {
-  sid: {
-    type: Sequelize.STRING,
-    primaryKey: true
-  },
-  //userId: Sequelize.STRING,
-  expires: Sequelize.DATE,
-  data: Sequelize.STRING
-});
+// var Session = sequelize.define('Session', {
+//   sid: {
+//     type: Sequelize.STRING,
+//     primaryKey: true
+//   },
+//   //userId: Sequelize.STRING,
+//   expires: Sequelize.DATE,
+//   data: Sequelize.STRING
+// });
 
 User.sync().then(function () {
   CategoryPage.belongsTo(User, {foreignKey: 'UserId'});
@@ -48,7 +49,7 @@ User.sync().then(function () {
     Hyper.belongsTo(CategoryPage, {foreignKey: 'CategoryPageId'});
     Hyper.sync().then(function() {
       // Session.belongsTo(User, {foreignKey: 'UserId'});
-      Session.sync();
+      // Session.sync();
     });
   });
 });
