@@ -6,6 +6,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import TextField from 'material-ui/TextField';
 
 
 class HyperspaceWorker extends Component {
@@ -48,7 +49,37 @@ class HyperspaceWorker extends Component {
     request.open('GET', url + params, true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.send();
+
+    this.handleHighlightedText();
   }
+
+  handleHighlightedText() {
+    var selectedText = '';
+    var context = this;
+
+    chrome.tabs.executeScript({
+      code: 'window.getSelection().toString();' 
+    }, function (selection) {
+      selectedText = selection[0];
+      context.setState({
+        highlighted: selectedText
+      });
+    });
+
+    if ( this.state.highlighted.length < 3 ) {
+      chrome.tabs.executeScript({
+        code: 'document.getElementsByTagName(\'p\')[0].textContent'
+      }, function (selection) {
+        selectedText = selection[0];
+        context.setState({
+          highlighted: selectedText
+        });
+      });
+    }
+
+    console.log(this.state.highlighted, 'HIGHLIGHTED HERE IS');
+  }
+
 
   sendLink (e) {
     e.preventDefault();    
@@ -95,30 +126,6 @@ class HyperspaceWorker extends Component {
     console.log('STATE CAT IS', this.state.cateogry);
   }
 
-  handleHighlightedText() {
-    var selectedText;
-    var context = this;
-
-    chrome.tabs.executeScript({
-      code: 'window.getSelection().toString();' 
-    }, function (selection) {
-      selectedText = selection[0];
-      context.setState({
-        highlighted: selectedText
-      });
-    });
-
-    if ( !selectedText ) {
-      chrome.tabs.executeScript({
-        code: 'document.getElementsByTagName(\'p\')[0].textContent'
-      }, function (selection) {
-        selectedText = selection[0];
-        context.setState({
-          highlighted: selectedText
-        });
-      });
-    }
-  }
 
   render () {
     console.log('STATE CATEGORY IS', this.state.category);
@@ -137,6 +144,12 @@ class HyperspaceWorker extends Component {
              onRequestDelete={(chip) => handleDeleteChip(chip)}
              onChange={this.handleInputChange}
           />
+          <TextField
+      value={this.state.highlighted}
+      multiLine={true}
+      rows={2}
+      maxrows={6}
+    />
           <FloatingActionButton onClick={this.sendLink} className="addTo">
              <ContentAdd />
           </FloatingActionButton>
