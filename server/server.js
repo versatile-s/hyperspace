@@ -12,9 +12,13 @@ var router = require('./router');
 
 
 // API Calls for AUTH Redirects
-require('./middleware.js')(server, express);
 require('./authenticationRoutes')(server, express);
+require('./middleware.js')(server, express);
 
+<<<<<<< c2e7b79badf845b205ee6a688db82b814367575e
+=======
+
+>>>>>>> changin to passport
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));
 
@@ -74,6 +78,12 @@ server.use(express.static(path.join(__dirname, '../client/')));
 require('./router.js')(server);
 
 
+<<<<<<< c2e7b79badf845b205ee6a688db82b814367575e
+=======
+server.use('/', router);
+server.use(history());
+
+>>>>>>> changin to passport
 
 var port = process.env.port || 3000;
 
