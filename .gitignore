@@ -1,8 +1,5 @@
 node_modules
 bundle.js
 npm-debug.log
-<<<<<<< HEAD
 dbConfig.js
-=======
-dbConfig.js
->>>>>>> 090170b0f916dcb42240a61efb3a6bf048d79ae2
+
