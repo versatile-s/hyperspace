@@ -127,3 +127,7 @@ p.failedLoginPrompt {
     margin-top: 5px;
     margin-bottom: 10px;
 }
+
+img.imageSelection {
+    max-width: 333px;
+}

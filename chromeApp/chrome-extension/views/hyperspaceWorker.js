@@ -21,7 +21,8 @@ class HyperspaceWorker extends Component {
       category: '',
       tags: '',
       selections: [],
-      highlighted: ''
+      highlighted: '',
+      image: ''
     };
     this.sendLink = this.sendLink.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -50,6 +51,7 @@ class HyperspaceWorker extends Component {
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.send();
 
+    this.getFirstImage();
     this.handleHighlightedText();
   }
 
@@ -78,6 +80,21 @@ class HyperspaceWorker extends Component {
     }
 
     console.log(this.state.highlighted, 'HIGHLIGHTED HERE IS');
+  }
+
+  getFirstImage() {
+    var firstImageSRC = '';
+    var context = this;
+
+    chrome.tabs.executeScript({
+      code: 'document.getElementsByTagName(\'img\')[0].src'
+    }, function (selection) {
+      firstImageSRC = selection[0];
+      console.log('IMAGE SRC IS ', firstImageSRC);
+      context.setState({
+        image: firstImageSRC
+      });
+    });
   }
 
 
@@ -150,6 +167,7 @@ class HyperspaceWorker extends Component {
       rows={2}
       maxrows={6}
     />
+        <img className="imageSelection" src={this.state.image}/>
           <FloatingActionButton onClick={this.sendLink} className="addTo">
              <ContentAdd />
           </FloatingActionButton>
