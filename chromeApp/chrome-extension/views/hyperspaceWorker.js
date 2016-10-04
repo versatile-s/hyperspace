@@ -120,8 +120,10 @@ class HyperspaceWorker extends Component {
         let tab = tabs[0];
         let url = tab.url;
         let title = tab.title;
+
         let highlighted = context.state.highlighted;
         let image = context.state.image;
+
         let category = context.state.tags;
         let tags = context.state.tags;
         console.log('TAGS TO BE SENT ARE', tags, '& HIGHLIGHTED TO BE SENT IS', highlighted);
