@@ -12,10 +12,6 @@ class UserSignIn extends Component {
     };
   }
 
-  componentWillMount() {
-
-  }
-
   render () {
     return (
       <div className="authBody">

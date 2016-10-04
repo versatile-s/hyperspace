@@ -2,12 +2,10 @@ html {
     height:150px; width: 350px; 
 
 
-
-
-background: #005C97; /* fallback for old browsers */
-background: -webkit-linear-gradient(to left, #005C97 , #363795); /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to left, #005C97 , #363795); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-              
+background: #757F9A; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #757F9A , #D7DDE8); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #757F9A , #D7DDE8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                    
          color: #fff;
 }
 
@@ -128,4 +126,14 @@ p.failedLoginPrompt {
     margin-right: 19px;
     margin-top: 5px;
     margin-bottom: 10px;
+}
+
+img.imageSelection {
+    max-width: 333px;
+}
+
+.miniMenu {
+    position: absolute !important;
+    right: 0px;
+    top: 5px;
 }

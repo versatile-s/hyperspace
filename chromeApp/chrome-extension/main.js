@@ -64,8 +64,9 @@ class ChromeApp extends Component {
    
     request.onreadystatechange = function () {
       console.log('status here is', this.status);
+      console.log('RESPONSE TEXT IS', this.responseText);
       console.log('we received a change in status!');
-      if (this.status === 200 ) {
+      if (this.status === 200 && this.responseText === 'Login successful!') {
         context.setState({
           authenticated: true,
           username: username
@@ -110,6 +111,3 @@ class ChromeApp extends Component {
 }
 
 ReactDOM.render(<ChromeApp />, document.getElementById('content'));
-
-
-
