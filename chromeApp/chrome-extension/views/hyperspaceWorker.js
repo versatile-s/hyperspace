@@ -61,7 +61,7 @@ class HyperspaceWorker extends Component {
         let tab = tabs[0];
         let url = tab.url;
         let title = tab.title;
-        let category = 'cat';
+        let category = context.state.tags;
         let tags = context.state.tags;
         console.log('TAGS TO BE SENT ARE', tags);
         let request = new XMLHttpRequest();
