@@ -11,7 +11,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ReactDOM from 'react-dom';
 import MakeCategory from './makeCategory';
 
-
 class Side extends Component {
   constructor (props) {
     super(props);
