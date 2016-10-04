@@ -10,7 +10,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-
+import Snackbar from 'material-ui/Snackbar';
 
 
 class HyperspaceWorker extends Component {
@@ -121,13 +121,14 @@ class HyperspaceWorker extends Component {
         let url = tab.url;
         let title = tab.title;
         let highlighted = context.state.highlighted;
-        let category = 'cat';
+        let image = context.state.image;
+        let category = context.state.tags;
         let tags = context.state.tags;
         console.log('TAGS TO BE SENT ARE', tags, '& HIGHLIGHTED TO BE SENT IS', highlighted);
         let request = new XMLHttpRequest();
         request.open('POST', 'http://127.0.0.1:3000/link', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags + '&username=' + username + '&description=' + highlighted));
+        request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags + '&username=' + username + '&description=' + highlighted + '&image=' + image));
       });
     };
     
@@ -183,6 +184,12 @@ class HyperspaceWorker extends Component {
           <FloatingActionButton onClick={this.sendLink} className="addTo">
              <ContentAdd />
           </FloatingActionButton>
+          <Snackbar
+          open={this.sendLink}
+          message="Sent to your hyperspace!"
+          autoHideDuration={2500}
+          className="invalidPass"
+        />
       </div> 
     );
   }
