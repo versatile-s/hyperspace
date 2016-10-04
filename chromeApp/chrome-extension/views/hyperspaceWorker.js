@@ -158,8 +158,7 @@ class HyperspaceWorker extends Component {
         >
            <MenuItem className="logout" onClick={this.props.logOutUser} primaryText="Logout" />
          </IconMenu>
-        <h5 className="welcome">welcome, {this.state.username}</h5>
-        <p className="workerPrompt">add to your hyperspace:</p>
+        <h5 className="welcome">welcome, {this.state.username}. <br/>add to your hyperspace.</h5>
           <SelectField 
             floatingLabelText="Category" 
             value={this.state.category} 
