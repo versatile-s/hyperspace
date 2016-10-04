@@ -19,7 +19,8 @@ var Hyper = sequelize.define('Hyper', {
   description: { type: Sequelize.STRING },
   image: { type: Sequelize.STRING },
   username: { type: Sequelize.STRING },
-  views: { type: Sequelize.INTEGER }
+  views: { type: Sequelize.INTEGER },
+  tags: { type: Sequelize.STRING }
 
   // Datatype of array only available in postgres so need to find a work around.
   // tags: { type: Sequelize.ARRAY },
@@ -33,26 +34,12 @@ var CategoryPage = sequelize.define('CategoryPage', {
   widgets: { type: Sequelize.STRING },
   preferences: { type: Sequelize.STRING }
 });
- 
-var Tag = sequelize.define('Tag', {
-  title: { type: Sequelize.STRING },
-  hyperId: { type: Sequelize.INTEGER }
-});
-
-var HyperTag = sequelize.define('Hyper_Tag', {});
- 
-HyperTag.belongsTo(Hyper);
-HyperTag.belongsTo(Tag);
-Hyper.hasMany(HyperTag);
 
 User.sync().then(function () {
   CategoryPage.belongsTo(User, {foreignKey: 'UserId'});
   CategoryPage.sync().then(function () {
     Hyper.belongsTo(CategoryPage, {foreignKey: 'CategoryPageId'});
     Hyper.sync().then(function () {
-      Tag.sync().then(function () {
-        HyperTag.sync();
-      });
     });
   });
 });
@@ -69,6 +56,3 @@ module.exports.sequelize = sequelize;
 module.exports.User = User;
 module.exports.Hyper = Hyper;
 module.exports.CategoryPage = CategoryPage;
-module.exports.Tag = Tag;
-module.exports.HyperTag = HyperTag;
-

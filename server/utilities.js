@@ -3,8 +3,6 @@ var db = require('./db/db').sequelize;
 var User = require('./db/db').User;
 var Hyper = require('./db/db').Hyper;
 var CategoryPage = require('./db/db').CategoryPage;
-var Tag = require('./db/db').Tag;
-var HyperTag = require('./db/db').HyperTag;
 var bcrypt = require('bcrypt');
 var axios = require('axios');
 
@@ -39,18 +37,6 @@ var comparePasswords = function(req, res, storedPass) {
     // sends unsuccessful response to client
     res.status(400).send('Information provided does not match records.');
   }
-};
-
-var createTag = function(tagName, hyperId) {
-  return Tag.create({
-    title: tagName,
-    hyperId: hyperId
-  }).then(function (newTag) {
-    HyperTag.create({
-      HyperId: hyperId,
-      TagId: newTag.id
-    });
-  });
 };
 
 var utils = {
@@ -106,8 +92,7 @@ var utils = {
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
-    console.log('STEP 1');
-    // incoming tags req.body.tags
+    var tags = req.body.tags.replace(/,/g, " ").toLowerCase();
     var userId = 0;
     var hyperId = 0;
     var name = '';
@@ -117,7 +102,6 @@ var utils = {
         username: req.body.username
       }
     }).then(function (user) {
-      console.log('STEP 2');
       userId = user.id;
       name = req.body.category || 'home';
       CategoryPage.findOne({
@@ -126,7 +110,6 @@ var utils = {
           UserId: userId
         }
       }).then(function(category) {
-        console.log('STEP 3');
         if (!category) {
           CategoryPage.create({
             name: name,
@@ -145,25 +128,20 @@ var utils = {
                 description: req.body.description,
                 image: req.body.image,
                 username: req.body.username,
+                tags: tags,
                 CategoryPageId: category.id
               }).then(function (newHyper) {
                 hyper = newHyper;
-                console.log('PRE-AXIOS......');
                 axios.post('localhost:9200/hyperspace/hypers', {
                   id: hyper.id,
                   url: hyper.url,
                   title: hyper.title,
                   description: hyper.description,
+                  tags: tags,
                   CategoryPageId: hyper.CategoryPageId
                 }).then(function (response) {
-                  console.log('AXIOS RESPONSE', response);
                 }).catch(function (err) {
-                  console.log('ERROR! IT\'S SAD DAY! D=', err);
                 });
-                var givenTags = req.body.tags.split(',');
-                for (var i = 0; i < givenTags.length; i++) {
-                  createTag(givenTags[i], newHyper.id);
-                }
               });
             });
           });
@@ -174,25 +152,20 @@ var utils = {
             description: req.body.description,
             image: req.body.image,
             username: req.body.username,
+            tags: tags,
             CategoryPageId: category.id
           }).then(function (newHyper) {
             hyper = newHyper;
-            console.log('PRE-AXIOS......');
             axios.post('http://localhost:9200/hyperspace/hypers', {
               id: hyper.id,
               url: hyper.url,
               title: hyper.title,
               description: hyper.description,
+              tags: tags,
               CategoryPageId: hyper.CategoryPageId
             }).then(function (response) {
-              console.log('AXIOS RESPONSE', response);
             }).catch(function (err) {
-              console.log('ERROR! IT\'S SAD DAY! D=', err);
             });
-            var givenTags = req.body.tags.split(',');
-            for (var i = 0; i < givenTags.length; i++) {
-              createTag(givenTags[i], newHyper.id);
-            }
           });
         }
       });
