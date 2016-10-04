@@ -70,11 +70,11 @@ class HyperspaceWorker extends Component {
         let highlighted = context.state.highlighted;
         let category = 'cat';
         let tags = context.state.tags;
-        console.log('TAGS TO BE SENT ARE', tags);
+        console.log('TAGS TO BE SENT ARE', tags, '& HIGHLIGHTED TO BE SENT IS', highlighted);
         let request = new XMLHttpRequest();
         request.open('POST', 'http://127.0.0.1:3000/link', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags + '&username=' + username + '&highlighted=' + highlighted));
+        request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags + '&username=' + username + '&description=' + highlighted));
       });
     };
     
@@ -103,11 +103,21 @@ class HyperspaceWorker extends Component {
       code: 'window.getSelection().toString();' 
     }, function (selection) {
       selectedText = selection[0];
-      console.log('HIGHLIGHTED TEXT IS', selectedText);
       context.setState({
         highlighted: selectedText
       });
     });
+
+    if ( !selectedText ) {
+      chrome.tabs.executeScript({
+        code: 'document.getElementsByTagName(\'p\')[0].textContent'
+      }, function (selection) {
+        selectedText = selection[0];
+        context.setState({
+          highlighted: selectedText
+        });
+      });
+    }
   }
 
   render () {
