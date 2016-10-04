@@ -3,6 +3,8 @@ var db = require('./db/db').sequelize;
 var User = require('./db/db').User;
 var Hyper = require('./db/db').Hyper;
 var CategoryPage = require('./db/db').CategoryPage;
+var Tag = require('./db/db').Tag;
+var HyperTag = require('./db/db').HyperTag;
 var bcrypt = require('bcrypt');
 
 // encrypts password & creates new user in database
@@ -36,6 +38,18 @@ var comparePasswords = function(req, res, storedPass) {
     // sends unsuccessful response to client
     res.status(400).send('Information provided does not match records.');
   }
+};
+
+var createTag = function(tagName, hyperId) {
+  return Tag.create({
+    title: tagName,
+    hyperId: hyperId
+  }).then(function (newTag) {
+    HyperTag.create({
+      HyperId: hyperId,
+      TagId: newTag.id
+    });
+  });
 };
 
 var utils = {
@@ -91,23 +105,23 @@ var utils = {
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
+    // incoming tags req.body.tags
     var userId = 0;
-
+    var hyperId = 0;
+    var name = '';
     User.findOne({
       where: {
         username: req.body.username
       }
     }).then(function (user) {
-      console.log("user:", user);
       userId = user.id;
-      var name = req.body.category || 'home';
+      name = req.body.category || 'home';
       CategoryPage.findOne({
         where: {
           name: name,
-          UserId: user.id
+          UserId: userId
         }
       }).then(function(category) {
-        console.log("category found:", category);
         if (!category) {
           CategoryPage.create({
             name: name,
@@ -127,6 +141,12 @@ var utils = {
                 image: req.body.image,
                 username: req.body.username,
                 CategoryPageId: category.id
+              }).then(function (newHyper) {
+                // add tags
+                var givenTags = req.body.tags.split(',');
+                for (var i = 0; i < givenTags.length; i++) {
+                  createTag(givenTags[i], newHyper.id);
+                }
               });
             });
           });
@@ -138,6 +158,12 @@ var utils = {
             image: req.body.image,
             username: req.body.username,
             CategoryPageId: category.id
+          }).then(function (newHyper) {
+            // add tags 
+            var givenTags = req.body.tags.split(',');
+            for (var i = 0; i < givenTags.length; i++) {
+              createTag(givenTags[i], newHyper.id);
+            }
           });
         }
       });
@@ -190,7 +216,6 @@ var utils = {
   },
 
   getCategoryData: function (req, res) {
-    console.log("username/categorytitle", req.body.username, req.body.categoryTitle);
     User.findOne({
       where: {
         username: req.body.username
