@@ -111,37 +111,30 @@ var utils = {
         }
       }).then(function(category) {
         if (!category) {
-          CategoryPage.create({
+          return CategoryPage.create({
             name: name,
             parentCategory: req.body.parents,
             UserId: userId
-          }).then(function () {
-            return CategoryPage.findOne({
-              where: {
-                name: name,
-                UserId: userId
-              }
-            }).then(function (category) {
-              return Hyper.create({
-                url: req.body.url,
-                title: req.body.title,
-                description: req.body.description,
-                image: req.body.image,
-                username: req.body.username,
+          }).then(function (category) {
+            return Hyper.create({
+              url: req.body.url,
+              title: req.body.title,
+              description: req.body.description,
+              image: req.body.image,
+              username: req.body.username,
+              tags: tags,
+              CategoryPageId: category.id
+            }).then(function (newHyper) {
+              hyper = newHyper;
+              axios.post('localhost:9200/hyperspace/hypers', {
+                id: hyper.id,
+                url: hyper.url,
+                title: hyper.title,
+                description: hyper.description,
                 tags: tags,
-                CategoryPageId: category.id
-              }).then(function (newHyper) {
-                hyper = newHyper;
-                axios.post('localhost:9200/hyperspace/hypers', {
-                  id: hyper.id,
-                  url: hyper.url,
-                  title: hyper.title,
-                  description: hyper.description,
-                  tags: tags,
-                  CategoryPageId: hyper.CategoryPageId
-                }).then(function (response) {
-                }).catch(function (err) {
-                });
+                CategoryPageId: hyper.CategoryPageId
+              }).then(function (response) {
+              }).catch(function (err) {
               });
             });
           });
@@ -172,6 +165,27 @@ var utils = {
     });
   },
 
+  searchHypers: function (req, res) {
+    var text = req.body.text.replace(/[^\w\s!?]/g,'').toLowerCase().split(' ').join(',');
+    var queryString = '';
+    for (var i = 0; i < text.length; i++) {
+      if (i === 0 && text.charAt(i) === ',') {
+        continue;
+      }
+      if (i === text.length-1 && text.charAt(i) === ',') {
+        continue;
+      }
+      if (text.charAt(i) === ',' && text.charAt(i+1) === ',') {
+        continue;
+      }
+      if (text.charAt(i) === ',') {
+        queryString += ' OR ';
+      } else {
+        queryString += text.charAt(i);
+      }
+    }
+    
+  },
 
   // This will save a category page. It only needs a name property at time of creation and potentially parentCategories
   saveCategoryPage: function (req, res) {
