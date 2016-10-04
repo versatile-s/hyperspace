@@ -153,15 +153,16 @@ class HyperspaceWorker extends Component {
         <p className="workerPrompt">add to your hyperspace:</p>
         <h3 className="hyperUrl"></h3>
         <form className="addLinkForm">
-          <SelectField value={this.state.category} onChange={this.handleSelectChange} selected={this.state.category}>
+          <SelectField floatingLabelText="Category" value={this.state.category} onChange={this.handleSelectChange} selected={this.state.category}>
             {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
           </SelectField>
           <ChipInput
+             floatingLabelText="Tags"
              onRequestAdd={(chip) => handleAddChip(chip)}
              onRequestDelete={(chip) => handleDeleteChip(chip)}
              onChange={this.handleInputChange}
           />
-          <TextField
+          <TextField floatingLabelText="Excerpt"
       value={this.state.highlighted}
       multiLine={true}
       rows={2}
