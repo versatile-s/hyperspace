@@ -130,17 +130,16 @@ class HyperspaceWorker extends Component {
   }
   
   handleInputChange(e) {
+    e.preventDefault();
     this.setState({
       tags: e
     });
   }
 
   handleSelectChange(e) {
-    console.log(e.target.innerHTML, 'E HERE IS ');
     this.setState({
       category: e.target.innerHTML
     });
-    console.log('STATE CAT IS', this.state.cateogry);
   }
 
 
@@ -153,8 +152,12 @@ class HyperspaceWorker extends Component {
         <p className="workerPrompt">add to your hyperspace:</p>
         <h3 className="hyperUrl"></h3>
         <form className="addLinkForm">
-          <SelectField floatingLabelText="Category" value={this.state.category} onChange={this.handleSelectChange} selected={this.state.category}>
-            {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
+          <SelectField 
+            floatingLabelText="Category" 
+            value={this.state.category} 
+            onChange={this.handleSelectChange} 
+            selected={this.state.category}>
+              {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
           </SelectField>
           <ChipInput
              floatingLabelText="Tags"
@@ -163,16 +166,15 @@ class HyperspaceWorker extends Component {
              onChange={this.handleInputChange}
           />
           <TextField floatingLabelText="Excerpt"
-      value={this.state.highlighted}
-      multiLine={true}
-      rows={2}
-      maxrows={6}
-    />
-        <img className="imageSelection" src={this.state.image}/>
+            value={this.state.highlighted}
+            multiLine={true}
+            rows={2}
+            maxrows={6}
+          />
+          <img className="imageSelection" src={this.state.image}/>
           <FloatingActionButton onClick={this.sendLink} className="addTo">
              <ContentAdd />
           </FloatingActionButton>
-        
         </form>
         <button className="logOut" onClick={this.props.logOutUser}>logout</button>
       </div>
