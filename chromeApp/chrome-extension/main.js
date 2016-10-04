@@ -111,6 +111,3 @@ class ChromeApp extends Component {
 }
 
 ReactDOM.render(<ChromeApp />, document.getElementById('content'));
-
-
-

@@ -24,6 +24,7 @@ class HyperspaceWorker extends Component {
       highlighted: '',
       image: ''
     };
+
     this.sendLink = this.sendLink.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
@@ -137,6 +138,7 @@ class HyperspaceWorker extends Component {
   }
 
   handleSelectChange(e) {
+    e.preventDefault();
     this.setState({
       category: e.target.innerHTML
     });
@@ -144,13 +146,10 @@ class HyperspaceWorker extends Component {
 
 
   render () {
-    console.log('STATE CATEGORY IS', this.state.category);
-
     return (
       <div className="workerBody">
         <h5 className="welcome">welcome, {this.state.username}</h5>
         <p className="workerPrompt">add to your hyperspace:</p>
-        <h3 className="hyperUrl"></h3>
         <form className="addLinkForm">
           <SelectField 
             floatingLabelText="Category" 
@@ -172,10 +171,10 @@ class HyperspaceWorker extends Component {
             maxrows={6}
           />
           <img className="imageSelection" src={this.state.image}/>
+        </form>
           <FloatingActionButton onClick={this.sendLink} className="addTo">
              <ContentAdd />
           </FloatingActionButton>
-        </form>
         <button className="logOut" onClick={this.props.logOutUser}>logout</button>
       </div>
     );
