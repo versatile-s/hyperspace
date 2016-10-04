@@ -131,3 +131,9 @@ p.failedLoginPrompt {
 img.imageSelection {
     max-width: 333px;
 }
+
+.miniMenu {
+    position: absolute !important;
+    right: 0px;
+    top: 5px;
+}

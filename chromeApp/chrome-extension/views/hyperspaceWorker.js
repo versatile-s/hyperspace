@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import ChipInput from 'material-ui-chip-input';
 import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+
 
 
 class HyperspaceWorker extends Component {
@@ -147,6 +151,13 @@ class HyperspaceWorker extends Component {
   render () {
     return (
       <div className="workerBody">
+        <IconMenu className="miniMenu"
+         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+         anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+         targetOrigin={{horizontal: 'left', vertical: 'top'}}
+        >
+           <MenuItem className="logout" onClick={this.props.logOutUser} primaryText="Logout" />
+         </IconMenu>
         <h5 className="welcome">welcome, {this.state.username}</h5>
         <p className="workerPrompt">add to your hyperspace:</p>
           <SelectField 
@@ -155,6 +166,7 @@ class HyperspaceWorker extends Component {
             onChange={this.handleSelectChange} 
             selected={this.state.category}>
               {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
+              <TextField/>
           </SelectField>
           <ChipInput
              floatingLabelText="Tags"
@@ -172,8 +184,7 @@ class HyperspaceWorker extends Component {
           <FloatingActionButton onClick={this.sendLink} className="addTo">
              <ContentAdd />
           </FloatingActionButton>
-        <button className="logOut" onClick={this.props.logOutUser}>logout</button>
-      </div>
+      </div> 
     );
   }
 }
