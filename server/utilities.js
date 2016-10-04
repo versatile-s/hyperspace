@@ -6,6 +6,7 @@ var CategoryPage = require('./db/db').CategoryPage;
 var Tag = require('./db/db').Tag;
 var HyperTag = require('./db/db').HyperTag;
 var bcrypt = require('bcrypt');
+var axios = require('axios');
 
 // encrypts password & creates new user in database
 var encrypt = function(req, res) {
@@ -105,15 +106,18 @@ var utils = {
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
+    console.log('STEP 1');
     // incoming tags req.body.tags
     var userId = 0;
     var hyperId = 0;
     var name = '';
+    var hyper = {};
     User.findOne({
       where: {
         username: req.body.username
       }
     }).then(function (user) {
+      console.log('STEP 2');
       userId = user.id;
       name = req.body.category || 'home';
       CategoryPage.findOne({
@@ -122,6 +126,7 @@ var utils = {
           UserId: userId
         }
       }).then(function(category) {
+        console.log('STEP 3');
         if (!category) {
           CategoryPage.create({
             name: name,
@@ -142,7 +147,19 @@ var utils = {
                 username: req.body.username,
                 CategoryPageId: category.id
               }).then(function (newHyper) {
-                // add tags
+                hyper = newHyper;
+                console.log('PRE-AXIOS......');
+                axios.post('localhost:9200/hyperspace/hypers', {
+                  id: hyper.id,
+                  url: hyper.url,
+                  title: hyper.title,
+                  description: hyper.description,
+                  CategoryPageId: hyper.CategoryPageId
+                }).then(function (response) {
+                  console.log('AXIOS RESPONSE', response);
+                }).catch(function (err) {
+                  console.log('ERROR! IT\'S SAD DAY! D=', err);
+                });
                 var givenTags = req.body.tags.split(',');
                 for (var i = 0; i < givenTags.length; i++) {
                   createTag(givenTags[i], newHyper.id);
@@ -159,7 +176,19 @@ var utils = {
             username: req.body.username,
             CategoryPageId: category.id
           }).then(function (newHyper) {
-            // add tags 
+            hyper = newHyper;
+            console.log('PRE-AXIOS......');
+            axios.post('http://localhost:9200/hyperspace/hypers', {
+              id: hyper.id,
+              url: hyper.url,
+              title: hyper.title,
+              description: hyper.description,
+              CategoryPageId: hyper.CategoryPageId
+            }).then(function (response) {
+              console.log('AXIOS RESPONSE', response);
+            }).catch(function (err) {
+              console.log('ERROR! IT\'S SAD DAY! D=', err);
+            });
             var givenTags = req.body.tags.split(',');
             for (var i = 0; i < givenTags.length; i++) {
               createTag(givenTags[i], newHyper.id);
