@@ -20,70 +20,69 @@ var path = require('path');
 /*********************************/
 /*********************************/
 // new user signup
+<<<<<<< f4ee7ce347459cb7cb8074d6b338a6d8fb6d7c11
+=======
+router.route('/signup')
+  .post(function (req, res) {
+    console.log('Received POST at /signup');
+    // if (utils.isAuth(req, res)) {
+    //   res.redirect('/dashboard');
+    //   console.log('redirect to dashboard');
+    // }
+    utils.createUser(req.body.username, req.body.password);
+    res.send('User created');
+  });
 
-module.exports = (router) => {
+// existing user login
+router.route('/login')
+  .post(function (req, res) {
+    utils.loginUser(req, res);
+  });
 
-  router.route('/signup')
-    .post(function (req, res) {
-      console.log('Received POST at /signup');
-      // if (utils.isAuth(req, res)) {
-      //   res.redirect('/dashboard');
-      //   console.log('redirect to dashboard');
-      // }
-      utils.createUser(req, res);
+router.route('/logout')
+  .get(function (req, res) {
+    console.log('Received GET at /logout');
+    utils.logoutUser(req, res);
+  });
 
-    });
-    // .get(function (req, res) {
-    //   console.log('Received GET at /signup');
-    //   if (utils.isAuth(req, res)) {
-    //     res.redirect('/dashboard');
-    //     console.log('redirect to dashboard');
-    //   }
-    // });
+router.route('/users')
+  .put(function (req, res) {
+    console.log('Received PUT at /users');
+    utils.updateUser(req, res);
+    console.log('User updated');
+  });
 
-  // existing user login
-  router.route('/login')
-    .post(function (req, res) {
-      utils.loginUser(req, res);
-    });
+/*********************************/
+/*********************************/
+      //CATEGORY PAGES//
+/*********************************/
+/*********************************/
 
-  router.route('/users')
-    .put(function (req, res) {
-      console.log('Received PUT at /users');
-      utils.updateUser(req, res);
-      console.log('User updated');
-    });
+router.route('/categoryData')
+  .post(function (req, res) {
+    console.log('Searching for categoryData');
+    utils.getCategoryData(req, res);
+  });
 
-  /*********************************/
-  /*********************************/
-        //CATEGORY PAGES//
-  /*********************************/
-  /*********************************/
+// view category
+router.route('/category')
+  .get(function (req, res) {
+    console.log('Received GET at /category');
+    res.send('Received GET at /category');
+  })
+// add category
+  .post(function (req, res) {
+    console.log('Received POST at /category');
+    utils.saveCategoryPage(req, res);
+    res.send('Received POST at /category');
+  })
+// update a category
+  .put(function (req, res) {
+    console.log('Received PUT at /category');
+    utils.updateCategoryPage(req, res);
+    res.send('Received PUT at /category');
+  });
 
-  router.route('/categoryData')
-    .post(function (req, res) {
-      console.log('Searching for categoryData');
-      utils.getCategoryData(req, res);
-    });
-
-  // view category
-  router.route('/category')
-    .get(function (req, res) {
-      console.log('Received GET at /category');
-      res.send('Received GET at /category');
-    })
-  // add category
-    .post(function (req, res) {
-      console.log('Received POST at /category');
-      utils.saveCategoryPage(req, res);
-      res.send('Received POST at /category');
-    })
-  // update a category
-    .put(function (req, res) {
-      console.log('Received PUT at /category');
-      utils.updateCategoryPage(req, res);
-      res.send('Received PUT at /category');
-    });
 
   /*********************************/
   /*********************************/
@@ -166,3 +165,4 @@ module.exports = (router) => {
   });
   return router;
 };
+

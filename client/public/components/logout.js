@@ -4,23 +4,20 @@ import { Link } from 'react-router';
 class Logout extends Component {
   constructor (props) {
     super(props);
-    this.login = this.login.bind(this);
-    this.handleUsername = this.handleUsername.bind(this);
-    this.handlePass = this.handlePass.bind(this);
     this.state = {
       username:'',
       password:'',
       failedLogin: false
     };
-    this.login = this.login.bind(this);
-    this.handleUsername = this.handleUsername.bind(this);
-    this.handlePass = this.handlePass.bind(this);
+    this.logout = this.logout.bind(this);
+    // this.handleUsername = this.handleUsername.bind(this);
+    // this.handlePass = this.handlePass.bind(this);
   }
 
-  login (e) {
+  logout (e) {
     e.preventDefault();
     var context = this;
-    fetch('/login', {
+    fetch('/logout', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -32,7 +29,7 @@ class Logout extends Component {
       })
     }).then((response) => {
       response.text().then((res) => {
-        if (res === 'Login successful!') {
+        if (res === 'Logout successful!') {
           context.props.history.username = context.state.username;
           context.props.history.push('/dashboard');
         } else {
@@ -67,7 +64,7 @@ class Logout extends Component {
         {this.state.failedLogin ? <p>The given information doesn't match our records, please enter information again.</p> : <p>Welcome to hyperspace. Login:</p>}
         <input onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
         <input onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
-        <input type="button" value="login" onClick={this.login} />
+        <input type="button" value="logout" onClick={this.logout} />
         <Link to="/signup"><button className="btn">Signup Screen</button></Link>
       </div>
     );

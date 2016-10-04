@@ -9,9 +9,6 @@ import FlatButton from 'material-ui/FlatButton';
 class Login extends Component {
   constructor (props) {
     super(props);
-    this.login = this.login.bind(this);
-    this.handleUsername = this.handleUsername.bind(this);
-    this.handlePass = this.handlePass.bind(this);
     this.state = {
       username:'',
       password:'',

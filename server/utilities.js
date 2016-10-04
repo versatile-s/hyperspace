@@ -50,7 +50,7 @@ var utils = {
       // if username doesn't exist
       if (!response) {
         // creates user
-        encrypt(req, res);        
+        encrypt(req, res);
       } else {
         // returns unsuccessful name selection to client
         res.send('Username exists');
@@ -84,10 +84,18 @@ var utils = {
         if (results.length === 1) {
           // if user exists, compare passwords
           comparePasswords(req, res, results[0].password);
+
         } else {
           res.status(400).send('Username not found');
         }
       });
+  },
+
+  logoutUser: function (req, res) {
+    console.log('ok we are in here logout user and req.session is ', req.session);
+    req.session.destroy(function() {
+      console.log('ok destroyed');
+    });
   },
 
   // HYPERS (Post request to /link)
@@ -295,7 +303,7 @@ var utils = {
         res.send(err);
       });
 
-   
+
     });
   },
 

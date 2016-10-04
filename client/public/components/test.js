@@ -57,7 +57,7 @@ export default class Test extends Component {
 
   logout (e) {
     e.preventDefault();
-    fetch('/logut', {
+    fetch('/logout', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -295,7 +295,7 @@ export default class Test extends Component {
       <div>
         <input type="button" value="POST at /signup" onClick={this.signup} />
         <input type="button" value="POST at /login" onClick={this.login} />
-        <input type="button" value="POST at /login" onClick={this.login} />
+        <input type="button" value="POST at /logout" onClick={this.logout} />
         <input type="button" value="PUT at /users" onClick={this.putUsers} />
         <input type="button" value="GET at /categories" onClick={this.getCategories} />
         <input type="button" value="POST at /categories" onClick={this.postCategories} />
