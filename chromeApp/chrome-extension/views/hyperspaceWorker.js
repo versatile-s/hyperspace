@@ -19,7 +19,8 @@ class HyperspaceWorker extends Component {
       title: null,
       category: '',
       tags: '',
-      selections: []
+      selections: [],
+      highlighted: ''
     };
     this.sendLink = this.sendLink.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -51,6 +52,8 @@ class HyperspaceWorker extends Component {
 
   sendLink (e) {
     e.preventDefault();    
+    this.handleHighlightedText();
+
     let username = this.state.username;
     let context = this;
 
@@ -64,18 +67,18 @@ class HyperspaceWorker extends Component {
         let tab = tabs[0];
         let url = tab.url;
         let title = tab.title;
+        let highlighted = context.state.highlighted;
         let category = 'cat';
         let tags = context.state.tags;
         console.log('TAGS TO BE SENT ARE', tags);
         let request = new XMLHttpRequest();
         request.open('POST', 'http://127.0.0.1:3000/link', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags + '&username=' + username));
+        request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags + '&username=' + username + '&highlighted=' + highlighted));
       });
     };
     
     getCurrentTabUrl();
-    this.handleHighlightedText();
   }
   
   handleInputChange(e) {
@@ -94,12 +97,16 @@ class HyperspaceWorker extends Component {
 
   handleHighlightedText() {
     var selectedText;
+    var context = this;
 
     chrome.tabs.executeScript({
       code: 'window.getSelection().toString();' 
     }, function (selection) {
       selectedText = selection[0];
       console.log('HIGHLIGHTED TEXT IS', selectedText);
+      context.setState({
+        highlighted: selectedText
+      });
     });
   }
 
