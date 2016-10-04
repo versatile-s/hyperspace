@@ -33,23 +33,23 @@ var CategoryPage = sequelize.define('CategoryPage', {
   preferences: { type: Sequelize.STRING }
 });
 
-// var Session = sequelize.define('Session', {
-//   sid: {
-//     type: Sequelize.STRING,
-//     primaryKey: true
-//   },
-//   //userId: Sequelize.STRING,
-//   expires: Sequelize.DATE,
-//   data: Sequelize.STRING
-// });
+var Session = sequelize.define('Session', {
+  sid: {
+    type: Sequelize.STRING,
+    primaryKey: true
+  },
+  //userId: Sequelize.STRING,
+  expires: Sequelize.DATE,
+  data: Sequelize.STRING
+});
 
 User.sync().then(function () {
   CategoryPage.belongsTo(User, {foreignKey: 'UserId'});
   CategoryPage.sync().then(function () {
     Hyper.belongsTo(CategoryPage, {foreignKey: 'CategoryPageId'});
     Hyper.sync().then(function() {
-      // Session.belongsTo(User, {foreignKey: 'UserId'});
-      // Session.sync();
+      Session.belongsTo(User, {foreignKey: 'UserId'});
+      Session.sync();
     });
   });
 });
