@@ -26,8 +26,8 @@ module.exports = (router) => {
     });
 
   router.route('/logout')
-    .delete(function (req, res) {
-      console.log('Received DELETE at /logout');
+    .get(function (req, res) {
+      console.log('Received GET at /logout');
       utils.logoutUser(req, res);
     });
 

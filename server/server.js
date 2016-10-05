@@ -26,7 +26,7 @@ server.use(session({
   store: new RedisStore({
     logErrors: true,
     host: 'localhost',
-    port: 3000,
+    port: 6379,
     client: client,
     ttl: 260
   })

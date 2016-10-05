@@ -101,9 +101,10 @@ var utils = {
 
 
   logoutUser: (req, res) => {
-    req.session.destroy(() => {
-      res.status(200).send('Great you are logged out');
-    });
+    console.log('within the logout util call');
+    req.session.destroy();
+    res.redirect('/login');
+    res.clearCookie(cookie, {path:'/'});
   },
 
 
