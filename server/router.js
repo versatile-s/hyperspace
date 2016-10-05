@@ -15,8 +15,7 @@ module.exports = (router) => {
       //   res.redirect('/dashboard');
       //   console.log('redirect to dashboard');
       // }
-      utils.createUser(req.body.username, req.body.password);
-      res.send('User created');
+      utils.createUser(req, res);
     });
 
 
@@ -144,11 +143,11 @@ module.exports = (router) => {
     res.sendFile(path.join(__dirname, '../client/bundle.js'));
   });
 
-  // 404 Fallback
+  //404 Fallback
   router.get('*', function(req, res) {
     // res.status(404).send('404, Sari Gurl');
     // console.log('HELLO THERE!');
     res.sendFile(path.join(__dirname, '../client/index.html' ));
   });
-  return router;
+  // return router;
 };

@@ -14,10 +14,11 @@ class Category extends Component {
     this.state = {
       username: this.props.params.user,
       categoryTitle: this.props.params.category,
-      data: []
+      data: [],
+      // currentVisitor: 'guest'
     };
 
-    this.isAuth = this.isAuth.bind(this);
+    // this.isAuth = this.isAuth.bind(this);
     this.categoryCall = this.categoryCall.bind(this);
     this.setCategory = this.setCategory.bind(this);
     this.updateViews = this.updateViews.bind(this);
@@ -25,13 +26,24 @@ class Category extends Component {
   }
 
   componentWillMount () {
-    this.listenForAuth();
-    this.isAuth();
+    // this.listenForAuth();
+    // this.isAuth();
     // Need to bear in mind the async nature here and only run
     this.categoryCall();
   }
 
   listenForAuth () {
+    document.getElementById('content').addEventListener('isAuth', function(eventResponse) {
+      var username = eventResponse.username;
+      if (this.state.username === username) {
+        this.setState({
+          currentVisitor: 'admin'
+        });
+      }
+      // we can add a 3rd option here, to change currentVisitor to 'hyperspaceUser' if the user is logged in but on another person's page
+      // we can add a 4th option here, to change currentVisitor to 'friend' if it is a logged in user who is friends with this person.
+      this.categoryCall();
+    });
   }
 
   setCategory(category) {

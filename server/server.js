@@ -5,18 +5,30 @@ var history = require('connect-history-api-fallback');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var utils = require('./utilities');
+var logger = require('morgan');
 
+var RedisStore = require('connect-redis')(session);
 var server = express();
 var router = require('./router');
 
+// // API Calls for AUTH Redirects
+// //require('./authenticationRoutes')(server, express);
+// require('./middleware.js')(server, express);
 
-
-// API Calls for AUTH Redirects
-//require('./authenticationRoutes')(server, express);
-require('./middleware.js')(server, express);
+// Populates req.session
+server.use(session({
+  resave: false, // don't save session if unmodified
+  saveUninitialized: true, // don't create session until something stored
+  secret: 'keyboard cat',
+  store: new RedisStore({
+    logErrors: true
+  })
+}));
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));
+server.use(logger('dev'));
+
 
 /*********************************/
 /*********************************/
@@ -39,9 +51,11 @@ server.get('*/styles.css', function (req, res) {
 server.get('/login', function(req, res) {
 
   if (utils.isAuth(req, res) === true) {
-    console.log('YOU ARE BEING REDIRECTED');
+    console.log('YOU ARE BEING REDIRECTED from isAuth');
+    console.log('NO AUTH HERE IS REQ.SESSION', req.session);
     res.redirect('/dashboard');
   } else {
+    console.log('YES AUTH HERE IS REQ.SESSION', req.session);
     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
   }
 });
@@ -73,10 +87,12 @@ server.use(history());
 server.use(express.static(path.join(__dirname, '../client/')));
 
 require('./router.js')(server);
+//server.use(history());
+
+
+//server.use(express.static(path.join(__dirname, '../client')));
 
 var port = process.env.port || 3000;
-
-
 server.listen(port, function() {
   console.log('Server is listening on port ' + port + '!');
 });

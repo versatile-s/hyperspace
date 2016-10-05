@@ -77,7 +77,7 @@ var utils = {
   },
 
   isAuth: function (req, res) {
-    if (req.session.login === true) {
+    if (req.session) {
       return true;
     } else {
       return false;
