@@ -42,6 +42,7 @@ class Side extends Component {
   }
 
   componentDidMount() {
+    console.log("side-this", this);
     this.getCategories();
 
   }
@@ -139,6 +140,8 @@ class Side extends Component {
         </div> 
         <div className="create-knob"> 
           <MakeCategory setCategory={this.props.setCategory} username={this.props.username}/>
+          {console.log("divthis-cat,uername", typeof this.props.setCategory, this.props.username)}
+          
         </div>
         <div className="hyper-knob">
           <HyperSearch />

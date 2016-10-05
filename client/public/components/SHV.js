@@ -82,9 +82,6 @@ class HyperSearch extends Component {
             </div>
           </IconMenu>
         </div> 
-        <div className="create-knob"> 
-          <MakeCategory setCategory={this.props.setCategory} username={this.props.username}/>
-        </div>
       </div>
     );
   }

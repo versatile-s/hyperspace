@@ -19,7 +19,9 @@ class MakeCategory extends Component {
     };
     this.makeNewCategory = this.makeNewCategory.bind(this);
     this.forceFocus = this.forceFocus.bind(this);
+    console.log('make category constructor this',this);
   }
+
 
 
   forceFocus(){
