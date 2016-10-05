@@ -109,7 +109,7 @@ class Bored extends Component {
     return (
       <div onClick={this.matterTest}>
         <p>hi</p>
-        <img src="./../assets/eye.jpg"/>
+        <img src="./../assets/horse.png"/>
       </div>
 
     

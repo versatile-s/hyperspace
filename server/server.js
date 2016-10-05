@@ -39,9 +39,9 @@ server.get('*/styles.css', function (req, res) {
 });
 
 //image serving work-around
-server.get('*/eye.jpg', function (req, res) {
-  res.sendFile(path.join(__dirname, '../client/assets/eye.jpg'));
-});
+// server.get('*/assets/*', function (req, res) {
+//   res.sendFile(path.join(__dirname, '../client/assets'));
+// });
 
 
 server.get('/login', function(req, res) {
@@ -78,11 +78,11 @@ server.get('/userCategories*', function (req, res) {
 
 server.use(history());
 
+server.use(express.static(path.join(__dirname, '../client/')));
 require('./router.js')(server);
 
 var port = process.env.port || 3000;
 
-server.use(express.static(path.join(__dirname, '../client')));
 
 server.listen(port, function() {
   console.log('Server is listening on port ' + port + '!');
