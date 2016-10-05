@@ -194,6 +194,21 @@ var utils = {
     });
   },
 
+  updateHyper: function (req, res) {
+    Hyper.findOne({
+      where: {
+        username: req.body.username,
+        title: req.body.title
+      }
+    }).then(function(hyper) {
+      console.log(hyper);
+      hyper.update({
+        views: req.body.views
+      });
+
+    });
+  },
+
   // This will save a category page. It only needs a name property at time of creation and potentially parentCategories
   saveCategoryPage: function (req, res) {
 
@@ -266,6 +281,7 @@ var utils = {
    
     });
   },
+
 
   getUserCategories: function (req, res) {
     // now using req.query to access, so params method chaining below is unnecessary

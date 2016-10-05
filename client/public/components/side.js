@@ -1,7 +1,15 @@
 import React, {Component} from 'react';
 import Router, { Link } from 'react-router';
 import { browserHistory } from 'react-router';
-
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton/IconButton';
+import ListIcon from 'material-ui/svg-icons/action/list';
+import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import ReactDOM from 'react-dom';
+import MakeCategory from './makeCategory';
 
 class Side extends Component {
   constructor (props) {
@@ -18,10 +26,13 @@ class Side extends Component {
 
     this.clickCategory = this.clickCategory.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.getCategories = this.getCategories.bind(this);
+
     this.makeNewCategory = this.makeNewCategory.bind(this);
     this.toggleSwitch = this.toggleSwitch.bind(this);
     this.elasticSearch = this.elasticSearch.bind(this);
+    this.forceFocus = this.forceFocus.bind(this);
+
   }
 
   clickCategory(e) {
@@ -34,9 +45,11 @@ class Side extends Component {
 
   componentDidMount() {
     this.getCategories();
+
   }
 
   getCategories () {
+    console.log("Gettttting");
     var context = this;
     fetch('/userCategories/?username=' + this.state.username, {
       headers: {
@@ -55,16 +68,11 @@ class Side extends Component {
     });
   }
 
-  focused (e) {
-    e.target.value = '';
-  }
-
-  handleChange(event) {
-    this.setState({newCategory: event.target.value});
-  }
-
   makeNewCategory(){
+
     var context = this;
+    var newCatName = this.refs.categoryInput.getValue();
+    console.log("catname",newCatName);
     fetch('/category', {
       method: 'POST',
       headers: {
@@ -73,12 +81,12 @@ class Side extends Component {
       },
       body: JSON.stringify({
         username: this.state.username,
-        name: this.state.newCategory
+        name: newCatName
       })
 
     }).then(function(){
-      browserHistory.push('/' + context.state.username + "/"+context.state.newCategory);
-      context.props.setCategory(context.state.newCategory);
+      browserHistory.push('/' + context.state.username + "/"+newCatName);
+      context.props.setCategory(newCatName);
       context.getCategories();
     });
 
@@ -91,6 +99,12 @@ class Side extends Component {
     this.setState({
       switch: !this.state.switch
     });
+  }
+
+  forceFocus(){
+    console.log(this);
+    this.refs.categoryInput.focus();
+    // ReactDOM.findDOMNode(this.refs.categoryInput).focus();
   }
 
   elasticSearch (e) {
@@ -196,8 +210,31 @@ class Side extends Component {
               </div>
             }
           </div>
+        <div className = "list-knob">
+          <IconMenu
+            onTouchTap={this.getCategories}
+            disableAutoFocus={true}
+            menuStyle={{width:250}}
+            touchTapCloseDelay={0}
+            initiallyKeyboardFocused={false}
+            iconButtonElement={<IconButton><ListIcon /></IconButton>}
+            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+            >
+            
+            <FlatButton label="My pages" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
+            {this.state.categories.map((category) => {
+              return (
+                <MenuItem focusState="none" disableAutoFocus={true} ref={category} onClick={this.clickCategory} primaryText={category}/>     
+              );
+            })}
+
+          </IconMenu>
+        </div> 
+        <div className="create-knob"> 
+          <MakeCategory setCategory={this.props.setCategory} username={this.props.username}/>
         </div>
-      </div>  
+      </div>
     );
   }
 }
