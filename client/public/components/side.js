@@ -20,7 +20,8 @@ class Side extends Component {
     this.toggleMenu = this.toggleMenu.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.makeNewCategory = this.makeNewCategory.bind(this);
-
+    this.toggleSwitch = this.toggleSwitch.bind(this);
+    this.elasticSearch = this.elasticSearch.bind(this);
   }
 
   clickCategory(e) {
@@ -91,6 +92,26 @@ class Side extends Component {
     });
   }
 
+  elasticSearch (e) {
+    e.preventDefault();
+    var context = this;
+    var text = e.target.value;
+    fetch('/searchLinks', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text: text
+      })
+    }).then(function (res) {
+      context.setState({
+        searchedHypers: res
+      });
+    });
+  }
+
   toggleMenu(){
     console.log("clicked");
     console.log(this.state.toggled);
@@ -151,7 +172,7 @@ class Side extends Component {
                       <th>Search Hypers</th>
                     </tr>
                     <tr>
-                      <input className="side-menu-text-box" onChange={this.elasticSearch} type="text" defaultValue="Search for hypers here!" onFocus={this.focused} />
+                      <input className="side-menu-text-box" onChange={this.elasticSearch} type="text" defaultValue="Search for titles, tags, or descriptions..." onFocus={this.focused} />
                     </tr>
                     {this.state.searchedHypers.map((hyper) => {
                       return (
