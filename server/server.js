@@ -7,7 +7,10 @@ var cookieParser = require('cookie-parser');
 var utils = require('./utilities');
 var logger = require('morgan');
 
+var redis = require('redis');
 var RedisStore = require('connect-redis')(session);
+var client = redis.createClient();
+
 var server = express();
 var router = require('./router');
 
@@ -21,7 +24,11 @@ server.use(session({
   saveUninitialized: true, // don't create session until something stored
   secret: 'keyboard cat',
   store: new RedisStore({
-    logErrors: true
+    logErrors: true,
+    host: 'localhost',
+    port: 3000,
+    client: client,
+    ttl: 260
   })
 }));
 
@@ -52,10 +59,10 @@ server.get('/login', function(req, res) {
 
   if (utils.isAuth(req, res) === true) {
     console.log('YOU ARE BEING REDIRECTED from isAuth');
-    console.log('NO AUTH HERE IS REQ.SESSION', req.session);
+    console.log('YES AUTH HERE IS REQ.SESSION', req.session);
     res.redirect('/dashboard');
   } else {
-    console.log('YES AUTH HERE IS REQ.SESSION', req.session);
+    console.log('NO AUTH HERE IS REQ.SESSION', req.session);
     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
   }
 });

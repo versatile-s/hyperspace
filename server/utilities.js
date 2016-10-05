@@ -77,7 +77,7 @@ var utils = {
   },
 
   isAuth: function (req, res) {
-    if (req.session.user) {
+    if (req.session) {
       return true;
     } else {
       return false;
@@ -91,6 +91,8 @@ var utils = {
         if (results.length === 1) {
           // if user exists, compare passwords
           comparePasswords(req, res, results[0].password);
+          req.session.key = results;
+          console.log(req.session);
         } else {
           res.status(400).send('Username not found');
         }
