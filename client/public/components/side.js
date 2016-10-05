@@ -87,6 +87,7 @@ class Side extends Component {
 
   toggleSwitch (e) {
     e.preventDefault();
+    console.log('changing this state switched');
     this.setState({
       switch: !this.state.switch
     });
@@ -94,6 +95,7 @@ class Side extends Component {
 
   elasticSearch (e) {
     e.preventDefault();
+    console.log('running elasticsearch function');
     var context = this;
     var text = e.target.value;
     fetch('/searchLinks', {
@@ -106,6 +108,7 @@ class Side extends Component {
         text: text
       })
     }).then(function (res) {
+      console.log('setting searchedHypers to: ', res);
       context.setState({
         searchedHypers: res
       });
@@ -176,13 +179,16 @@ class Side extends Component {
                     </tr>
                     {this.state.searchedHypers.map((hyper) => {
                       return (
-                        <tr>
-                          <td>
-                            <div className="hyper-details">
-
-                            </div>
-                          </td>
-                        </tr>
+                        <a href={hyper._source.url} target="_blank">
+                          <tr className="hyper-details">
+                            <td className="hyper-title">
+                              {hyper._source.title}                            
+                            </td>
+                            <td className="hyper-description">
+                              {hyper._source.description}
+                            </td>
+                          </tr>
+                        </a>
                       );
                     })}
                   </table>
