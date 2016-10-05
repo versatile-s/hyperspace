@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/versatile-s/hyperspace#readme",
   "dependencies": {
+    "axios": "^0.14.0",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "connect-history-api-fallback": "^1.3.0",

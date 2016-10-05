@@ -10,6 +10,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactDOM from 'react-dom';
 import MakeCategory from './makeCategory';
+import HyperSearch from './SHV';
 
 class Side extends Component {
   constructor (props) {
@@ -139,37 +140,12 @@ class Side extends Component {
         <div className="create-knob"> 
           <MakeCategory setCategory={this.props.setCategory} username={this.props.username}/>
         </div>
+        <div className="hyper-knob">
+          <HyperSearch />
+        </div>
       </div>
     );
   }
 }
 
 export default Side;
-        // <div className="knob" onClick={this.toggleMenu}>
-        //   <p className="knob-title">menu</p>
-        // </div>
-        // <div className={this.state.toggled ? "side-menu" : "blank"}>
-        //   <div className="side-menu-title">
-        //     <div className="side-menu-category-list">
-        //       <table className="category-table">
-        //         <tr>
-        //           <th>My Categories</th>
-        //         </tr>
-        //         {this.state.categories.map((category) => {
-        //           return (
-        //             <tr>
-        //               <td className="side-menu-category" ref={category} onClick={this.clickCategory} >{category}</td>
-        //             </tr>
-        //           );
-        //         })}
-        //       </table>
-        //     </div>
-        //     <div className="side-menu-search-container">
-        //     Add new Category
-        //       <div className="side-menu-search">
-        //         <input className="side-menu-text-box" onChange={this.handleChange} type="text" defaultValue="New Category Title" onFocus={this.focused} />
-        //       </div>
-        //       <button onClick={this.makeNewCategory}>Create new category page</button>
-        //     </div>
-        //   </div>
-        // </div>

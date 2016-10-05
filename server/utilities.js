@@ -4,6 +4,7 @@ var User = require('./db/db').User;
 var Hyper = require('./db/db').Hyper;
 var CategoryPage = require('./db/db').CategoryPage;
 var bcrypt = require('bcrypt');
+var axios = require('axios');
 
 // encrypts password & creates new user in database
 var encrypt = function(req, res) {
@@ -91,42 +92,49 @@ var utils = {
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
+    var tags = req.body.tags.replace(/,/g, " ").toLowerCase();
     var userId = 0;
-
+    var hyperId = 0;
+    var name = '';
+    var hyper = {};
     User.findOne({
       where: {
         username: req.body.username
       }
     }).then(function (user) {
-      console.log("user:", user);
       userId = user.id;
-      var name = req.body.category || 'home';
+      name = req.body.category || 'home';
       CategoryPage.findOne({
         where: {
           name: name,
-          UserId: user.id
+          UserId: userId
         }
       }).then(function(category) {
-        console.log("category found:", category);
         if (!category) {
-          CategoryPage.create({
+          return CategoryPage.create({
             name: name,
             parentCategory: req.body.parents,
             UserId: userId
-          }).then(function () {
-            return CategoryPage.findOne({
-              where: {
-                name: name,
-                UserId: userId
-              }
-            }).then(function (category) {
-              return Hyper.create({
-                url: req.body.url,
-                title: req.body.title,
-                description: req.body.description,
-                image: req.body.image,
-                username: req.body.username,
-                CategoryPageId: category.id
+          }).then(function (category) {
+            return Hyper.create({
+              url: req.body.url,
+              title: req.body.title,
+              description: req.body.description,
+              image: req.body.image,
+              username: req.body.username,
+              tags: tags,
+              CategoryPageId: category.id
+            }).then(function (newHyper) {
+              hyper = newHyper;
+              axios.post('localhost:9200/hyperspace/hypers', {
+                id: hyper.id,
+                url: hyper.url,
+                title: hyper.title,
+                description: hyper.description,
+                tags: tags,
+                CategoryPageId: hyper.CategoryPageId
+              }).then(function (response) {
+              }).catch(function (err) {
               });
             });
           });
@@ -137,10 +145,52 @@ var utils = {
             description: req.body.description,
             image: req.body.image,
             username: req.body.username,
+            tags: tags,
             CategoryPageId: category.id
+          }).then(function (newHyper) {
+            hyper = newHyper;
+            axios.post('http://localhost:9200/hyperspace/hypers', {
+              id: hyper.id,
+              url: hyper.url,
+              title: hyper.title,
+              description: hyper.description,
+              tags: tags,
+              CategoryPageId: hyper.CategoryPageId
+            }).then(function (response) {
+            }).catch(function (err) {
+            });
           });
         }
       });
+    });
+  },
+
+  searchHypers: function (req, res) {
+    var text = req.body.text.replace(/[^\w\s!?]/g,'').toLowerCase().split(' ').join(',');
+    var queryString = '';
+    for (var i = 0; i < text.length; i++) {
+      if (i === 0 && text.charAt(i) === ',') {
+        continue;
+      }
+      if (i === text.length-1 && text.charAt(i) === ',') {
+        continue;
+      }
+      if (text.charAt(i) === ',' && text.charAt(i+1) === ',') {
+        continue;
+      }
+      if (text.charAt(i) === ',') {
+        queryString += '&';
+      } else {
+        queryString += text.charAt(i);
+      }
+    }
+    console.log('About to Axios...');
+    axios.get('http://localhost:9200/hyperspace/hypers/_search?q=' + queryString, {
+    }).then(function (response) {
+      var hits = response.data.hits.hits;
+      res.send(hits);
+    }).catch(function (err) {
+      console.log('Error! It\'s sad day! D=', err)
     });
   },
 
@@ -158,7 +208,6 @@ var utils = {
 
     });
   },
-
 
   // This will save a category page. It only needs a name property at time of creation and potentially parentCategories
   saveCategoryPage: function (req, res) {
@@ -205,7 +254,6 @@ var utils = {
   },
 
   getCategoryData: function (req, res) {
-    console.log("username/categorytitle", req.body.username, req.body.categoryTitle);
     User.findOne({
       where: {
         username: req.body.username
