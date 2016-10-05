@@ -37,6 +37,13 @@ server.get('*/reset.css', function (req, res) {
 server.get('*/styles.css', function (req, res) {
   res.sendFile(path.join(__dirname, '../client/styles/styles.css'));
 });
+
+//image serving work-around
+server.get('*/eye.jpg', function (req, res) {
+  res.sendFile(path.join(__dirname, '../client/assets/eye.jpg'));
+});
+
+
 server.get('/login', function(req, res) {
 
   if (utils.isAuth(req, res) === true) {
@@ -46,6 +53,7 @@ server.get('/login', function(req, res) {
     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
   }
 });
+
 server.get('/signup', function(req, res) {
   if (utils.isAuth(req, res) === true) {
     console.log('YOU ARE BEING REDIRECTED');

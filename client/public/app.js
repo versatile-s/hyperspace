@@ -13,6 +13,7 @@ import Category from './components/category';
 import Side from './components/side';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Bored from './components/bored';
 
 class App extends Component {
   constructor (props) {
@@ -33,6 +34,7 @@ class App extends Component {
         <Route path='/dashboard' component={Dashboard}/>
         <Route path='/:user/:category' component={Category} />
         <Route path='/test' component={Test} />
+        <Route path='/bored' component={Bored}/>
       </Router>
       </MuiThemeProvider>
     );
