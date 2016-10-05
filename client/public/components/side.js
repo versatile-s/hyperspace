@@ -10,6 +10,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactDOM from 'react-dom';
 import MakeCategory from './makeCategory';
+import HyperSearch from './SHV';
 
 class Side extends Component {
   constructor (props) {
@@ -138,6 +139,9 @@ class Side extends Component {
         </div> 
         <div className="create-knob"> 
           <MakeCategory setCategory={this.props.setCategory} username={this.props.username}/>
+        </div>
+        <div className="hyper-knob">
+          <HyperSearch />
         </div>
       </div>
     );

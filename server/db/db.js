@@ -39,7 +39,8 @@ User.sync().then(function () {
   CategoryPage.belongsTo(User, {foreignKey: 'UserId'});
   CategoryPage.sync().then(function () {
     Hyper.belongsTo(CategoryPage, {foreignKey: 'CategoryPageId'});
-    Hyper.sync();
+    Hyper.sync().then(function () {
+    });
   });
 });
 
@@ -55,5 +56,3 @@ module.exports.sequelize = sequelize;
 module.exports.User = User;
 module.exports.Hyper = Hyper;
 module.exports.CategoryPage = CategoryPage;
-
-

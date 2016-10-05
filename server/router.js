@@ -91,11 +91,11 @@ module.exports = (router) => {
   /*********************************/
   /*********************************/
   // add tag to category
-  router.route('/addTag')
-    .post(function (req, res) {
-      console.log('Received POST at /addTag');
-      res.send('Received POST at /addTag');
-    });
+  // router.route('/addTag')
+  //   .post(function (req, res) {
+  //     console.log('Received POST at /addTag');
+  //     res.send('Received POST at /addTag');
+  //   });
 
   /*********************************/
   /*********************************/
@@ -119,8 +119,8 @@ module.exports = (router) => {
   // search links
   router.route('/searchLinks')
     .post(function (req, res) {
-      console.log('Received POST at /searchLinks');
-      res.send('Received POST at /searchLinks');
+      console.log('Received GET at /searchLinks');
+      utils.searchHypers(req, res);
     });
 
 
