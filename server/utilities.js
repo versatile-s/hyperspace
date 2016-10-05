@@ -179,12 +179,19 @@ var utils = {
         continue;
       }
       if (text.charAt(i) === ',') {
-        queryString += ' OR ';
+        queryString += '&';
       } else {
         queryString += text.charAt(i);
       }
     }
-    
+    console.log('About to Axios...');
+    axios.get('http://localhost:9200/hyperspace/hypers/_search?q=' + queryString, {
+    }).then(function (response) {
+      var hits = response.data.hits.hits;
+      res.send(hits);
+    }).catch(function (err) {
+      console.log('Error! It\'s sad day! D=', err)
+    });
   },
 
   // This will save a category page. It only needs a name property at time of creation and potentially parentCategories

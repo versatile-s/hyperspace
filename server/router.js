@@ -118,7 +118,7 @@ module.exports = (router) => {
   // search links
   router.route('/searchLinks')
     .post(function (req, res) {
-      console.log('Received POST at /searchLinks');
+      console.log('Received GET at /searchLinks');
       utils.searchHypers(req, res);
     });
 
