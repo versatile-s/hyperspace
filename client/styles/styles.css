@@ -40,6 +40,13 @@
   right: -10px;
   opacity: .2;
 }
+.hyper-knob{
+  z-index: 100;
+  position: fixed;
+  top: 55px;
+  right: -10px;
+  opacity: .2;
+}
 .create-knob{
   z-index: 100;
   position: fixed;

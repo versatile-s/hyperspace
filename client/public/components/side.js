@@ -10,6 +10,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactDOM from 'react-dom';
 import MakeCategory from './makeCategory';
+import HyperSearch from './SHV';
 
 class Side extends Component {
   constructor (props) {
@@ -19,9 +20,8 @@ class Side extends Component {
 
       categories: [],
       toggled: false,
-      newCategory:'',
-      searchedHypers: [],
-      switch: true 
+      newCategory:''
+ 
     };
 
     this.clickCategory = this.clickCategory.bind(this);
@@ -29,8 +29,6 @@ class Side extends Component {
     this.getCategories = this.getCategories.bind(this);
 
     this.makeNewCategory = this.makeNewCategory.bind(this);
-    this.toggleSwitch = this.toggleSwitch.bind(this);
-    this.elasticSearch = this.elasticSearch.bind(this);
     this.forceFocus = this.forceFocus.bind(this);
 
   }
@@ -93,41 +91,13 @@ class Side extends Component {
 
   }
 
-  toggleSwitch (e) {
-    e.preventDefault();
-    console.log('changing this state switched');
-    this.setState({
-      switch: !this.state.switch
-    });
-  }
-
   forceFocus(){
     console.log(this);
     this.refs.categoryInput.focus();
     // ReactDOM.findDOMNode(this.refs.categoryInput).focus();
   }
 
-  elasticSearch (e) {
-    e.preventDefault();
-    console.log('running elasticsearch function');
-    var context = this;
-    var text = e.target.value;
-    fetch('/searchLinks', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        text: text
-      })
-    }).then(function (res) {
-      console.log('setting searchedHypers to: ', res);
-      context.setState({
-        searchedHypers: res
-      });
-    });
-  }
+
 
   toggleMenu(){
     console.log("clicked");
@@ -146,70 +116,6 @@ class Side extends Component {
   render () {
     return (
       <div>
-        <div className="knob" onClick={this.toggleMenu}>
-          <p className="knob-title">menu</p>
-        </div>
-        <div className={this.state.toggled ? "side-menu" : "blank"}>
-          <div className="button-wrapper">
-            {this.state.switch ? 
-              <button className="switch-button" onClick={this.toggleSwitch}>Search Hypers</button> :
-              <button className="switch-button" onClick={this.toggleSwitch}>View My Pages</button>
-            }
-          </div>
-          <div className="side-menu-title">
-            {this.state.switch ?
-              <div className="container">
-                <div className="side-menu-category-list">
-                  <table className="category-table">
-                    <tr>
-                      <th>My Categories</th>
-                    </tr>
-                    {this.state.categories.map((category) => {
-                      return (
-                        <tr>
-                          <td className="side-menu-category" ref={category} onClick={this.clickCategory} >{category}</td>
-                        </tr>
-                      );
-                    })}
-                  </table>
-                </div>
-                <div className="side-menu-search-container">
-                Add new Category
-                  <div className="side-menu-search">
-                    <input className="side-menu-text-box" onChange={this.handleChange} type="text" defaultValue="New Category Title" onFocus={this.focused} />
-                  </div>
-                  <button onClick={this.makeNewCategory}>Create new category page</button>
-                </div>
-              </div>
-              :
-              <div className="container">
-                <div className="side-menu-category-list">
-                  <table className="category-table">
-                    <tr>
-                      <th>Search Hypers</th>
-                    </tr>
-                    <tr>
-                      <input className="side-menu-text-box" onChange={this.elasticSearch} type="text" defaultValue="Search for titles, tags, or descriptions..." onFocus={this.focused} />
-                    </tr>
-                    {this.state.searchedHypers.map((hyper) => {
-                      return (
-                        <a href={hyper._source.url} target="_blank">
-                          <tr className="hyper-details">
-                            <td className="hyper-title">
-                              {hyper._source.title}                            
-                            </td>
-                            <td className="hyper-description">
-                              {hyper._source.description}
-                            </td>
-                          </tr>
-                        </a>
-                      );
-                    })}
-                  </table>
-                </div>
-              </div>
-            }
-          </div>
         <div className = "list-knob">
           <IconMenu
             onTouchTap={this.getCategories}
@@ -233,6 +139,9 @@ class Side extends Component {
         </div> 
         <div className="create-knob"> 
           <MakeCategory setCategory={this.props.setCategory} username={this.props.username}/>
+        </div>
+        <div className="hyper-knob">
+          <HyperSearch />
         </div>
       </div>
     );
