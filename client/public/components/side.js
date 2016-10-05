@@ -11,8 +11,9 @@ class Side extends Component {
 
       categories: [],
       toggled: false,
-      newCategory:''
- 
+      newCategory:'',
+      searchedHypers: [],
+      switch: true 
     };
 
     this.clickCategory = this.clickCategory.bind(this);
@@ -83,7 +84,12 @@ class Side extends Component {
 
   }
 
-
+  toggleSwitch (e) {
+    e.preventDefault();
+    this.setState({
+      switch: !this.state.switch
+    });
+  }
 
   toggleMenu(){
     console.log("clicked");
@@ -106,28 +112,62 @@ class Side extends Component {
           <p className="knob-title">menu</p>
         </div>
         <div className={this.state.toggled ? "side-menu" : "blank"}>
+          <div className="button-wrapper">
+            {this.state.switch ? 
+              <button className="switch-button" onClick={this.toggleSwitch}>Search Hypers</button> :
+              <button className="switch-button" onClick={this.toggleSwitch}>View My Pages</button>
+            }
+          </div>
           <div className="side-menu-title">
-            <div className="side-menu-category-list">
-              <table className="category-table">
-                <tr>
-                  <th>My Categories</th>
-                </tr>
-                {this.state.categories.map((category) => {
-                  return (
+            {this.state.switch ?
+              <div className="container">
+                <div className="side-menu-category-list">
+                  <table className="category-table">
                     <tr>
-                      <td className="side-menu-category" ref={category} onClick={this.clickCategory} >{category}</td>
+                      <th>My Categories</th>
                     </tr>
-                  );
-                })}
-              </table>
-            </div>
-            <div className="side-menu-search-container">
-            Add new Category
-              <div className="side-menu-search">
-                <input className="side-menu-text-box" onChange={this.handleChange} type="text" defaultValue="New Category Title" onFocus={this.focused} />
+                    {this.state.categories.map((category) => {
+                      return (
+                        <tr>
+                          <td className="side-menu-category" ref={category} onClick={this.clickCategory} >{category}</td>
+                        </tr>
+                      );
+                    })}
+                  </table>
+                </div>
+                <div className="side-menu-search-container">
+                Add new Category
+                  <div className="side-menu-search">
+                    <input className="side-menu-text-box" onChange={this.handleChange} type="text" defaultValue="New Category Title" onFocus={this.focused} />
+                  </div>
+                  <button onClick={this.makeNewCategory}>Create new category page</button>
+                </div>
               </div>
-              <button onClick={this.makeNewCategory}>Create new category page</button>
-            </div>
+              :
+              <div className="container">
+                <div className="side-menu-category-list">
+                  <table className="category-table">
+                    <tr>
+                      <th>Search Hypers</th>
+                    </tr>
+                    <tr>
+                      <input className="side-menu-text-box" onChange={this.elasticSearch} type="text" defaultValue="Search for hypers here!" onFocus={this.focused} />
+                    </tr>
+                    {this.state.searchedHypers.map((hyper) => {
+                      return (
+                        <tr>
+                          <td>
+                            <div className="hyper-details">
+
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </table>
+                </div>
+              </div>
+            }
           </div>
         </div>
       </div>  
