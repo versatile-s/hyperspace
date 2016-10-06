@@ -141,7 +141,7 @@ class Side extends Component {
           <MakeCategory setCategory={this.props.setCategory} username={this.props.username}/>
         </div>
         <div className="hyper-knob">
-          <HyperSearch />
+          <HyperSearch username={this.state.username}/>
         </div>
       </div>
     );
