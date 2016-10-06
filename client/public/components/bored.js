@@ -147,11 +147,11 @@ class Bored extends Component {
       //   max:{x:400, y:400}
       // }
     });
-    var boxArray=[];
-    for(var i = 0; i < 10; i ++){
-      var box = Bodies.rectangle(300,300,40,40);
-      boxArray.push(box);
-    }
+    // var boxArray=[];
+    // for(var i = 0; i < 10; i ++){
+    //   var box = Bodies.rectangle(300,300,40,40);
+    //   boxArray.push(box);
+    // }
     // create two boxes and a ground
     var fart= 3;
     // Matter.Composites.stack(xx, yy, columns, rows, columnGap, rowGap, callback)
@@ -165,10 +165,7 @@ class Bored extends Component {
       
     });
     console.log(stack);
-    // stack.body.fillStyle="#FFFFFF";
-    // var abox = Bodies.rectangle(15,15,15,15);
-    // abox.force.x=-.1;
-    // abox.force.y=..5;
+
 
 
     
@@ -194,8 +191,8 @@ class Bored extends Component {
   
     });
     
-    var itemsToAdd= [ wallL, wallR, floor, ceil,stack, mouseConstraint]
-    itemsToAdd=itemsToAdd.concat(boxArray);
+    var itemsToAdd= [ wallL, wallR, floor, ceil,stack, mouseConstraint];
+    // itemsToAdd=itemsToAdd.concat(boxArray);
     // render.mouse = mouseConstraint.mouse;
     // add all of the bodies to the world
     World.add(engine.world, itemsToAdd);

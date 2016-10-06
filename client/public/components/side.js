@@ -4,14 +4,17 @@ import { browserHistory } from 'react-router';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton/IconButton';
-import ListIcon from 'material-ui/svg-icons/action/list';
+import SettingsIcon from 'material-ui/svg-icons/action/settings';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactDOM from 'react-dom';
 import MakeCategory from './makeCategory';
 import HyperSearch from './SHV';
-
+import FriendList from './friendList';
+import MyCategories from './myCategories';
+import ListIcon from 'material-ui/svg-icons/action/list';
+import BoredIcon from 'material-ui/svg-icons/hardware/videogame-asset';
 class Side extends Component {
   constructor (props) {
     super(props);
@@ -24,6 +27,7 @@ class Side extends Component {
       newCategory:''
  
     };
+    console.log("sideusername", this.state.username);
 
     this.clickCategory = this.clickCategory.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
@@ -117,39 +121,26 @@ class Side extends Component {
 
   render () {
     return (
-      <div>
-        <div className = "list-knob">
-          <IconMenu
-            onTouchTap={this.getCategories}
-            disableAutoFocus={true}
-            menuStyle={{width:250}}
-            touchTapCloseDelay={0}
-            initiallyKeyboardFocused={false}
-            iconButtonElement={<IconButton><ListIcon /></IconButton>}
-            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-            targetOrigin={{horizontal: 'right', vertical: 'top'}}
-            >
-            
-            <FlatButton label="My pages" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-            {this.state.categories.map((category) => {
-              return (
-                <MenuItem focusState="none" disableAutoFocus={true} ref={category} onClick={this.clickCategory} primaryText={category}/>     
-              );
-            })}
+     
+      <div className = "list-knob">
+        <IconMenu
+          disableAutoFocus={true}
+          menuStyle={{width:0, opacity:.2}}
+          touchTapCloseDelay={0}
+          initiallyKeyboardFocused={false}
+          iconButtonElement={<IconButton><SettingsIcon /></IconButton>}
+          anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+          targetOrigin={{horizontal: 'right', vertical: 'top'}}
+          >
 
-          </IconMenu>
-        </div> 
-        <div className="create-knob"> 
-          <MakeCategory setCategory={this.props.setCategory} username={this.props.username}/>
-          
-          
-        </div>
-        <div className="hyper-knob">
-          <HyperSearch username={this.state.username}/>
-        </div>
-        <div className="bored-knob">
-         <a href={"/"+this.state.username+"/"+this.state.categoryTitle+"/bored"}><IconButton><ListIcon /></IconButton></a>
-        </div>
+            <MyCategories username={this.state.username}/>
+            <MakeCategory setCategory={this.props.setCategory} username={this.props.username}/>
+            <HyperSearch username={this.state.username}/>
+            <FriendList username={this.state.username}/>
+            <a href={"/"+this.state.username+"/"+this.state.categoryTitle+"/bored"}><IconButton iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton></a>
+
+        </IconMenu>
+        
       </div>
     );
   }
