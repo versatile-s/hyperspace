@@ -11,11 +11,23 @@
 	  "default_title": "hyperspace!"
 	},
 
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": true
+	},
+
+	"externally_connectable": {
+		"matches": ["*localhost:3000*"]
+	},
+
 	"permissions": [
 		"activeTab",
 		"tabs",
 		"https://ajax.googleapis.com/",
 		"*://*/*",
-		"storage"
+		"storage",
+		"nativeMessaging",
+		"http://localhost/",
+		"*localhost*"
 	]
 }
