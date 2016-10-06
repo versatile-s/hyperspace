@@ -21,7 +21,21 @@ class Login extends Component {
     this.login = this.login.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
-        this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
+  }
+
+  componentWillMount () {
+    const chromeExtensionId = 'ojfphmbcbojldkhanmckikiachebhnba';
+
+    // Make a simple request:
+    setInterval( 
+      function () {
+        chrome.runtime.sendMessage(chromeExtensionId, {message: 'message'},
+        function (response) {
+          console.log('sending MESSAGE');
+          console.log('AND RESPONSE IS', response);
+        });
+      }, 2000);
   }
 
   login (e) {

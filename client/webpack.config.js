@@ -5,6 +5,10 @@ module.exports = {
   entry: './main.js',
   output: {path: __dirname, filename: 'bundle.js'},
   watch: true,
+  resolve: {
+    extensions: ['', '.jsx', '.scss', '.js', '.json', '.md'],    
+  },
+
   module: {
     loaders: [
       {
@@ -14,8 +18,12 @@ module.exports = {
         query: {
           presets: ['es2015', 'react']
         }
+      },
+      {
+        test: /\.css$/,
+        loader: 'style!css?modules',
+        include: /flexboxgrid/,
       }
-
     ]
   },
 };
