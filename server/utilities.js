@@ -110,8 +110,13 @@ var utils = {
   logoutUser: (req, res) => {
     console.log('within the logout util call');
     req.session.destroy();
-    res.redirect('/login');
-    res.clearCookie(cookie, {path:'/'});
+      // console.log('right inside of the destroy req.session is ', req.session)
+      // //res.redirect('/login');
+      // res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
+    // });
+    console.log('right outside of the destroy req.session is ', req.session);
+    res.status(200).send('logout successful');
+    //res.clearCookie(cookie, {path:'/'});
   },
 
 

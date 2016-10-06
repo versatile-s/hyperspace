@@ -59,6 +59,11 @@ server.get('*/styles.css', function (req, res) {
 // This servers for all of our session based authorization for example.
 require('./authenticationRoutes')(server);
 
+server.route('/logout')
+    .get(function (req, res) {
+      console.log('YOOOOOO Received GET at /logout but only in server file');
+      utils.logoutUser(req, res);
+    });
 
 // This should be moved to router file
 server.get('/userCategories*', function (req, res) {

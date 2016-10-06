@@ -26,7 +26,7 @@ module.exports = (router) => {
 
   router.route('/logout')
     .get(function (req, res) {
-      console.log('Received GET at /logout');
+      console.log('YOOOOOO Received GET at /logout');
       utils.logoutUser(req, res);
     });
 

@@ -59,12 +59,15 @@ export default class Test extends Component {
     e.preventDefault();
     fetch('/logout', {
       method: 'GET',
+      credentials: 'same-origin',
       headers: {
-        'Accept': 'application/json',
+        //'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
     }).then((response) => {
-      console.log(response);
+      if (response.status === 200) {
+        console.log('you have been logged out');
+      }
     })
     .catch((error) => {
       console.log('error: ', error);
