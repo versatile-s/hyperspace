@@ -13,6 +13,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Snackbar from 'material-ui/Snackbar';
 import FirstFiveCarousel from './firstFiveCarousel.js';
 import Checkbox from 'material-ui/Checkbox';
+import AutoComplete from 'material-ui/AutoComplete';
 
 
 class HyperspaceWorker extends Component {
@@ -31,7 +32,8 @@ class HyperspaceWorker extends Component {
       selectedImage: '',
       images: [],
       includeImage: false,
-      fullyLoaded: false
+      fullyLoaded: false,
+      tagStore: ['test', 'testing', 'testfuck']
     };
 
     this.sendLink = this.sendLink.bind(this);
@@ -160,6 +162,11 @@ class HyperspaceWorker extends Component {
     getCurrentTabUrl();
   }
   
+  handleExcerptUpdate(e) {
+    console.log('HANDLING EXCERPT UPDATE AND', e);
+    console.log('HANDLING EXCERPT UPDATE AND', e.target.innerHTML);
+  }
+
   handleInputChange(e) {
     this.setState({
       tags: e
@@ -180,7 +187,7 @@ class HyperspaceWorker extends Component {
 
   takeCurrentGalleryImage(e) {
     console.log('TAKING GALLERY GOING');
-    var curr = document.getElementsByClassName('.image-gallery-slide.center');
+    var curr = document.getElementsByClassName('.center');
     console.log(curr, 'CURRENT IS');
     this.setState({
       selectedImage: curr
@@ -189,6 +196,7 @@ class HyperspaceWorker extends Component {
 
 
   render () {
+    const context = this;
     return (
       <div className="workerBody">
         <IconMenu className="miniMenu"
@@ -211,6 +219,7 @@ class HyperspaceWorker extends Component {
              onRequestAdd={(chip) => handleAddChip(chip)}
              onRequestDelete={(chip) => handleDeleteChip(chip)}
              onChange={this.handleInputChange}
+             dataSource={this.state.tagStore}
           />
           <TextField floatingLabelText="Excerpt"
             value={this.state.highlighted}

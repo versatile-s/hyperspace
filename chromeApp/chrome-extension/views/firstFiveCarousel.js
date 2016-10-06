@@ -5,11 +5,15 @@ class FirstFiveCarousel extends React.Component {
 
   constructor (props) {
     super(props);
-    console.log(props, 'PROPS ARE');
+
+    this.state = {
+      counter: 0
+    };
   }
 
-  handleImageLoad(event) {
-    console.log('Image loaded ', event.target);
+
+  onSlide(index) {
+    console.debug('slid to index', index);
   }
 
   componentDidMount () {
@@ -32,8 +36,7 @@ class FirstFiveCarousel extends React.Component {
         showPlayButton={false}
         showIndex={true}
         showFullscreenButton={false}
-        onSlide={this.props.takeCurrentGalleryImage}
-        onImageLoad={this.handleImageLoad}/>
+        onSlide={this.onSlide.bind(this)} />
     );
   }
 }
