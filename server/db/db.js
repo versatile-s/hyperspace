@@ -35,8 +35,15 @@ var CategoryPage = sequelize.define('CategoryPage', {
   preferences: { type: Sequelize.STRING }
 });
 
+var Friend = sequelize.define('Friend', {
+  name: {type: Sequelize.STRING},
+  category: {type: Sequelize.STRING}
+});
+
 User.sync().then(function () {
   CategoryPage.belongsTo(User, {foreignKey: 'UserId'});
+  Friend.belongsTo(User, {foreignKey: 'UserId'});
+  Friend.sync();
   CategoryPage.sync().then(function () {
     Hyper.belongsTo(CategoryPage, {foreignKey: 'CategoryPageId'});
     Hyper.sync().then(function () {
@@ -56,3 +63,4 @@ module.exports.sequelize = sequelize;
 module.exports.User = User;
 module.exports.Hyper = Hyper;
 module.exports.CategoryPage = CategoryPage;
+module.exports.Friend = Friend;

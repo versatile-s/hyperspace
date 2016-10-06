@@ -15,6 +15,8 @@ import FriendList from './friendList';
 import MyCategories from './myCategories';
 import ListIcon from 'material-ui/svg-icons/action/list';
 import BoredIcon from 'material-ui/svg-icons/hardware/videogame-asset';
+import AddFriend from './addFriend';
+
 class Side extends Component {
   constructor (props) {
     super(props);
@@ -137,6 +139,7 @@ class Side extends Component {
             <MakeCategory setCategory={this.props.setCategory} username={this.props.username}/>
             <HyperSearch username={this.state.username}/>
             <FriendList username={this.state.username}/>
+            <AddFriend username={this.state.username}/>
             <a href={"/"+this.state.username+"/"+this.state.categoryTitle+"/bored"}><IconButton iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton></a>
 
         </IconMenu>

@@ -47,6 +47,16 @@
   right: -10px;
   opacity: .2;
 }
+.knob{
+  opacity: .2;
+}
+.friendList-knob{
+  z-index: 100;
+  position: fixed;
+  top: -10px;
+  right: 20px;
+  opacity: .2;
+}
 .hyper-knob{
   z-index: 100;
   position: fixed;
