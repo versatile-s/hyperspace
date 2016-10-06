@@ -86,7 +86,7 @@ var utils = {
   },
 
   isAuth: function (req, res) {
-    if (req.session) {
+    if (req.session.key) {
       return true;
     } else {
       return false;

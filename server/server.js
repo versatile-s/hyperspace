@@ -62,20 +62,20 @@ server.get('/login', function(req, res) {
     console.log('YOU ARE BEING REDIRECTED from isAuth');
     console.log('YES AUTH HERE IS REQ.SESSION', req.session);
     // res.redirect('/dashboard');
-    res.send(req.session);
+    res.redirect('/dashboard');
   } else {
     console.log('NO AUTH HERE IS REQ.SESSION', req.session);
     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
   }
 });
 
-server.get('/peh', function(req, res) {
+server.get('/', function(req, res) {
 
   if (utils.isAuth(req, res) === true) {
     console.log('YOU ARE BEING REDIRECTED from isAuth');
     console.log('YES AUTH HERE IS REQ.SESSION', req.session);
     // res.redirect('/dashboard');
-    res.send(req.session);
+    res.redirect('/dashboard');
   } else {
     console.log('NO AUTH HERE IS REQ.SESSION', req.session);
     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
