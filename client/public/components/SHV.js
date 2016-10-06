@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton/IconButton';
-import ListIcon from 'material-ui/svg-icons/action/list';
+import SearchIcon from 'material-ui/svg-icons/action/search';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -88,12 +88,13 @@ class HyperSearch extends Component {
       <div>
         <div className="knob-wrapper">
           <IconMenu
+            iconStyle={{opacity:.2, width:50}}
             onTouchTap={this.getCategories}
             disableAutoFocus={true}
             menuStyle={{width:250}}
             touchTapCloseDelay={0}
             initiallyKeyboardFocused={false}
-            iconButtonElement={<IconButton><ListIcon /></IconButton>}
+            iconButtonElement={<IconButton><SearchIcon /></IconButton>}
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >

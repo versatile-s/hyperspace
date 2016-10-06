@@ -1,55 +1,120 @@
 import React, {Component} from 'react';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton/IconButton';
-import ListIcon from 'material-ui/svg-icons/action/list';
-import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
+import Side from './side';
 import RaisedButton from 'material-ui/RaisedButton';
-import ReactDOM from 'react-dom';
-import { Loop, Stage, World, Body, Sprite } from 'react-game-kit';
+import TextField from 'material-ui/TextField';
+import Snackbar from 'material-ui/Snackbar';
+import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Matter from 'matter-js';
 
 class Bored extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      username: this.props.username,
- 
+      username: this.props.params.user,
+      categoryTitle: this.props.params.category,
+      data: [],
+      playing: false
     };
-
-  }
-  physicsInit (engine) {
-    const ground = Matter.Bodies.rectangle(
-      512 * 3, 448,
-      1024 * 3, 64,
-      {
-        isStatic: true,
-      }
-    );
-
-    const leftWall = Matter.Bodies.rectangle(
-      -64, 288,
-      64, 576,
-      {
-        isStatic: true,
-      }
-    );
-
-    const rightWall = Matter.Bodies.rectangle(
-      3008, 288,
-      64, 576,
-      {
-        isStatic: true,
-      }
-    );
-
-    Matter.World.addBody(engine.world, ground);
-    Matter.World.addBody(engine.world, leftWall);
-    Matter.World.addBody(engine.world, rightWall);
+    
+    this.categoryCall = this.categoryCall.bind(this);
+    this.setCategory = this.setCategory.bind(this);
+    this.updateViews = this.updateViews.bind(this);
+    this.sortData = this.sortData.bind(this);
+    this.play=this.play.bind(this);
   }
 
+  componentWillMount () {
+    this.categoryCall();
+  }
+  componentDidMount(){
+    this.play();
+  }
 
+  setCategory(category){
+    var context=this;
+    console.log("category param",category);
+    this.setState({
+      categoryTitle: category
+    },
+    function() {
+      console.log("state",this.state.categoryTitle);
+      context.categoryCall();
+    });  
+  }
+
+  updateViews (item) {
+    var context = this;
+    console.log(this.state.username);
+    item.views +=1;
+    fetch('/link', {
+      method:'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        title: item.title,  
+        views: item.views
+
+      })
+      
+    }).then(function(){
+      context.sortData();
+    });
+  }
+
+  sortData () {
+    var tempData = this.state.data.sort(function (a, b) {
+      return b.views - a.views;
+    });
+    this.setState({
+      data: tempData
+    });
+  }
+
+ 
+  categoryCall () {
+    var context = this;
+    fetch('/categoryData', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        categoryTitle: this.state.categoryTitle
+      })
+    }).then((response) => {
+      response.json().then(function (data) {
+        if (Array.isArray(data)) {
+          console.log("data from category call",data);
+          context.setState({
+            data: data
+          }, function(){
+            context.sortData();
+          });
+        } else {
+          context.setState({
+            data: [{title: "This category doesnt seem to have any links yet!"}]
+          });
+        }  
+      });
+    });
+  }
+  play(){
+    var context= this;
+    if(!context.state.playing){
+      console.log("gameon");
+      context.matterTest();
+    }  
+    this.setState({
+      playing: true
+    });
+  }
   matterTest() {
 
     // module aliases
@@ -58,79 +123,127 @@ class Bored extends Component {
     var World = Matter.World;
     var Bodies = Matter.Bodies;
     var Composites = Matter.Composites;
+    var Events = Matter.Events;
+    var Constraint = Matter.Constraint;
+
 
     // create an engine
-    var engine = Engine.create();
+    var engine = Engine.create({
+    
+    });
 
     // create a renderer
     var render = Render.create({
-      element: document.body,
-      engine: engine
-    });
+      element: document.getElementById("sandbox"),
+      engine: engine,
+      options: {  
+        width: window.innerWidth,
+        height: 400,
+      }
 
-    console.log(Bodies.rectangle(400, 200, 80, 80));
+      // },
+      // bounds: {
+      //   min:{ x:0, y:0},
+      //   max:{x:400, y:400}
+      // }
+    });
+    // var boxArray=[];
+    // for(var i = 0; i < 10; i ++){
+    //   var box = Bodies.rectangle(300,300,40,40);
+    //   boxArray.push(box);
+    // }
     // create two boxes and a ground
     var fart= 3;
     // Matter.Composites.stack(xx, yy, columns, rows, columnGap, rowGap, callback)
-    var stack = Composites.stack(200, 200, 4, fart, 10, 10, function(x, y) {
-      for(var i =0; i < 10; i ++){
-        return Bodies.rectangle(x, y, 20, 20);
+    var stack = Composites.stack(10, 10, 7, 1, 20, 20, function(x, y) {
+      var box1 =Bodies.rectangle(x, y, 100, 100, {restitution: 1});
+      console.log("box1", box1);
+      box1.render.fillStyle = "#FFFFFF";
+      box1.render.strokeStyle= "#FFFFFF";
+      return box1;
         
-      }
+      
     });
+    console.log(stack);
 
-    for (var i = 0; i < 20; i ++){
-      var abox = Bodies.rectangle(5,5,5,5);
-      abox.frictionAir=1;
-      World.add(engine.world, abox);
 
-    }
-    var boxB = Bodies.rectangle(450, 50, 80, 80);
-    var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
-    boxB.render.sprite.texture="/../../../assets/eye.jpg";
-    boxB.render.fillStyle= '#edc51e';
-    console.log(boxB);
 
+    
+    
+    var ceil = Bodies.rectangle(window.innerWidth/2, -45, window.innerWidth, 100,  { isStatic: true, render:{visible:false }});
+    var floor = Bodies.rectangle(window.innerWidth/2, 445, window.innerWidth, 100, { isStatic: true, render:{visible:false }});
+    var wallL = Bodies.rectangle(-45, 200, 100, 400, { isStatic: true, render:{visible:false }});
+    var wallR = Bodies.rectangle(window.innerWidth+45, 200, 100, 400,  { isStatic: true, render:{visible:false }});
+
+   
+    // boxB.render.sprite.texture="/../../../assets/eye.jpg";
+
+    engine.world.gravity.y=0;
+
+
+    var mouseConstraint = Matter.MouseConstraint.create(render.engine,{
+      element: render.canvas,
+      constraint: {
+        render: {
+          visible: false
+        }
+      }  
+  
+    });
+    
+    var itemsToAdd= [ wallL, wallR, floor, ceil,stack, mouseConstraint];
+    // itemsToAdd=itemsToAdd.concat(boxArray);
+    // render.mouse = mouseConstraint.mouse;
     // add all of the bodies to the world
-    World.add(engine.world, [boxB, ground,stack]);
+    World.add(engine.world, itemsToAdd);
+
+    // World.bounds = { min: { x: 0, y: 0}, max: { x: 400, y: 400 } };
+    // Events.on(mouseConstraint, "mousedown", function(){
+    //   console.log('hi');
+
+    // });
+    console.log("engine", engine);
+
+    // engine.world.bounds.min.x=0;
+    // engine.world.bounds.min.y=0;
+    // engine.world.bounds.max.x=400;
+    // engine.world.bounds.max.y=300; 
+    // Matter.Bounds.create(0,0,400,400);
+    console.log(engine);
 
     // run the engine
     Engine.run(engine);
 
+
     // run the renderer
-    console.log(render.options);
+    console.log("render",render);
     render.options.wireframes = false;
-    render.options.background = "http://www.freedigitalphotos.net/images/img/homepage/87357.jpg";
+    render.options.background = "#00FFFFFF";
+    // render.options.style.
+    render.options.hasBounds=true;
+    render.canvas.style.backgroundSize = "stretch";
+
     Render.run(render);
     
 
   }
-  render () {
-    return (
-      <div onClick={this.matterTest}>
-        <p>hi</p>
-        <img src="./../assets/horse.png"/>
-      </div>
 
-    
+  render () {
+    { var context = this; }
+    return (
+      <div>
+        <Side setCategory={this.setCategory} username={this.state.username}/> 
+         
+ 
+        <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
+        <FlatButton label={this.state.username+"  -  "+this.state.categoryTitle} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
+        <div id="sandbox" className="categoryPageContainer">
+       
+        </div>    
+      </div>
     );
   }
 }
 
-export default Bored;
-      // <Loop>
-      //   <Stage style={{ background: '#3a9bdc' }}>
-      //     <World onInit={this.physicsInit}>
-      //       <Body
-      //         args={[-100, 0, 0, 0]}
-      //         ref={(b) => { this.body = b; }}
-      //         >
-      //         <Sprite  
-      //           src="http://weknowyourdreams.com/images/ball/ball-05.jpg"
-                  
-      //                   />
 
-      //       </Body>  
-      //     </World>
-      //   </Stage>
-      // </Loop>
+export default Bored;

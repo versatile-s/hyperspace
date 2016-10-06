@@ -33,6 +33,13 @@
 .hyperImage{
 
 }
+.bored-knob{
+  z-index: 100;
+  position: fixed;
+  top: 80px;
+  right: -10px;
+  opacity: .2;
+}
 .list-knob{
   z-index: 100;
   position: fixed;
@@ -135,6 +142,6 @@
 
 .categoryPageContainer{
   height: 400px;
-  background-image: url(/../assets/catbackground.jpg);
+  background-image: url(/../../assets/catbackground.jpg);
   background-size: 100%;
 }
