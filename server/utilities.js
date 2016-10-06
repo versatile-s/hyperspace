@@ -30,11 +30,20 @@ var encrypt = function(req, res) {
   });
 };
 
-var comparePasswords = function(req, res, storedPass) {
+var comparePasswords = function(req, res, storedPass, userInfo) {
   // compares passwords for login
   if (bcrypt.compareSync(req.body.password, storedPass)) {
     // sends success response to client
-    res.send('Login successful!');
+    console.log('here is req.session within comparePASS', req.session);
+    console.log('here is userInfo within comparePASS', userInfo);
+    req.session.regenerate(function() {
+      req.session.key = userInfo;
+      console.log('inside of req.session.regenerate and req.session is ,', req.session);
+      res.send('Login successful!');
+    });
+    // req.session.key = userInfo;
+    // console.log('and here it is after we assign a key ', req.session);
+
   } else {
     // sends unsuccessful response to client
     res.status(400).send('Information provided does not match records.');
@@ -90,9 +99,7 @@ var utils = {
       .then(function (results) {
         if (results.length === 1) {
           // if user exists, compare passwords
-          comparePasswords(req, res, results[0].password);
-          req.session.key = results;
-          console.log(req.session);
+          comparePasswords(req, res, results[0].password, results);
         } else {
           res.status(400).send('Username not found');
         }

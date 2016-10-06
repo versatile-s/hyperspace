@@ -17,12 +17,14 @@ var router = require('./router');
 // // API Calls for AUTH Redirects
 // //require('./authenticationRoutes')(server, express);
 // require('./middleware.js')(server, express);
-
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ 'extended': false }));
 // Populates req.session
 server.use(session({
   resave: false, // don't save session if unmodified
-  saveUninitialized: true, // don't create session until something stored
+  saveUninitialized: false, // don't create session until something stored
   secret: 'keyboard cat',
+  name: 'Yosh Cookies',
   store: new RedisStore({
     logErrors: true,
     host: 'localhost',
@@ -32,8 +34,7 @@ server.use(session({
   })
 }));
 
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ 'extended': false }));
+
 server.use(logger('dev'));
 
 
@@ -60,7 +61,21 @@ server.get('/login', function(req, res) {
   if (utils.isAuth(req, res) === true) {
     console.log('YOU ARE BEING REDIRECTED from isAuth');
     console.log('YES AUTH HERE IS REQ.SESSION', req.session);
-    res.redirect('/dashboard');
+    // res.redirect('/dashboard');
+    res.send(req.session);
+  } else {
+    console.log('NO AUTH HERE IS REQ.SESSION', req.session);
+    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
+  }
+});
+
+server.get('/peh', function(req, res) {
+
+  if (utils.isAuth(req, res) === true) {
+    console.log('YOU ARE BEING REDIRECTED from isAuth');
+    console.log('YES AUTH HERE IS REQ.SESSION', req.session);
+    // res.redirect('/dashboard');
+    res.send(req.session);
   } else {
     console.log('NO AUTH HERE IS REQ.SESSION', req.session);
     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));

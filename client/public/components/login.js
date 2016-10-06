@@ -28,8 +28,9 @@ class Login extends Component {
     var context = this;
     fetch('/login', {
       method: 'POST',
+      credentials: 'same-origin',
       headers: {
-        'Accept': 'application/json',
+        // 'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
