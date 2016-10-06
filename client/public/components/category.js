@@ -124,7 +124,7 @@ class Category extends Component {
                   <a href={item.url} target="_blank">
                     <Card>
                     <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>  
-                      {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 200}}/>}
+                      {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
                     </CardMedia>
                     </Card>
                   </a>

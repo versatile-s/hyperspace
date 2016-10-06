@@ -205,7 +205,6 @@ class HyperspaceWorker extends Component {
             onChange={this.handleSelectChange} 
             selected={this.state.category}>
               {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
-              <TextField/>
           </SelectField>
           <ChipInput
              floatingLabelText="Tags"
