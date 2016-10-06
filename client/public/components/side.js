@@ -17,6 +17,7 @@ class Side extends Component {
     super(props);
     this.state = {
       username: this.props.username,
+      categoryTitle: this.props.category,
 
       categories: [],
       toggled: false,
@@ -140,11 +141,14 @@ class Side extends Component {
         </div> 
         <div className="create-knob"> 
           <MakeCategory setCategory={this.props.setCategory} username={this.props.username}/>
-          {console.log("divthis-cat,uername", typeof this.props.setCategory, this.props.username)}
+          
           
         </div>
         <div className="hyper-knob">
           <HyperSearch />
+        </div>
+        <div className="bored-knob">
+         <a href={"/"+this.state.username+"/"+this.state.categoryTitle+"/bored"}><IconButton><ListIcon /></IconButton></a>
         </div>
       </div>
     );

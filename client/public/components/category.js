@@ -105,7 +105,7 @@ class Category extends Component {
     { var context = this; }
     return (
       <div>
-        <Side setCategory={this.setCategory} username={this.state.username}/>  
+        <Side category={this.state.categoryTitle} setCategory={this.setCategory} username={this.state.username}/>  
         <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
         <FlatButton label={this.state.username+"  -  "+this.state.categoryTitle} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
         <div className="categoryPageContainer">
