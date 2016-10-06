@@ -54,34 +54,25 @@ server.get('*/styles.css', function (req, res) {
 // server.get('*/assets/*', function (req, res) {
 //   res.sendFile(path.join(__dirname, '../client/assets'));
 // });
-
-
-server.get('/login', function(req, res) {
-
-  if (utils.isAuth(req, res) === true) {
+server.get('/', function(req, res) {
+  if (utils.isAuth(req, res)) {
     res.redirect('/' + req.session.key[0].username + '/home');
   } else {
     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
   }
 });
 
-server.get('/', function(req, res) {
-
-  if (utils.isAuth(req, res) === true) {
-    console.log('YOU ARE BEING REDIRECTED from isAuth');
-    console.log('YES AUTH HERE IS REQ.SESSION', req.session);
-    // res.redirect('/dashboard');
-    res.redirect('/dashboard');
+server.get('/login', function(req, res) {
+  if (utils.isAuth(req, res)) {
+    res.redirect('/' + req.session.key[0].username + '/home');
   } else {
-    console.log('NO AUTH HERE IS REQ.SESSION', req.session);
     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
   }
 });
 
 server.get('/signup', function(req, res) {
-  if (utils.isAuth(req, res) === true) {
-    console.log('YOU ARE BEING REDIRECTED');
-    res.redirect('/dashboard');
+  if (utils.isAuth(req, res)) {
+    res.redirect('/' + req.session.key[0].username + '/home');
   } else {
     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
   }
