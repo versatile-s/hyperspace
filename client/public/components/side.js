@@ -145,7 +145,7 @@ class Side extends Component {
           
         </div>
         <div className="hyper-knob">
-          <HyperSearch />
+          <HyperSearch username={this.state.username}/>
         </div>
         <div className="bored-knob">
          <a href={"/"+this.state.username+"/"+this.state.categoryTitle+"/bored"}><IconButton><ListIcon /></IconButton></a>

@@ -123,6 +123,7 @@ var utils = {
               image: req.body.image,
               username: req.body.username,
               tags: tags,
+              views: 0,
               CategoryPageId: category.id
             }).then(function (newHyper) {
               hyper = newHyper;
@@ -132,6 +133,7 @@ var utils = {
                 title: hyper.title,
                 description: hyper.description,
                 tags: tags,
+                username: req.body.username,
                 CategoryPageId: hyper.CategoryPageId
               }).then(function (response) {
               }).catch(function (err) {
@@ -146,6 +148,7 @@ var utils = {
             image: req.body.image,
             username: req.body.username,
             tags: tags,
+            views: 0,
             CategoryPageId: category.id
           }).then(function (newHyper) {
             hyper = newHyper;
@@ -155,6 +158,7 @@ var utils = {
               title: hyper.title,
               description: hyper.description,
               tags: tags,
+              username: req.body.username,
               CategoryPageId: hyper.CategoryPageId
             }).then(function (response) {
             }).catch(function (err) {
@@ -166,7 +170,7 @@ var utils = {
   },
 
   searchHypers: function (req, res) {
-    var text = req.body.text.replace(/[^\w\s!?]/g,'').toLowerCase().split(' ').join(',');
+    var text = req.body.text.replace(/[^\w\s!?]/g,'').toLowerCase().split(' ').join('*,');
     var queryString = '';
     for (var i = 0; i < text.length; i++) {
       if (i === 0 && text.charAt(i) === ',') {
@@ -178,20 +182,34 @@ var utils = {
       if (text.charAt(i) === ',' && text.charAt(i+1) === ',') {
         continue;
       }
+      if (text.charAt(i) === ',' && (i+1) >= text.length) {
+        continue;
+      }
       if (text.charAt(i) === ',') {
         queryString += '&';
       } else {
         queryString += text.charAt(i);
       }
     }
-    console.log('About to Axios...');
-    axios.get('http://localhost:9200/hyperspace/hypers/_search?q=' + queryString, {
-    }).then(function (response) {
-      var hits = response.data.hits.hits;
-      res.send(hits);
-    }).catch(function (err) {
-      console.log('Error! It\'s sad day! D=', err)
-    });
+    if (req.body.username) {
+      var username = req.body.username.toLowerCase();
+      axios.get('http://localhost:9200/hyperspace/hypers/_search?q=' + queryString, {
+      }).then(function (response) {
+        var hits = response.data.hits.hits.filter(function (item) {
+          return item._source.username === username;
+        });
+        res.send(hits);
+      }).catch(function (err) {
+      });
+    } else {
+      axios.get('http://localhost:9200/hyperspace/hypers/_search?q=' + queryString, {
+      }).then(function (response) {
+        var hits = response.data.hits.hits;
+        res.send(hits);
+      }).catch(function (err) {
+        console.log('Error! It\'s sad day! D=', err)
+      });
+    }
   },
 
   updateHyper: function (req, res) {
@@ -201,7 +219,6 @@ var utils = {
         title: req.body.title
       }
     }).then(function(hyper) {
-      console.log(hyper);
       hyper.update({
         views: req.body.views
       });
@@ -286,7 +303,6 @@ var utils = {
   getUserCategories: function (req, res) {
     // now using req.query to access, so params method chaining below is unnecessary
     // var username = req.params[0].split('').slice(10).join('');
-    console.log('fetching categories for this user', req.query.username);
     var username = req.query.username;
     User.findOne({
       where: {
