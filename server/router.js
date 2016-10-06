@@ -18,7 +18,6 @@ module.exports = (router) => {
       utils.createUser(req, res);
     });
 
-
   // existing user login
   router.route('/login')
     .post(function (req, res) {

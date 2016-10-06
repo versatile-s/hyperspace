@@ -54,52 +54,26 @@ server.get('*/styles.css', function (req, res) {
 // server.get('*/assets/*', function (req, res) {
 //   res.sendFile(path.join(__dirname, '../client/assets'));
 // });
-server.get('/', function(req, res) {
-  if (utils.isAuth(req, res)) {
-    res.redirect('/' + req.session.key[0].username + '/home');
-  } else {
-    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-  }
-});
 
-server.get('/login', function(req, res) {
-  if (utils.isAuth(req, res)) {
-    res.redirect('/' + req.session.key[0].username + '/home');
-  } else {
-    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-  }
-});
+// AuthRoutes are all of our endpoints that need to take priority over all else.
+// This servers for all of our session based authorization for example.
+require('./authenticationRoutes')(server);
 
-server.get('/signup', function(req, res) {
-  if (utils.isAuth(req, res)) {
-    res.redirect('/' + req.session.key[0].username + '/home');
-  } else {
-    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-  }
-});
-server.get('/dashboard', function(req, res) {
-  if (utils.isAuth(req, res) === false) {
-    console.log('YOU ARE BEING REDIRECTED');
-    res.redirect('/login');
-  } else {
-    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-  }
-});
 
+// This should be moved to router file
 server.get('/userCategories*', function (req, res) {
   console.log('Received GET @ /userCategories', req.body);
   utils.getUserCategories(req, res);
 });
 
+// IMPORTANT any remaining routes that have NOT hit the authRoutes already will be first sent
+// to the client code in app.js and hit the React Router. Only if a request does not hit the react router
+// will it fallback into the server side router.js file.
 server.use(history());
-
 server.use(express.static(path.join(__dirname, '../client/')));
-
 require('./router.js')(server);
-//server.use(history());
 
 
-//server.use(express.static(path.join(__dirname, '../client')));
 
 var port = process.env.port || 3000;
 server.listen(port, function() {

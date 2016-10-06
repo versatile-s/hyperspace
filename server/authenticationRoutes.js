@@ -1,33 +1,39 @@
 //var authRouter = require('express');
 var path = require('path');
-module.exports = (authRouter, express) => {
-  authRouter.route('/login')
-    .get(function (req, res) {
-      if (req.session.user) {
-        res.redirect('/dashboard');
-      } else {
-        res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-      }
-    });
+var utils = require('./utilities');
 
-  authRouter.route('/signup')
-    .get(function(req, res) {
-      if (req.session) {
-        res.redirect('/dashboard');
-      } else {
-        res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-      }
-    });
+module.exports = (authRouter) => {
+  // authRouter.get('/', function(req, res) {
+  //   if (utils.isAuth(req, res)) {
+  //     res.redirect('/' + req.session.key[0].username + '/home');
+  //   } else {
+  //     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
+  //   }
+  // });
 
-  authRouter.route('/dashboard')
-    .get(function(req, res) {
-      if (!req.session.id) {
-        res.redirect('/login');
-      } else {
-        res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-      }
-    });
+  authRouter.get('/login', function(req, res) {
+    if (utils.isAuth(req, res)) {
+      res.redirect('/' + req.session.key[0].username + '/home');
+    } else {
+      res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
+    }
+  });
 
+  authRouter.get('/signup', function(req, res) {
+    if (utils.isAuth(req, res)) {
+      res.redirect('/' + req.session.key[0].username + '/home');
+    } else {
+      res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
+    }
+  });
+
+  authRouter.get('/dashboard', function(req, res) {
+    if (utils.isAuth(req, res) === false) {
+      res.redirect('/login');
+    } else {
+      res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
+    }
+  });
 };
 
 
