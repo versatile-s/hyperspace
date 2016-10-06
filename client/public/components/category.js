@@ -118,7 +118,6 @@ class Category extends Component {
         <FlatButton label={this.state.username + "  -  " + this.state.categoryTitle} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
         <div className="categoryPageContainer">
             {this.state.data.map(function (item) {
-
               return (
                 <div className="hyper" style={{order: item.views}} onClick={()=>context.updateViews(item)}>
                   <a href={item.url} target="_blank">

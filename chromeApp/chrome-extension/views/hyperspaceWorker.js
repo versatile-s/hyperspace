@@ -33,7 +33,8 @@ class HyperspaceWorker extends Component {
       images: [],
       includeImage: false,
       fullyLoaded: false,
-      tagStore: ['test', 'testing', 'test2']
+      tagStore: ['test', 'testing', 'test2'],
+      snackbarOpen: false
     };
 
     this.sendLink = this.sendLink.bind(this);
@@ -128,11 +129,18 @@ class HyperspaceWorker extends Component {
 
   sendLink (e) {
     e.preventDefault();    
+    
+    let context = this;
+  
+    context.setState({
+      snackbarOpen: true
+    });
+  
     this.handleHighlightedText();
     console.log('STATE IMAGES HERE WERE', this.state.images);
 
     let username = this.state.username;
-    let context = this;
+
 
     let getCurrentTabUrl = function () {
       let queryInfo = {
@@ -197,6 +205,12 @@ class HyperspaceWorker extends Component {
     });
   }
 
+  handleRequestClose() {
+    this.setState({
+      snackbarOpen: false
+    });
+  }
+
   render () {
     const context = this;
     return (
@@ -236,15 +250,16 @@ class HyperspaceWorker extends Component {
              />
           </div>
           {this.state.includeImage ? this.state.images.length > 0 ? <FirstFiveCarousel images={this.state.images} takeCurrentGalleryImage={this.takeCurrentGalleryImage}/> : 'Sorry, no images were found on this page' : null}
-          <FloatingActionButton onClick={this.sendLink} className="addTo">
+          <FloatingActionButton onTouchTap={this.sendLink} className="addTo">
              <ContentAdd />
           </FloatingActionButton>
           <Snackbar
-          open={this.sendLink}
-          message="Sent to your hyperspace!"
-          autoHideDuration={2500}
-          className="invalidPass"
-        />
+            open={this.state.snackbarOpen}
+            className="sendLinkSnack"
+            message="Sent to your hyperspace!"
+            autoHideDuration={2500}
+            onRequestClose={this.handleRequestClose}
+          />
       </div> 
     );
   }
