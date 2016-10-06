@@ -33,7 +33,7 @@ class HyperspaceWorker extends Component {
       images: [],
       includeImage: false,
       fullyLoaded: false,
-      tagStore: ['test', 'testing', 'testfuck']
+      tagStore: ['test', 'testing', 'test2']
     };
 
     this.sendLink = this.sendLink.bind(this);
@@ -145,9 +145,16 @@ class HyperspaceWorker extends Component {
         let url = tab.url;
         let title = tab.title;
         let highlighted = context.state.highlighted;
-        let image = context.state.selectedImage;
+        
         let category = context.state.category;
         let tags = context.state.tags;
+
+        let firstImage = context.state.images[0];
+        let image;
+        
+        // selected image handling        
+        context.state.includeImage && context.state.selectedImage.length < 4 ? image = firstImage : image = context.state.selectedImage;
+
         console.log('TAGS TO BE SENT ARE', tags, '& HIGHLIGHTED TO BE SENT IS', highlighted);
         let request = new XMLHttpRequest();
         request.open('POST', 'http://127.0.0.1:3000/link', true);
@@ -157,8 +164,6 @@ class HyperspaceWorker extends Component {
       });
     };
     
-
-
     getCurrentTabUrl();
   }
   
@@ -185,15 +190,12 @@ class HyperspaceWorker extends Component {
     });
   }
 
-  takeCurrentGalleryImage(e) {
-    console.log('TAKING GALLERY GOING');
-    var curr = document.getElementsByClassName('.center');
-    console.log(curr, 'CURRENT IS');
+  takeCurrentGalleryImage(index) {
+    console.log('TAKING GALLERY GOING', this.state.images[index]);
     this.setState({
-      selectedImage: curr
+      selectedImage: this.state.images[index]
     });
   }
-
 
   render () {
     const context = this;
@@ -205,7 +207,7 @@ class HyperspaceWorker extends Component {
          targetOrigin={{horizontal: 'left', vertical: 'top'}}
         >
            <MenuItem className="logout" onClick={this.props.logOutUser} primaryText="Logout" />
-         </IconMenu>
+        </IconMenu>
         <h5 className="welcome">welcome, {this.state.username}. <br/>add to your hyperspace.</h5>
           <SelectField 
             floatingLabelText="Category" 
@@ -233,7 +235,7 @@ class HyperspaceWorker extends Component {
                onCheck={this.handleToggle}
              />
           </div>
-          {this.state.includeImage ? this.state.images.length > 0 ? <FirstFiveCarousel images={this.state.images} takeCurrentGalleryImage={this.takeCurrentGalleryImage}/> : "Sorry, no images were found on this page" : null}
+          {this.state.includeImage ? this.state.images.length > 0 ? <FirstFiveCarousel images={this.state.images} takeCurrentGalleryImage={this.takeCurrentGalleryImage}/> : 'Sorry, no images were found on this page' : null}
           <FloatingActionButton onClick={this.sendLink} className="addTo">
              <ContentAdd />
           </FloatingActionButton>

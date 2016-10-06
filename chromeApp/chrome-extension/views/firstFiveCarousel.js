@@ -14,9 +14,7 @@ class FirstFiveCarousel extends React.Component {
 
   onSlide(index) {
     console.debug('slid to index', index);
-  }
-
-  componentDidMount () {
+    this.props.takeCurrentGalleryImage(index);
   }
  
   render() {
