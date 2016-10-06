@@ -138,7 +138,6 @@ class HyperspaceWorker extends Component {
   }
   
   handleInputChange(e) {
-    e.preventDefault();
     this.setState({
       tags: e
     });
