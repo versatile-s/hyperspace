@@ -33,6 +33,7 @@ var encrypt = function(req, res, cb) {
 var createSession = function(req, res, userInfo) {
   req.session.regenerate(function() {
     req.session.key = userInfo;
+    console.log('here is req.session', req.session);
     res.send('Login successful!');
   });
 };
@@ -61,17 +62,10 @@ var utils = {
       if (!response) {
         // creates user
         encrypt(req, res);
-        User.findOne({
-          where: {
-            username: req.body.username
-          }
-        }).then(function (userInfo) {
-            req.session.regenerate(function() {
-              req.session.key = userInfo;
-              console.log('inside of encrypt promise and req.session is ,', req.session);
-              res.send('User created');
-            });
-          });
+        // The reason we create keyUsername here in this particular format is because it needs to match
+        // the same format that we push into createSession when we login users. (loginUser function)
+        var keyUsername = [{ username: req.body.username }];
+        createSession(req, res, keyUsername);
       } else {
         // returns unsuccessful name selection to client
         res.send('Username exists');
