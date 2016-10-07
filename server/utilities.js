@@ -240,7 +240,7 @@ var utils = {
         var hits = response.data.hits.hits;
         res.send(hits);
       }).catch(function (err) {
-        console.log('Error! It\'s sad day! D=', err)
+        console.log('Error! It\'s sad day! D=', err);
       });
     }
   },
@@ -255,7 +255,6 @@ var utils = {
       hyper.update({
         views: req.body.views
       });
-
     });
   },
 
@@ -332,7 +331,6 @@ var utils = {
     });
   },
 
-
   getUserCategories: function (req, res) {
     // now using req.query to access, so params method chaining below is unnecessary
     // var username = req.params[0].split('').slice(10).join('');
@@ -352,6 +350,30 @@ var utils = {
           catArray.push(category.dataValues.name);
         });
         res.send(JSON.stringify(catArray));
+      });
+    });
+  },
+
+  getUserTags: function (req, res) {
+    var username = req.query.username;
+    User.findOne({
+      where: {
+        username: username
+      }
+    }).then(function (user) {
+      CategoryPage:findAll({
+        where: {
+          userId: user.id
+        }
+      }).then(function(categories) {
+        Hyper:findAll({
+          where: {
+            username: req.query.username
+          }
+        }).then(function(hypers) {
+          res.send(hypers);
+          console.log(hypers);
+        });
       });
     });
   }
