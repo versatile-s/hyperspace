@@ -19,23 +19,28 @@ import Frame from './components/frame';
 import Warpfield from './components/warpfield';
 
 var loginCheck = function() {
-  return fetch('http://localhost:3000/api/session', {
-    method: 'GET',
+  fetch('/logincheck', {
     credentials: 'same-origin'
   })
   .then(function(res) {
-    if (res === 'not logged in') {
-      console.log('not logged in fool');
-    } else {
-      // here is where we would want to set the state in the universal store object
-      console.log('ok so here is the session ', req.session);
-    }
+    res.json().then(function(resText) {
+      console.log('THIS IS RESTEXT ', typeof resText);
+      if (resText === 'not logged in') {
+        console.log('not logged in fool');
+        store.dispatch({type: 'USERNAME_UPDATE', payload: ''});
+      } else {
+        // here is where we would want to set the state in the universal store object
+        console.log('ok so here is the username ', resText[0].username);
+        store.dispatch({type: 'USERNAME_UPDATE', payload: resText[0].username});
+      }
+    });
   });
 };
 
 class App extends Component {
   constructor (props) {
     super(props);
+    loginCheck();
     store.dispatch({type: 'AUTH_SUCCESS', payload: null});
     store.dispatch({type: 'GET_CATEGORIES', payload: []});
     store.dispatch({type: 'CAT_TITLE', payload: 'home'});
@@ -44,14 +49,8 @@ class App extends Component {
     store.dispatch({type: 'S_HYPERS', payload: []});
     store.dispatch({type: 'SELF', payload: null});
     store.dispatch({type: 'TOGGLE_SWITCH', payload: null});
-    store.dispatch({type: 'USERNAME_UPDATE', payload: ''});
     injectTapEventPlugin();
-
   }
-
-
-
-   // onEnter={requireAuth}
 
   render() {
     return (

@@ -16,7 +16,7 @@ module.exports = (authRouter) => {
     if (utils.isAuth(req, res)) {
       res.send(req.session.key);
     } else {
-      res.send('not logged in');
+      res.send(JSON.stringify('not logged in'));
     }
   });
 
