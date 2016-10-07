@@ -361,18 +361,27 @@ var utils = {
         username: username
       }
     }).then(function (user) {
-      CategoryPage:findAll({
+      CategoryPage.findAll({
         where: {
           userId: user.id
         }
       }).then(function(categories) {
-        Hyper:findAll({
+        Hyper.findAll({
           where: {
             username: req.query.username
           }
         }).then(function(hypers) {
-          res.send(hypers.tags);
-          console.log(hypers.tags);
+          var tagArray = [];
+          hypers.forEach(function (hyper) {
+            var singleTags = hyper.dataValues.tags.split(' ');
+            singleTags.forEach(function(tag) {
+              if ( tagArray.indexOf(tag) === -1 ) {
+                tagArray.push(tag);
+              }
+            });
+          });
+          console.log('tags here are', tagArray);
+          res.send(JSON.stringify(tagArray));
         });
       });
     });

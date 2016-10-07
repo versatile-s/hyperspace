@@ -51,10 +51,14 @@ class HyperspaceWorker extends Component {
   }
 
   componentWillMount () {
-
     injectTapEventPlugin();
     this.handleHighlightedText();
-    
+    this.getFirstFiveImages();
+    this.getUserCategories();
+    this.getUserTags();
+  }
+
+  getUserCategories () {
     let context = this;
     // hit DB and pull categories for given user
     let request = new XMLHttpRequest();
@@ -73,8 +77,28 @@ class HyperspaceWorker extends Component {
     request.open('GET', url + params, true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.send();
+    
+  }
 
-    this.getFirstFiveImages();
+  getUserTags () {
+    let context = this;
+    // hit DB and pull tags for given user
+    let request = new XMLHttpRequest();
+    let url = 'http:127.0.0.1:3000/usertags';
+    let params = '?username=' + this.props.username;
+
+    request.onreadystatechange = function () {
+      // remove brackets, quotation marks and split on the comma to create new array
+      var unfiltered = this.responseText.slice(1, -1).replace(/['"]+/g, '').split(',');
+      
+      context.setState({
+        tagStore: unfiltered
+      });
+    };
+    
+    request.open('GET', url + params, true);
+    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    request.send();   
   }
 
   handleHighlightedText() {
@@ -163,7 +187,6 @@ class HyperspaceWorker extends Component {
         // handle category vs. new cateogry logic
         let category;
         context.state.category === 'or Add New Category' ? category = context.state.newCategory : category = context.state.category;
-        
 
         let description = context.state.description;
 

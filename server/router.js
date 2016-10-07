@@ -74,13 +74,13 @@ module.exports = (router) => {
              //TAGS//
   /*********************************/
   /*********************************/
-  // get all user tags
-  router.route('/userTags')
+  // get all user tags -- this has been moved to server
+/*  router.route('/userTags')
     .get(function (req, res) {
       console.log('Received POST at /addTag');
       utils.getUserTags(req, res);
       res.send('Received POST at /addTag');
-    });
+    });*/
 
   /*********************************/
   /*********************************/
