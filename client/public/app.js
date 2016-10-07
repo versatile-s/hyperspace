@@ -24,13 +24,10 @@ var loginCheck = function() {
   })
   .then(function(res) {
     res.json().then(function(resText) {
-      console.log('THIS IS RESTEXT ', typeof resText);
       if (resText === 'not logged in') {
-        console.log('not logged in fool');
         store.dispatch({type: 'USERNAME_UPDATE', payload: ''});
       } else {
         // here is where we would want to set the state in the universal store object
-        console.log('ok so here is the username ', resText[0].username);
         store.dispatch({type: 'USERNAME_UPDATE', payload: resText[0].username});
       }
     });
@@ -62,7 +59,7 @@ class App extends Component {
             <Route path='/login' component={Login} />
             <Route path='/signup' component={Signup} />
             <Route path='/dashboard' component={Dashboard}/>
-          </Route>  
+          </Route>
           <Route path='/:user/:category' component={Category} />
           <Route path='/:user/:category/bored' component={Bored}/>
         </Route>
