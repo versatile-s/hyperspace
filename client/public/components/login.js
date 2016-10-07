@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
+import store from '../../store';
 
 class Login extends Component {
   constructor (props) {
@@ -14,8 +15,6 @@ class Login extends Component {
       password:'',
       failedLogin: false,
       warp:false
-      
-
     };
     this.warpfield = this.warpfield.bind(this);
     this.accelerate = this.accelerate.bind(this);
@@ -24,8 +23,6 @@ class Login extends Component {
     this.handlePass = this.handlePass.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
   }
-
-
 
   login (e) {
     e.preventDefault();
@@ -44,9 +41,15 @@ class Login extends Component {
     }).then((response) => {
       response.text().then((res) => {
         if (res === 'Login successful!') {
+          store.dispatch({type: 'AUTH_SUCCESS', payload: true});
+          store.dispatch({type: 'USERNAME_UPDATE', payload: context.state.username});
+          context.setState({
+            failedLogin: false
+          });
           context.props.history.username = context.state.username;
           context.props.history.push('/'+context.state.username+'/home');
         } else {
+          store.dispatch({type: 'AUTH_FAIL', payload: false});
           context.setState({
             failedLogin: true
           });
@@ -61,9 +64,7 @@ class Login extends Component {
   }
 
   handleRequestClose () {
-    this.setState({
-      open: false,
-    });
+    store.dispatch({type: 'CLOSE', payload: false});
   }
 
   handleUsername(name) {
@@ -120,14 +121,11 @@ class Login extends Component {
               onRequestClose={this.handleRequestClose}
             />
             <Snackbar
-              open={!this.state.failedLogin && this.state.open}
-              message={"WELCOME TO HYPERSPACE " + this.state.username}
-
+              open={store.getState().authenticated.authenticated && store.getState().open.open}
+              message={"WELCOME TO HYPERSPACE " + store.getState().username.username}
               onRequestClose={this.handleRequestClose}
             />
             <FlatButton label="LOGIN" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-
-
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
             <RaisedButton type="button" fullWidth="true" label="Login" onClick={this.login} />

@@ -9,14 +9,11 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactDOM from 'react-dom';
+import store from '../../store';
 
 class MakeCategory extends Component {
   constructor (props) {
     super(props);
-    this.state = {
-      username: this.props.username
- 
-    };
     this.makeNewCategory = this.makeNewCategory.bind(this);
     this.forceFocus = this.forceFocus.bind(this);
     console.log('make category constructor this',this);
@@ -31,25 +28,26 @@ class MakeCategory extends Component {
   }
   getCategories () {
     var context = this;
-    fetch('/userCategories/?username=' + this.state.username, {
+    fetch('/userCategories/?username=' + store.getState().username.username, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
     }).then(function (response) {
-      console.log('resoponse from api call',response);
+      console.log('response from api call',response);
       response.json()
         .then(function(categoryData) {
           console.log('categoryData', categoryData);
-          context.setState({
-            categories: categoryData
-          });
+          store.dispatch({type: 'GET_CATEGORIES', payload: categoryData});
+          // context.setState({
+          //   categories: categoryData
+          // });
         });
     });
   }
 
   makeNewCategory(){
-
+    var username = store.getState().username.username;
     var context = this;
     var newCatName = this.refs.categoryInput.getValue();
     console.log("catname",newCatName);
@@ -60,12 +58,12 @@ class MakeCategory extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.username,
+        username: username,
         name: newCatName
       })
 
     }).then(function(){
-      browserHistory.push('/' + context.state.username + "/"+newCatName);
+      browserHistory.push('/' + username + "/"+newCatName);
       context.props.setCategory(newCatName);
       context.getCategories();
     });

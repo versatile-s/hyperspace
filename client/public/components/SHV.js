@@ -11,31 +11,27 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
 import ReactDOM from 'react-dom';
 import MakeCategory from './makeCategory';
+import store from '../../store';
 
 class HyperSearch extends Component {
   constructor (props) {
     super(props);
-    this.state = {
-      searchedHypers: [],
-      username: props.username,
-      self: false
-    };
+    store.dispatch({type: 'SELF', payload: false});
     this.elasticSearch = this.elasticSearch.bind(this);
     this.setSelf = this.setSelf.bind(this);
   }
 
   setSelf () {
-    this.setState({
-      self: !this.state.self
-    });
+    store.dispatch({type: 'SELF', payload: !store.getState().self.self});
   }
 
   elasticSearch (e) {
     e.preventDefault();
     var context = this;
     var text = e.target.value;
-    if (this.state.self) {
+    if (store.getState().self.self) {
       // if user is searching only their own hypers
+      console.log(store.getState().username.username);
       fetch('/searchLinks', {
         method: 'POST',
         headers: {
@@ -44,17 +40,17 @@ class HyperSearch extends Component {
         },
         body: JSON.stringify({
           text: text,
-          username: context.state.username
+          username: store.getState().username.username
         })
       }).then(function (res) {
         res.json().then(function (resText) {      
-          context.setState({
-            searchedHypers: resText
-          });
+          store.dispatch({type: 'S_HYPERS', payload: resText});
+          context.forceUpdate();
         });
       });
     } else {
       // if user is searching all hypers
+      console.log('oops......');
       fetch('/searchLinks', {
         method: 'POST',
         headers: {
@@ -66,9 +62,8 @@ class HyperSearch extends Component {
         })
       }).then(function (res) {
         res.json().then(function (resText) {      
-          context.setState({
-            searchedHypers: resText
-          });
+          store.dispatch({type: 'S_HYPERS', payload: resText});
+          context.forceUpdate();
         });
       });    
     }
@@ -88,6 +83,7 @@ class HyperSearch extends Component {
       <div>
         <div className="knob-wrapper">
           <IconMenu
+            useLayerForClickAway={true}
             iconStyle={{opacity:.2, width:50}}
             onTouchTap={this.getCategories}
             disableAutoFocus={true}
@@ -104,7 +100,7 @@ class HyperSearch extends Component {
               <Checkbox onClick={this.setSelf} style="float: left"/> Show only my Hypers
               <br/>
               <TextField hintText="Search Hypers" ref="hyperInput" onClick={this.forceFocus} onChange={this.elasticSearch}/>
-              {this.state.searchedHypers.slice(0, 4).map((hyper) => {
+              {store.getState().searchedHypers.searchedHypers ? store.getState().searchedHypers.searchedHypers.slice(0, 4).map((hyper) => {
                 return (
                   <a href={hyper._source.url} target="_blank"> 
                     <MenuItem focusState="none" disableAutoFocus={true}>
@@ -116,7 +112,7 @@ class HyperSearch extends Component {
                     </MenuItem>
                   </a>
                 );
-              })}
+              }) : null}
             </div>
           </IconMenu>
         </div> 

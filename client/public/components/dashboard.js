@@ -3,19 +3,19 @@ import { browserHistory } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
-
+import store from '../../store';
 
 class Dashboard extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      username: this.props.history.username,
       category: 'home'
     };
     this.createHome = this.createHome.bind(this);
 
   }
   createHome() {
+    var username = store.getState().username.username;
     fetch('/category', {
       method: 'POST',
       headers: {
@@ -23,10 +23,10 @@ class Dashboard extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.username,
+        username: username,
         name: this.state.category
       })
-    }).then(browserHistory.push('/' + this.state.username + "/home"));
+    }).then(browserHistory.push('/' + username + "/home"));
 
 
     // browserHistory.push("/" + this.state.username + "/home");
@@ -60,7 +60,7 @@ class Dashboard extends Component {
             <FlatButton label="Once that's installed, click " labelStyle={{textAlign: 'center'}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
             <FlatButton label="'Create My First Home Page!' to get started!" labelStyle={{textAlign: 'center'}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
             <FlatButton label="Your homepage can be found at" labelStyle={{textAlign: 'center'}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-            <FlatButton label={"hyprspace.me/"+this.state.username+"/home."} labelStyle={{textAlign: 'center'}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
+            <FlatButton label={"hyprspace.me/"+store.getState().username.username+"/home."} labelStyle={{textAlign: 'center'}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
             <FlatButton label="(You can go ahead and set it to your" labelStyle={{textAlign: 'center'}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
             <FlatButton label="default home page in Chrome now!)" labelStyle={{textAlign: 'center'}} style={{width: '100%'}} fullWidth="true" disabled={true}/> 
           

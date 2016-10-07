@@ -15,74 +15,52 @@ import FriendList from './friendList';
 import MyCategories from './myCategories';
 import ListIcon from 'material-ui/svg-icons/action/list';
 import BoredIcon from 'material-ui/svg-icons/hardware/videogame-asset';
-
+import store from '../../store';
 import AddFriend from './addFriend';
-
 import Logout from './logout';
-
 
 class Side extends Component {
   constructor (props) {
     super(props);
-    this.state = {
-      username: this.props.username,
-      categoryTitle: this.props.category,
-
-      categories: [],
-      toggled: false,
-      newCategory:''
-
-    };
-    console.log("sideusername", this.state.username);
-
     this.clickCategory = this.clickCategory.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
     this.getCategories = this.getCategories.bind(this);
-
     this.makeNewCategory = this.makeNewCategory.bind(this);
     this.forceFocus = this.forceFocus.bind(this);
-
   }
 
   clickCategory(e) {
-    console.log("thisdotstate.username", this.state.username);
-
-    browserHistory.push('/' + this.state.username + '/' + e.target.innerHTML);
+    browserHistory.push('/' + store.getState().username.username + '/' + e.target.innerHTML);
     this.props.setCategory(e.target.innerHTML);
 
   }
 
   componentDidMount() {
-    console.log("side-this", this);
     this.getCategories();
-
   }
 
   getCategories () {
-    console.log("Gettttting");
     var context = this;
-    fetch('/userCategories/?username=' + this.state.username, {
+    fetch('/userCategories/?username=' + store.getState().username.username, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
     }).then(function (response) {
-      console.log('resoponse from api call',response);
       response.json()
         .then(function(categoryData) {
-          console.log('categoryData', categoryData);
-          context.setState({
-            categories: categoryData
-          });
+          store.dispatch({type: 'GET_CATEGORIES', payload: categoryData});
+          // context.setState({
+          //   categories: categoryData
+          // });
         });
     });
   }
 
   makeNewCategory(){
-
+    var username = store.getState().username.username;
     var context = this;
     var newCatName = this.refs.categoryInput.getValue();
-    console.log("catname",newCatName);
     fetch('/category', {
       method: 'POST',
       headers: {
@@ -90,39 +68,28 @@ class Side extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.username,
+        username: username,
         name: newCatName
       })
 
     }).then(function(){
-      browserHistory.push('/' + context.state.username + "/"+newCatName);
+      browserHistory.push('/' + username + "/"+newCatName);
       context.props.setCategory(newCatName);
       context.getCategories();
     });
-
-
   }
 
   forceFocus(){
-    console.log(this);
     this.refs.categoryInput.focus();
     // ReactDOM.findDOMNode(this.refs.categoryInput).focus();
   }
 
-
-
   toggleMenu(){
-    console.log("clicked");
-    console.log(this.state.toggled);
-    if (this.state.toggled) {
-      this.setState({
-        toggled: false
-      });
+    if (store.getState().toggled.toggled) {
+      store.dispatch({type: 'TOGGLE_SWITCH', payload: false});
     } else {
-      this.setState({
-        toggled:true
-      });
-    }
+      store.dispatch({type: 'TOGGLE_SWITCH', payload: true});
+    } 
   }
 
   render () {
@@ -138,15 +105,13 @@ class Side extends Component {
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-
-            <MyCategories username={this.state.username} setCategory={this.props.setCategory}/>
-            <MakeCategory setCategory={this.props.setCategory} username={this.props.username}/>
-            <HyperSearch username={this.state.username}/>
+            <MyCategories username={store.getState().username.username} setCategory={this.props.setCategory}/>
+            <MakeCategory setCategory={this.props.setCategory} username={store.getState().username.username}/>
+            <HyperSearch username={store.getState().username.username}/>
             <div className="hyper-knob"><Logout /></div>
-            <FriendList username={this.state.username}/>
-            <AddFriend username={this.state.username}/>
-            <a href={"/"+this.state.username+"/"+this.state.categoryTitle+"/bored"}><IconButton iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton></a>
-
+            <FriendList username={store.getState().username.username}/>
+            <AddFriend username={store.getState().username.username}/>
+            <a href={"/"+store.getState().username.username+"/"+store.getState().categoryTitle.categoryTitle+"/bored"}><IconButton iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton></a>
         </IconMenu>
       </div>
     );

@@ -224,7 +224,7 @@ var utils = {
         queryString += text.charAt(i);
       }
     }
-    if (req.body.username) {
+    if (req.body.username && req.body.username !== "") {
       var username = req.body.username.toLowerCase();
       axios.get('http://localhost:9200/hyperspace/hypers/_search?q=' + queryString, {
       }).then(function (response) {
