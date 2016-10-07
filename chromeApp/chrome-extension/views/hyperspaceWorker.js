@@ -14,6 +14,7 @@ import Snackbar from 'material-ui/Snackbar';
 import FirstFiveCarousel from './firstFiveCarousel.js';
 import Checkbox from 'material-ui/Checkbox';
 import AutoComplete from 'material-ui/AutoComplete';
+import CircularProgress from 'material-ui/CircularProgress';
 
 
 class HyperspaceWorker extends Component {
@@ -52,7 +53,8 @@ class HyperspaceWorker extends Component {
   componentWillMount () {
 
     injectTapEventPlugin();
-
+    this.handleHighlightedText();
+    
     let context = this;
     // hit DB and pull categories for given user
     let request = new XMLHttpRequest();
@@ -73,13 +75,6 @@ class HyperspaceWorker extends Component {
     request.send();
 
     this.getFirstFiveImages();
-    this.handleHighlightedText();
-  }
-
-  componentDidMount() {
-    this.setState({
-      fullyLoaded: true
-    });
   }
 
   handleHighlightedText() {
@@ -89,9 +84,12 @@ class HyperspaceWorker extends Component {
     chrome.tabs.executeScript({
       code: 'window.getSelection().toString();' 
     }, function (selection) {
-      selectedText = selection[0];
       context.setState({
-        highlighted: selectedText
+        highlighted: selection[0]
+      }, function() {
+        context.setState({
+          fullyLoaded: true
+        });
       });
     });
 
@@ -102,10 +100,13 @@ class HyperspaceWorker extends Component {
         selectedText = selection[0];
         context.setState({
           highlighted: selectedText
+        }, function () {
+          context.setState({
+            fullyLoaded: true
+          });
         });
       });
     }
-
     console.log(this.state.highlighted, 'HIGHLIGHTED HERE IS');
   }
 
@@ -232,56 +233,58 @@ class HyperspaceWorker extends Component {
   render () {
     const context = this;
     return (
-      <div className="workerBody">
-        <IconMenu className="miniMenu"
-         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-         anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-         targetOrigin={{horizontal: 'left', vertical: 'top'}}
-        >
-           <MenuItem className="logout" onClick={this.props.logOutUser} primaryText="Logout" />
-        </IconMenu>
-        <h5 className="welcome">welcome, {this.state.username}. <br/>add to your hyperspace.</h5>
-          {this.state.category === 'or Add New Category' ? <TextField floatingLabelText="New Category"
-            onChange={this.onNewCatChange} floatingLabelFixed={true} hintText="Enter New Category"/> : <SelectField 
-            floatingLabelText="Category" 
-            value={this.state.category} 
-            onChange={this.handleSelectChange} 
-            selected={this.state.category}>
-              {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
-            <MenuItem value="or Add New Category" className="addNew" primaryText = "or Add New Category"/>
-          </SelectField>}
-          <ChipInput
-             floatingLabelText="Tags"
-             onRequestAdd={(chip) => handleAddChip(chip)}
-             onRequestDelete={(chip) => handleDeleteChip(chip)}
-             onChange={this.handleInputChange}
-             dataSource={this.state.tagStore}
-          />
-          <TextField floatingLabelText="Excerpt"
-            defaultValue={this.state.highlighted}
-            onChange={this.handleExcerptUpdate}
-            multiLine={true}
-            rows={2}
-            maxrows={6}
-          />
-          <div className="imageToggle">
-            <Checkbox
-               label="Include image?"
-               onCheck={this.handleToggle}
-             />
-          </div>
-          {this.state.includeImage ? this.state.images.length > 0 ? <FirstFiveCarousel images={this.state.images} takeCurrentGalleryImage={this.takeCurrentGalleryImage}/> : 'Sorry, no images were found on this page' : null}
-          <FloatingActionButton onTouchTap={this.sendLink} className="addTo">
-             <ContentAdd />
-          </FloatingActionButton>
-          <Snackbar
-            open={this.state.snackbarOpen}
-            className="sendLinkSnack"
-            message="Sent to your hyperspace!"
-            autoHideDuration={2500}
-            onRequestClose={this.handleRequestClose}
-          />
-      </div> 
+        this.state.fullyLoaded ? 
+        <div className="workerBody">  
+          <IconMenu className="miniMenu"
+           iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+           anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+           targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          >
+             <MenuItem className="logout" onClick={this.props.logOutUser} primaryText="Logout" />
+          </IconMenu>
+          <h5 className="welcome">welcome, {this.state.username}. <br/>add to your hyperspace.</h5>
+            {this.state.category === 'or Add New Category' ? <TextField floatingLabelText="New Category"
+              onChange={this.onNewCatChange} floatingLabelFixed={true} hintText="Enter New Category"/> : <SelectField 
+              floatingLabelText="Category" 
+              value={this.state.category} 
+              onChange={this.handleSelectChange} 
+              selected={this.state.category}>
+                {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
+              <MenuItem value="or Add New Category" className="addNew" primaryText = "or Add New Category"/>
+            </SelectField>}
+            <ChipInput
+               floatingLabelText="Tags"
+               onRequestAdd={(chip) => handleAddChip(chip)}
+               onRequestDelete={(chip) => handleDeleteChip(chip)}
+               onChange={this.handleInputChange}
+               dataSource={this.state.tagStore}
+            />
+            <TextField floatingLabelText="Excerpt"
+              defaultValue={this.state.highlighted}
+              onChange={this.handleExcerptUpdate}
+              multiLine={true}
+              rows={2}
+              maxrows={6}
+            />
+            <div className="imageToggle">
+              <Checkbox
+                 label="Include image?"
+                 onCheck={this.handleToggle}
+               />
+            </div>
+            {this.state.includeImage ? this.state.images.length > 0 ? <FirstFiveCarousel images={this.state.images} takeCurrentGalleryImage={this.takeCurrentGalleryImage}/> : 'Sorry, no images were found on this page' : null}
+            <FloatingActionButton onTouchTap={this.sendLink} className="addTo">
+               <ContentAdd />
+            </FloatingActionButton>
+            <Snackbar
+              open={this.state.snackbarOpen}
+              className="sendLinkSnack"
+              message="Sent to your hyperspace!"
+              autoHideDuration={2500}
+              onRequestClose={this.handleRequestClose}
+            />
+        </div> 
+        : <CircularProgress size={60} thickness={7} />
     );
   }
 }

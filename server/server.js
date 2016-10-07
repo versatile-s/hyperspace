@@ -7,9 +7,9 @@ var cookieParser = require('cookie-parser');
 var utils = require('./utilities');
 var logger = require('morgan');
 
-var redis = require('redis');
+/*var redis = require('redis');
 var RedisStore = require('connect-redis')(session);
-var client = redis.createClient();
+var client = redis.createClient();*/
 
 var server = express();
 var router = require('./router');
@@ -22,14 +22,14 @@ server.use(session({
   saveUninitialized: false, // don't create session until something stored
   secret: 'keyboard cat',
   name: 'Yosh Cookies',
-  store: new RedisStore({
+/*  store: new RedisStore({
     logErrors: true,
     host: 'localhost',
     port: 6379,
     client: client,
     ttl: 260
   })
-}));
+*/}));
 
 
 server.use(logger('dev'));
