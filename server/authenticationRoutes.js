@@ -12,7 +12,6 @@ module.exports = (authRouter) => {
   });
 
   authRouter.get('/logincheck', function(req, res) {
-    console.log('HITTING THE LOGINCHECK ENDPOINT here is req.session', req.session);
     if (utils.isAuth(req, res)) {
       res.send(req.session.key);
     } else {
