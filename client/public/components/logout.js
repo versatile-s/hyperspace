@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 
 class Logout extends Component {
   constructor (props) {
@@ -10,6 +11,7 @@ class Logout extends Component {
 
   logout (e) {
     e.preventDefault();
+    var context = this;
     fetch('/logout', {
       method: 'GET',
       credentials: 'same-origin',
@@ -20,43 +22,13 @@ class Logout extends Component {
     }).then((response) => {
       if (response.status === 200) {
         console.log('you have been logged out');
+        browserHistory.push('/');
       }
     })
     .catch((error) => {
       console.log('error: ', error);
     });
   }
-
-  // logout (e) {
-  //   e.preventDefault();
-  //   var context = this;
-  //   fetch('/logout', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({
-  //       username: this.state.username,
-  //       password: this.state.password
-  //     })
-  //   }).then((response) => {
-  //     response.text().then((res) => {
-  //       if (res === 'Logout successful!') {
-  //         context.props.history.username = context.state.username;
-  //         context.props.history.push('/dashboard');
-  //       } else {
-  //         context.setState({
-  //           failedLogin: true
-  //         });
-  //       }
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     error.text().then((err) => {
-  //       console.log(err);
-  //     });
-  //   });
-  // }
 
   render() {
     return (
