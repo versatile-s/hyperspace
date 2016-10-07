@@ -136,7 +136,7 @@ class Side extends Component {
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
 
-            <MyCategories username={this.state.username}/>
+            <MyCategories username={this.state.username} setCategory={this.props.setCategory}/>
             <MakeCategory setCategory={this.props.setCategory} username={this.props.username}/>
             <HyperSearch username={this.state.username}/>
             <FriendList username={this.state.username}/>

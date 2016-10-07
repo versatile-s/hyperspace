@@ -6,7 +6,8 @@ import Snackbar from 'material-ui/Snackbar';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 
-class Login extends Component {
+
+class SpaceLogin extends Component {
   constructor (props) {
     super(props);
     this.login = this.login.bind(this);
@@ -27,19 +28,19 @@ class Login extends Component {
     this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
-  componentWillMount () {
-    const chromeExtensionId = 'ojfphmbcbojldkhanmckikiachebhnba';
+  // componentWillMount () {
+  //   const chromeExtensionId = 'ojfphmbcbojldkhanmckikiachebhnba';
 
-    // Make a simple request:
-    setInterval( 
-      function () {
-        chrome.runtime.sendMessage(chromeExtensionId, {message: 'message'},
-        function (response) {
-          console.log('sending MESSAGE');
-          console.log('AND RESPONSE IS', response);
-        });
-      }, 2000);
-  }
+  //   // Make a simple request:
+  //   setInterval( 
+  //     function () {
+  //       chrome.runtime.sendMessage(chromeExtensionId, {message: 'message'},
+  //       function (response) {
+  //         console.log('sending MESSAGE');
+  //         console.log('AND RESPONSE IS', response);
+  //       });
+  //     }, 2000);
+  // }
 
   login (e) {
     e.preventDefault();
@@ -73,6 +74,9 @@ class Login extends Component {
     });
   }
 
+  componentDidMount(){
+    this.warpfield();
+  }
   handleRequestClose () {
     this.setState({
       open: false,
@@ -90,15 +94,16 @@ class Login extends Component {
       password: pass.target.value
     });
   }
-
   warpfield() {
     if (this.state.warp) {
       new WarpSpeed("warpfield",{'speed':5, 'density':8});
     } else {
       new WarpSpeed("warpfield",{'speed':.2, 'density':8});
-    }   
-  }
+    }  
 
+     
+   
+  }
   accelerate() {
     var context= this;
     if (this.state.warp) {
@@ -114,16 +119,15 @@ class Login extends Component {
         context.warpfield();
       });
     }
+    
+    
   }
-  componentDidMount(){
-    this.warpfield();
-  }
-
   render() {
     return (
       <div>
 
         <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
+
         <div className="loginHome" onClick={this.accelerate}>
           <Paper className="loginPaper" zDepth={5}>
            <Snackbar
@@ -146,7 +150,7 @@ class Login extends Component {
             <RaisedButton type="button" fullWidth="true" label="Login" onClick={this.login} />
             <Link to="/signup"><RaisedButton fullWidth="true" label="signup page"/></Link>
           </Paper>  
-        </div>
+        </div>        
         <canvas id="warpfield">
         </canvas>
       </div>
@@ -154,4 +158,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default SpaceLogin;
