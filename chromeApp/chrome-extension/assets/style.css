@@ -1,6 +1,6 @@
 
 html {
-    height:150px; width: 350px; 
+   
 
 
 background: #757F9A; /* fallback for old browsers */
@@ -27,6 +27,10 @@ button#submit:hover {
     background: #000 !important;
     color: #fff;
     cursor: pointer;
+}
+
+input#undefined-EnterNewCategory-NewCategory-39016 {
+    font-weight: bolder !important;
 }
 
 input:focus {

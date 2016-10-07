@@ -2,9 +2,6 @@ var Sequelize = require('sequelize');
 var dbPassword = require('./dbConfig.js');
 var sequelize = new Sequelize('hyperspace', 'root', dbPassword, {logging: false});
 
-
-
-
 var User = sequelize.define('User', {
   username: { type: Sequelize.STRING },
   password: { type: Sequelize.STRING },
