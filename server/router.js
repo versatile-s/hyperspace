@@ -124,7 +124,17 @@ module.exports = (router) => {
       console.log('Received PUT at /preferences');
       res.send('Received PUT at /preferences');
     });
-
+  /*********************************/
+      //Friends
+  /*********************************/
+  router.route('/addfriend')
+    .post(function (req, res) {
+      utils.addFriend(req, res);
+    });
+  router.route('/getfriends')
+    .post(function (req, res) {
+      utils.getFriends(req, res);
+    });  
 
   /************************************************************/
   //       Authentication routes
