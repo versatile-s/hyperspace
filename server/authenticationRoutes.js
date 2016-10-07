@@ -42,9 +42,3 @@ module.exports = (authRouter) => {
     }
   });
 };
-
-
-//var utils = require('./utilities');
-
-
-

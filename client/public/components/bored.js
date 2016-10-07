@@ -20,7 +20,7 @@ class Bored extends Component {
     this.setCategory = this.setCategory.bind(this);
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
-    this.play=this.play.bind(this);
+    this.play = this.play.bind(this);
   }
 
   componentWillMount () {
@@ -31,10 +31,9 @@ class Bored extends Component {
   }
 
   setCategory(category){
-    var context=this;
+    var context = this;
     console.log("category param",category);
     store.dispatcher({type: 'CAT_TITLE', payload: category});
-    console.log("state",this.state.categoryTitle);
     context.categoryCall();
   }
 

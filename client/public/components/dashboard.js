@@ -8,9 +8,6 @@ import store from '../../store';
 class Dashboard extends Component {
   constructor (props) {
     super(props);
-    this.state = {
-      category: 'home'
-    };
     this.createHome = this.createHome.bind(this);
 
   }
@@ -24,13 +21,9 @@ class Dashboard extends Component {
       },
       body: JSON.stringify({
         username: username,
-        name: this.state.category
+        name: store.getState().categoryTitle.categoryTitle
       })
     }).then(browserHistory.push('/' + username + "/home"));
-
-
-    // browserHistory.push("/" + this.state.username + "/home");
-
   }
 
   render () {

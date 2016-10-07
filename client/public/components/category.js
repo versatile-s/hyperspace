@@ -13,9 +13,9 @@ class Category extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      username: this.props.params.user,
-      categoryTitle: this.props.params.category,
-      data: [],
+      viewedUser: this.props.params.user,
+      viewedCat: this.props.params.category,
+      data: []
       // currentVisitor: 'guest'
     };
     // this.isAuth = this.isAuth.bind(this);
@@ -32,7 +32,7 @@ class Category extends Component {
   setCategory(category) {
     var context = this;
     this.setState({
-      categoryTitle: category
+      viewedCat: category
     },
     function() {
       context.categoryCall();
@@ -49,7 +49,7 @@ class Category extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.username,
+        username: this.state.viewedUser,
         title: item.title,
         views: item.views
       })
@@ -77,7 +77,6 @@ class Category extends Component {
     return 'gradient' + random;
   }
 
-
   categoryCall () {
     var context = this;
     fetch('/categoryData', {
@@ -87,19 +86,23 @@ class Category extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.username,
-        categoryTitle: this.state.categoryTitle
+        username: this.state.viewedUser,
+        categoryTitle: this.state.viewedCat
       })
     }).then((response) => {
       response.json().then(function (data) {
         if (Array.isArray(data)) {
           context.setState({
+            viewedUser: context.props.params.user,
+            viewedCat: context.props.params.category,
             data: data
           }, function () {
             context.sortData();
           });
         } else {
           context.setState({
+            viewedUser: context.props.params.user,
+            viewedCat: context.props.params.category,
             data: [{title: "This category doesnt seem to have any links yet!"}]
           });
         }
@@ -109,12 +112,13 @@ class Category extends Component {
 
 
   render () {
+    console.log('this state:', this.state);
     { var context = this; this.randomizeGradient();}
     return (
       <div>
-        <Side category={this.state.categoryTitle} setCategory={this.setCategory} username={this.state.username}/>  
+        <Side category={this.state.viewedCat} setCategory={this.setCategory} username={this.state.viewedUser}/>  
         <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
-        <FlatButton label={this.state.username + "  -  " + this.state.categoryTitle} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
+        <FlatButton label={this.state.viewedUser + "  -  " + this.state.viewedCat} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
         <div className="categoryPageContainer">
             {this.state.data.map(function (item) {
               return (

@@ -31,7 +31,6 @@ class HyperSearch extends Component {
     var text = e.target.value;
     if (store.getState().self.self) {
       // if user is searching only their own hypers
-      console.log(store.getState().username.username);
       fetch('/searchLinks', {
         method: 'POST',
         headers: {
@@ -50,7 +49,6 @@ class HyperSearch extends Component {
       });
     } else {
       // if user is searching all hypers
-      console.log('oops......');
       fetch('/searchLinks', {
         method: 'POST',
         headers: {

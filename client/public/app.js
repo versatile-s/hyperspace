@@ -19,6 +19,24 @@ import SpaceLogin from './components/SpaceLogin';
 class App extends Component {
   constructor (props) {
     super(props);
+
+// check if auth exists
+
+    fetch('', {
+      credentials: 'same-origin'
+    }).then(function (res) {
+      res.text().then(function (response) {
+        if (response === 'No Auth') {
+          store.dispatch({type: 'USERNAME_UPDATE', payload: ''});
+        } else {
+          store.dispatch({type: 'USERNAME_UPDATE', payload: response});
+        }
+      });
+    });
+
+// check if auth exists
+
+
     store.dispatch({type: 'AUTH_SUCCESS', payload: null});
     store.dispatch({type: 'GET_CATEGORIES', payload: []});
     store.dispatch({type: 'CAT_TITLE', payload: 'home'});
@@ -27,7 +45,6 @@ class App extends Component {
     store.dispatch({type: 'S_HYPERS', payload: []});
     store.dispatch({type: 'SELF', payload: null});
     store.dispatch({type: 'TOGGLE_SWITCH', payload: null});
-    store.dispatch({type: 'USERNAME_UPDATE', payload: ''});
     injectTapEventPlugin();
   }
    // onEnter={requireAuth}
