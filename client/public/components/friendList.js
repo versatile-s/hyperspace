@@ -10,17 +10,11 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton/IconButton';
 import GroupIcon from 'material-ui/svg-icons/social/group';
-
+import store from '../../store';
 
 class FriendList extends Component {
   constructor (props) {
     super(props);
-    this.state = {
-      username: "",
-      categoryTitle: "",
-
-    };
-    
   }
   render () {
     return (

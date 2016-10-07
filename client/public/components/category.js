@@ -7,6 +7,7 @@ import Snackbar from 'material-ui/Snackbar';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import store from '../../store';
 
 class Category extends Component {
   constructor (props) {
@@ -16,7 +17,6 @@ class Category extends Component {
       categoryTitle: this.props.params.category,
       data: []
     };
-    
     this.categoryCall = this.categoryCall.bind(this);
     this.setCategory = this.setCategory.bind(this);
     this.updateViews = this.updateViews.bind(this);
@@ -28,20 +28,14 @@ class Category extends Component {
   }
 
   setCategory(category){
-    var context=this;
-    console.log("category param",category);
     this.setState({
       categoryTitle: category
-    },
-    function() {
-      console.log("state",this.state.categoryTitle);
-      context.categoryCall();
-    });  
+    });
+    this.categoryCall();
   }
 
   updateViews (item) {
     var context = this;
-    console.log(this.state.username);
     item.views +=1;
     fetch('/link', {
       method:'PUT',
@@ -53,7 +47,6 @@ class Category extends Component {
         username: this.state.username,
         title: item.title,  
         views: item.views
-
       })
       
     }).then(function(){
@@ -62,6 +55,7 @@ class Category extends Component {
   }
 
   sortData () {
+    var context = this;
     var tempData = this.state.data.sort(function (a, b) {
       return b.views - a.views;
     });
@@ -93,17 +87,16 @@ class Category extends Component {
     }).then((response) => {
       response.json().then(function (data) {
         if (Array.isArray(data)) {
-          console.log("data from category call",data);
           context.setState({
             data: data
-          }, function(){
+          }, function () {
             context.sortData();
           });
         } else {
           context.setState({
             data: [{title: "This category doesnt seem to have any links yet!"}]
           });
-        }  
+        }
       });
     });
   }
@@ -113,7 +106,7 @@ class Category extends Component {
     { var context = this; this.randomizeGradient();}
     return (
       <div>
-        <Side category={this.props.categoryTitle} setCategory={this.setCategory} username={this.state.username}/>  
+        <Side category={this.state.categoryTitle} setCategory={this.setCategory} username={this.state.username}/>  
         <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
         <FlatButton label={this.state.username + "  -  " + this.state.categoryTitle} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
         <div className="categoryPageContainer">

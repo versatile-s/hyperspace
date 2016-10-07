@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
+import store from '../../store';
 
 class Login extends Component {
   constructor (props) {
@@ -15,8 +16,7 @@ class Login extends Component {
     this.state = {
       username:'',
       password:'',
-      failedLogin: false,
-      
+      failedLogin: false     
     };
     this.login = this.login.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
@@ -28,14 +28,14 @@ class Login extends Component {
     const chromeExtensionId = 'ojfphmbcbojldkhanmckikiachebhnba';
 
     // Make a simple request:
-    setInterval( 
-      function () {
-        chrome.runtime.sendMessage(chromeExtensionId, {message: 'message'},
-        function (response) {
-          console.log('sending MESSAGE');
-          console.log('AND RESPONSE IS', response);
-        });
-      }, 2000);
+    // setInterval( 
+    //   function () {
+    //     chrome.runtime.sendMessage(chromeExtensionId, {message: 'message'},
+    //     function (response) {
+    //       console.log('sending MESSAGE');
+    //       console.log('AND RESPONSE IS', response);
+    //     });
+    //   }, 2000);
   }
 
   login (e) {
@@ -54,9 +54,15 @@ class Login extends Component {
     }).then((response) => {
       response.text().then((res) => {
         if (res === 'Login successful!') {
+          store.dispatch({type: 'AUTH_SUCCESS', payload: true});
+          store.dispatch({type: 'USERNAME_UPDATE', payload: context.state.username});
+          context.setState({
+            failedLogin: false
+          });
           context.props.history.username = context.state.username;
           context.props.history.push('/'+context.state.username+'/home');
         } else {
+          store.dispatch({type: 'AUTH_FAIL', payload: false});
           context.setState({
             failedLogin: true
           });
@@ -71,9 +77,7 @@ class Login extends Component {
   }
 
   handleRequestClose () {
-    this.setState({
-      open: false,
-    });
+    store.dispatch({type: 'CLOSE', payload: false});
   }
 
   handleUsername(name) {
@@ -102,8 +106,8 @@ class Login extends Component {
               onRequestClose={this.handleRequestClose}
             />
             <Snackbar
-              open={!this.state.failedLogin && this.state.open}
-              message={"WELCOME TO HYPERSPACE " + this.state.username}
+              open={store.getState().authenticated.authenticated && store.getState().open.open}
+              message={"WELCOME TO HYPERSPACE " + store.getState().username.username}
               
               onRequestClose={this.handleRequestClose}
             />
