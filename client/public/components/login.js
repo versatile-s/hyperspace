@@ -9,14 +9,11 @@ import FlatButton from 'material-ui/FlatButton';
 class Login extends Component {
   constructor (props) {
     super(props);
-    this.login = this.login.bind(this);
-    this.handleUsername = this.handleUsername.bind(this);
-    this.handlePass = this.handlePass.bind(this);
     this.state = {
       username:'',
       password:'',
       failedLogin: false,
-      
+
     };
     this.login = this.login.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
@@ -24,27 +21,16 @@ class Login extends Component {
     this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
-  componentWillMount () {
-    const chromeExtensionId = 'ojfphmbcbojldkhanmckikiachebhnba';
 
-    // Make a simple request:
-    setInterval( 
-      function () {
-        chrome.runtime.sendMessage(chromeExtensionId, {message: 'message'},
-        function (response) {
-          console.log('sending MESSAGE');
-          console.log('AND RESPONSE IS', response);
-        });
-      }, 2000);
-  }
 
   login (e) {
     e.preventDefault();
     var context = this;
     fetch('/login', {
       method: 'POST',
+      credentials: 'same-origin',
       headers: {
-        'Accept': 'application/json',
+        // 'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -104,17 +90,17 @@ class Login extends Component {
             <Snackbar
               open={!this.state.failedLogin && this.state.open}
               message={"WELCOME TO HYPERSPACE " + this.state.username}
-              
+
               onRequestClose={this.handleRequestClose}
             />
             <FlatButton label="LOGIN" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-        
+
 
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
             <RaisedButton type="button" fullWidth="true" label="Login" onClick={this.login} />
             <Link to="/signup"><RaisedButton fullWidth="true" label="signup page"/></Link>
-          </Paper>  
+          </Paper>
         </div>
       </div>
     );
