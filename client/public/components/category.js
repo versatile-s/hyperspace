@@ -26,25 +26,9 @@ class Category extends Component {
   }
 
   componentWillMount () {
-    // this.listenForAuth();
-    // this.isAuth();
-    // Need to bear in mind the async nature here and only run
     this.categoryCall();
   }
 
-  listenForAuth () {
-    document.getElementById('content').addEventListener('isAuth', function(eventResponse) {
-      var username = eventResponse.username;
-      if (this.state.username === username) {
-        this.setState({
-          currentVisitor: 'admin'
-        });
-      }
-      // we can add a 3rd option here, to change currentVisitor to 'hyperspaceUser' if the user is logged in but on another person's page
-      // we can add a 4th option here, to change currentVisitor to 'friend' if it is a logged in user who is friends with this person.
-      this.categoryCall();
-    });
-  }
 
   setCategory(category) {
     var context = this;
