@@ -91,6 +91,8 @@ class HyperspaceWorker extends Component {
       // remove brackets, quotation marks and split on the comma to create new array
       var unfiltered = this.responseText.slice(1, -1).replace(/['"]+/g, '').split(',');
       
+      console.log('TAGS RECEIVED ARE', unfiltered, this.responseText)
+
       context.setState({
         tagStore: unfiltered
       });
