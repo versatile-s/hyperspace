@@ -117,7 +117,7 @@ class Category extends Component {
 
 
   render () {
-    { var context = this; this.randomizeGradient();}
+    { var context = this; this.randomizeGradient(); }
     return (
       <div>
         <Side category={this.props.categoryTitle} setCategory={this.setCategory} username={this.state.username}/>

@@ -233,7 +233,7 @@ class HyperspaceWorker extends Component {
   render () {
     const context = this;
     return (
-        this.state.fullyLoaded ? 
+        !this.state.fullyLoaded ? <CircularProgress size={60} thickness={7} /> : 
         <div className="workerBody">  
           <IconMenu className="miniMenu"
            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -284,7 +284,6 @@ class HyperspaceWorker extends Component {
               onRequestClose={this.handleRequestClose}
             />
         </div> 
-        : <CircularProgress size={60} thickness={7} />
     );
   }
 }
