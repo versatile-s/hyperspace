@@ -111,8 +111,8 @@ class Login extends Component {
     return (
       <div>
 
-        <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
-        <div className="loginHome" onClick={this.accelerate}>
+        
+ 
           <Paper className="loginPaper" zDepth={5}>
            <Snackbar
               open={this.state.failedLogin}
@@ -131,9 +131,8 @@ class Login extends Component {
             <RaisedButton type="button" fullWidth="true" label="Login" onClick={this.login} />
             <Link to="/signup"><RaisedButton fullWidth="true" label="signup page"/></Link>
           </Paper>
-        </div>
-        <canvas id="warpfield">
-        </canvas>
+     
+        
       </div>
     );
   }

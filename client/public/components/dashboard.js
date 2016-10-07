@@ -16,6 +16,8 @@ class Dashboard extends Component {
   }
   createHome() {
     var username = store.getState().username.username;
+    console.log("store",store);
+    console.log("clicking create home",username);
     fetch('/category', {
       method: 'POST',
       headers: {
@@ -37,7 +39,7 @@ class Dashboard extends Component {
     return (
       <div className="dashContainer">
 
-        <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
+       
         
         <div className="dashboardPaperContainer">
           <Paper className="dashboardPaperL" zDepth={5} >

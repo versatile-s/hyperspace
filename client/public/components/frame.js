@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import Side from './side';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -9,7 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import store from '../../store';
 
-class Category extends Component {
+class Frame extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -112,21 +111,11 @@ class Category extends Component {
     { var context = this; this.randomizeGradient();}
     return (
       <div>
-        
-        <div className="categoryPageContainer">
-            {this.state.data.map(function (item) {
-              return (
-                <div className="hyper" style={{order: item.views}} onClick={()=>context.updateViews(item)}>
-                  <a href={item.url} target="_blank">
-                    <Card>
-                    <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
-                      {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
-                    </CardMedia>
-                    </Card>
-                  </a>
-                </div>
-              );
-            })}
+        <Side category={this.state.categoryTitle} setCategory={this.setCategory} username={this.state.username}/>  
+        <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
+        <FlatButton label={this.state.username + "  -  " + this.state.categoryTitle} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
+        <div>
+            {this.props.children}
         </div>
       </div>
     );
@@ -135,4 +124,4 @@ class Category extends Component {
 
 
 
-export default Category;
+export default Frame;

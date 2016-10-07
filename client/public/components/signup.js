@@ -80,8 +80,8 @@ class Signup extends Component {
   render() {
     return (
       <div>
-        <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
-        <div className="loginHome">
+        
+        <div>
           <Paper className="loginPaper" zDepth={5}>
            <Snackbar
               open={this.state.failedSignin}
