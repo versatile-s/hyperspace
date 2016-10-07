@@ -371,8 +371,8 @@ var utils = {
             username: req.query.username
           }
         }).then(function(hypers) {
-          res.send(hypers);
-          console.log(hypers);
+          res.send(hypers.tags);
+          console.log(hypers.tags);
         });
       });
     });
