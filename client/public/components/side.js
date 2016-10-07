@@ -126,6 +126,7 @@ class Side extends Component {
      
       <div className = "list-knob">
         <IconMenu
+          useLayerForClickAway={true}
           disableAutoFocus={true}
           menuStyle={{width:0, opacity:.2}}
           touchTapCloseDelay={0}

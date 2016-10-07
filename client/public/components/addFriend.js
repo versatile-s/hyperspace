@@ -16,12 +16,35 @@ class AddFriend extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      username: "",
-      categoryTitle: "",
+      username: this.props.username,
+      categoryTitle: this.props.category,
+      lurked: "lurk this user"
 
     };
-    
+    this.addFriend = this.addFriend.bind(this);
   }
+
+  addFriend() {
+    var context=this;
+    fetch('/addfriend', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        friendName: "dummy",
+        friendCategory: "hot dogs"
+      })
+    }).then(function(){
+      context.setState({
+        lurked: "lurking dummy"
+      });
+    });
+
+  }
+
   render () {
     return (
       <div>
@@ -35,13 +58,9 @@ class AddFriend extends Component {
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-          
-          <FlatButton label="add new page" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-          <div ref="catbox">
 
-            
-            <RaisedButton type="button" fullWidth="true" label="Create New PAge" />
-          </div>
+            <RaisedButton type="button" fullWidth="true" onClick={this.addFriend} label={this.state.lurked} />
+          
         </IconMenu>
       </div>  
     );
