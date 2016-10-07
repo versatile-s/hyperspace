@@ -21,6 +21,11 @@ module.exports = (authRouter) => {
     }
   });
 
+  authRouter.route('/logout')
+    .get(function (req, res) {
+      utils.logoutUser(req, res);
+    });
+
   authRouter.get('/signup', function(req, res) {
     if (utils.isAuth(req, res)) {
       res.redirect('/' + req.session.key[0].username + '/home');
