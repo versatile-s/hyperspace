@@ -18,6 +18,21 @@ import SpaceLogin from './components/experimental/SpaceLogin';
 import Frame from './components/frame';
 import Warpfield from './components/warpfield';
 
+var loginCheck = function() {
+  return fetch('http://localhost:3000/api/session', {
+    method: 'GET',
+    credentials: 'same-origin'
+  })
+  .then(function(res) {
+    if (res === 'not logged in') {
+      console.log('not logged in fool');
+    } else {
+      // here is where we would want to set the state in the universal store object
+      console.log('ok so here is the session ', req.session);
+    }
+  });
+};
+
 class App extends Component {
   constructor (props) {
     super(props);
@@ -31,7 +46,11 @@ class App extends Component {
     store.dispatch({type: 'TOGGLE_SWITCH', payload: null});
     store.dispatch({type: 'USERNAME_UPDATE', payload: ''});
     injectTapEventPlugin();
+
   }
+
+
+
    // onEnter={requireAuth}
 
   render() {

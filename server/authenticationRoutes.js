@@ -11,9 +11,16 @@ module.exports = (authRouter) => {
     }
   });
 
-  authRouter.get('/login', function(req, res) {
-    console.log('WITHIN LOGIN ', req.session);
+  authRouter.get('/logincheck', function(req, res) {
+    console.log('HITTING THE LOGINCHECK ENDPOINT here is req.session', req.session);
+    if (utils.isAuth(req, res)) {
+      res.send(req.session.key);
+    } else {
+      res.send('not logged in');
+    }
+  });
 
+  authRouter.get('/login', function(req, res) {
     if (utils.isAuth(req, res)) {
       res.redirect('/' + req.session.key[0].username + '/home');
     } else {
