@@ -3,13 +3,13 @@ var path = require('path');
 var utils = require('./utilities');
 
 module.exports = (authRouter) => {
-  // authRouter.get('/', function(req, res) {
-  //   if (utils.isAuth(req, res)) {
-  //     res.redirect('/' + req.session.key[0].username + '/home');
-  //   } else {
-  //     res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-  //   }
-  // });
+  authRouter.get('/', function(req, res) {
+    if (utils.isAuth(req, res)) {
+      res.redirect('/' + req.session.key[0].username + '/home');
+    } else {
+      res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
+    }
+  });
 
   authRouter.get('/login', function(req, res) {
     if (utils.isAuth(req, res)) {

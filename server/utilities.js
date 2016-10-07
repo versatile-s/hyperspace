@@ -9,7 +9,7 @@ var axios = require('axios');
 
 
 // encrypts password & creates new user in database
-var encrypt = function(req, res) {
+var encrypt = function(req, res, cb) {
   var password = req.body.password;
 
   // generates salt for hashing
@@ -25,8 +25,15 @@ var encrypt = function(req, res) {
           });
         });
       // sends success response to client
-      res.send('User created');
+      //res.send('User created');
     });
+  });
+};
+
+var createSession = function(req, res, userInfo) {
+  req.session.regenerate(function() {
+    req.session.key = userInfo;
+    res.send('Login successful!');
   });
 };
 
@@ -34,16 +41,7 @@ var comparePasswords = function(req, res, storedPass, userInfo) {
   // compares passwords for login
   if (bcrypt.compareSync(req.body.password, storedPass)) {
     // sends success response to client
-    console.log('here is req.session within comparePASS', req.session);
-    console.log('here is userInfo within comparePASS', userInfo);
-    req.session.regenerate(function() {
-      req.session.key = userInfo;
-      console.log('inside of req.session.regenerate and req.session is ,', req.session);
-      res.send('Login successful!');
-    });
-    // req.session.key = userInfo;
-    // console.log('and here it is after we assign a key ', req.session);
-
+    createSession(req, res, userInfo);
   } else {
     // sends unsuccessful response to client
     res.status(400).send('Information provided does not match records.');
@@ -63,6 +61,17 @@ var utils = {
       if (!response) {
         // creates user
         encrypt(req, res);
+        User.findOne({
+          where: {
+            username: req.body.username
+          }
+        }).then(function (userInfo) {
+            req.session.regenerate(function() {
+              req.session.key = userInfo;
+              console.log('inside of encrypt promise and req.session is ,', req.session);
+              res.send('User created');
+            });
+          });
       } else {
         // returns unsuccessful name selection to client
         res.send('Username exists');
