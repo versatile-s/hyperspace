@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
+import store from '../../store';
 
 class Signup extends Component {
   constructor (props) {
@@ -16,9 +17,9 @@ class Signup extends Component {
     this.state = {
       username:'',
       password:'',
-      failedSignup: false,
-      open: true
+      failedSignin: false
     };
+    store.dispatch({type: 'OPEN', payload: true});
   }
 
   signup (e) {
@@ -38,11 +39,17 @@ class Signup extends Component {
     }).then((response) => {
       response.text().then((res)=>{
         if (res === 'Login successful!') {
+          store.dispatch({type: 'USERNAME_UPDATE', payload: context.state.username});
+          store.dispatch({type: 'AUTH_SUCCESS', payload: true});
+          context.setState({
+            failedSignin: false
+          });
           context.props.history.username = context.state.username;
           context.props.history.push('/dashboard');
         } else {
+          store.dispatch({type: 'AUTH_FAIL', payload: false});
           context.setState({
-            failedSignup: true
+            failedSignin: true
           });
         }
       });
@@ -67,34 +74,27 @@ class Signup extends Component {
   }
 
   handleRequestClose () {
-    this.setState({
-      open: false,
-    });
+    store.dispatch({type: 'CLOSE', payload: false});
   }
 
   render() {
     return (
-
       <div>
-
         <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
         <div className="loginHome">
           <Paper className="loginPaper" zDepth={5}>
            <Snackbar
-              open={this.state.failedSignup}
+              open={this.state.failedSignin}
               message={"I'm sorry "+this.state.username+", it looks like you are not the first " + this.state.username + "."}
               autoHideDuration={4000}
               onRequestClose={this.handleRequestClose}
             />
             <Snackbar
-              open={!this.state.failedSignup && this.state.open}
-              message={"WELCOME TO HYPERSPACE " + this.state.username}
-
+              open={store.getState().authenticated.authenticated && store.getState().open.open}
+              message={"WELCOME TO HYPERSPACE " + store.getState().username.username}
               onRequestClose={this.handleRequestClose}
             />
             <FlatButton label="signup" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-
-
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
             <RaisedButton type="button" fullWidth="true" label="signup" onClick={this.signup} />

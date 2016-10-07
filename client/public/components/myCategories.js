@@ -9,16 +9,11 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactDOM from 'react-dom';
 import ListIcon from 'material-ui/svg-icons/action/list';
+import store from '../../store';
 
 class MyCategory extends Component {
   constructor (props) {
     super(props);
-    this.state = {
-      username: this.props.username,
-      categoryTitle: this.props.category,
-      categories: []
- 
-    };
     this.clickCategory = this.clickCategory.bind(this);
     this.getCategories = this.getCategories.bind(this);
   }
@@ -26,7 +21,7 @@ class MyCategory extends Component {
   getCategories () {
     console.log("Gettttting");
     var context = this;
-    fetch('/userCategories/?username=' + this.state.username, {
+    fetch('/userCategories/?username=' + store.getState().username.username, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -36,16 +31,17 @@ class MyCategory extends Component {
       response.json()
         .then(function(categoryData) {
           console.log('categoryData', categoryData);
-          context.setState({
-            categories: categoryData
-          });
+          store.dispatch({type: 'GET_CATEGORIES', payload: categoryData});
+          // context.setState({
+          //   categories: categoryData
+          // });
         });
     });
   }
   clickCategory(e) {
-    console.log("thisdotstate.username", this.state.username);
+    console.log("thisdotstate.username", store.getState().username.username);
   
-    browserHistory.push('/' + this.state.username + '/' + e.target.innerHTML);
+    browserHistory.push('/' + store.getState().username.username + '/' + e.target.innerHTML);
     this.props.setCategory(e.target.innerHTML);
 
   }
@@ -76,7 +72,7 @@ class MyCategory extends Component {
             >
             
             <FlatButton label="My pages" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-            {this.state.categories.map((category) => {
+            {store.getState().categories.categories.map((category) => {
               return (
                 <MenuItem focusState="none" disableAutoFocus={true} ref={category} onClick={this.clickCategory} primaryText={category}/>     
               );

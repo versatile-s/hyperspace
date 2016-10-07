@@ -1,4 +1,3 @@
-
 var db = require('./db/db').sequelize;
 var User = require('./db/db').User;
 var Hyper = require('./db/db').Hyper;
@@ -6,6 +5,7 @@ var path = require('path');
 var CategoryPage = require('./db/db').CategoryPage;
 var bcrypt = require('bcrypt');
 var axios = require('axios');
+var Friend = require('./db/db').Friend;
 
 
 // encrypts password & creates new user in database
@@ -224,7 +224,7 @@ var utils = {
         queryString += text.charAt(i);
       }
     }
-    if (req.body.username) {
+    if (req.body.username && req.body.username !== "") {
       var username = req.body.username.toLowerCase();
       axios.get('http://localhost:9200/hyperspace/hypers/_search?q=' + queryString, {
       }).then(function (response) {
@@ -342,7 +342,7 @@ var utils = {
     }).then(function (user) {
       CategoryPage.findAll({
         where: {
-          userId: user.id,
+          UserId: user.id,
         }
       }).then(function(categories) {
         var catArray = [];
@@ -383,6 +383,42 @@ var utils = {
           console.log('tags here are', tagArray);
           res.send(JSON.stringify(tagArray));
         });
+      });
+    });
+  },
+
+  getFriends: function (req, res) {
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function (user) {
+      Friend.findAll({
+        where: {
+          UserId: user.id
+        }
+      }).then(function(friends) {
+        var friendsArray = [];
+        friends.forEach(function(friend) {
+          friendsArray.push([friend.name, friend.category]);
+        });
+        res.send(friendsArray);
+      });
+    });
+  },
+
+  addFriend: function (req, res) {
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function (user) {
+      Friend.create({
+        name: req.body.friendName,
+        category: req.body.friendCategory,
+        UserId: user.id
+      }).then(function() {
+        res.send('Friend Added!');
       });
     });
   }

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
-
 import Test from './components/test';
 import Login from './components/login';
 import Signup from './components/signup';
@@ -14,10 +13,21 @@ import Side from './components/side';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Bored from './components/bored';
+import store from '../store';
+import SpaceLogin from './components/SpaceLogin';
 
 class App extends Component {
   constructor (props) {
     super(props);
+    store.dispatch({type: 'AUTH_SUCCESS', payload: null});
+    store.dispatch({type: 'GET_CATEGORIES', payload: []});
+    store.dispatch({type: 'CAT_TITLE', payload: 'home'});
+    store.dispatch({type: 'GET_DATA', payload: []});
+    store.dispatch({type: 'OPEN', payload: null});
+    store.dispatch({type: 'S_HYPERS', payload: []});
+    store.dispatch({type: 'SELF', payload: null});
+    store.dispatch({type: 'TOGGLE_SWITCH', payload: null});
+    store.dispatch({type: 'USERNAME_UPDATE', payload: ''});
     injectTapEventPlugin();
   }
    // onEnter={requireAuth}
@@ -28,6 +38,7 @@ class App extends Component {
       <Router history={browserHistory} >
         <Route path='/' component={Login} />
         <Route path='/login' component={Login} />
+        <Route path='/spacelogin' component={SpaceLogin} />
         <Route path='/signup' component={Signup} />
         <Route path='/home' component={Home} />
         <Route path='/layout' component= {Layout} />

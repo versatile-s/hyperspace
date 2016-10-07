@@ -12,7 +12,7 @@ module.exports = (authRouter) => {
   });
 
   authRouter.get('/login', function(req, res) {
-    console.log('WITHIN LOGIN ', req.session)
+    console.log('WITHIN LOGIN ', req.session);
 
     if (utils.isAuth(req, res)) {
       res.redirect('/' + req.session.key[0].username + '/home');
