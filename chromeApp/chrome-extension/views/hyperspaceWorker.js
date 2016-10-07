@@ -25,9 +25,11 @@ class HyperspaceWorker extends Component {
       username: props.username,
       url: null,
       title: null,
+      newCategory: '',
       category: '',
       tags: '',
       selections: [],
+      description: '',
       highlighted: '',
       selectedImage: '',
       images: [],
@@ -42,6 +44,7 @@ class HyperspaceWorker extends Component {
     this.handleSelectChange = this.handleSelectChange.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
     this.takeCurrentGalleryImage = this.takeCurrentGalleryImage.bind(this);
+    this.handleExcerptUpdate = this.handleExcerptUpdate.bind(this);
   }
 
   componentWillMount () {
@@ -154,7 +157,11 @@ class HyperspaceWorker extends Component {
         let title = tab.title;
         let highlighted = context.state.highlighted;
         
-        let category = context.state.category;
+        // handle category vs. new cateogry logic
+        let category;
+        context.state.category === 'or Add New Category' ? category = context.state.newCategory : category = context.state.category;
+        
+
         let tags = context.state.tags;
 
         let firstImage = context.state.images[0];
@@ -176,8 +183,11 @@ class HyperspaceWorker extends Component {
   }
   
   handleExcerptUpdate(e) {
-    console.log('HANDLING EXCERPT UPDATE AND', e);
-    console.log('HANDLING EXCERPT UPDATE AND', e.target.innerHTML);
+    this.setState({
+      description: e.target.value
+    });
+    console.log('HANDLING EXCERPT UPDATE AND', e.target.value);
+    console.log('excerpt in state is', this.state.description);
   }
 
   handleInputChange(e) {
@@ -223,13 +233,15 @@ class HyperspaceWorker extends Component {
            <MenuItem className="logout" onClick={this.props.logOutUser} primaryText="Logout" />
         </IconMenu>
         <h5 className="welcome">welcome, {this.state.username}. <br/>add to your hyperspace.</h5>
-          <SelectField 
+          {this.state.category === 'or Add New Category' ? <TextField floatingLabelText="New Category"
+            value={this.state.newCategory} floatingLabelFixed={true} hintText="Enter New Category"/> :  <SelectField 
             floatingLabelText="Category" 
             value={this.state.category} 
             onChange={this.handleSelectChange} 
             selected={this.state.category}>
               {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
-          </SelectField>
+            <MenuItem value="or Add New Category" className="addNew" primaryText = "or Add New Category"/>
+          </SelectField>}
           <ChipInput
              floatingLabelText="Tags"
              onRequestAdd={(chip) => handleAddChip(chip)}
@@ -238,7 +250,8 @@ class HyperspaceWorker extends Component {
              dataSource={this.state.tagStore}
           />
           <TextField floatingLabelText="Excerpt"
-            value={this.state.highlighted}
+            defaultValue={this.state.highlighted}
+            onChange={this.handleExcerptUpdate}
             multiLine={true}
             rows={2}
             maxrows={6}
