@@ -5,11 +5,11 @@
 #warpfield{
 
   position:absolute;
-  top:70px;
+  top:106px;
   left:0;
   width:100%;
   height:400px;
-  z-index:-1;
+  z-index:-100;
 
 }
 .hyper {
@@ -141,8 +141,6 @@
 .dashboardPaperContainer{
   display:flex;
   justify-content: space-around;
-  background-image: url(http://www.azdeepskies.com/_Media/deconvolved_b33crop.jpeg);
-  background-size: 100%;
 
 }
 .dashboardPaperL{

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
-import Test from './components/test';
+import Test from './components/experimental/test';
 import Login from './components/login';
 import Signup from './components/signup';
-import Home from './components/home';
-import Layout from './components/layoutTest';
+import Home from './components/experimental/home';
+import Layout from './components/experimental/layoutTest';
 import Dashboard from './components/dashboard';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
@@ -14,7 +14,9 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Bored from './components/bored';
 import store from '../store';
-import SpaceLogin from './components/SpaceLogin';
+import SpaceLogin from './components/experimental/SpaceLogin';
+import Frame from './components/frame';
+import Warpfield from './components/warpfield';
 
 class App extends Component {
   constructor (props) {
@@ -36,16 +38,20 @@ class App extends Component {
     return (
       <MuiThemeProvider>
       <Router history={browserHistory} >
-        <Route path='/' component={Login} />
-        <Route path='/login' component={Login} />
+        <Route component={Frame}>
+          <Route component={Warpfield}>
+            <Route path='/' component={Login} />
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={Signup} />
+            <Route path='/dashboard' component={Dashboard}/>
+          </Route>  
+          <Route path='/:user/:category' component={Category} />
+          <Route path='/:user/:category/bored' component={Bored}/>
+        </Route>
         <Route path='/spacelogin' component={SpaceLogin} />
-        <Route path='/signup' component={Signup} />
         <Route path='/home' component={Home} />
         <Route path='/layout' component= {Layout} />
-        <Route path='/dashboard' component={Dashboard}/>
-        <Route path='/:user/:category' component={Category} />
         <Route path='/test' component={Test} />
-        <Route path='/:user/:category/bored' component={Bored}/>
       </Router>
       </MuiThemeProvider>
     );
