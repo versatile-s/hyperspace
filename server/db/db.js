@@ -1,6 +1,8 @@
 var Sequelize = require('sequelize');
 var dbPassword = require('./dbConfig.js');
-var sequelize = new Sequelize('hyperspace', 'root', dbPassword, {logging: false});
+var sequelize = new Sequelize('hyperspace', 'root', dbPassword.dbPassword, {logging: false});
+
+
 
 
 var User = sequelize.define('User', {
@@ -21,10 +23,6 @@ var Hyper = sequelize.define('Hyper', {
   username: { type: Sequelize.STRING },
   tags: { type: Sequelize.STRING },
   views: {type: Sequelize.INTEGER }
-
-  // Datatype of array only available in postgres so need to find a work around.
-  // tags: { type: Sequelize.ARRAY },
-  // widgets: { type: Sequelize.ARRAY }
 });
 
 var CategoryPage = sequelize.define('CategoryPage', {
@@ -35,9 +33,20 @@ var CategoryPage = sequelize.define('CategoryPage', {
   preferences: { type: Sequelize.STRING }
 });
 
+
 var Friend = sequelize.define('Friend', {
   name: {type: Sequelize.STRING},
   category: {type: Sequelize.STRING}
+});
+var Session = sequelize.define('Session', {
+  sid: {
+    type: Sequelize.STRING,
+    primaryKey: true
+  },
+  //userId: Sequelize.STRING,
+  expires: Sequelize.DATE,
+  data: Sequelize.STRING
+
 });
 
 User.sync().then(function () {
@@ -46,7 +55,9 @@ User.sync().then(function () {
   Friend.sync();
   CategoryPage.sync().then(function () {
     Hyper.belongsTo(CategoryPage, {foreignKey: 'CategoryPageId'});
-    Hyper.sync().then(function () {
+    Hyper.sync().then(function() {
+      Session.belongsTo(User, {foreignKey: 'UserId'});
+      Session.sync();
     });
   });
 });
@@ -63,4 +74,9 @@ module.exports.sequelize = sequelize;
 module.exports.User = User;
 module.exports.Hyper = Hyper;
 module.exports.CategoryPage = CategoryPage;
+<<<<<<< HEAD
 module.exports.Friend = Friend;
+=======
+// module.exports.Session = Session;
+module.exports.sequelize = sequelize;
+>>>>>>> 93e5c6d1d73ebcfe2958846e0f16e9d96f0a78c0

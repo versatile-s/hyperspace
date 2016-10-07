@@ -1,13 +1,15 @@
 var db = require('./db/db').sequelize;
 var User = require('./db/db').User;
 var Hyper = require('./db/db').Hyper;
+var path = require('path');
 var CategoryPage = require('./db/db').CategoryPage;
 var bcrypt = require('bcrypt');
 var axios = require('axios');
 var Friend = require('./db/db').Friend;
 
+
 // encrypts password & creates new user in database
-var encrypt = function(req, res) {
+var encrypt = function(req, res, cb) {
   var password = req.body.password;
 
   // generates salt for hashing
@@ -23,16 +25,24 @@ var encrypt = function(req, res) {
           });
         });
       // sends success response to client
-      res.send('User created');
+      //res.send('User created');
     });
   });
 };
 
-var comparePasswords = function(req, res, storedPass) {
+var createSession = function(req, res, userInfo) {
+  req.session.regenerate(function() {
+    req.session.key = userInfo;
+    console.log('here is req.session', req.session);
+    res.send('Login successful!');
+  });
+};
+
+var comparePasswords = function(req, res, storedPass, userInfo) {
   // compares passwords for login
   if (bcrypt.compareSync(req.body.password, storedPass)) {
     // sends success response to client
-    res.send('Login successful!');
+    createSession(req, res, userInfo);
   } else {
     // sends unsuccessful response to client
     res.status(400).send('Information provided does not match records.');
@@ -40,6 +50,7 @@ var comparePasswords = function(req, res, storedPass) {
 };
 
 var utils = {
+
   // USERS
   createUser: function (req, res) {
     User.find({
@@ -50,7 +61,11 @@ var utils = {
       // if username doesn't exist
       if (!response) {
         // creates user
-        encrypt(req, res);        
+        encrypt(req, res);
+        // The reason we create keyUsername here in this particular format is because it needs to match
+        // the same format that we push into createSession when we login users. (loginUser function)
+        var keyUsername = [{ username: req.body.username }];
+        createSession(req, res, keyUsername);
       } else {
         // returns unsuccessful name selection to client
         res.send('Username exists');
@@ -74,7 +89,11 @@ var utils = {
   },
 
   isAuth: function (req, res) {
-    return (req.session) ? true : false;
+    if (req.session.key) {
+      return true;
+    } else {
+      return false;
+    }
   },
 
   loginUser: function (req, res) {
@@ -83,12 +102,26 @@ var utils = {
       .then(function (results) {
         if (results.length === 1) {
           // if user exists, compare passwords
-          comparePasswords(req, res, results[0].password);
+          comparePasswords(req, res, results[0].password, results);
         } else {
           res.status(400).send('Username not found');
         }
       });
   },
+
+
+  logoutUser: (req, res) => {
+    console.log('within the logout util call');
+    req.session.destroy();
+      // console.log('right inside of the destroy req.session is ', req.session)
+      // //res.redirect('/login');
+      // res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
+    // });
+    console.log('right outside of the destroy req.session is ', req.session);
+    res.status(200).send('logout successful');
+    //res.clearCookie(cookie, {path:'/'});
+  },
+
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
@@ -295,7 +328,7 @@ var utils = {
         res.send(err);
       });
 
-   
+
     });
   },
 
