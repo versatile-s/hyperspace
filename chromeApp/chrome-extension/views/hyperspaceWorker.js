@@ -45,6 +45,7 @@ class HyperspaceWorker extends Component {
     this.handleToggle = this.handleToggle.bind(this);
     this.takeCurrentGalleryImage = this.takeCurrentGalleryImage.bind(this);
     this.handleExcerptUpdate = this.handleExcerptUpdate.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   componentWillMount () {
@@ -162,6 +163,8 @@ class HyperspaceWorker extends Component {
         context.state.category === 'or Add New Category' ? category = context.state.newCategory : category = context.state.category;
         
 
+        let description = context.state.description;
+
         let tags = context.state.tags;
 
         let firstImage = context.state.images[0];
@@ -174,8 +177,8 @@ class HyperspaceWorker extends Component {
         let request = new XMLHttpRequest();
         request.open('POST', 'http://127.0.0.1:3000/link', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags + '&username=' + username + '&description=' + highlighted + '&image=' + image));
-        console.log('EVERYTHING SENT HERE IS', url, title, highlighted, image, category, tags);
+        request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags + '&username=' + username + '&description=' + description + '&image=' + image));
+        console.log('EVERYTHING SENT HERE IS', url, title, description, image, category, tags);
       });
     };
     
@@ -186,8 +189,6 @@ class HyperspaceWorker extends Component {
     this.setState({
       description: e.target.value
     });
-    console.log('HANDLING EXCERPT UPDATE AND', e.target.value);
-    console.log('excerpt in state is', this.state.description);
   }
 
   handleInputChange(e) {
