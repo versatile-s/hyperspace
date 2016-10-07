@@ -14,9 +14,6 @@ var client = redis.createClient();
 var server = express();
 var router = require('./router');
 
-// // API Calls for AUTH Redirects
-// //require('./authenticationRoutes')(server, express);
-// require('./middleware.js')(server, express);
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));
 // Populates req.session
