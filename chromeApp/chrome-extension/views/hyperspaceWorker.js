@@ -46,6 +46,7 @@ class HyperspaceWorker extends Component {
     this.takeCurrentGalleryImage = this.takeCurrentGalleryImage.bind(this);
     this.handleExcerptUpdate = this.handleExcerptUpdate.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.onNewCatChange = this.onNewCatChange.bind(this);
   }
 
   componentWillMount () {
@@ -222,6 +223,12 @@ class HyperspaceWorker extends Component {
     });
   }
 
+  onNewCatChange(e) {
+    this.setState({
+      newCategory: e.target.value
+    });
+  }
+
   render () {
     const context = this;
     return (
@@ -235,7 +242,7 @@ class HyperspaceWorker extends Component {
         </IconMenu>
         <h5 className="welcome">welcome, {this.state.username}. <br/>add to your hyperspace.</h5>
           {this.state.category === 'or Add New Category' ? <TextField floatingLabelText="New Category"
-            value={this.state.newCategory} floatingLabelFixed={true} hintText="Enter New Category"/> :  <SelectField 
+            onChange={this.onNewCatChange} floatingLabelFixed={true} hintText="Enter New Category"/> :  <SelectField 
             floatingLabelText="Category" 
             value={this.state.category} 
             onChange={this.handleSelectChange} 
