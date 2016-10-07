@@ -91,7 +91,7 @@ class HyperspaceWorker extends Component {
       // remove brackets, quotation marks and split on the comma to create new array
       var unfiltered = this.responseText.slice(1, -1).replace(/['"]+/g, '').split(',');
       
-      console.log('TAGS RECEIVED ARE', unfiltered, this.responseText)
+      console.log('TAGS RECEIVED ARE', unfiltered, this.responseText);
 
       context.setState({
         tagStore: unfiltered
@@ -254,6 +254,7 @@ class HyperspaceWorker extends Component {
       newCategory: e.target.value
     });
   }
+  
 
   render () {
     const context = this;
@@ -277,7 +278,7 @@ class HyperspaceWorker extends Component {
                 {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
               <MenuItem value="or Add New Category" className="addNew" primaryText = "or Add New Category"/>
             </SelectField>}
-            <ChipInput
+            <ChipInpu
                floatingLabelText="Tags"
                onRequestAdd={(chip) => handleAddChip(chip)}
                onRequestDelete={(chip) => handleDeleteChip(chip)}
