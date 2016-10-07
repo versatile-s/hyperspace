@@ -26,8 +26,9 @@ class Signup extends Component {
     var context = this;
     fetch('/signup', {
       method: 'POST',
+      credentials: 'same-origin',
       headers: {
-        'Accept': 'application/json',
+        //'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -36,14 +37,13 @@ class Signup extends Component {
       })
     }).then((response) => {
       response.text().then((res)=>{
-        if (res === 'User created') {
+        if (res === 'Login successful!') {
           context.props.history.username = context.state.username;
           context.props.history.push('/dashboard');
         } else {
           context.setState({
             failedSignup: true
           });
-
         }
       });
     })
@@ -89,17 +89,17 @@ class Signup extends Component {
             <Snackbar
               open={!this.state.failedSignup && this.state.open}
               message={"WELCOME TO HYPERSPACE " + this.state.username}
-              
+
               onRequestClose={this.handleRequestClose}
             />
             <FlatButton label="signup" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-        
+
 
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
             <RaisedButton type="button" fullWidth="true" label="signup" onClick={this.signup} />
             <Link to="/login"><RaisedButton fullWidth="true" label="login page"/></Link>
-          </Paper>  
+          </Paper>
         </div>
       </div>
     );

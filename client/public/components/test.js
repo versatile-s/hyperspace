@@ -57,14 +57,17 @@ export default class Test extends Component {
 
   logout (e) {
     e.preventDefault();
-    fetch('/logut', {
+    fetch('/logout', {
       method: 'GET',
+      credentials: 'same-origin',
       headers: {
-        'Accept': 'application/json',
+        //'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
     }).then((response) => {
-      console.log(response);
+      if (response.status === 200) {
+        console.log('you have been logged out');
+      }
     })
     .catch((error) => {
       console.log('error: ', error);
@@ -295,7 +298,7 @@ export default class Test extends Component {
       <div>
         <input type="button" value="POST at /signup" onClick={this.signup} />
         <input type="button" value="POST at /login" onClick={this.login} />
-        <input type="button" value="POST at /login" onClick={this.login} />
+        <input type="button" value="DELETE at /logout" onClick={this.logout} />
         <input type="button" value="PUT at /users" onClick={this.putUsers} />
         <input type="button" value="GET at /categories" onClick={this.getCategories} />
         <input type="button" value="POST at /categories" onClick={this.postCategories} />

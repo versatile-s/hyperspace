@@ -2,27 +2,12 @@
 var utils = require('./utilities');
 var path = require('path');
 
-         // HOMEPAGE //
-// router.route('/')
-//   .get(function (req, res) {
-//     console.log('Received GET at /');
-//     // if (utils.isAuth(req, res)) {
-//     //   res.redirect('/dashboard');
-//     //   console.log('redirect to dashboard');
-//     // }
-//     // The above is not doing anything at the moment because we are using routers
-//     res.send('Received GET at /');
-//   });
-
 /*********************************/
 /*********************************/
            //USERS//
 /*********************************/
 /*********************************/
-// new user signup
-
 module.exports = (router) => {
-
   router.route('/signup')
     .post(function (req, res) {
       console.log('Received POST at /signup');
@@ -31,20 +16,18 @@ module.exports = (router) => {
       //   console.log('redirect to dashboard');
       // }
       utils.createUser(req, res);
-
     });
-    // .get(function (req, res) {
-    //   console.log('Received GET at /signup');
-    //   if (utils.isAuth(req, res)) {
-    //     res.redirect('/dashboard');
-    //     console.log('redirect to dashboard');
-    //   }
-    // });
 
   // existing user login
   router.route('/login')
     .post(function (req, res) {
       utils.loginUser(req, res);
+    });
+
+  router.route('/logout')
+    .get(function (req, res) {
+      console.log('YOOOOOO Received GET at /logout');
+      utils.logoutUser(req, res);
     });
 
   router.route('/users')
@@ -54,11 +37,11 @@ module.exports = (router) => {
       console.log('User updated');
     });
 
-  /*********************************/
-  /*********************************/
-        //CATEGORY PAGES//
-  /*********************************/
-  /*********************************/
+/*********************************/
+/*********************************/
+      //CATEGORY PAGES//
+/*********************************/
+/*********************************/
 
   router.route('/categoryData')
     .post(function (req, res) {
@@ -84,6 +67,7 @@ module.exports = (router) => {
       utils.updateCategoryPage(req, res);
       res.send('Received PUT at /category');
     });
+
 
   /*********************************/
   /*********************************/
@@ -158,11 +142,11 @@ module.exports = (router) => {
     res.sendFile(path.join(__dirname, '../client/bundle.js'));
   });
 
-  // 404 Fallback
+  //404 Fallback
   router.get('*', function(req, res) {
     // res.status(404).send('404, Sari Gurl');
     // console.log('HELLO THERE!');
     res.sendFile(path.join(__dirname, '../client/index.html' ));
   });
-  return router;
+  // return router;
 };

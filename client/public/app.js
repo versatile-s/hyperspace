@@ -34,7 +34,7 @@ class App extends Component {
         <Route path='/dashboard' component={Dashboard}/>
         <Route path='/:user/:category' component={Category} />
         <Route path='/test' component={Test} />
-        <Route path='/bored' component={Bored}/>
+        <Route path='/:user/:category/bored' component={Bored}/>
       </Router>
       </MuiThemeProvider>
     );
