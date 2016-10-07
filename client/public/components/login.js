@@ -13,7 +13,7 @@ class Login extends Component {
       username:'',
       password:'',
       failedLogin: false,
-      
+
     };
     this.login = this.login.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
@@ -21,18 +21,19 @@ class Login extends Component {
     this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
-  componentWillMount () {
-    const chromeExtensionId = 'ojfphmbcbojldkhanmckikiachebhnba';
+  // componentWillMount () {
+  //   const chromeExtensionId = 'ojfphmbcbojldkhanmckikiachebhnba';
 
-    // Make a simple request:
-    setInterval( 
-      function () {
-        chrome.runtime.sendMessage(chromeExtensionId, {message: 'message'},
-        function (response) {
-          console.log('sending MESSAGE');
-          console.log('AND RESPONSE IS', response);
-        });
-      }, 2000);
+  //   // Make a simple request:
+  //   setInterval(
+  //     function () {
+  //       chrome.runtime.sendMessage(chromeExtensionId, {message: 'message'},
+  //       function (response) {
+  //         console.log('sending MESSAGE');
+  //         console.log('AND RESPONSE IS', response);
+  //       });
+  //     }, 2000);
+
   }
 
   login (e) {
@@ -101,17 +102,17 @@ class Login extends Component {
             <Snackbar
               open={!this.state.failedLogin && this.state.open}
               message={"WELCOME TO HYPERSPACE " + this.state.username}
-              
+
               onRequestClose={this.handleRequestClose}
             />
             <FlatButton label="LOGIN" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-        
+
 
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
             <RaisedButton type="button" fullWidth="true" label="Login" onClick={this.login} />
             <Link to="/signup"><RaisedButton fullWidth="true" label="signup page"/></Link>
-          </Paper>  
+          </Paper>
         </div>
       </div>
     );
