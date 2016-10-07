@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 var dbPassword = require('./dbConfig.js');
-var sequelize = new Sequelize('hyperspace', 'root', dbPassword.dbPassword, {logging: false});
+var sequelize = new Sequelize('hyperspace', 'root', dbPassword, {logging: false});
 
 
 
@@ -74,9 +74,8 @@ module.exports.sequelize = sequelize;
 module.exports.User = User;
 module.exports.Hyper = Hyper;
 module.exports.CategoryPage = CategoryPage;
-<<<<<<< HEAD
+
 module.exports.Friend = Friend;
-=======
 // module.exports.Session = Session;
 module.exports.sequelize = sequelize;
->>>>>>> 93e5c6d1d73ebcfe2958846e0f16e9d96f0a78c0
+
