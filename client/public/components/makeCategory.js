@@ -76,6 +76,7 @@ class MakeCategory extends Component {
     return (
       <div>
         <IconMenu
+          useLayerForClickAway={true}
           iconStyle={{opacity:.2, width:50}}
           disableAutoFocus={true}
           menuStyle={{width:250}}

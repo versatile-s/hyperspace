@@ -15,8 +15,10 @@ class Category extends Component {
     this.state = {
       username: this.props.params.user,
       categoryTitle: this.props.params.category,
-      data: []
+      data: [],
+      // currentVisitor: 'guest'
     };
+    // this.isAuth = this.isAuth.bind(this);
     this.categoryCall = this.categoryCall.bind(this);
     this.setCategory = this.setCategory.bind(this);
     this.updateViews = this.updateViews.bind(this);
@@ -27,11 +29,14 @@ class Category extends Component {
     this.categoryCall();
   }
 
-  setCategory(category){
+  setCategory(category) {
+    var context = this;
     this.setState({
       categoryTitle: category
+    },
+    function() {
+      context.categoryCall();
     });
-    this.categoryCall();
   }
 
   updateViews (item) {
@@ -45,10 +50,10 @@ class Category extends Component {
       },
       body: JSON.stringify({
         username: this.state.username,
-        title: item.title,  
+        title: item.title,
         views: item.views
       })
-      
+
     }).then(function(){
       context.sortData();
     });
@@ -66,12 +71,13 @@ class Category extends Component {
 
   randomizeGradient () {
     console.log('FIRING GRADIENT');
-  
+
     let random = Math.ceil(Math.random() * 25);
 
     return 'gradient' + random;
   }
- 
+
+
   categoryCall () {
     var context = this;
     fetch('/categoryData', {
@@ -111,12 +117,11 @@ class Category extends Component {
         <FlatButton label={this.state.username + "  -  " + this.state.categoryTitle} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
         <div className="categoryPageContainer">
             {this.state.data.map(function (item) {
-
               return (
                 <div className="hyper" style={{order: item.views}} onClick={()=>context.updateViews(item)}>
                   <a href={item.url} target="_blank">
                     <Card>
-                    <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>  
+                    <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
                       {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
                     </CardMedia>
                     </Card>
@@ -124,7 +129,7 @@ class Category extends Component {
                 </div>
               );
             })}
-        </div>    
+        </div>
       </div>
     );
   }

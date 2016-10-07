@@ -16,6 +16,8 @@ import MyCategories from './myCategories';
 import ListIcon from 'material-ui/svg-icons/action/list';
 import BoredIcon from 'material-ui/svg-icons/hardware/videogame-asset';
 import store from '../../store';
+import AddFriend from './addFriend';
+import Logout from './logout';
 
 class Side extends Component {
   constructor (props) {
@@ -92,7 +94,6 @@ class Side extends Component {
 
   render () {
     return (
-     
       <div className = "list-knob">
         <IconMenu
           useLayerForClickAway={true}
@@ -104,15 +105,14 @@ class Side extends Component {
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-
             <MyCategories username={store.getState().username.username} setCategory={this.props.setCategory}/>
             <MakeCategory setCategory={this.props.setCategory} username={store.getState().username.username}/>
             <HyperSearch username={store.getState().username.username}/>
+            <div className="hyper-knob"><Logout /></div>
             <FriendList username={store.getState().username.username}/>
+            <AddFriend username={store.getState().username.username}/>
             <a href={"/"+store.getState().username.username+"/"+store.getState().categoryTitle.categoryTitle+"/bored"}><IconButton iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton></a>
-
         </IconMenu>
-        
       </div>
     );
   }

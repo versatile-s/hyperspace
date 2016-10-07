@@ -27,8 +27,9 @@ class Signup extends Component {
     var context = this;
     fetch('/signup', {
       method: 'POST',
+      credentials: 'same-origin',
       headers: {
-        'Accept': 'application/json',
+        //'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -37,7 +38,7 @@ class Signup extends Component {
       })
     }).then((response) => {
       response.text().then((res)=>{
-        if (res === 'User created') {
+        if (res === 'Login successful!') {
           store.dispatch({type: 'USERNAME_UPDATE', payload: context.state.username});
           store.dispatch({type: 'AUTH_SUCCESS', payload: true});
           context.setState({
@@ -78,9 +79,7 @@ class Signup extends Component {
 
   render() {
     return (
-
       <div>
-
         <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
         <div className="loginHome">
           <Paper className="loginPaper" zDepth={5}>
@@ -96,13 +95,11 @@ class Signup extends Component {
               onRequestClose={this.handleRequestClose}
             />
             <FlatButton label="signup" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-        
-
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
             <RaisedButton type="button" fullWidth="true" label="signup" onClick={this.signup} />
             <Link to="/login"><RaisedButton fullWidth="true" label="login page"/></Link>
-          </Paper>  
+          </Paper>
         </div>
       </div>
     );

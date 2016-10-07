@@ -15,12 +15,44 @@ import store from '../../store';
 class FriendList extends Component {
   constructor (props) {
     super(props);
+
+    this.state = {
+      username: this.props.username,
+      friendsData: []
+    };
+    this.fetchFriends = this.fetchFriends.bind(this);
   }
+
+  fetchFriends() {
+    var context = this;
+    fetch('/getfriends', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.state.username
+      })
+    }).then(function(data) {
+      data.json().then(function(parsedData){
+        console.log('parsedata',parsedData);
+        context.setState({
+          friendsData: parsedData
+        
+        });
+      });
+      
+
+    });
+  }
+
   render () {
     return (
       <div>
         <IconMenu
           iconStyle={{opacity:.2, width:50}}
+          onTouchTap={this.fetchFriends}
           disableAutoFocus={true}
           menuStyle={{width:250}}
           touchTapCloseDelay={0}
@@ -30,12 +62,12 @@ class FriendList extends Component {
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
           
-          <FlatButton label="add new page" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-          <div ref="catbox">
-
-            
-            <RaisedButton type="button" fullWidth="true" label="Create New PAge" />
-          </div>
+          <FlatButton label="LURK LIST" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
+          {this.state.friendsData.map((friend) => {
+            return (
+              <a href={'/' + friend[0] + '/' + friend[1]}><MenuItem primaryText={friend[0] + " - " + friend[1]}/></a>     
+            );
+          })}
         </IconMenu>
       </div>  
     );

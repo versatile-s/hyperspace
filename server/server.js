@@ -5,26 +5,35 @@ var history = require('connect-history-api-fallback');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var utils = require('./utilities');
+var logger = require('morgan');
+
+// var redis = require('redis');
+// var RedisStore = require('connect-redis')(session);
+// var client = redis.createClient();
 
 var server = express();
-
-server.use(cookieParser('secret'));
-server.use(session({
-  secret: 'Our Secret',
-  resave: false,
-  saveUninitialized: true,
-  // store: new (require('express-sessions'))({
-  //   storage: 'redis',
-  //   instance: client, // optional
-  //   host: 'localhost', // optional
-  //   port: 6379, // optional
-  //   collection: 'sessions', // optional
-  //   expire: 86400 // optional
-  // })
-}));
+var router = require('./router');
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));
+// Populates req.session
+server.use(session({
+  resave: false, // don't save session if unmodified
+  saveUninitialized: false, // don't create session until something stored
+  secret: 'keyboard cat',
+  name: 'Yosh Cookies',
+  // store: new RedisStore({
+  //   logErrors: true,
+  //   host: 'localhost',
+  //   port: 6379,
+  //   client: client,
+  //   ttl: 260
+  // })
+}));
+
+
+server.use(logger('dev'));
+
 
 /*********************************/
 /*********************************/
@@ -43,47 +52,26 @@ server.get('*/styles.css', function (req, res) {
 //   res.sendFile(path.join(__dirname, '../client/assets'));
 // });
 
+// AuthRoutes are all of our endpoints that need to take priority over all else.
+// This servers for all of our session based authorization for example.
+require('./authenticationRoutes')(server);
 
-server.get('/login', function(req, res) {
-
-  if (utils.isAuth(req, res) === true) {
-    console.log('YOU ARE BEING REDIRECTED');
-    res.redirect('/dashboard');
-  } else {
-    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-  }
-});
-
-server.get('/signup', function(req, res) {
-  if (utils.isAuth(req, res) === true) {
-    console.log('YOU ARE BEING REDIRECTED');
-    res.redirect('/dashboard');
-  } else {
-    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-  }
-});
-server.get('/dashboard', function(req, res) {
-  if (utils.isAuth(req, res) === false) {
-    console.log('YOU ARE BEING REDIRECTED');
-    res.redirect('/login');
-  } else {
-    res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-  }
-});
-
+// This should be moved to router file
 server.get('/userCategories*', function (req, res) {
   console.log('Received GET @ /userCategories', req.body);
   utils.getUserCategories(req, res);
 });
 
+// IMPORTANT any remaining routes that have NOT hit the authRoutes already will be first sent
+// to the client code in app.js and hit the React Router. Only if a request does not hit the react router
+// will it fallback into the server side router.js file.
 server.use(history());
-
 server.use(express.static(path.join(__dirname, '../client/')));
 require('./router.js')(server);
 
+
+
 var port = process.env.port || 3000;
-
-
 server.listen(port, function() {
   console.log('Server is listening on port ' + port + '!');
 });

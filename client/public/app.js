@@ -14,6 +14,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Bored from './components/bored';
 import store from '../store';
+import SpaceLogin from './components/SpaceLogin';
 
 class App extends Component {
   constructor (props) {
@@ -37,6 +38,7 @@ class App extends Component {
       <Router history={browserHistory} >
         <Route path='/' component={Login} />
         <Route path='/login' component={Login} />
+        <Route path='/spacelogin' component={SpaceLogin} />
         <Route path='/signup' component={Signup} />
         <Route path='/home' component={Home} />
         <Route path='/layout' component= {Layout} />
