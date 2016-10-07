@@ -29,6 +29,10 @@ button#submit:hover {
     cursor: pointer;
 }
 
+input#undefined-EnterNewCategory-NewCategory-39016 {
+    font-weight: bolder !important;
+}
+
 input:focus {
     outline-offset: 7px;
     outline-color: #ffc371;
