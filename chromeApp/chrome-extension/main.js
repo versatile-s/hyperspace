@@ -6,6 +6,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class ChromeApp extends Component {
   constructor (props) {
@@ -14,7 +15,8 @@ class ChromeApp extends Component {
     this.state = {
       authenticated: false, 
       username: '',
-      failedLogin: false
+      failedLogin: false,
+      loading: true
     };
 
     this.authenticateUser = this.authenticateUser.bind(this);
@@ -33,6 +35,12 @@ class ChromeApp extends Component {
           username: username
         });
       }
+    });
+  }
+
+  componentDidMount () {
+    this.setState({
+      loading: false
     });
   }
 
@@ -96,6 +104,7 @@ class ChromeApp extends Component {
   render () {
     return (
       <MuiThemeProvider>
+        {this.state.loading ? <CircularProgress thickness={7} /> : 
         <div>
           {this.state.authenticated ? <HyperspaceWorker props={this.props} logOutUser={this.logOutUser.bind(this)} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>}
           <Snackbar
@@ -105,6 +114,7 @@ class ChromeApp extends Component {
           className="invalidPass"
         />
         </div>
+      }
       </MuiThemeProvider>
     );
   }

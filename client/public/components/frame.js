@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import Side from './side';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -9,13 +8,13 @@ import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import store from '../../store';
 
-class Category extends Component {
+class Frame extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      viewedUser: this.props.params.user,
-      viewedCat: this.props.params.category,
-      data: []
+      username: this.props.params.user,
+      categoryTitle: this.props.params.category,
+      data: [],
       // currentVisitor: 'guest'
     };
     // this.isAuth = this.isAuth.bind(this);
@@ -32,7 +31,7 @@ class Category extends Component {
   setCategory(category) {
     var context = this;
     this.setState({
-      viewedCat: category
+      categoryTitle: category
     },
     function() {
       context.categoryCall();
@@ -49,7 +48,7 @@ class Category extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.viewedUser,
+        username: this.state.username,
         title: item.title,
         views: item.views
       })
@@ -77,6 +76,7 @@ class Category extends Component {
     return 'gradient' + random;
   }
 
+
   categoryCall () {
     var context = this;
     fetch('/categoryData', {
@@ -86,23 +86,19 @@ class Category extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.viewedUser,
-        categoryTitle: this.state.viewedCat
+        username: this.state.username,
+        categoryTitle: this.state.categoryTitle
       })
     }).then((response) => {
       response.json().then(function (data) {
         if (Array.isArray(data)) {
           context.setState({
-            viewedUser: context.props.params.user,
-            viewedCat: context.props.params.category,
             data: data
           }, function () {
             context.sortData();
           });
         } else {
           context.setState({
-            viewedUser: context.props.params.user,
-            viewedCat: context.props.params.category,
             data: [{title: "This category doesnt seem to have any links yet!"}]
           });
         }
@@ -112,23 +108,14 @@ class Category extends Component {
 
 
   render () {
-    { var context = this; this.randomizeGradient(); }
+    { var context = this; this.randomizeGradient();}
     return (
-      <div>        
-        <div className="categoryPageContainer">
-            {this.state.data.map(function (item) {
-              return (
-                <div className="hyper" style={{order: item.views}} onClick={()=>context.updateViews(item)}>
-                  <a href={item.url} target="_blank">
-                    <Card>
-                    <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
-                      {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
-                    </CardMedia>
-                    </Card>
-                  </a>
-                </div>
-              );
-            })}
+      <div>
+        <Side category={this.state.categoryTitle} setCategory={this.setCategory} username={this.state.username}/>  
+        <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
+        <FlatButton label={this.state.username + "  -  " + this.state.categoryTitle} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
+        <div>
+            {this.props.children}
         </div>
       </div>
     );
@@ -137,4 +124,4 @@ class Category extends Component {
 
 
 
-export default Category;
+export default Frame;
