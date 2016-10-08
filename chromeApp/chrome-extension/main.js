@@ -105,7 +105,6 @@ class ChromeApp extends Component {
     return (
       <MuiThemeProvider>
         <div className="chromeApp">
-          {this.state.loading ? <CircularProgress /> : loaded}
           {this.state.authenticated ? <HyperspaceWorker props={this.props} logOutUser={this.logOutUser.bind(this)} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>}
             <Snackbar
               open={this.state.failedLogin && !this.state.authenticated}
