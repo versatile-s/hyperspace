@@ -148,6 +148,10 @@ img.imageSelection {
     top: 5px;
 }
 
+span.addNew {
+    background: #d3edff;
+}
+
 @charset "UTF-8";
 /*!
   Ionicons, v2.0.0
