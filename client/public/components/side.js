@@ -96,7 +96,7 @@ class Side extends Component {
       store.dispatch({type: 'TOGGLE_SWITCH', payload: false});
     } else {
       store.dispatch({type: 'TOGGLE_SWITCH', payload: true});
-    } 
+    }
   }
 
   toBored(){

@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
+//import GoogleSignup from './googleSignup';
 import store from '../../store';
 
 class Signup extends Component {
@@ -94,8 +95,8 @@ class Signup extends Component {
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
             <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
             <RaisedButton type="button" fullWidth="true" label="signup" onClick={this.signup} />
-            <Link to="/googleSignup"><RaisedButton fullWidth="true" label="Google Signup"/></Link>
             <Link to="/login"><RaisedButton fullWidth="true" label="login page"/></Link>
+
           </Paper>
         </div>
       </div>
@@ -103,4 +104,5 @@ class Signup extends Component {
   }
 }
 
+//<GoogleSignup />
 export default Signup;
