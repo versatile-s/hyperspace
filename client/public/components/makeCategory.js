@@ -76,6 +76,7 @@ class MakeCategory extends Component {
     return (
       <div>
         <IconMenu
+          style={this.props.params.user===store.getState().username.username?{}:{display:"none"}}
           useLayerForClickAway={true}
           iconStyle={{opacity:.2, width:50}}
           disableAutoFocus={true}

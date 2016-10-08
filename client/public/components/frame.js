@@ -12,8 +12,6 @@ class Frame extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      username: this.props.params.user,
-      categoryTitle: this.props.params.category,
       data: [],
       // currentVisitor: 'guest'
     };
@@ -22,10 +20,19 @@ class Frame extends Component {
     this.setCategory = this.setCategory.bind(this);
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
+    this.hardRender = this.hardRender.bind(this);
+    // var context = this;
+    // store.subscribe(()=>{
+    //   // console.log("frame updated store");
+    //   // context.forceUpdate();
+      
+   
+    // });
   }
 
   componentWillMount () {
-    this.categoryCall();
+    console.log("componentWillMount--frame");
+    this.categoryCall(this.props.params.user, this.props.params.category);
   }
 
   setCategory(category) {
@@ -34,7 +41,7 @@ class Frame extends Component {
       categoryTitle: category
     },
     function() {
-      context.categoryCall();
+      context.categoryCall(context.props.params.user, context.props.params.category);
     });
   }
 
@@ -57,15 +64,18 @@ class Frame extends Component {
       context.sortData();
     });
   }
+  hardRender(){
 
-  sortData () {
-    var context = this;
-    var tempData = this.state.data.sort(function (a, b) {
+    this.children.forceUpdate();
+  }
+
+  sortData (responseData) {
+   
+    var tempData = responseData.sort(function (a, b) {
       return b.views - a.views;
     });
-    this.setState({
-      data: tempData
-    });
+    store.dispatch({type: "GET_DATA", payload: tempData});
+    // this.forceUpdate();
   }
 
   randomizeGradient () {
@@ -77,8 +87,12 @@ class Frame extends Component {
   }
 
 
-  categoryCall () {
+  categoryCall (username, category) {
     var context = this;
+    store.dispatch({
+      type: "GET_DATA", payload:[]
+    });
+    console.log("categorycall params",username,category);
     fetch('/categoryData', {
       method: 'POST',
       headers: {
@@ -86,20 +100,21 @@ class Frame extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.username,
-        categoryTitle: this.state.categoryTitle
+        username: username,
+        categoryTitle: category
       })
     }).then((response) => {
+
       response.json().then(function (data) {
+        console.log("response from frame category call",data);
+
         if (Array.isArray(data)) {
-          context.setState({
-            data: data
-          }, function () {
-            context.sortData();
-          });
+           
+          context.sortData(data);
+          
         } else {
-          context.setState({
-            data: [{title: "This category doesnt seem to have any links yet!"}]
+          store.dispatch({
+            type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!"}]
           });
         }
       });
@@ -107,15 +122,15 @@ class Frame extends Component {
   }
 
 
+    // { var context = this; this.randomizeGradient();}
   render () {
-    { var context = this; this.randomizeGradient();}
     return (
       <div>
-        <Side category={this.state.categoryTitle} setCategory={this.setCategory} username={this.state.username}/>  
+        <Side categoryCall={this.categoryCall} params={this.props.params} category={this.state.categoryTitle} setCategory={this.setCategory} username={this.state.username}/>  
         <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
-        <FlatButton label={this.state.username + "  -  " + this.state.categoryTitle} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
+        <FlatButton label={this.props.params.user?this.props.params.user + "  -  " + this.props.params.category:"WELCOME TO HYPERSPACE"} labelStyle={{textAlign: 'center', fontSize: 15, letterSpacing: 2}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
         <div>
-            {this.props.children}
+            {React.cloneElement(this.props.children,{categoryCall: this.categoryCall})}
         </div>
       </div>
     );

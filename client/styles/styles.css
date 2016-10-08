@@ -60,6 +60,11 @@
 .knob{
   opacity: .2;
 }
+.logout-knob{
+  opacity: .2;
+  margin-left: auto;
+  margin-right: auto;
+}
 .friendList-knob{
   z-index: 100;
   position: fixed;
@@ -143,6 +148,7 @@
   justify-content: space-around;
 
 }
+
 .dashboardPaperL{
   height: 400px;
   width: 400px;
