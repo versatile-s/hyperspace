@@ -113,9 +113,11 @@ class HyperspaceWorker extends Component {
       context.setState({
         highlighted: selection[0]
       }, function() {
-        context.setState({
-          fullyLoaded: true
-        });
+        if ( this.state.highlighted.length > 3 ) {
+          context.setState({
+            fullyLoaded: true
+          });
+        }
       });
     });
 
