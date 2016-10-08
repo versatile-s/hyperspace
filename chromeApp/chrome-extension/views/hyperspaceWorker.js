@@ -259,57 +259,56 @@ class HyperspaceWorker extends Component {
   render () {
     const context = this;
     return (
-        !this.state.fullyLoaded ? <CircularProgress size={60} thickness={7} /> : 
-        <div className="workerBody">  
-          <IconMenu className="miniMenu"
-           iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-           anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-           targetOrigin={{horizontal: 'left', vertical: 'top'}}
-          >
-             <MenuItem className="logout" onClick={this.props.logOutUser} primaryText="Logout" />
-          </IconMenu>
-          <h5 className="welcome">welcome, {this.state.username}. <br/>add to your hyperspace.</h5>
-            {this.state.category === 'or Add New Category' ? <TextField floatingLabelText="New Category"
-              onChange={this.onNewCatChange} floatingLabelFixed={true} hintText="Enter New Category"/> : <SelectField 
-              floatingLabelText="Category" 
-              value={this.state.category} 
-              onChange={this.handleSelectChange} 
-              selected={this.state.category}>
-                {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
-              <MenuItem value="or Add New Category" className="addNew" primaryText = "or Add New Category"/>
-            </SelectField>}
-            <ChipInpu
-               floatingLabelText="Tags"
-               onRequestAdd={(chip) => handleAddChip(chip)}
-               onRequestDelete={(chip) => handleDeleteChip(chip)}
-               onChange={this.handleInputChange}
-               dataSource={this.state.tagStore}
-            />
-            <TextField floatingLabelText="Excerpt"
-              defaultValue={this.state.highlighted}
-              onChange={this.handleExcerptUpdate}
-              multiLine={true}
-              rows={2}
-              maxrows={6}
-            />
-            <div className="imageToggle">
-              <Checkbox
-                 label="Include image?"
-                 onCheck={this.handleToggle}
-               />
-            </div>
-            {this.state.includeImage ? this.state.images.length > 0 ? <FirstFiveCarousel images={this.state.images} takeCurrentGalleryImage={this.takeCurrentGalleryImage}/> : 'Sorry, no images were found on this page' : null}
-            <FloatingActionButton onTouchTap={this.sendLink} className="addTo">
-               <ContentAdd />
-            </FloatingActionButton>
-            <Snackbar
-              open={this.state.snackbarOpen}
-              className="sendLinkSnack"
-              message="Sent to your hyperspace!"
-              autoHideDuration={2500}
-              onRequestClose={this.handleRequestClose}
-            />
-        </div> 
+      <div className="workerBody">  
+        <IconMenu className="miniMenu"
+         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+         anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+         targetOrigin={{horizontal: 'left', vertical: 'top'}}
+        >
+           <MenuItem className="logout" onClick={this.props.logOutUser} primaryText="Logout" />
+        </IconMenu>
+        <h5 className="welcome">welcome, {this.state.username}. <br/>add to your hyperspace.</h5>
+          {this.state.category === 'or Add New Category' ? <TextField floatingLabelText="New Category"
+            onChange={this.onNewCatChange} floatingLabelFixed={true} hintText="Enter New Category"/> : <SelectField 
+            floatingLabelText="Category" 
+            value={this.state.category} 
+            onChange={this.handleSelectChange} 
+            selected={this.state.category}>
+              {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
+            <MenuItem value="or Add New Category" className="addNew" primaryText = "or Add New Category"/>
+          </SelectField>}
+          <ChipInput
+             floatingLabelText="Tags"
+             onRequestAdd={(chip) => handleAddChip(chip)}
+             onRequestDelete={(chip) => handleDeleteChip(chip)}
+             onChange={this.handleInputChange}
+             dataSource={this.state.tagStore}
+          />
+          <TextField floatingLabelText="Excerpt"
+            defaultValue={this.state.highlighted}
+            onChange={this.handleExcerptUpdate}
+            multiLine={true}
+            rows={2}
+            maxrows={6}
+          />
+          <div className="imageToggle">
+            <Checkbox
+               label="Include image?"
+               onCheck={this.handleToggle}
+             />
+          </div>
+          {this.state.includeImage ? this.state.images.length > 0 ? <FirstFiveCarousel images={this.state.images} takeCurrentGalleryImage={this.takeCurrentGalleryImage}/> : 'Sorry, no images were found on this page' : null}
+          <FloatingActionButton onTouchTap={this.sendLink} className="addTo">
+             <ContentAdd />
+          </FloatingActionButton>
+          <Snackbar
+            open={this.state.snackbarOpen}
+            className="sendLinkSnack"
+            message="Sent to your hyperspace!"
+            autoHideDuration={2500}
+            onRequestClose={this.handleRequestClose}
+          />
+      </div> 
     );
   }
 }
