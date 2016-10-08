@@ -9,6 +9,7 @@ var path = require('path');
 module.exports = (router) => {
   router.route('/signup')
     .post(function (req, res) {
+      console.log('Received POST at /signup');
       utils.createUser(req, res);
     });
 
@@ -58,12 +59,6 @@ module.exports = (router) => {
       utils.updateCategoryPage(req, res);
       res.send('Received PUT at /category');
     });
-
-  // get a user's categories  
-  router.get('/userCategories', function (req, res) {
-    utils.getUserCategories(req, res);
-  });
-
 
   /*********************************/
   /*********************************/
@@ -126,9 +121,9 @@ module.exports = (router) => {
   router.route('/getfriends')
     .post(function (req, res) {
       utils.getFriends(req, res);
-    });  
+    });
 
-  router.route('/getfeed')  
+  router.route('/getfeed')
     .post(function (req, res) {
       console.log('Received POST at /getFeed');
       utils.getFeed(req, res);

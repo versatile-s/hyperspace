@@ -6,7 +6,7 @@ module.exports = {
   output: {path: __dirname, filename: 'bundle.js'},
   watch: true,
   resolve: {
-    extensions: ['', '.jsx', '.scss', '.js', '.json', '.md'],    
+    extensions: ['', '.jsx', '.scss', '.js', '.json', '.md'],
   },
 
   module: {

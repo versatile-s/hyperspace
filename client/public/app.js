@@ -39,6 +39,8 @@ var loginCheck = function(cb) {
   });
 };
 
+
+
 class App extends Component {
   constructor (props) {
     super(props);
@@ -94,4 +96,10 @@ class App extends Component {
   }
 }
 
+<<<<<<< fd3033c0b793c69a58622b1edf4d7e00d78fb95f
 export default connect()(App);
+=======
+
+
+export default DragDropContext(HTML5Backend)(App);
+>>>>>>> refactored signin and signup google functions into separat file
