@@ -91,7 +91,7 @@ class HyperspaceWorker extends Component {
       // remove brackets, quotation marks and split on the comma to create new array
       var unfiltered = this.responseText.slice(1, -1).replace(/['"]+/g, '').split(',');
       
-      console.log('TAGS RECEIVED ARE', unfiltered, this.responseText)
+      console.log('TAGS RECEIVED ARE', unfiltered, this.responseText);
 
       context.setState({
         tagStore: unfiltered
@@ -113,9 +113,11 @@ class HyperspaceWorker extends Component {
       context.setState({
         highlighted: selection[0]
       }, function() {
-        context.setState({
-          fullyLoaded: true
-        });
+        if ( this.state.highlighted.length > 3 ) {
+          context.setState({
+            fullyLoaded: true
+          });
+        }
       });
     });
 
@@ -254,12 +256,12 @@ class HyperspaceWorker extends Component {
       newCategory: e.target.value
     });
   }
+  
 
   render () {
     const context = this;
     return (
-        !this.state.fullyLoaded ? <CircularProgress size={60} thickness={7} /> : 
-        <div className="workerBody">  
+        !this.state.fullyLoaded ? <CircularProgress size={60} thickness={7} /> : <div className="workerBody">  
           <IconMenu className="miniMenu"
            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
@@ -275,7 +277,7 @@ class HyperspaceWorker extends Component {
               onChange={this.handleSelectChange} 
               selected={this.state.category}>
                 {this.state.selections.map((item) => <MenuItem key={item} value={item} primaryText={item} /> )}
-              <MenuItem value="or Add New Category" className="addNew" primaryText = "or Add New Category"/>
+              <MenuItem style={{backgroundColor: 'ffd699'}} value="or Add New Category" className="addNew" primaryText = "or Add New Category"/>
             </SelectField>}
             <ChipInput
                floatingLabelText="Tags"
@@ -308,7 +310,7 @@ class HyperspaceWorker extends Component {
               autoHideDuration={2500}
               onRequestClose={this.handleRequestClose}
             />
-        </div> 
+        </div>
     );
   }
 }

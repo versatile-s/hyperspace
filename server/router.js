@@ -108,6 +108,12 @@ module.exports = (router) => {
       utils.searchHypers(req, res);
     });
 
+  router.route('/removeLink')
+    .post(function (req, res) {
+      console.log('Received POST at /removeLink');
+      utils.removeHyper(req, res);
+    });
+
 
   /*********************************/
   /*********************************/
