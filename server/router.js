@@ -111,8 +111,8 @@ module.exports = (router) => {
   router.route('/removeLink')
     .post(function (req, res) {
       console.log('Received POST at /removeLink');
-      utils.removeHyperlink(req, res);
-    }
+      utils.removeHyper(req, res);
+    });
 
 
   /*********************************/

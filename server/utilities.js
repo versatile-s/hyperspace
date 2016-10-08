@@ -258,9 +258,20 @@ var utils = {
     });
   },
 
+  removeHyper: function (req, res) {
+    Hyper.findOne({
+      where: {
+        username: req.body.username,
+        title: req.body.title
+      }
+    }).then(function(hyper) {
+      hyper.destroy();
+      console.log('Destroyed this hyperlink: ', hyper);
+    });
+  },
+
   // This will save a category page. It only needs a name property at time of creation and potentially parentCategories
   saveCategoryPage: function (req, res) {
-
     User.findOne({
       where: {
         username: req.body.username
