@@ -18,6 +18,7 @@ import BoredIcon from 'material-ui/svg-icons/hardware/videogame-asset';
 import store from '../../store';
 import AddFriend from './addFriend';
 import Logout from './logout';
+import HomeIcon from 'material-ui/svg-icons/action/home';
 
 class Side extends Component {
   constructor (props) {
@@ -28,6 +29,7 @@ class Side extends Component {
     this.makeNewCategory = this.makeNewCategory.bind(this);
     this.forceFocus = this.forceFocus.bind(this);
     this.toBored=this.toBored.bind(this);
+    this.toHome=this.toHome.bind(this);
   }
 
   clickCategory(e) {
@@ -96,6 +98,10 @@ class Side extends Component {
   toBored(){
     browserHistory.push('/' +this.props.params.user +'/'+this.props.params.category +'/bored');
   }
+  toHome(){
+    browserHistory.push('/' +store.getState().username.username +'/home');
+    this.props.categoryCall(store.getState().username.username,"home");
+  }
 
   render () {
     return (
@@ -110,10 +116,11 @@ class Side extends Component {
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
+            <IconButton onClick={this.toHome} iconStyle={{opacity:.2, width:50}}><HomeIcon /></IconButton>
             <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall}/>
             <MakeCategory params={this.props.params} setCategory={this.props.setCategory} username={store.getState().username.username}/>
             <HyperSearch username={store.getState().username.username}/>
-            <FriendList username={store.getState().username.username}/>
+            <FriendList categoryCall={this.props.categoryCall}/>
             <AddFriend params={this.props.params} username={store.getState().username.username}/>
             <IconButton onClick={this.toBored} iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton>
             <Logout/>
