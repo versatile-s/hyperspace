@@ -33,9 +33,10 @@ class Category extends Component {
     });
   }
 
-  // componentWillMount () {
-  //   this.categoryCall();
-  // }
+  componentWillMount () {
+    console.log("componentWillMount--category. params:",this.props.params.user, this.props.params.category);
+    this.props.categoryCall(this.props.params.user, this.props.params.category);
+  }
 
   setCategory(category) {
     // var context = this;

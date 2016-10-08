@@ -31,6 +31,7 @@ class Frame extends Component {
   }
 
   componentWillMount () {
+    console.log("componentWillMount--frame");
     this.categoryCall(this.props.params.user, this.props.params.category);
   }
 
@@ -129,7 +130,7 @@ class Frame extends Component {
         <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
         <FlatButton label={this.props.params.user?this.props.params.user + "  -  " + this.props.params.category:"WELCOME TO HYPERSPACE"} labelStyle={{textAlign: 'center', fontSize: 15, letterSpacing: 2}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
         <div>
-            {this.props.children}
+            {React.cloneElement(this.props.children,{categoryCall: this.categoryCall})}
         </div>
       </div>
     );
