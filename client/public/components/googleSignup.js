@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import store from '../../store';
 
-class Signup extends Component {
+class GoogleSignup extends Component {
   constructor (props) {
     super(props);
     this.signup = this.signup.bind(this);
@@ -16,8 +16,18 @@ class Signup extends Component {
     store.dispatch({type: 'OPEN', payload: true});
   }
 
+  // The 'e' here should represent a google user
   signup (e) {
     e.preventDefault();
+    var profile = googleUser.getBasicProfile();
+    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+    console.log('Full Name: ' + profile.getName());
+    console.log('Given Name: ' + profile.getGivenName());
+    console.log('Family Name: ' + profile.getFamilyName());
+    console.log("Image URL: " + profile.getImageUrl());
+    console.log("Email: " + profile.getEmail());
+    var id_token = googleUser.getAuthResponse().id_token;
+    console.log("ID Token: " + id_token);
     var context = this;
     fetch('/signup', {
       method: 'POST',
@@ -55,51 +65,22 @@ class Signup extends Component {
     });
   }
 
-  handleUsername(name) {
-    this.setState({
-      username: name.target.value
-    });
-  }
 
-  handlePass(pass) {
-    this.setState({
-      password: pass.target.value
-    });
-  }
-
-  handleRequestClose () {
-    store.dispatch({type: 'CLOSE', payload: false});
-  }
-
+  // render() {
+  //   return (
+  //     <Paper className="loginPaper" zDepth={5}>
+  //       <h1>GOOGLE LOGIN</h1>
+  //       <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+  //       <RaisedButton type="button" fullWidth="true" label="signup" onClick={this.signup} />
+  //     </Paper>
+  //   );
+  // }
   render() {
     return (
-      <div>
-
-        <div>
-          <Paper className="loginPaper" zDepth={5}>
-           <Snackbar
-              open={this.state.failedSignin}
-              message={"I'm sorry "+this.state.username+", it looks like you are not the first " + this.state.username + "."}
-              autoHideDuration={4000}
-              onRequestClose={this.handleRequestClose}
-            />
-            <Snackbar
-              open={store.getState().authenticated.authenticated && store.getState().open.open}
-              message={"WELCOME TO HYPERSPACE " + store.getState().username.username}
-              onRequestClose={this.handleRequestClose}
-            />
-            <FlatButton label="signup" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-            <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
-            <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
-            <RaisedButton type="button" fullWidth="true" label="signup" onClick={this.signup} />
-            <GoogleSignup />
-            <Link to="/login"><RaisedButton fullWidth="true" label="login page"/></Link>
-          </Paper>
-        </div>
-      </div>
+      <h1>GOOGLE SIGNIN</h1>
     );
   }
 }
 
 
-export default Signup;
+export default GoogleSignup;
