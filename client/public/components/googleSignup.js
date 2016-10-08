@@ -1,11 +1,4 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import Snackbar from 'material-ui/Snackbar';
-import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton';
-import GoogleSignup from 'googleSignup';
 import store from '../../store';
 
 class Signup extends Component {
@@ -16,10 +9,11 @@ class Signup extends Component {
     this.handlePass = this.handlePass.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.state = {
-      username: '',
-      password: '',
+      username:'',
+      password:'',
       failedSignin: false
     };
+    store.dispatch({type: 'OPEN', payload: true});
   }
 
   signup (e) {
@@ -29,6 +23,7 @@ class Signup extends Component {
       method: 'POST',
       credentials: 'same-origin',
       headers: {
+        //'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -55,7 +50,7 @@ class Signup extends Component {
     })
     .catch((error) => {
       error.text().then((err)=>{
-        console.error(err);
+        console.log(err);
       });
     });
   }
@@ -73,21 +68,24 @@ class Signup extends Component {
   }
 
   handleRequestClose () {
-    this.setState({
-      failedSignin:false
-    });
-
+    store.dispatch({type: 'CLOSE', payload: false});
   }
 
   render() {
     return (
       <div>
+
         <div>
           <Paper className="loginPaper" zDepth={5}>
            <Snackbar
               open={this.state.failedSignin}
               message={"I'm sorry "+this.state.username+", it looks like you are not the first " + this.state.username + "."}
-              autoHideDuration={3000}
+              autoHideDuration={4000}
+              onRequestClose={this.handleRequestClose}
+            />
+            <Snackbar
+              open={store.getState().authenticated.authenticated && store.getState().open.open}
+              message={"WELCOME TO HYPERSPACE " + store.getState().username.username}
               onRequestClose={this.handleRequestClose}
             />
             <FlatButton label="signup" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
@@ -102,5 +100,6 @@ class Signup extends Component {
     );
   }
 }
+
 
 export default Signup;
