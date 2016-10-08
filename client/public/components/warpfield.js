@@ -52,7 +52,7 @@ class Warpfield extends Component {
     return (
       <div>
 
-        
+        {console.log("warpfield this", this)}
         <div onClick={this.accelerate}>
           {this.props.children}
         </div>
