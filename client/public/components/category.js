@@ -49,7 +49,7 @@ class Category extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.viewedUser,
+        username: context.props.params.user,
         title: item.title,
         views: item.views
       })
@@ -86,8 +86,8 @@ class Category extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.viewedUser,
-        categoryTitle: this.state.viewedCat
+        username: context.props.params.user,
+        categoryTitle: context.props.params.category
       })
     }).then((response) => {
       response.json().then(function (data) {
@@ -109,7 +109,6 @@ class Category extends Component {
       });
     });
   }
-
 
   render () {
     { var context = this; this.randomizeGradient(); }

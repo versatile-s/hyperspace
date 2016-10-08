@@ -30,7 +30,7 @@ class Side extends Component {
   }
 
   clickCategory(e) {
-    browserHistory.push('/' + store.getState().username.username + '/' + e.target.innerHTML);
+    browserHistory.push('/' + this.props.username + '/' + e.target.innerHTML);
     this.props.setCategory(e.target.innerHTML);
 
   }
