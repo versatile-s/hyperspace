@@ -10,6 +10,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ReactDOM from 'react-dom';
 import ListIcon from 'material-ui/svg-icons/action/list';
 import store from '../../store';
+import {connect} from 'react-redux';
+import Category from './Category';
 
 class MyCategory extends Component {
   constructor (props) {
@@ -19,30 +21,32 @@ class MyCategory extends Component {
   }
 
   getCategories () {
-    console.log("Gettttting");
+
     var context = this;
-    fetch('/userCategories/?username=' + store.getState().username.username, {
+    fetch('/userCategories/?username=' + this.props.params.user, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
     }).then(function (response) {
-      console.log('resoponse from api call',response);
+
       response.json()
         .then(function(categoryData) {
-          console.log('categoryData', categoryData);
+
           store.dispatch({type: 'GET_CATEGORIES', payload: categoryData});
-          // context.setState({
-          //   categories: categoryData
-          // });
+
+          context.forceUpdate();
         });
     });
   }
   clickCategory(e) {
-    console.log("thisdotstate.username", store.getState().username.username);
+
+    
   
-    browserHistory.push('/' + store.getState().username.username + '/' + e.target.innerHTML);
-    this.props.setCategory(e.target.innerHTML);
+    browserHistory.push('/' + this.props.params.user + '/' + e.target.innerHTML);
+    // store.dispatch({type: "TOGGLE_SWITCH", payload: "fart"});
+    console.log("set category",this);
+    this.props.categoryCall(this.props.params.user,e.target.innerHTML);
 
   }
 
@@ -61,18 +65,20 @@ class MyCategory extends Component {
       <div className="knob">
           <IconMenu
             iconStyle={{opacity:.2, width:50}}
-            onTouchTap={this.getCategories}
+            // onTouchTap={this.getCategories}
             disableAutoFocus={true}
             menuStyle={{width:250}}
             touchTapCloseDelay={0}
             initiallyKeyboardFocused={false}
-            iconButtonElement={<IconButton><ListIcon /></IconButton>}
+            iconButtonElement={<IconButton onClick={this.getCategories}><ListIcon /></IconButton>}
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >
+
             
-            <FlatButton label="My pages" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
+            <FlatButton label={this.props.params.user===store.getState().username.username?"My pages":this.props.params.user+"'s pages"} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
             {store.getState().categories.categories.map((category) => {
+
               return (
                 <MenuItem focusState="none" disableAutoFocus={true} ref={category} onClick={this.clickCategory} primaryText={category}/>     
               );

@@ -10,7 +10,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton/IconButton';
 import AddFriendIcon from 'material-ui/svg-icons/social/person-add';
-
+import store from '../../store';
 
 class AddFriend extends Component {
   constructor (props) {
@@ -49,6 +49,7 @@ class AddFriend extends Component {
     return (
       <div>
         <IconMenu
+         style={this.props.params.user===store.getState().username.username?{display:"none"}:{}}
           iconStyle={{opacity:.2, width:50}}
           disableAutoFocus={true}
           menuStyle={{width:250}}

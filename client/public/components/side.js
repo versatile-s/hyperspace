@@ -27,10 +27,11 @@ class Side extends Component {
     this.getCategories = this.getCategories.bind(this);
     this.makeNewCategory = this.makeNewCategory.bind(this);
     this.forceFocus = this.forceFocus.bind(this);
+    this.toBored=this.toBored.bind(this);
   }
 
   clickCategory(e) {
-    browserHistory.push('/' + this.props.username + '/' + e.target.innerHTML);
+    browserHistory.push('/' + store.getState().username.username + '/' + e.target.innerHTML);
     this.props.setCategory(e.target.innerHTML);
 
   }
@@ -92,6 +93,10 @@ class Side extends Component {
     } 
   }
 
+  toBored(){
+    browserHistory.push('/' +this.props.params.user +'/'+this.props.params.category +'/bored');
+  }
+
   render () {
     return (
       <div className = "list-knob">
@@ -105,13 +110,13 @@ class Side extends Component {
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-            <MyCategories username={store.getState().username.username} setCategory={this.props.setCategory}/>
-            <MakeCategory setCategory={this.props.setCategory} username={store.getState().username.username}/>
+            <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall}/>
+            <MakeCategory params={this.props.params} setCategory={this.props.setCategory} username={store.getState().username.username}/>
             <HyperSearch username={store.getState().username.username}/>
-            <div className="hyper-knob"><Logout /></div>
             <FriendList username={store.getState().username.username}/>
-            <AddFriend username={store.getState().username.username}/>
-            <a href={"/"+store.getState().username.username+"/"+store.getState().categoryTitle.categoryTitle+"/bored"}><IconButton iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton></a>
+            <AddFriend params={this.props.params} username={store.getState().username.username}/>
+            <IconButton onClick={this.toBored} iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton>
+            <Logout/>
         </IconMenu>
       </div>
     );

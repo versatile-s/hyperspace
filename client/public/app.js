@@ -17,6 +17,7 @@ import store from '../store';
 import SpaceLogin from './components/experimental/SpaceLogin';
 import Frame from './components/frame';
 import Warpfield from './components/warpfield';
+import { connect } from 'react-redux';
 
 var loginCheck = function() {
   fetch('/logincheck', {
@@ -37,7 +38,6 @@ var loginCheck = function() {
 class App extends Component {
   constructor (props) {
     super(props);
-
     loginCheck();
     store.dispatch({type: 'AUTH_SUCCESS', payload: null});
     store.dispatch({type: 'GET_CATEGORIES', payload: []});
@@ -74,4 +74,4 @@ class App extends Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(App);
+export default connect()(App);

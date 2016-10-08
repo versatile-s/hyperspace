@@ -8,14 +8,16 @@ import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import store from '../../store';
+import {connect} from 'react-redux';
+import MyCategories from './myCategories';
 
 class Category extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      viewedUser: this.props.params.user,
-      viewedCat: this.props.params.category,
-      data: []
+      username: this.props.params.user,
+      categoryTitle: this.props.params.category,
+      data: [],
       // currentVisitor: 'guest'
     };
     // this.isAuth = this.isAuth.bind(this);
@@ -23,20 +25,27 @@ class Category extends Component {
     this.setCategory = this.setCategory.bind(this);
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
+
+    var context = this;
+    store.subscribe(()=>{
+      console.log("category.js store update");
+      context.forceUpdate();
+    });
   }
 
   componentWillMount () {
-    this.categoryCall();
+    console.log("componentWillMount--category. params:",this.props.params.user, this.props.params.category);
+    this.props.categoryCall(this.props.params.user, this.props.params.category);
   }
 
   setCategory(category) {
-    var context = this;
-    this.setState({
-      viewedCat: category
-    },
-    function() {
-      context.categoryCall();
-    });
+    // var context = this;
+    // this.setState({
+    //   categoryTitle: category
+    // },
+    // function() {
+    //   context.categoryCall();
+    // });
   }
 
   updateViews (item) {
@@ -49,73 +58,72 @@ class Category extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: context.props.params.user,
+        username: this.props.params.user,
         title: item.title,
         views: item.views
       })
 
     }).then(function(){
-      context.sortData();
+      context.sortData(store.getState().data.data);
     });
   }
 
-  sortData () {
-    var context = this;
-    var tempData = this.state.data.sort(function (a, b) {
+  sortData (responseData) {
+   
+    var tempData = responseData.sort(function (a, b) {
       return b.views - a.views;
     });
-    this.setState({
-      data: tempData
-    });
+    store.dispatch({type: "GET_DATA", payload: tempData});
+    // this.forceUpdate();
   }
 
   randomizeGradient () {
-    console.log('FIRING GRADIENT');
+
 
     let random = Math.ceil(Math.random() * 25);
 
     return 'gradient' + random;
   }
 
+
   categoryCall () {
-    var context = this;
-    fetch('/categoryData', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: context.props.params.user,
-        categoryTitle: context.props.params.category
-      })
-    }).then((response) => {
-      response.json().then(function (data) {
-        if (Array.isArray(data)) {
-          context.setState({
-            viewedUser: context.props.params.user,
-            viewedCat: context.props.params.category,
-            data: data
-          }, function () {
-            context.sortData();
-          });
-        } else {
-          context.setState({
-            viewedUser: context.props.params.user,
-            viewedCat: context.props.params.category,
-            data: [{title: "This category doesnt seem to have any links yet!"}]
-          });
-        }
-      });
-    });
+    // var context = this;
+    // console.log("categorycall params",this.state.username,this.state.categoryTitle);
+    // fetch('/categoryData', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     username: this.state.username,
+    //     categoryTitle: this.state.categoryTitle
+    //   })
+    // }).then((response) => {
+    //   console.log("response from categoryCall",response);
+    //   response.json().then(function (data) {
+
+    //     if (Array.isArray(data)) {
+           
+    //       context.sortData(data);
+          
+    //     } else {
+    //       store.dispatch({
+    //         type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!"}]
+    //       });
+    //     }
+    //   });
+    // });
   }
 
+
   render () {
-    { var context = this; this.randomizeGradient(); }
+    { var context = this;  }
     return (
-      <div>        
+      <div>
+        
         <div className="categoryPageContainer">
-            {this.state.data.map(function (item) {
+            {store.getState().data.data.map(function (item) {
               return (
                 <div className="hyper" style={{order: item.views}} onClick={()=>context.updateViews(item)}>
                   <a href={item.url} target="_blank">
@@ -133,7 +141,11 @@ class Category extends Component {
     );
   }
 }
-
+// const mapStateToProps = function(store){
+//   return{
+//     store
+//   };
+// };
 
 
 export default Category;
