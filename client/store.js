@@ -24,7 +24,7 @@ const reducers = combineReducers({
 const store = createStore(reducers);
 
 store.subscribe(() => {
-  console.log('store changed', store.getState());
+  console.log('Store: ', store.getState());
 });
 
 export default store;

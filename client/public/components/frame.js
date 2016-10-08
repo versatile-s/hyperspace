@@ -12,26 +12,16 @@ class Frame extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      data: [],
-      // currentVisitor: 'guest'
+      data: []
     };
-    // this.isAuth = this.isAuth.bind(this);
     this.categoryCall = this.categoryCall.bind(this);
     this.setCategory = this.setCategory.bind(this);
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
     this.hardRender = this.hardRender.bind(this);
-    // var context = this;
-    // store.subscribe(()=>{
-    //   // console.log("frame updated store");
-    //   // context.forceUpdate();
-      
-   
-    // });
   }
 
   componentWillMount () {
-    console.log("componentWillMount--frame");
     this.categoryCall(this.props.params.user, this.props.params.category);
   }
 
@@ -59,40 +49,32 @@ class Frame extends Component {
         title: item.title,
         views: item.views
       })
-
     }).then(function(){
       context.sortData();
     });
   }
-  hardRender(){
 
+  hardRender(){
     this.children.forceUpdate();
   }
 
   sortData (responseData) {
-   
     var tempData = responseData.sort(function (a, b) {
       return b.views - a.views;
     });
     store.dispatch({type: "GET_DATA", payload: tempData});
-    // this.forceUpdate();
   }
 
   randomizeGradient () {
-    console.log('FIRING GRADIENT');
-
     let random = Math.ceil(Math.random() * 25);
-
     return 'gradient' + random;
   }
-
 
   categoryCall (username, category) {
     var context = this;
     store.dispatch({
       type: "GET_DATA", payload:[]
     });
-    console.log("categorycall params",username,category);
     fetch('/categoryData', {
       method: 'POST',
       headers: {
@@ -104,14 +86,9 @@ class Frame extends Component {
         categoryTitle: category
       })
     }).then((response) => {
-
       response.json().then(function (data) {
-        console.log("response from frame category call",data);
-
         if (Array.isArray(data)) {
-           
           context.sortData(data);
-          
         } else {
           store.dispatch({
             type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!"}]
@@ -121,8 +98,6 @@ class Frame extends Component {
     });
   }
 
-
-    // { var context = this; this.randomizeGradient();}
   render () {
     return (
       <div>
@@ -136,7 +111,5 @@ class Frame extends Component {
     );
   }
 }
-
-
 
 export default Frame;

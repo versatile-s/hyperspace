@@ -21,7 +21,6 @@ class MyCategory extends Component {
   }
 
   getCategories () {
-
     var context = this;
     fetch('/userCategories/?username=' + this.props.params.user, {
       headers: {
@@ -29,43 +28,28 @@ class MyCategory extends Component {
         'Content-Type': 'application/json'
       },
     }).then(function (response) {
-
       response.json()
         .then(function(categoryData) {
-
           store.dispatch({type: 'GET_CATEGORIES', payload: categoryData});
-
           context.forceUpdate();
         });
     });
   }
+
   clickCategory(e) {
-
-    
-  
     browserHistory.push('/' + this.props.params.user + '/' + e.target.innerHTML);
-    // store.dispatch({type: "TOGGLE_SWITCH", payload: "fart"});
-    console.log("set category",this);
     this.props.categoryCall(this.props.params.user,e.target.innerHTML);
-
   }
-
 
   forceFocus(){
-    console.log(this);
     this.refs.categoryInput.focus();
-    // ReactDOM.findDOMNode(this.refs.categoryInput).focus();
   }
-  
-  
-
 
   render () {
     return (
       <div className="knob">
           <IconMenu
             iconStyle={{opacity:.2, width:50}}
-            // onTouchTap={this.getCategories}
             disableAutoFocus={true}
             menuStyle={{width:250}}
             touchTapCloseDelay={0}
@@ -74,20 +58,16 @@ class MyCategory extends Component {
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >
-
-            
             <FlatButton label={this.props.params.user===store.getState().username.username?"My pages":this.props.params.user+"'s pages"} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
             {store.getState().categories.categories.map((category) => {
-
               return (
                 <MenuItem focusState="none" disableAutoFocus={true} ref={category} onClick={this.clickCategory} primaryText={category}/>     
               );
             })}
-
           </IconMenu>
-
       </div>  
     );
   }
 }
+
 export default MyCategory;  

@@ -29,7 +29,6 @@ class Signup extends Component {
       method: 'POST',
       credentials: 'same-origin',
       headers: {
-        //'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -56,7 +55,7 @@ class Signup extends Component {
     })
     .catch((error) => {
       error.text().then((err)=>{
-        console.log(err);
+        console.error(err);
       });
     });
   }
@@ -80,7 +79,6 @@ class Signup extends Component {
   render() {
     return (
       <div>
-        
         <div>
           <Paper className="loginPaper" zDepth={5}>
            <Snackbar
@@ -105,6 +103,5 @@ class Signup extends Component {
     );
   }
 }
-
 
 export default Signup;

@@ -33,7 +33,6 @@ class Side extends Component {
   clickCategory(e) {
     browserHistory.push('/' + store.getState().username.username + '/' + e.target.innerHTML);
     this.props.setCategory(e.target.innerHTML);
-
   }
 
   componentDidMount() {
@@ -48,13 +47,9 @@ class Side extends Component {
         'Content-Type': 'application/json'
       },
     }).then(function (response) {
-      response.json()
-        .then(function(categoryData) {
-          store.dispatch({type: 'GET_CATEGORIES', payload: categoryData});
-          // context.setState({
-          //   categories: categoryData
-          // });
-        });
+      response.json().then(function(categoryData) {
+        store.dispatch({type: 'GET_CATEGORIES', payload: categoryData});
+      });
     });
   }
 
@@ -72,7 +67,6 @@ class Side extends Component {
         username: username,
         name: newCatName
       })
-
     }).then(function(){
       browserHistory.push('/' + username + "/"+newCatName);
       context.props.setCategory(newCatName);
@@ -82,7 +76,6 @@ class Side extends Component {
 
   forceFocus(){
     this.refs.categoryInput.focus();
-    // ReactDOM.findDOMNode(this.refs.categoryInput).focus();
   }
 
   toggleMenu(){
@@ -110,13 +103,13 @@ class Side extends Component {
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-            <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall}/>
-            <MakeCategory params={this.props.params} setCategory={this.props.setCategory} username={store.getState().username.username}/>
-            <HyperSearch username={store.getState().username.username}/>
-            <FriendList username={store.getState().username.username}/>
-            <AddFriend params={this.props.params} username={store.getState().username.username}/>
-            <IconButton onClick={this.toBored} iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton>
-            <Logout/>
+          <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall}/>
+          <MakeCategory params={this.props.params} setCategory={this.props.setCategory} username={store.getState().username.username}/>
+          <HyperSearch username={store.getState().username.username}/>
+          <FriendList username={store.getState().username.username}/>
+          <AddFriend params={this.props.params} username={store.getState().username.username}/>
+          <IconButton onClick={this.toBored} iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton>
+          <Logout/>
         </IconMenu>
       </div>
     );

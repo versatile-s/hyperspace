@@ -14,38 +14,18 @@ import MyCategories from './myCategories';
 class Category extends Component {
   constructor (props) {
     super(props);
-    this.state = {
-      username: this.props.params.user,
-      categoryTitle: this.props.params.category,
-      data: [],
-      // currentVisitor: 'guest'
-    };
-    // this.isAuth = this.isAuth.bind(this);
     this.categoryCall = this.categoryCall.bind(this);
     this.setCategory = this.setCategory.bind(this);
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
-
     var context = this;
     store.subscribe(()=>{
-      console.log("category.js store update");
       context.forceUpdate();
     });
   }
 
   componentWillMount () {
-    console.log("componentWillMount--category. params:",this.props.params.user, this.props.params.category);
     this.props.categoryCall(this.props.params.user, this.props.params.category);
-  }
-
-  setCategory(category) {
-    // var context = this;
-    // this.setState({
-    //   categoryTitle: category
-    // },
-    // function() {
-    //   context.categoryCall();
-    // });
   }
 
   updateViews (item) {
@@ -62,66 +42,27 @@ class Category extends Component {
         title: item.title,
         views: item.views
       })
-
     }).then(function(){
       context.sortData(store.getState().data.data);
     });
   }
 
   sortData (responseData) {
-   
     var tempData = responseData.sort(function (a, b) {
       return b.views - a.views;
     });
     store.dispatch({type: "GET_DATA", payload: tempData});
-    // this.forceUpdate();
   }
 
   randomizeGradient () {
-
-
     let random = Math.ceil(Math.random() * 25);
-
     return 'gradient' + random;
   }
-
-
-  categoryCall () {
-    // var context = this;
-    // console.log("categorycall params",this.state.username,this.state.categoryTitle);
-    // fetch('/categoryData', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     username: this.state.username,
-    //     categoryTitle: this.state.categoryTitle
-    //   })
-    // }).then((response) => {
-    //   console.log("response from categoryCall",response);
-    //   response.json().then(function (data) {
-
-    //     if (Array.isArray(data)) {
-           
-    //       context.sortData(data);
-          
-    //     } else {
-    //       store.dispatch({
-    //         type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!"}]
-    //       });
-    //     }
-    //   });
-    // });
-  }
-
 
   render () {
     { var context = this;  }
     return (
       <div>
-        
         <div className="categoryPageContainer">
             {store.getState().data.data.map(function (item) {
               return (
@@ -141,11 +82,5 @@ class Category extends Component {
     );
   }
 }
-// const mapStateToProps = function(store){
-//   return{
-//     store
-//   };
-// };
-
 
 export default Category;

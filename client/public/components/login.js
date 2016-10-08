@@ -31,7 +31,6 @@ class Login extends Component {
       method: 'POST',
       credentials: 'same-origin',
       headers: {
-        // 'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -58,7 +57,7 @@ class Login extends Component {
     })
     .catch((error) => {
       error.text().then((err) => {
-        console.log(err);
+        console.error(err);
       });
     });
   }
@@ -103,6 +102,7 @@ class Login extends Component {
       });
     }
   }
+
   componentDidMount(){
     this.warpfield();
   }
@@ -110,9 +110,6 @@ class Login extends Component {
   render() {
     return (
       <div>
-
-        
- 
           <Paper className="loginPaper" zDepth={5}>
            <Snackbar
               open={this.state.failedLogin}
@@ -131,8 +128,6 @@ class Login extends Component {
             <RaisedButton type="button" fullWidth="true" label="Login" onClick={this.login} />
             <Link to="/signup"><RaisedButton fullWidth="true" label="signup page"/></Link>
           </Paper>
-     
-        
       </div>
     );
   }
