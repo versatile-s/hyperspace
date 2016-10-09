@@ -367,34 +367,20 @@ var utils = {
 
   getUserTags: function (req, res) {
     var username = req.query.username;
-    User.findOne({
+    Hyper.find({
       where: {
         username: username
       }
-    }).then(function (user) {
-      CategoryPage.findAll({
-        where: {
-          userId: user.id
-        }
-      }).then(function(categories) {
-        Hyper.findAll({
-          where: {
-            username: req.query.username
-          }
-        }).then(function(hypers) {
-          var tagArray = [];
-          hypers.forEach(function (hyper) {
-            var singleTags = hyper.dataValues.tags.split(' ');
-            singleTags.forEach(function(tag) {
-              if ( tagArray.indexOf(tag) === -1 ) {
-                tagArray.push(tag);
-              }
-            });
-          });
-          console.log('tags here are', tagArray);
-          res.send(JSON.stringify(tagArray));
+    }).then(function (hypers) {
+      var tagStore = {};
+      hypers.forEach(function (hyper) {
+        var singleTags = hyper.dataValues.tags.split(' ');
+        singleTags.forEach(function(tag) {
+          tagStore[tag] = tag;
         });
       });
+      console.log('tags are here', tagStore);
+      res.send(JSON.stringify(tagStore));
     });
   },
 
