@@ -23,6 +23,9 @@ import HomeIcon from 'material-ui/svg-icons/action/home';
 class Side extends Component {
   constructor (props) {
     super(props);
+    this.state={
+      open: null
+    };
     this.clickCategory = this.clickCategory.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
     this.getCategories = this.getCategories.bind(this);
@@ -30,6 +33,7 @@ class Side extends Component {
     this.forceFocus = this.forceFocus.bind(this);
     this.toBored=this.toBored.bind(this);
     this.toHome=this.toHome.bind(this);
+    this.closeMenu=this.closeMenu.bind(this);
   }
 
   clickCategory(e) {
@@ -102,11 +106,24 @@ class Side extends Component {
     browserHistory.push('/' +store.getState().username.username +'/home');
     this.props.categoryCall(store.getState().username.username,"home");
   }
+  closeMenu(){
+    var context = this;
+    this.setState({
+      open: false
+    }, function () {
+      context.setState({
+        open: null
+      });
+      
+    });
+  }
 
   render () {
     return (
       <div className = "list-knob">
         <IconMenu
+          open={this.state.open}
+          style={this.props.params.user?{}:{display:"none"}}
           useLayerForClickAway={true}
           disableAutoFocus={true}
           menuStyle={{width:0, opacity:.2}}
@@ -123,7 +140,7 @@ class Side extends Component {
             <FriendList categoryCall={this.props.categoryCall}/>
             <AddFriend params={this.props.params} username={store.getState().username.username}/>
             <IconButton onClick={this.toBored} iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton>
-            <Logout/>
+            <Logout closeMenu={this.closeMenu}/>
         </IconMenu>
       </div>
     );
