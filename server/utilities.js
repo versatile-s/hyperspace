@@ -15,11 +15,20 @@ var encrypt = function(req, res, cb) {
     // hashes password with salt
     bcrypt.hash(password, salt, function(err, hash) {
       // creates user in database with encrypted password
+      var username = req.body.username;
+      var firstName = req.body.firstName || null;
+      var lastName = req.body.lastName || null;
+      var photo = req.body.photo || null;
+      var email = req.body.email || null;
       User.sync()
         .then(function () {
           return User.create({
-            username: req.body.username,
-            password: hash
+            username: username,
+            password: hash,
+            firstName: firstName,
+            lastName: lastName,
+            photoUrl: photoUrl,
+            email: email
           });
         });
     });

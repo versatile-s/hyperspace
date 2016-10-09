@@ -63,3 +63,5 @@ ReactDOM.render(
 //   };
 //   signup();
 // };
+
+// ReactDOM.render(<App />, document.getElementById('content'));

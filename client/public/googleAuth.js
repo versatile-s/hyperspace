@@ -1,19 +1,19 @@
-var onSignIn = function(googleUser) {
-  // Useful data for your client-side scripts:
-  console.log("OK OUR ONSIGNIN FUNC IS BEING CALLED")
-  var profile = googleUser.getBasicProfile();
-  var ID = profile.getId(); // Don't send this directly to your server!
-  var fullName = profile.getName();
-  var firstName = profile.getGivenName();
-  var lastName = profile.getFamilyName();
-  var photoUrl = profile.getImageUrl();
-  var email = profile.getEmail();
-  // The ID token you need to pass to your backend:
-  var id_token = googleUser.getAuthResponse().id_token;
+// var onSignIn = function(googleUser) {
+//   // Useful data for your client-side scripts:
+//   console.log("OK OUR ONSIGNIN FUNC IS BEING CALLED")
+//import store from './../store';
 
-  login (e) {
-    e.preventDefault();
-    var context = this;
+  var login = function(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    var ID = profile.getId(); // Don't send this directly to your server!
+    var fullName = profile.getName();
+    var firstName = profile.getGivenName();
+    var lastName = profile.getFamilyName();
+    var photoUrl = profile.getImageUrl();
+    var email = profile.getEmail();
+    // The ID token you need to pass to your backend:
+    var id_token = googleUser.getAuthResponse().id_token;
+    //e.preventDefault();
     fetch('/login', {
       method: 'POST',
       credentials: 'same-origin',
@@ -22,8 +22,8 @@ var onSignIn = function(googleUser) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.username,
-        password: this.state.password
+        username: fullName,
+        password: ID
       })
     }).then((response) => {
       response.text().then((res) => {
@@ -48,10 +48,20 @@ var onSignIn = function(googleUser) {
         console.log(err);
       });
     });
-  }
+  };
 
-  var signup = function(e) {
+  var signup = function(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    var ID = profile.getId(); // Don't send this directly to your server!
+    var fullName = profile.getName();
+    var firstName = profile.getGivenName();
+    var lastName = profile.getFamilyName();
+    var photo = profile.getImageUrl();
+    var email = profile.getEmail();
+    // The ID token you need to pass to your backend:
+    var id_token = googleUser.getAuthResponse().id_token;
     //e.preventDefault();
+    console.log('OK SIGNUP BEING CALLED')
     fetch('/signup', {
       method: 'POST',
       credentials: 'same-origin',
@@ -60,8 +70,12 @@ var onSignIn = function(googleUser) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: profile.getName(),
-        password: profile.getId()
+        username: fullName,
+        password: ID,
+        firstName: firstName,
+        lastName: lastName,
+        photo: photo,
+        email: email
       })
     }).then((response) => {
       response.text().then((res)=>{
@@ -88,10 +102,3 @@ var onSignIn = function(googleUser) {
       });
     });
   };
-
-  if (req.session.key) {
-    login();
-  } else {
-    signup();
-  }
-};
