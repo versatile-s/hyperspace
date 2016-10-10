@@ -22,6 +22,11 @@ body {
         max-width: 400px; 
 }
 
+.chromeApp {
+    min-width: 257px;
+    min-height: 400px;
+}
+
 
 button#submit:hover {
     background: #000 !important;
@@ -141,6 +146,10 @@ img.imageSelection {
     position: absolute !important;
     right: 0px;
     top: 5px;
+}
+
+span.addNew {
+    background: #d3edff;
 }
 
 @charset "UTF-8";

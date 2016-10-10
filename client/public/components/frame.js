@@ -22,6 +22,7 @@ class Frame extends Component {
   }
 
   componentWillMount () {
+    console.log("componentWillMount--frame");
     this.categoryCall(this.props.params.user, this.props.params.category);
   }
 
@@ -53,7 +54,6 @@ class Frame extends Component {
       context.sortData();
     });
   }
-
   hardRender(){
     this.children.forceUpdate();
   }
@@ -75,6 +75,7 @@ class Frame extends Component {
     store.dispatch({
       type: "GET_DATA", payload:[]
     });
+
     fetch('/categoryData', {
       method: 'POST',
       headers: {

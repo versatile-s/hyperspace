@@ -28,11 +28,10 @@ class MyCategory extends Component {
         'Content-Type': 'application/json'
       },
     }).then(function (response) {
-      response.json()
-        .then(function(categoryData) {
-          store.dispatch({type: 'GET_CATEGORIES', payload: categoryData});
-          context.forceUpdate();
-        });
+      response.json().then(function(categoryData) {
+        store.dispatch({type: 'GET_CATEGORIES', payload: categoryData});
+        context.forceUpdate();
+      });
     });
   }
 

@@ -25,7 +25,6 @@ class ChromeApp extends Component {
 
   componentWillMount() {
     var context = this;
-
     // check if username is already stored in local storage
     chrome.storage.sync.get(['username'], function (storageObj) {
       if ( storageObj.username ) {
@@ -36,12 +35,12 @@ class ChromeApp extends Component {
         });
       }
     });
-  }
 
-  componentDidMount () {
-    this.setState({
-      loading: false
-    });
+    setTimeout(function() {
+      context.setState({
+        loading: false
+      });
+    }, 500);
   }
 
   persistToLocalStorage() {
@@ -96,25 +95,24 @@ class ChromeApp extends Component {
 
     context.setState({
       authenticated: false
+    }, function () {
+      chrome.storage.sync.set({'username': null});
     });
 
-    chrome.storage.sync.set({'username': null});
   }
 
   render () {
     return (
       <MuiThemeProvider>
-        {this.state.loading ? <CircularProgress thickness={7} /> : 
-        <div>
+        <div className="chromeApp">
           {this.state.authenticated ? <HyperspaceWorker props={this.props} logOutUser={this.logOutUser.bind(this)} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>}
-          <Snackbar
-          open={this.state.failedLogin && !this.state.authenticated}
-          message="Sorry, the login you entered is incorrect."
-          autoHideDuration={2500}
-          className="invalidPass"
-        />
+            <Snackbar
+              open={this.state.failedLogin && !this.state.authenticated}
+              message="Sorry, the login you entered is incorrect."
+              autoHideDuration={2500}
+              className="invalidPass"
+            />
         </div>
-      }
       </MuiThemeProvider>
     );
   }
