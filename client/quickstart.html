@@ -43,10 +43,10 @@
        * @param {Event} event Button click event.
        */
       function handleAuthClick(event) {
-        gapi.auth.authorize(
-          {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
-          handleAuthResult);
-        return false;
+         gapi.auth.authorize(
+           {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
+           handleAuthResult);
+         return false;
       }
 
       /**
@@ -63,6 +63,8 @@
        * are found an appropriate message is printed.
        */
       function listLabels() {
+        console.log('INSIDE OF LISTLABELS< THIS IS THE USERS.id OBJECT: ', gapi.client.gmail.users.id);
+        console.log('INSIDE OF LISTLABELS< THIS IS THE USERS.userId OBJECT: ', gapi.client.gmail.users.userId);
         var request = gapi.client.gmail.users.labels.list({
           'userId': 'me'
         });
@@ -85,7 +87,8 @@
 
       function listMessages() {
           var request = gapi.client.gmail.users.messages.list({
-          'userId': 'me'
+          'userId': 'me',
+          'q': 'from:novakovs1@yahoo.com'
         });
 
         request.execute(function(resp) {
