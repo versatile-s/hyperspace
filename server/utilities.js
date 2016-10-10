@@ -245,7 +245,7 @@ var utils = {
     }
   },
 
-  updateHyper: function (req, res) {
+  updateHyperViews: function (req, res) {
     Hyper.findOne({
       where: {
         username: req.body.username,
@@ -254,6 +254,23 @@ var utils = {
     }).then(function(hyper) {
       hyper.update({
         views: req.body.views
+      });
+    });
+  },
+
+  editHyper: function (req, res) {
+    Hyper.findOne({
+      where: {
+        username: req.body.username,
+        title:req.body.oldTitle
+      }
+    }).then(function(hyper) {
+      hyper.update({
+        title: req.body.newTitle,
+        description: req.body.description,
+        image: req.body.image
+      }).then(function() {
+        res.send("Hyper Updated");
       });
     });
   },

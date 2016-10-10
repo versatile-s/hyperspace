@@ -88,16 +88,24 @@ module.exports = (router) => {
   /*********************************/
   /*********************************/
   //This adds the hyper to the database.
+
+  router.route('/editLink')
+    .post(function (req, res) {
+      console.log('Youre updating this link:', req.body);
+      utils.editHyper(req, res);
+      res.send('Received POST at /editLink');
+    });
   router.route('/link')
     .post(function (req, res) {
       console.log('Youre adding this link:', req.body);
       utils.saveHyper(req, res);
       res.send('Received POST at /link');
     })
+
     // edit link
     .put(function (req, res) {
       console.log('Received PUT at /link');
-      utils.updateHyper(req, res);
+      utils.updateHyperViews(req, res);
       res.send('Received PUT at /link');
     });
 
