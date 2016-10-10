@@ -62,6 +62,7 @@
     var id_token = googleUser.getAuthResponse().id_token;
     //e.preventDefault();
     console.log('OK SIGNUP BEING CALLED')
+    console.log('USER ID IS: ', ID);
     fetch('/signup', {
       method: 'POST',
       credentials: 'same-origin',
