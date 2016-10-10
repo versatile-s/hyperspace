@@ -12,7 +12,7 @@ class FriendFeed extends Component {
   updateViews (item) {
     var context = this;
     item.views += 1;
-    fetch('/link', {
+    fetch('/getFeed=', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
