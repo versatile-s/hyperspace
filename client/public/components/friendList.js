@@ -16,7 +16,6 @@ import store from '../../store';
 class FriendList extends Component {
   constructor (props) {
     super(props);
-
     this.state = {
       friendsData: []
     };
@@ -37,17 +36,14 @@ class FriendList extends Component {
       })
     }).then(function(data) {
       data.json().then(function(parsedData){
-        console.log('parsedata',parsedData);
         context.setState({
           friendsData: parsedData
-        
         });
       });
     });
   }
 
   toFriend(friend){
-
     browserHistory.push('/' + friend[0] + '/' + friend[1]);
     this.props.categoryCall(friend[0],friend[1]);
   }
@@ -66,7 +62,6 @@ class FriendList extends Component {
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-          
           <FlatButton label="LURK LIST" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
           {this.state.friendsData.map((friend) => {
             return (
