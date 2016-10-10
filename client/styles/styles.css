@@ -189,6 +189,22 @@
 
 }
 
+.logIn input {
+    height: 55px !important;
+    font-size: 18px;
+    width: 100%;
+    border-radius: 4px;
+    outline: 0;
+    text-align: center;
+    margin-bottom: 16px;
+    border: none;
+}
+
+.logIn {
+    width: 400px;
+    margin: 0 auto;
+}
+
 .dashboardPaperL{
   height: 400px;
   width: 400px;
@@ -220,6 +236,43 @@ span.addNew div {
 
 input#undefined-EnterNewCategory-NewCategory-39016 {
     font-weight: bolder !important;
+}
+
+button.logIn {
+    height: 55px;
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    background: #165690;
+    display: inline-block;
+    padding: 10px 20px;
+    outline: 0;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 500;
+    text-align: center;
+}
+
+button.signUp {
+    height: 55px;
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    background: #6089B1;
+    display: inline-block;
+    padding: 10px 20px;
+    outline: 0;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 15px;
+    width: 50%;
+    float: right;
 }
 
 

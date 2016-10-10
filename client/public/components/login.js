@@ -109,11 +109,11 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
+      <div className="logIn">
 
         
  
-          <Paper className="loginPaper" zDepth={5}>
+          
            <Snackbar
               open={this.state.failedLogin}
               message={"I'm sorry "+this.state.username+", you must have goofed something up."}
@@ -126,11 +126,13 @@ class Login extends Component {
               onRequestClose={this.handleRequestClose}
             />
             <FlatButton label="LOGIN" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-            <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
-            <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
-            <RaisedButton type="button" fullWidth="true" label="Login" onClick={this.login} />
-            <Link to="/signup"><RaisedButton fullWidth="true" label="signup page"/></Link>
-          </Paper>
+            <input fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
+            <input fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
+            <button className="logIn" onClick={this.login}>Login </button>
+            <Link to="/signup"><button className="signUp">Sign Up</button></Link>
+            {/*<RaisedButton type="button" fullWidth="true" label="Login" onClick={this.login} />*/}
+            {/*<Link to="/signup"><RaisedButton fullWidth="true" label="signup page"/></Link>*/}
+
      
         
       </div>
