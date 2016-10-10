@@ -15,8 +15,8 @@ class Signup extends Component {
     this.handlePass = this.handlePass.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.state = {
-      username:'',
-      password:'',
+      username: '',
+      password: '',
       failedSignin: false
 
     };
