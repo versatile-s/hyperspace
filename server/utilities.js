@@ -380,9 +380,12 @@ var utils = {
           userId: user.id
         }
       }).then(function (friends) {
-
-      })
-    })
+        var friendsArray = [];
+        friends.forEach(function(friend) {
+          friendsArray.push([friend.name, friend.category]);
+        });
+      });
+    });
   },
 
   getFriends: function (req, res) {

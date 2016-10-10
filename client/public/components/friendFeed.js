@@ -13,7 +13,7 @@ class FriendFeed extends Component {
     var context = this;
     item.views += 1;
     fetch('/link', {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -30,6 +30,24 @@ class FriendFeed extends Component {
 
   render () {
     { var context = this; }
+    return (
+      <div className="friendFeed">
+        {store.getState().data.data.map(function (item) {
+          return (
+            <div className="feedHyper">
+              <a href={item.url} target="_blank">
+                <Card>
+                  <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: 'break-word', lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
+                  {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
+                  </CardMedia>
+                </Card>
+              </a>
+            </div>
+          );
+        })}
+      </div>  
+    );
   }
-
 }
+
+export default FriendFeed;
