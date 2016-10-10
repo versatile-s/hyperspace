@@ -7,11 +7,9 @@ var bcrypt = require('bcrypt');
 var axios = require('axios');
 var Friend = require('./db/db').Friend;
 
-
 // encrypts password & creates new user in database
 var encrypt = function(req, res, cb) {
   var password = req.body.password;
-
   // generates salt for hashing
   bcrypt.genSalt(10, function(err, salt) {
     // hashes password with salt
@@ -24,8 +22,6 @@ var encrypt = function(req, res, cb) {
             password: hash
           });
         });
-      // sends success response to client
-      //res.send('User created');
     });
   });
 };
@@ -33,7 +29,6 @@ var encrypt = function(req, res, cb) {
 var createSession = function(req, res, userInfo) {
   req.session.regenerate(function() {
     req.session.key = userInfo;
-    console.log('here is req.session', req.session);
     res.send('Login successful!');
   });
 };
@@ -50,7 +45,6 @@ var comparePasswords = function(req, res, storedPass, userInfo) {
 };
 
 var utils = {
-
   // USERS
   createUser: function (req, res) {
     User.find({
@@ -109,19 +103,10 @@ var utils = {
       });
   },
 
-
   logoutUser: (req, res) => {
-    console.log('within the logout util call');
     req.session.destroy();
-      // console.log('right inside of the destroy req.session is ', req.session)
-      // //res.redirect('/login');
-      // res.sendFile(path.resolve(__dirname + '/../client/index.html' ));
-    // });
-    console.log('right outside of the destroy req.session is ', req.session);
     res.status(200).send('logout successful');
-    //res.clearCookie(cookie, {path:'/'});
   },
-
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
@@ -335,10 +320,11 @@ var utils = {
         });
       }).catch(function(err){
         console.log("server error:",err);
-        res.send(err);
+        res.send(JSON.stringify('Error'));
       });
-
-
+    }).catch(function(error) {
+      console.log('Error! It\'s sad day! D=');
+      res.send(JSON.stringify('Error'));
     });
   },
 
@@ -379,7 +365,6 @@ var utils = {
           tagStore[tag] = tag;
         });
       });
-      console.log('tags are here', tagStore);
       res.send(JSON.stringify(tagStore));
     });
   },

@@ -6,16 +6,14 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var utils = require('./utilities');
 var logger = require('morgan');
-
 /*var redis = require('redis');
 var RedisStore = require('connect-redis')(session);
 var client = redis.createClient();*/
-
 var server = express();
 var router = require('./router');
-
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ 'extended': false }));
+
 // Populates req.session
 server.use(session({
   resave: false, // don't save session if unmodified
@@ -54,14 +52,7 @@ server.get('*/styles.css', function (req, res) {
 // This servers for all of our session based authorization for example.
 require('./authenticationRoutes')(server);
 
-// This should be moved to router file
-server.get('/userCategories*', function (req, res) {
-  console.log('Received GET @ /userCategories', req.body);
-  utils.getUserCategories(req, res);
-});
-
 server.get('/userTags', function (req, res) {
-  console.log('Received GET @ /userTags', req.body);
   utils.getUserTags(req, res);
 });
 
@@ -72,11 +63,9 @@ server.use(history());
 server.use(express.static(path.join(__dirname, '../client/')));
 require('./router.js')(server);
 
-
-
 var port = process.env.port || 3000;
 server.listen(port, function() {
-  console.log('Server is listening on port ' + port + '!');
+  console.log('Server is listening on port ' + port + '...');
 });
 
 module.exports = server;

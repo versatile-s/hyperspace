@@ -32,9 +32,7 @@ class Bored extends Component {
 
   setCategory(category){
     var context=this;
-    console.log("category param",category);
     store.dispatcher({type: 'CAT_TITLE', payload: category});
-    console.log("state",this.state.categoryTitle);
     context.categoryCall();
   }
 
@@ -82,7 +80,6 @@ class Bored extends Component {
     }).then((response) => {
       response.json().then(function (data) {
         if (Array.isArray(data)) {
-          console.log("data from category call",data);
           store.dispatch({type: 'GET_DATA', payload: data});
           context.sortData();
         } else {
@@ -94,7 +91,6 @@ class Bored extends Component {
   play(){
     var context= this;
     if(!context.state.playing){
-      console.log("gameon");
       context.matterTest();
     }  
     this.setState({
@@ -143,14 +139,12 @@ class Bored extends Component {
     // Matter.Composites.stack(xx, yy, columns, rows, columnGap, rowGap, callback)
     var stack = Composites.stack(10, 10, 7, 1, 20, 20, function(x, y) {
       var box1 =Bodies.rectangle(x, y, 100, 100, {restitution: 1});
-      console.log("box1", box1);
       box1.render.fillStyle = "#FFFFFF";
       box1.render.strokeStyle= "#FFFFFF";
       return box1;
         
       
     });
-    console.log(stack);
 
 
 
@@ -185,24 +179,20 @@ class Bored extends Component {
 
     // World.bounds = { min: { x: 0, y: 0}, max: { x: 400, y: 400 } };
     // Events.on(mouseConstraint, "mousedown", function(){
-    //   console.log('hi');
 
     // });
-    console.log("engine", engine);
 
     // engine.world.bounds.min.x=0;
     // engine.world.bounds.min.y=0;
     // engine.world.bounds.max.x=400;
     // engine.world.bounds.max.y=300; 
     // Matter.Bounds.create(0,0,400,400);
-    console.log(engine);
 
     // run the engine
     Engine.run(engine);
 
 
     // run the renderer
-    console.log("render",render);
     render.options.wireframes = false;
     render.options.background = "#00FFFFFF";
     // render.options.style.

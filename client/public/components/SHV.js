@@ -30,8 +30,6 @@ class HyperSearch extends Component {
     var context = this;
     var text = e.target.value;
     if (store.getState().self.self) {
-      // if user is searching only their own hypers
-      console.log(store.getState().username.username);
       fetch('/searchLinks', {
         method: 'POST',
         headers: {
@@ -49,8 +47,6 @@ class HyperSearch extends Component {
         });
       });
     } else {
-      // if user is searching all hypers
-      console.log('oops......');
       fetch('/searchLinks', {
         method: 'POST',
         headers: {
@@ -75,7 +71,6 @@ class HyperSearch extends Component {
 
   forceFocus(){
     this.refs.hyperInput.focus();
-    // ReactDOM.findDOMNode(this.refs.categoryInput).focus();
   }
 
   render () {
@@ -94,7 +89,6 @@ class HyperSearch extends Component {
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >
-            
             <FlatButton label="Search Hypers" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
             <div className="wrapper">
               <Checkbox onClick={this.setSelf} style="float: left"/> Show only my Hypers

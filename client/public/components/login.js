@@ -31,7 +31,6 @@ class Login extends Component {
       method: 'POST',
       credentials: 'same-origin',
       headers: {
-        // 'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -58,7 +57,7 @@ class Login extends Component {
     })
     .catch((error) => {
       error.text().then((err) => {
-        console.log(err);
+        console.error(err);
       });
     });
   }
@@ -105,6 +104,7 @@ class Login extends Component {
       });
     }
   }
+
   componentDidMount(){
     this.warpfield();
   }
@@ -112,10 +112,6 @@ class Login extends Component {
   render() {
     return (
       <div className="logIn">
-
-        
- 
-          
            <Snackbar
               open={this.state.failedLogin}
               message={"I'm sorry "+this.state.username+", you must have goofed something up."}
@@ -129,9 +125,6 @@ class Login extends Component {
             <Link to="/signup"><button className="signUp">Sign Up</button></Link>
             {/*<RaisedButton type="button" fullWidth="true" label="Login" onClick={this.login} />*/}
             {/*<Link to="/signup"><RaisedButton fullWidth="true" label="signup page"/></Link>*/}
-
-     
-        
       </div>
     );
   }

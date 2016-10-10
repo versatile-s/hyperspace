@@ -15,10 +15,7 @@ class Warpfield extends Component {
     };
     this.warpfield = this.warpfield.bind(this);
     this.accelerate = this.accelerate.bind(this);
-    
   }
-
-  
 
   warpfield() {
     if (this.state.warp) {
@@ -44,6 +41,7 @@ class Warpfield extends Component {
       });
     }
   }
+
   componentDidMount(){
     this.warpfield();
   }
@@ -51,12 +49,9 @@ class Warpfield extends Component {
   render() {
     return (
       <div>
-
-        {console.log("warpfield this", this)}
         <div onClick={this.accelerate}>
           {this.props.children}
         </div>
-
         <canvas id="warpfield">
         </canvas>
       </div>
