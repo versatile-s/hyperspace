@@ -76,7 +76,6 @@
           if (labels && labels.length > 0) {
             for (i = 0; i < labels.length; i++) {
               var label = labels[i];
-              console.log('OK THIS IS WHAT A LABEL LOOKS LIKE ', label);
               appendPre(label.name);
             }
           } else {
@@ -85,10 +84,39 @@
         });
       }
 
+
+      var saveHyper = function(resp) {
+        fetch('/link', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            title: 'placeholder',
+            description: resp.snippet,
+            username: 'Aljosha Novakovic',
+            tags: 'pehTag'
+          })
+        })
+        .then(function(res) {
+          console.log(res);
+        });
+      };
+
+      // url: req.body.url,
+      //         title: req.body.title,
+      //         description: req.body.description,
+      //         image: req.body.image,
+      //         username: req.body.username,
+      //         tags: tags,
+      //         views: 0,
+      //         CategoryPageId: category.id
+
       function listMessages() {
           var request = gapi.client.gmail.users.messages.list({
           'userId': 'me',
-          'q': 'from:novakovs1@yahoo.com'
+          'q': 'to:add@hyperspace.me'
         });
 
         request.execute(function(resp) {
@@ -99,16 +127,15 @@
           if (messages && messages.length > 0) {
             for (i = 0; i < messages.length; i++) {
               var message = messages[i];
-              console.log('THIS IS WHAT A MESSAGE.ID LOOKS LIKE: ', message.id);
               appendPre(message);
               function getMessage(message) {
-                console.log('ok at least inside of the getMessage call boy')
                 var request = gapi.client.gmail.users.messages.get({
                   'userId': 'me',
                   'id': message.id
                 });
                 request.execute(function(resp) {
-                  console.log('THIS IS WHAT A RESP AFTER MESSAGE CALL ', resp);
+                  console.log('THIS IS WHAT A RESP.SNIPPET IS AFTER MESSAGE CALL ', resp.snippet);
+                  saveHyper(resp);
                 });
               }
               getMessage(message);

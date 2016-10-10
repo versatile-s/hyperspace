@@ -142,7 +142,8 @@ var utils = {
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
-    var tags = req.body.tags.replace(/,/g, ' ').toLowerCase();
+    console.log('HERE IS THE BODY IINSIDE OF SAVEHYPER IN UTILS, ', req.body);
+    var tags = req.body.tags.replace(/,/g, " ").toLowerCase();
     var userId = 0;
     var hyperId = 0;
     var name = '';
