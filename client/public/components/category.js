@@ -14,8 +14,6 @@ import MyCategories from './myCategories';
 class Category extends Component {
   constructor (props) {
     super(props);
-    this.categoryCall = this.categoryCall.bind(this);
-    this.setCategory = this.setCategory.bind(this);
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
     var context = this;
