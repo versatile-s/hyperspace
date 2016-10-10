@@ -33,7 +33,6 @@ server.use(session({
 
 server.use(logger('dev'));
 
-
 /*********************************/
 /*********************************/
   //API CALLS FOR AUTHENTICATION//
