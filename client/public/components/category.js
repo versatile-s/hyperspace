@@ -30,7 +30,7 @@ class Category extends Component {
     var context = this;
     item.views +=1;
     fetch('/link', {
-      method:'PUT',
+      method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ class Category extends Component {
         title: item.title,
         views: item.views
       })
-    }).then(function(){
+    }).then(function() {
       context.sortData(store.getState().data.data);
     });
   }
@@ -58,7 +58,7 @@ class Category extends Component {
   }
 
   render () {
-    { var context = this;  }
+    { var context = this; }
     return (
       <div>
         <div className="categoryPageContainer">

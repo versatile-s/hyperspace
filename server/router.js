@@ -108,6 +108,13 @@ module.exports = (router) => {
     .post(function (req, res) {
       utils.getFriends(req, res);
     });  
+
+  router.route('/getfeed')  
+    .post(function (req, res) {
+      console.log('Received PUT at /getFeed');
+      utils.getFeed(req, res);
+    });
+
   /************************************************************/
   //       Authentication routes
   /************************************************************/
