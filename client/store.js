@@ -3,6 +3,7 @@ import authReducer from './reducers/authReducer';
 import categoriesReducer from './reducers/categoriesReducer';
 import categoryTitleReducer from './reducers/categoryTitleReducer';
 import dataReducer from './reducers/dataReducer';
+import editReducer from './reducers/editReducer';
 import openReducer from './reducers/openReducer';
 import searchedHypersReducer from './reducers/searchedHypersReducer';
 import selfReducer from './reducers/selfReducer';
@@ -18,7 +19,8 @@ const reducers = combineReducers({
   searchedHypers: searchedHypersReducer,
   self: selfReducer,
   toggled: toggleReducer,
-  username: userReducer
+  username: userReducer,
+  edit: editReducer
 });
 
 const store = createStore(reducers);

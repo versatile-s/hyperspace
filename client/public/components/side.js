@@ -19,6 +19,7 @@ import store from '../../store';
 import AddFriend from './addFriend';
 import Logout from './logout';
 import HomeIcon from 'material-ui/svg-icons/action/home';
+import EditIcon from 'material-ui/svg-icons/action/build';
 
 class Side extends Component {
   constructor (props) {
@@ -34,6 +35,7 @@ class Side extends Component {
     this.toBored=this.toBored.bind(this);
     this.toHome=this.toHome.bind(this);
     this.closeMenu=this.closeMenu.bind(this);
+    this.startEdit=this.startEdit.bind(this);
   }
 
   clickCategory(e) {
@@ -117,6 +119,14 @@ class Side extends Component {
       
     });
   }
+  startEdit() {
+    if (!store.getState().edit.edit) {
+      store.dispatch({type: 'EDIT_SWITCH', payload: true});
+    } else {
+      store.dispatch({type: 'EDIT_SWITCH', payload: false});
+    }
+    console.log("editing:",store.getState().edit.edit);
+  }
 
   render () {
     return (
@@ -139,6 +149,7 @@ class Side extends Component {
             <HyperSearch username={store.getState().username.username}/>
             <FriendList categoryCall={this.props.categoryCall}/>
             <AddFriend params={this.props.params} username={store.getState().username.username}/>
+            <IconButton onClick={this.startEdit} style={this.props.params.user===store.getState().username.username?{}:{display:"none"}} iconStyle={{opacity:.2, width:50}}><EditIcon/></IconButton>
             <IconButton onClick={this.toBored} iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton>
             <Logout closeMenu={this.closeMenu}/>
         </IconMenu>

@@ -47,6 +47,7 @@ class App extends Component {
     store.dispatch({type: 'S_HYPERS', payload: []});
     store.dispatch({type: 'SELF', payload: null});
     store.dispatch({type: 'TOGGLE_SWITCH', payload: null});
+    store.dispatch({type: 'EDIT_SWITCH', payload: false});
     injectTapEventPlugin();
   }
 

@@ -265,8 +265,9 @@ var utils = {
         title: req.body.title
       }
     }).then(function(hyper) {
+      var destroyed = hyper;
       hyper.destroy();
-      console.log('Destroyed this hyperlink: ', hyper);
+      res.send(destroyed);
     });
   },
 

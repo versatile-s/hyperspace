@@ -10,6 +10,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import store from '../../store';
 import {connect} from 'react-redux';
 import MyCategories from './myCategories';
+import EditHyper from './editHyper';
 
 class Category extends Component {
   constructor (props) {
@@ -21,11 +22,11 @@ class Category extends Component {
       // currentVisitor: 'guest'
     };
     // this.isAuth = this.isAuth.bind(this);
-    this.categoryCall = this.categoryCall.bind(this);
+    // this.categoryCall = this.categoryCall.bind(this);
     this.setCategory = this.setCategory.bind(this);
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
-
+    this.categoryPageCategoryCall=this.categoryPageCategoryCall.bind(this);
     var context = this;
     store.subscribe(()=>{
       console.log("category.js store update");
@@ -84,37 +85,43 @@ class Category extends Component {
 
     return 'gradient' + random;
   }
-
-
-  categoryCall () {
-    // var context = this;
-    // console.log("categorycall params",this.state.username,this.state.categoryTitle);
-    // fetch('/categoryData', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     username: this.state.username,
-    //     categoryTitle: this.state.categoryTitle
-    //   })
-    // }).then((response) => {
-    //   console.log("response from categoryCall",response);
-    //   response.json().then(function (data) {
-
-    //     if (Array.isArray(data)) {
-           
-    //       context.sortData(data);
-          
-    //     } else {
-    //       store.dispatch({
-    //         type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!"}]
-    //       });
-    //     }
-    //   });
-    // });
+  componentWillUnmount(){
+    console.log("Goodbye");
   }
+
+  categoryPageCategoryCall(){
+    this.props.categoryCall(this.props.params.user, this.props.params.category);
+  }
+
+  // categoryCall () {
+  //   // var context = this;
+  //   // console.log("categorycall params",this.state.username,this.state.categoryTitle);
+  //   // fetch('/categoryData', {
+  //   //   method: 'POST',
+  //   //   headers: {
+  //   //     'Accept': 'application/json',
+  //   //     'Content-Type': 'application/json'
+  //   //   },
+  //   //   body: JSON.stringify({
+  //   //     username: this.state.username,
+  //   //     categoryTitle: this.state.categoryTitle
+  //   //   })
+  //   // }).then((response) => {
+  //   //   console.log("response from categoryCall",response);
+  //   //   response.json().then(function (data) {
+
+  //   //     if (Array.isArray(data)) {
+           
+  //   //       context.sortData(data);
+          
+  //   //     } else {
+  //   //       store.dispatch({
+  //   //         type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!"}]
+  //   //       });
+  //   //     }
+  //   //   });
+  //   // });
+  // }
 
 
   render () {
@@ -125,9 +132,10 @@ class Category extends Component {
         <div className="categoryPageContainer">
             {store.getState().data.data.map(function (item) {
               return (
-                <div className="hyper" style={{order: item.views}} onClick={()=>context.updateViews(item)}>
+                <div className="hyper" style={{order: item.views}} >
+                  <EditHyper categoryCall={context.categoryPageCategoryCall} item={item}/>
                   <a href={item.url} target="_blank">
-                    <Card>
+                    <Card onClick={()=>context.updateViews(item)}>
                     <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
                       {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
                     </CardMedia>
