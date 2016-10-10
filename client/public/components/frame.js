@@ -114,7 +114,7 @@ class Frame extends Component {
           
         } else {
           store.dispatch({
-            type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!"}]
+            type: "GET_DATA", payload:[ {title: "This category doesnt seem to have any links yet!"} ]
           });
         }
       });
@@ -127,13 +127,15 @@ class Frame extends Component {
     return (
       <div>
         <div className="header">
+          <div className="logo">hyprspace</div>
+        </div>
+        <div className="sideMenu">
           <Side categoryCall={this.categoryCall} params={this.props.params} category={this.state.categoryTitle} setCategory={this.setCategory} username={this.state.username}/>  
-          <FlatButton label="H   Y   P   E   R   S   P   A   C   E" labelStyle={{textAlign: 'center', fontSize: 100}} style={{width: '100%', height: 70}} fullWidth="true" disabled={true}/>
-          <FlatButton label={this.props.params.user ? this.props.params.user + "  -  " + this.props.params.category:"WELCOME TO HYPERSPACE"} labelStyle={{textAlign: 'center', fontSize: 15, letterSpacing: 2}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
         </div>
         <div className="mainContent">
             {React.cloneElement(this.props.children, {categoryCall: this.categoryCall})}
         </div>
+        <div className="footer" />
       </div>
     );
   }

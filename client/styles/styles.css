@@ -1,3 +1,43 @@
+
+
+.header {
+    height: 60px;
+    width: 100%;
+    background: #113B63;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+
+.footer {
+    height: 40px;
+    background: #1C344A;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+}
+
+.logo {
+    color: white;
+    font-family: Roboto;
+    margin-top: 18px;
+    margin-left: 18px;
+    font-weight: 100;
+    letter-spacing: 1px;
+}
+
+
+
+.mainContent {
+    margin-top: 106px;
+}
+
 #content{
   top:0;
   right: 0;
@@ -183,12 +223,12 @@ input#undefined-EnterNewCategory-NewCategory-39016 {
 }
 
 
+
 .gradient1 {
      
               background: #16A085;
               background: -webkit-linear-gradient(to left, #16A085 , #F4D03F );
               background: linear-gradient(to left, #16A085 , #F4D03F );
-            
 }
 
 .gradient2 {
