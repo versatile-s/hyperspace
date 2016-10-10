@@ -87,11 +87,15 @@ class Frame extends Component {
         })
       }).then((response) => {
         response.json().then(function (data) {
-          if (Array.isArray(data)) {
+          if (data === 'Error') {
+            store.dispatch({
+              type: "GET_DATA", payload:[{title: "There seems to be a problem with your request.", description: "The requested page may have been deleted or the user no longer exists.", image: []}]
+            });
+          } else if (Array.isArray(data)) {
             context.sortData(data);
           } else {
             store.dispatch({
-              type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!"}]
+              type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!", description: "Make sure you get the Hyprspace Chrome Extension to start adding Hypers!", image: []}]
             });
           }
         });

@@ -44,7 +44,6 @@ class FriendList extends Component {
   }
 
   toFriend(friend){
-
     browserHistory.push('/' + friend[0] + '/' + friend[1]);
     this.props.categoryCall(friend[0],friend[1]);
   }

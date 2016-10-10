@@ -320,8 +320,11 @@ var utils = {
         });
       }).catch(function(err){
         console.log("server error:",err);
-        res.send(err);
+        res.send(JSON.stringify('Error'));
       });
+    }).catch(function(error) {
+      console.log('Error! It\'s sad day! D=');
+      res.send(JSON.stringify('Error'));
     });
   },
 

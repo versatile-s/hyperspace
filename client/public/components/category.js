@@ -28,16 +28,6 @@ class Category extends Component {
     this.props.categoryCall(this.props.params.user, this.props.params.category);
   }
 
-  setCategory(category) {
-    // var context = this;
-    // this.setState({
-    //   categoryTitle: category
-    // },
-    // function() {
-    //   context.categoryCall();
-    // });
-  }
-
   updateViews (item) {
     var context = this;
     item.views +=1;
@@ -67,36 +57,6 @@ class Category extends Component {
   randomizeGradient () {
     let random = Math.ceil(Math.random() * 25);
     return 'gradient' + random;
-  }
-
-  categoryCall () {
-    // var context = this;
-    // console.log("categorycall params",this.state.username,this.state.categoryTitle);
-    // fetch('/categoryData', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     username: this.state.username,
-    //     categoryTitle: this.state.categoryTitle
-    //   })
-    // }).then((response) => {
-    //   console.log("response from categoryCall",response);
-    //   response.json().then(function (data) {
-
-    //     if (Array.isArray(data)) {
-           
-    //       context.sortData(data);
-          
-    //     } else {
-    //       store.dispatch({
-    //         type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!"}]
-    //       });
-    //     }
-    //   });
-    // });
   }
 
   render () {

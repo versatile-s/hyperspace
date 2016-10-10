@@ -18,9 +18,7 @@ class Signup extends Component {
       username:'',
       password:'',
       failedSignin: false
-
     };
-
   }
 
   signup (e) {
