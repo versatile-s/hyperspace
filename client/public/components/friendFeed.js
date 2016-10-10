@@ -29,7 +29,7 @@ class FriendFeed extends Component {
   }
 
   render () {
-  	{ var context = this; }
+    { var context = this; }
   }
 
 }

@@ -369,6 +369,22 @@ var utils = {
     });
   },
 
+  getFeed: function (req, res) {
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function (user) {
+      Friend.findAll({
+        where: {
+          userId: user.id
+        }
+      }).then(function (friends) {
+
+      })
+    })
+  },
+
   getFriends: function (req, res) {
     User.findOne({
       where: {
