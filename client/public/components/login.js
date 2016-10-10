@@ -64,7 +64,9 @@ class Login extends Component {
   }
 
   handleRequestClose () {
-    store.dispatch({type: 'CLOSE', payload: false});
+    this.setState({
+      failedLogin: false
+    });
   }
 
   handleUsername(name) {
@@ -117,12 +119,7 @@ class Login extends Component {
            <Snackbar
               open={this.state.failedLogin}
               message={"I'm sorry "+this.state.username+", you must have goofed something up."}
-              autoHideDuration={4000}
-              onRequestClose={this.handleRequestClose}
-            />
-            <Snackbar
-              open={store.getState().authenticated.authenticated && store.getState().open.open}
-              message={"WELCOME TO HYPERSPACE " + store.getState().username.username}
+              autoHideDuration={3000}
               onRequestClose={this.handleRequestClose}
             />
             <FlatButton label="LOGIN" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>

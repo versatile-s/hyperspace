@@ -33,14 +33,15 @@ class AddFriend extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.username,
-        friendName: "dummy",
-        friendCategory: "hot dogs"
+        username: store.getState().username.username,
+        friendName: this.props.params.user,
+        friendCategory: this.props.params.category
       })
-    }).then(function(){
+    }).then(function() {
       context.setState({
-        lurked: "lurking dummy"
+        lurked: "lurking: "+context.props.params.user+" - "+context.props.params.category
       });
+        
     });
 
   }
