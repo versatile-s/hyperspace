@@ -41,29 +41,29 @@ class Side extends Component {
   clickCategory(e) {
     browserHistory.push('/' + store.getState().username.username + '/' + e.target.innerHTML);
     this.props.setCategory(e.target.innerHTML);
-
   }
 
   componentDidMount() {
-    this.getCategories();
+    if (store.getState().username.username !== '') {
+      this.getCategories();
+    }
   }
 
   getCategories () {
     var context = this;
-    fetch('/userCategories/?username=' + store.getState().username.username, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    }).then(function (response) {
-      response.json()
-        .then(function(categoryData) {
+    var username = store.getState().username.username;
+    if (username && username !== '') {
+      fetch('/userCategories/?username=' + store.getState().username.username, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      }).then(function (response) {
+        response.json().then(function(categoryData) {
           store.dispatch({type: 'GET_CATEGORIES', payload: categoryData});
-          // context.setState({
-          //   categories: categoryData
-          // });
         });
-    });
+      });
+    }
   }
 
   makeNewCategory(){
@@ -80,7 +80,6 @@ class Side extends Component {
         username: username,
         name: newCatName
       })
-
     }).then(function(){
       browserHistory.push('/' + username + "/"+newCatName);
       context.props.setCategory(newCatName);
@@ -90,7 +89,6 @@ class Side extends Component {
 
   forceFocus(){
     this.refs.categoryInput.focus();
-    // ReactDOM.findDOMNode(this.refs.categoryInput).focus();
   }
 
   toggleMenu(){

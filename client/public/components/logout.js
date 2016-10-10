@@ -10,7 +10,6 @@ class Logout extends Component {
   constructor (props) {
     super(props);
     this.logout = this.logout.bind(this);
-
   }
 
   logout (e) {
@@ -20,12 +19,10 @@ class Logout extends Component {
       method: 'GET',
       credentials: 'same-origin',
       headers: {
-        //'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
     }).then((response) => {
       if (response.status === 200) {
-        console.log('you have been logged out');
         browserHistory.push('/');
         store.dispatch({
           type: "GET_DATA", payload: []
@@ -34,15 +31,14 @@ class Logout extends Component {
       }
     })
     .catch((error) => {
-      console.log('error: ', error);
+      console.error(error);
     });
   }
 
   render() {
     return (
       <div className="logout-knob">
-        
-         <IconButton onTouchTap={this.logout} style={{opacity:.2, width:50, left:12}}><LogoutIcon /></IconButton>
+        <IconButton onTouchTap={this.logout} style={{opacity:.2, width:50, left:12}}><LogoutIcon /></IconButton>
       </div>
     );
   }

@@ -22,45 +22,16 @@ class EditHyper extends Component {
       confirm: false,
       deleteMessage: ''
     };
-    this.clickCategory = this.clickCategory.bind(this);
-    this.getCategories = this.getCategories.bind(this);
     this.deleteHyper = this.deleteHyper.bind(this);
     this.warn = this.warn.bind(this);
     this.confirm = this.confirm.bind(this);
     this.handleWarnClose = this.handleWarnClose.bind(this);
     this.handleConfirmClose = this.handleConfirmClose.bind(this);
-  }
-
-  getCategories () {
-
     var context = this;
-    fetch('/userCategories/?username=' + this.props.params.user, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    }).then(function (response) {
-
-      response.json()
-        .then(function(categoryData) {
-
-          store.dispatch({type: 'GET_CATEGORIES', payload: categoryData});
-
-          context.forceUpdate();
-        });
+    store.subscribe(() => {
+      context.forceUpdate();
     });
   }
-  clickCategory(e) {
-
-    
-  
-    browserHistory.push('/' + this.props.params.user + '/' + e.target.innerHTML);
-    // store.dispatch({type: "TOGGLE_SWITCH", payload: "fart"});
-    console.log("set category",this);
-    this.props.categoryCall(this.props.params.user,e.target.innerHTML);
-
-  }
-
 
   
   deleteHyper(){
@@ -139,7 +110,7 @@ class EditHyper extends Component {
     return (
       <div className="editHyper">
         <IconMenu
-          style={store.getState().edit.edit?{ top:0,left:0}:{display:"none"}}
+          style={store.getState().edit.edit?{}:{display:"none"}}
           iconStyle={{opacity:.2, width:50}}
           // onTouchTap={this.getCategories}
           disableAutoFocus={true}

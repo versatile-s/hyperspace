@@ -15,6 +15,7 @@ import EditHyper from './editHyper';
 class Category extends Component {
   constructor (props) {
     super(props);
+
     this.state = {
       username: this.props.params.user,
       categoryTitle: this.props.params.category,
@@ -23,30 +24,19 @@ class Category extends Component {
     };
     // this.isAuth = this.isAuth.bind(this);
     // this.categoryCall = this.categoryCall.bind(this);
-    this.setCategory = this.setCategory.bind(this);
+
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
     this.categoryPageCategoryCall=this.categoryPageCategoryCall.bind(this);
+
     var context = this;
-    store.subscribe(()=>{
-      console.log("category.js store update");
+    store.subscribe(() => {
       context.forceUpdate();
     });
   }
 
   componentWillMount () {
-    console.log("componentWillMount--category. params:",this.props.params.user, this.props.params.category);
     this.props.categoryCall(this.props.params.user, this.props.params.category);
-  }
-
-  setCategory(category) {
-    // var context = this;
-    // this.setState({
-    //   categoryTitle: category
-    // },
-    // function() {
-    //   context.categoryCall();
-    // });
   }
 
   updateViews (item) {
@@ -63,31 +53,26 @@ class Category extends Component {
         title: item.title,
         views: item.views
       })
-
     }).then(function(){
       context.sortData(store.getState().data.data);
     });
   }
 
   sortData (responseData) {
-   
     var tempData = responseData.sort(function (a, b) {
       return b.views - a.views;
     });
     store.dispatch({type: "GET_DATA", payload: tempData});
-    // this.forceUpdate();
   }
 
   randomizeGradient () {
-
-
     let random = Math.ceil(Math.random() * 25);
-
     return 'gradient' + random;
   }
   componentWillUnmount(){
     console.log("Goodbye");
   }
+
 
   categoryPageCategoryCall(){
     this.props.categoryCall(this.props.params.user, this.props.params.category);
@@ -124,11 +109,11 @@ class Category extends Component {
   // }
 
 
+
   render () {
     { var context = this;  }
     return (
       <div>
-        
         <div className="categoryPageContainer">
             {store.getState().data.data.map(function (item) {
               return (
@@ -149,11 +134,5 @@ class Category extends Component {
     );
   }
 }
-// const mapStateToProps = function(store){
-//   return{
-//     store
-//   };
-// };
-
 
 export default Category;

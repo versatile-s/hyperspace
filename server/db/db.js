@@ -30,20 +30,18 @@ var CategoryPage = sequelize.define('CategoryPage', {
   preferences: { type: Sequelize.STRING }
 });
 
-
 var Friend = sequelize.define('Friend', {
   name: {type: Sequelize.STRING},
   category: {type: Sequelize.STRING}
 });
+
 var Session = sequelize.define('Session', {
   sid: {
     type: Sequelize.STRING,
     primaryKey: true
   },
-  //userId: Sequelize.STRING,
   expires: Sequelize.DATE,
   data: Sequelize.STRING
-
 });
 
 User.sync().then(function () {
@@ -71,8 +69,6 @@ module.exports.sequelize = sequelize;
 module.exports.User = User;
 module.exports.Hyper = Hyper;
 module.exports.CategoryPage = CategoryPage;
-
 module.exports.Friend = Friend;
-// module.exports.Session = Session;
 module.exports.sequelize = sequelize;
 

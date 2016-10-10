@@ -19,7 +19,6 @@ class AddFriend extends Component {
       username: this.props.username,
       categoryTitle: this.props.category,
       lurked: "lurk this user"
-
     };
     this.addFriend = this.addFriend.bind(this);
   }
@@ -43,7 +42,6 @@ class AddFriend extends Component {
       });
         
     });
-
   }
 
   render () {
@@ -60,14 +58,11 @@ class AddFriend extends Component {
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-
             <RaisedButton type="button" fullWidth="true" onClick={this.addFriend} label={this.state.lurked} />
-          
         </IconMenu>
       </div>  
     );
   }
 }
-
 
 export default AddFriend;
