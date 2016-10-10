@@ -27,6 +27,7 @@ class Logout extends Component {
         store.dispatch({
           type: "GET_DATA", payload: []
         });
+        context.props.closeMenu();
       }
     })
     .catch((error) => {

@@ -18,8 +18,9 @@ class Signup extends Component {
       username:'',
       password:'',
       failedSignin: false
+
     };
-    store.dispatch({type: 'OPEN', payload: true});
+
   }
 
   signup (e) {
@@ -73,7 +74,10 @@ class Signup extends Component {
   }
 
   handleRequestClose () {
-    store.dispatch({type: 'CLOSE', payload: false});
+    this.setState({
+      failedSignin:false
+    });
+   
   }
 
   render() {
@@ -84,12 +88,7 @@ class Signup extends Component {
            <Snackbar
               open={this.state.failedSignin}
               message={"I'm sorry "+this.state.username+", it looks like you are not the first " + this.state.username + "."}
-              autoHideDuration={4000}
-              onRequestClose={this.handleRequestClose}
-            />
-            <Snackbar
-              open={store.getState().authenticated.authenticated && store.getState().open.open}
-              message={"WELCOME TO HYPERSPACE " + store.getState().username.username}
+              autoHideDuration={3000}
               onRequestClose={this.handleRequestClose}
             />
             <FlatButton label="signup" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>

@@ -18,16 +18,22 @@ import BoredIcon from 'material-ui/svg-icons/hardware/videogame-asset';
 import store from '../../store';
 import AddFriend from './addFriend';
 import Logout from './logout';
+import HomeIcon from 'material-ui/svg-icons/action/home';
 
 class Side extends Component {
   constructor (props) {
     super(props);
+    this.state={
+      open: null
+    };
     this.clickCategory = this.clickCategory.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
     this.getCategories = this.getCategories.bind(this);
     this.makeNewCategory = this.makeNewCategory.bind(this);
     this.forceFocus = this.forceFocus.bind(this);
     this.toBored=this.toBored.bind(this);
+    this.toHome=this.toHome.bind(this);
+    this.closeMenu=this.closeMenu.bind(this);
   }
 
   clickCategory(e) {
@@ -94,11 +100,28 @@ class Side extends Component {
   toBored(){
     browserHistory.push('/' +this.props.params.user +'/'+this.props.params.category +'/bored');
   }
+  toHome(){
+    browserHistory.push('/' +store.getState().username.username +'/home');
+    this.props.categoryCall(store.getState().username.username,"home");
+  }
+  closeMenu(){
+    var context = this;
+    this.setState({
+      open: false
+    }, function () {
+      context.setState({
+        open: null
+      });
+      
+    });
+  }
 
   render () {
     return (
       <div className = "list-knob">
         <IconMenu
+          open={this.state.open}
+          style={this.props.params.user?{}:{display:"none"}}
           useLayerForClickAway={true}
           disableAutoFocus={true}
           menuStyle={{width:0, opacity:.2}}
@@ -108,13 +131,14 @@ class Side extends Component {
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-          <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall}/>
-          <MakeCategory params={this.props.params} setCategory={this.props.setCategory} username={store.getState().username.username}/>
-          <HyperSearch username={store.getState().username.username}/>
-          <FriendList username={store.getState().username.username}/>
-          <AddFriend params={this.props.params} username={store.getState().username.username}/>
-          <IconButton onClick={this.toBored} iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton>
-          <Logout/>
+            <IconButton onClick={this.toHome} iconStyle={{opacity:.2, width:50}}><HomeIcon /></IconButton>
+            <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall}/>
+            <MakeCategory params={this.props.params} setCategory={this.props.setCategory} username={store.getState().username.username}/>
+            <HyperSearch username={store.getState().username.username}/>
+            <FriendList categoryCall={this.props.categoryCall}/>
+            <AddFriend params={this.props.params} username={store.getState().username.username}/>
+            <IconButton onClick={this.toBored} iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton>
+            <Logout closeMenu={this.closeMenu}/>
         </IconMenu>
       </div>
     );
