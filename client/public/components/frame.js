@@ -22,7 +22,6 @@ class Frame extends Component {
   }
 
   componentWillMount () {
-    console.log("componentWillMount--frame");
     this.categoryCall(this.props.params.user, this.props.params.category);
   }
 
@@ -75,28 +74,29 @@ class Frame extends Component {
     store.dispatch({
       type: "GET_DATA", payload:[]
     });
-
-    fetch('/categoryData', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: username,
-        categoryTitle: category
-      })
-    }).then((response) => {
-      response.json().then(function (data) {
-        if (Array.isArray(data)) {
-          context.sortData(data);
-        } else {
-          store.dispatch({
-            type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!"}]
-          });
-        }
+    if (username && username !== '') {
+      fetch('/categoryData', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: username,
+          categoryTitle: category
+        })
+      }).then((response) => {
+        response.json().then(function (data) {
+          if (Array.isArray(data)) {
+            context.sortData(data);
+          } else {
+            store.dispatch({
+              type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!"}]
+            });
+          }
+        });
       });
-    });
+    }
   }
 
   render () {

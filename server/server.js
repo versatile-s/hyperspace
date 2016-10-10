@@ -52,11 +52,6 @@ server.get('*/styles.css', function (req, res) {
 // This servers for all of our session based authorization for example.
 require('./authenticationRoutes')(server);
 
-// This should be moved to router file
-server.get('/userCategories*', function (req, res) {
-  utils.getUserCategories(req, res);
-});
-
 server.get('/userTags', function (req, res) {
   utils.getUserTags(req, res);
 });

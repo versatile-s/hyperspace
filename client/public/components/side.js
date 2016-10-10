@@ -36,21 +36,26 @@ class Side extends Component {
   }
 
   componentDidMount() {
-    this.getCategories();
+    if (store.getState().username.username !== '') {
+      this.getCategories();
+    }
   }
 
   getCategories () {
     var context = this;
-    fetch('/userCategories/?username=' + store.getState().username.username, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    }).then(function (response) {
-      response.json().then(function(categoryData) {
-        store.dispatch({type: 'GET_CATEGORIES', payload: categoryData});
+    var username = store.getState().username.username;
+    if (username && username !== '') {
+      fetch('/userCategories/?username=' + store.getState().username.username, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      }).then(function (response) {
+        response.json().then(function(categoryData) {
+          store.dispatch({type: 'GET_CATEGORIES', payload: categoryData});
+        });
       });
-    });
+    }
   }
 
   makeNewCategory(){
