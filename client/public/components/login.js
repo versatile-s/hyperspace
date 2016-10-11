@@ -7,6 +7,7 @@ import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import store from '../../store';
 
+
 class Login extends Component {
   constructor (props) {
     super(props);

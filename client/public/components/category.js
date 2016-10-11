@@ -11,6 +11,7 @@ import store from '../../store';
 import {connect} from 'react-redux';
 import MyCategories from './myCategories';
 import FriendFeed from './friendFeed.js';
+import Sunburst from './sunburst.js';
 
 class Category extends Component {
   constructor (props) {
@@ -62,6 +63,7 @@ class Category extends Component {
     { var context = this; }
     return (
       <div>
+        <Sunburst/>
         <div className="categoryPageContainer">
           <FriendFeed />
             {store.getState().data.data.map(function (item) {
