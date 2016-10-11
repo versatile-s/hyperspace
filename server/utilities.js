@@ -44,6 +44,28 @@ var comparePasswords = function(req, res, storedPass, userInfo) {
   }
 };
 
+var getUserId = function (username, cb) {
+  console.log('USERNAME HERE IS', username);
+  User.findOne({
+    where: {
+      username: username
+    }
+  }).then(function (user) {
+    cb(user.id);
+  });
+};
+
+var getCategoryId = function (userID, category, cb) {
+  CategoryPage.findOne({
+    where: {
+      name: category,
+      UserId: userID
+    }
+  }).then(function (categoryId) {
+    cb(categoryId);
+  });
+};
+
 var utils = {
   // USERS
   createUser: function (req, res) {
@@ -372,19 +394,41 @@ var utils = {
   },
 
   getFeed: function (req, res) {
-    User.findOne({
-      where: {
-        username: req.body.username
-      }
-    }).then(function (user) {
+    var storage = [];
+    var count = 0;
+    getUserId(req.body.username, function (userID) {
       Friend.findAll({
         where: {
-          userId: user.id
+          userId: userID
         }
-      }).then(function (friends) {
-        var friendsArray = [];
-        friends.forEach(function(friend) {
-          friendsArray.push([friend.name, friend.category]);
+      }).then(function (allFriends) {
+        allFriends.forEach(function (friend) {
+          getUserId(friend.name, function (friendID) {
+            CategoryPage.findOne({
+              where: {
+                name: friend.category
+              }
+            }).then(function (cat) {
+              Hyper.findAll({
+                where: {
+                  CategoryPageId: cat.id,
+                  username: friend.name
+                }
+              }).then(function (hypers) {
+                storage = storage.concat(hypers.map(function (hyper) {
+                  return hyper.dataValues;
+                }));
+              }).then(function () {
+                if ( count === allFriends.length - 1 ) {
+                  res.send(JSON.stringify(storage.sort(function(a, b) {
+                    return a.createdAt > b.createdAt ? 1 : -1;
+                  })));
+                } else {
+                  count ++;
+                }
+              });
+            });
+          });
         });
       });
     });

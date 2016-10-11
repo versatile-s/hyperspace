@@ -107,7 +107,7 @@ module.exports = (router) => {
 
   router.route('/getfeed')  
     .post(function (req, res) {
-      console.log('Received PUT at /getFeed');
+      console.log('Received POST at /getFeed');
       utils.getFeed(req, res);
     });
 
