@@ -1,11 +1,8 @@
 <html>
   <head>
     <script type="text/javascript">
-      // Your Client ID can be retrieved from your project in the Google
-      // Developer Console, https://console.developers.google.com
       var CLIENT_ID = '957621027327-ind7306mrrdvjqkvvdmt2rjvqo3iq39j.apps.googleusercontent.com';
       var SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
-
       /**
        * Check if current user has authorized this application.
        */
@@ -18,15 +15,11 @@
           }, handleAuthResult);
       }
 
-      /**
-       * Handle response from authorization server.
-       *
-       * @param {Object} authResult Authorization result.
-       */
+       //Handle response from authorization server.
+
       function handleAuthResult(authResult) {
         var authorizeDiv = document.getElementById('authorize-div');
         if (authResult && !authResult.error) {
-          // Hide auth UI, then load client library.
           authorizeDiv.style.display = 'none';
           loadGmailApi();
         } else {
@@ -36,11 +29,8 @@
         }
       }
 
-      /**
-       * Initiate auth flow in response to user clicking authorize button.
-       *
-       * @param {Event} event Button click event.
-       */
+
+       //Initiate auth flow in response to user clicking authorize button.
       function handleAuthClick(event) {
          gapi.auth.authorize(
            {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
@@ -49,8 +39,8 @@
       }
 
       /**
-       * Load Gmail API client library. List labels once client library
-       * is loaded.
+       * Load Gmail API client library. List email labels once client library
+       * is loaded. Then list all emails sent to add@hyperspace.me
        */
       function loadGmailApi() {
         gapi.client.load('gmail', 'v1', listLabels);
@@ -132,7 +122,7 @@
       function listMessages() {
         var request = gapi.client.gmail.users.messages.list({
           'userId': 'me',
-          'q': 'to:add@hyprspace.me'
+          'q': 'to:add@hyperspace.me'
         });
 
 

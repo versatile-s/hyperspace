@@ -486,7 +486,7 @@ var utils = {
         res.send(category);
       });
     });
-  },      
+  },
 
   getFeed: function(req, res) {
     var storage = [];
