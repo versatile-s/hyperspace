@@ -175,6 +175,7 @@ var utils = {
               url: hyper.url,
               title: hyper.title,
               description: hyper.description,
+              image: hyper.image,
               tags: tags,
               username: req.body.username,
               CategoryPageId: hyper.CategoryPageId
@@ -209,6 +210,7 @@ var utils = {
         queryString += text.charAt(i);
       }
     }
+    queryString = queryString + '&size=50';
     if (req.body.username && req.body.username !== "") {
       var username = req.body.username.toLowerCase();
       axios.get('http://localhost:9200/hyperspace/hypers/_search?q=' + queryString, {

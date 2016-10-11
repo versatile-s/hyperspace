@@ -56,6 +56,11 @@ server.get('/userTags', function (req, res) {
   utils.getUserTags(req, res);
 });
 
+// get a user's categories  
+server.get('/userCategories', function (req, res) {
+  utils.getUserCategories(req, res);
+});
+
 // IMPORTANT any remaining routes that have NOT hit the authRoutes already will be first sent
 // to the client code in app.js and hit the React Router. Only if a request does not hit the react router
 // will it fallback into the server side router.js file.
