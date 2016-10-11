@@ -150,7 +150,6 @@ var utils = {
     var username = req.body.username;
 
     if (req.body.username) {
-      console.log('WE WILL USE USUERNAME BECAUSE WE FOUND ONE')
       var findBy =
         User.findOne({
           where: {
@@ -158,7 +157,6 @@ var utils = {
           }
         });
     } else {
-      console.log('WE WILL USE EMAIL BECAUSE WE DIDNT FIND USERNAME')
       var findBy =
         User.findOne({
           where: {
@@ -180,56 +178,81 @@ var utils = {
             name: name,
             parentCategory: req.body.parents,
             UserId: userId
-          }).then(function (category) {
-            console.log('here is the category son!!!', category);
-            return Hyper.create({
-              url: req.body.url,
-              title: req.body.title,
-              description: req.body.description,
-              image: req.body.image,
-              username: req.body.username,
-              tags: tags,
-              views: 0,
-              CategoryPageId: category.id
-            }).then(function (newHyper) {
-              hyper = newHyper;
-              axios.post('localhost:9200/hyperspace/hypers', {
-                id: hyper.id,
-                url: hyper.url,
-                title: hyper.title,
-                description: hyper.description,
-                tags: tags,
-                username: req.body.username,
-                CategoryPageId: hyper.CategoryPageId
-              }).then(function (response) {
-              }).catch(function (err) {
-              });
+          }).then(function (newCategory) {
+            console.log('here is the category son!!!', newCategory);
+            Hyper.findOne({
+              where: {
+                url: req.body.url,
+                CategoryPageId: newCategory.id
+              }
+            }).then(function(previousHyper) {
+              if (!previousHyper) {
+                return Hyper.create({
+                  url: req.body.url,
+                  title: req.body.title,
+                  description: req.body.description,
+                  image: req.body.image,
+                  username: req.body.username,
+                  tags: tags,
+                  views: 0,
+                  CategoryPageId: category.id
+                }).then(function (newHyper) {
+                  hyper = newHyper;
+                  axios.post('localhost:9200/hyperspace/hypers', {
+                    id: hyper.id,
+                    url: hyper.url,
+                    title: hyper.title,
+                    description: hyper.description,
+                    tags: tags,
+                    username: req.body.username,
+                    CategoryPageId: hyper.CategoryPageId
+                  }).then(function (response) {
+                    console.log('here is the response after hyper is created ', response);
+                  }).catch(function (err) {
+                  });
+                });
+              } else {
+                console.log('yo that Hyper already exists here it is: ', previousHyper);
+              }
             });
           });
         } else {
-          return Hyper.create({
-            url: req.body.url,
-            title: req.body.title,
-            description: req.body.description,
-            image: req.body.image,
-            username: user.dataValues.username,
-            tags: tags,
-            views: 0,
-            CategoryPageId: category.id
-          }).then(function (newHyper) {
-            hyper = newHyper;
-            axios.post('http://localhost:9200/hyperspace/hypers', {
-              id: hyper.id,
-              url: hyper.url,
-              title: hyper.title,
-              description: hyper.description,
-              image: hyper.image,
-              tags: tags,
-              username: req.body.username,
-              CategoryPageId: hyper.CategoryPageId
-            }).then(function (response) {
-            }).catch(function (err) {
-            });
+          console.log('ok so we found this category page and now we are checking to see if this hyper is in')
+          Hyper.findOne({
+            where: {
+              url: req.body.url,
+              CategoryPageId: category.id
+            }
+          }).then(function(previousHyper) {
+            if (!previousHyper) {
+              console.log('we didnt find this hyper, lets go ahead and make it');
+              return Hyper.create({
+                url: req.body.url,
+                title: req.body.title,
+                description: req.body.description,
+                image: req.body.image,
+                username: user.dataValues.username,
+                tags: tags,
+                views: 0,
+                CategoryPageId: category.id
+              }).then(function (newHyper) {
+                hyper = newHyper;
+                axios.post('http://localhost:9200/hyperspace/hypers', {
+                  id: hyper.id,
+                  url: hyper.url,
+                  title: hyper.title,
+                  description: hyper.description,
+                  image: hyper.image,
+                  tags: tags,
+                  username: req.body.username,
+                  CategoryPageId: hyper.CategoryPageId
+                }).then(function (response) {
+                }).catch(function (err) {
+                });
+              });
+            } else {
+              console.log('yo that Hyper alrady exists here it is ', previousHyper);
+            }
           });
         }
       });
