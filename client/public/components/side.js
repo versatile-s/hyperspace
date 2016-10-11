@@ -24,7 +24,7 @@ import EditIcon from 'material-ui/svg-icons/action/build';
 class Side extends Component {
   constructor (props) {
     super(props);
-    this.state={
+    this.state = {
       open: null
     };
     this.clickCategory = this.clickCategory.bind(this);
@@ -96,7 +96,7 @@ class Side extends Component {
       store.dispatch({type: 'TOGGLE_SWITCH', payload: false});
     } else {
       store.dispatch({type: 'TOGGLE_SWITCH', payload: true});
-    } 
+    }
   }
 
   toBored(){
@@ -115,7 +115,7 @@ class Side extends Component {
       context.setState({
         open: null
       });
-      
+
     });
   }
   startEdit() {
@@ -130,7 +130,7 @@ class Side extends Component {
   render () {
     return (
       <div className = "list-knob">
-        <IconMenu
+         <IconMenu
           open={this.state.open}
           style={this.props.params.user?{}:{display:"none"}}
           useLayerForClickAway={true}
@@ -142,7 +142,6 @@ class Side extends Component {
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-            {console.log("side user, store user",this.props.params.user,store.getState().username.username)}
             <IconButton onClick={this.toHome} iconStyle={{opacity:.2, width:50}}><HomeIcon /></IconButton>
             <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall} getCategory={this.props.getCategory}/>
             <MakeCategory params={this.props.params} setCategory={this.props.setCategory} username={store.getState().username.username}/>

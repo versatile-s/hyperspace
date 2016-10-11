@@ -56,7 +56,7 @@ server.get('/userTags', function (req, res) {
   utils.getUserTags(req, res);
 });
 
-// get a user's categories  
+// get a user's categories
 server.get('/userCategories', function (req, res) {
   utils.getUserCategories(req, res);
 });
