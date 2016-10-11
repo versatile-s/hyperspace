@@ -396,7 +396,6 @@ var utils = {
   getFeed: function (req, res) {
     var storage = [];
     var count = 0;
-    console.log(req.body, 'req.body');
     getUserId(req.body.username, function (userID) {
       Friend.findAll({
         where: {
@@ -421,8 +420,7 @@ var utils = {
                 }));
               }).then(function () {
                 if ( count === allFriends.length - 1 ) {
-                  console.log('STORAGE BEING SENT IS', storage);
-                  res.send(storage);
+                  res.send(JSON.stringify(storage));
                 } else {
                   count ++;
                 }
@@ -433,30 +431,6 @@ var utils = {
       });
     });
   },
-
-/*  var getUserId = function (username, cb) {
-  User.findOne({
-    where: {
-      username: username
-    }
-  }).then(function (user) {
-    cb(user.id);
-  });
-};
-
-var getCategoryId = function (userID, category, cb) {
-  CategoryPage.findOne({
-    where: {
-      name: category,
-      UserId: userID
-    }
-  }).then(function (categoryId) {
-    cb(categoryId);
-  });
-};*/
-
-
-
 
   getFriends: function (req, res) {
     User.findOne({
