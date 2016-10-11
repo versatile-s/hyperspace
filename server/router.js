@@ -38,6 +38,12 @@ module.exports = (router) => {
     });
 
   // view category
+
+  router.route('/getCategory')
+    .post(function(req, res) {
+      utils.getCategoryPage(req, res);
+    });
+
   router.route('/category')
     .get(function (req, res) {
       res.send('Received GET at /category');

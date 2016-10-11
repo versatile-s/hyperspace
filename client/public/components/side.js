@@ -105,6 +105,7 @@ class Side extends Component {
   toHome(){
     browserHistory.push('/' +store.getState().username.username +'/home');
     this.props.categoryCall(store.getState().username.username,"home");
+    this.props.getCategory(store.getState().username.username,"home");
   }
   closeMenu(){
     var context = this;
@@ -143,10 +144,10 @@ class Side extends Component {
           >
             {console.log("side user, store user",this.props.params.user,store.getState().username.username)}
             <IconButton onClick={this.toHome} iconStyle={{opacity:.2, width:50}}><HomeIcon /></IconButton>
-            <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall}/>
+            <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall} getCategory={this.props.getCategory}/>
             <MakeCategory params={this.props.params} setCategory={this.props.setCategory} username={store.getState().username.username}/>
             <HyperSearch username={store.getState().username.username}/>
-            <FriendList categoryCall={this.props.categoryCall}/>
+            <FriendList params={this.props.params} getCategory={this.props.getCategory} categoryCall={this.props.categoryCall}/>
             <AddFriend params={this.props.params} username={store.getState().username.username}/>
             <IconButton onClick={this.startEdit} style={this.props.params.user===store.getState().username.username?{}:{display:"none"}} iconStyle={{opacity:.2, width:50}}><EditIcon/></IconButton>
             <IconButton onClick={this.toBored} iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton>

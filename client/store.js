@@ -1,7 +1,7 @@
 import { combineReducers, createStore } from 'redux';
 import authReducer from './reducers/authReducer';
 import categoriesReducer from './reducers/categoriesReducer';
-import categoryTitleReducer from './reducers/categoryTitleReducer';
+import categoryInfoReducer from './reducers/categoryInfoReducer';
 import dataReducer from './reducers/dataReducer';
 import editReducer from './reducers/editReducer';
 import openReducer from './reducers/openReducer';
@@ -13,7 +13,7 @@ import userReducer from './reducers/userReducer';
 const reducers = combineReducers({
   authenticated: authReducer,
   categories: categoriesReducer,
-  categoryTitle: categoryTitleReducer,
+  categoryInfo: categoryInfoReducer,
   data: dataReducer,
   open: openReducer,
   searchedHypers: searchedHypersReducer,

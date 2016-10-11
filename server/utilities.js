@@ -387,6 +387,23 @@ var utils = {
     });
   },
 
+  getCategoryPage: function(req,res) {
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function (user) {
+      CategoryPage.findOne({
+        where: {
+          UserId: user.id,
+          name: req.body.title
+        }
+      }).then(function(category){
+        res.send(category);
+      });
+    });
+  },
+
   getFriends: function (req, res) {
     User.findOne({
       where: {

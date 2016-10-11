@@ -47,7 +47,7 @@ class App extends Component {
     var context=this;
     store.dispatch({type: 'AUTH_SUCCESS', payload: null});
     store.dispatch({type: 'GET_CATEGORIES', payload: []});
-    store.dispatch({type: 'CAT_TITLE', payload: 'home'});
+    store.dispatch({type: 'CAT_INFO', payload: {}});
     store.dispatch({type: 'GET_DATA', payload: []});
     store.dispatch({type: 'OPEN', payload: null});
     store.dispatch({type: 'S_HYPERS', payload: []});

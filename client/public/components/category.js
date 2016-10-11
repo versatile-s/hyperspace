@@ -28,7 +28,6 @@ class Category extends Component {
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
     this.categoryPageCategoryCall=this.categoryPageCategoryCall.bind(this);
-
     var context = this;
     store.subscribe(() => {
       context.forceUpdate();
@@ -37,7 +36,10 @@ class Category extends Component {
 
   componentWillMount () {
     this.props.categoryCall(this.props.params.user, this.props.params.category);
+    this.props.getCategory(this.props.params.user, this.props.params.category);
   }
+
+
 
   updateViews (item) {
     var context = this;
@@ -76,6 +78,7 @@ class Category extends Component {
 
   categoryPageCategoryCall(){
     this.props.categoryCall(this.props.params.user, this.props.params.category);
+    this.props.getCategory(this.props.params.user, this.props.params.category);
   }
 
   // categoryCall () {
