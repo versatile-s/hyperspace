@@ -142,12 +142,19 @@ var utils = {
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
-    console.log('HERE IS THE BODY IINSIDE OF SAVEHYPER IN UTILS, ', req.body);
     var tags = req.body.tags.replace(/,/g, " ").toLowerCase();
     var userId = 0;
     var hyperId = 0;
     var name = '';
     var hyper = {};
+
+    if (req.body.username) {
+      var propertyToFindBy = 'username';
+      var toFindBy = req.body.username;
+    } else {
+      var propertyToFindBy = 'username';
+      var toFindBy = req.body.username;
+    }
     User.findOne({
       where: {
         username: req.body.username

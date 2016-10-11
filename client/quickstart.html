@@ -96,7 +96,7 @@
             url: 'https://www.facebook.com/',
             title: 'placeholder',
             description: resp.snippet,
-            username: '1',
+            username: 'peh'
             tags: 'NEWTESTTAG',
             image: 'http://www.mariowiki.com/images/thumb/4/4d/Yoshi_-_Mario_Party_10.png/150px-Yoshi_-_Mario_Party_10.png'
           })
@@ -104,6 +104,19 @@
         .then(function(res) {
           console.log('HERE IS RES ', res);
         });
+      };
+
+      var getUserInfo = function(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        var ID = profile.getId(); // Don't send this directly to your server!
+        var fullName = profile.getName();
+        var firstName = profile.getGivenName();
+        var lastName = profile.getFamilyName();
+        var photoUrl = profile.getImageUrl();
+        var email = profile.getEmail();
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log('CREDENTIALS: ', ID, fullName);
       };
 
       // url: req.body.url,
@@ -124,7 +137,6 @@
         request.execute(function(resp) {
           var messages = resp.messages;
           appendPre('Messages:');
-
 
           if (messages && messages.length > 0) {
             for (i = 0; i < messages.length; i++) {
