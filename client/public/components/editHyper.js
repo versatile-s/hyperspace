@@ -27,10 +27,11 @@ class EditHyper extends Component {
     this.confirm = this.confirm.bind(this);
     this.handleWarnClose = this.handleWarnClose.bind(this);
     this.handleConfirmClose = this.handleConfirmClose.bind(this);
-    var context = this;
-    store.subscribe(() => {
-      context.forceUpdate();
-    });
+    this.updateChange = this.updateChange.bind(this);
+    // var context = this;
+    // store.subscribe(() => {
+    //   context.forceUpdate();
+    // });
   }
 
   
@@ -84,6 +85,32 @@ class EditHyper extends Component {
     });
   }
 
+  updateChange(){
+    var context = this;
+    fetch('/editLink',{
+      method:'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: store.getState().username.username,
+        oldTitle: this.props.item.title,
+        newTitle: this.refs.title.getValue(),
+        description: this.refs.description.getValue(),
+        image: this.refs.image.getValue() 
+      })
+
+    }).then(function(response){
+      response.text().then(function(parsedRes){
+        console.log(parsedRes);
+        context.props.categoryCall();
+      });
+    });
+
+
+   
+  }
+
 
   render () {
     const warnActions = [
@@ -121,37 +148,39 @@ class EditHyper extends Component {
           anchorOrigin={{horizontal: 'left', vertical: 'top'}}
           targetOrigin={{horizontal: 'left', vertical: 'top'}}
           >
-          <FlatButton label="Title" disabled={true}/>
-          <TextField defaultValue={this.props.item.title}/>
-          <FlatButton label={"Description"} disabled={true}/>
-          <TextField defaultValue={this.props.item.description}/>
-          <FlatButton label={"Image URL"} disabled={true}/>
-          <TextField defaultValue={this.props.item.image}/>
-          <IconButton onClick={this.warn}><DeleteIcon/></IconButton>
-          <IconButton><DoneIcon/></IconButton>
-        
-          <Dialog
-            style={{position: "fixed",zIndex:4001}}
-            title="ARE YOU SUUUUURE?"
-            actions={warnActions}
-            modal={false}
-            open={this.state.warning}
-            onRequestClose={this.handleWarnClose}
-          >
-            Are you sure you want to delete this Link?
-          </Dialog>
+          <div>
+            <FlatButton label="Title" disabled={true}/>
+            <TextField ref="title" defaultValue={this.props.item.title}/>
+            <FlatButton label={"Description"} disabled={true}/>
+            <TextField ref="description" defaultValue={this.props.item.description}/>
+            <FlatButton label={"Image URL"} disabled={true}/>
+            <TextField ref="image" defaultValue={this.props.item.image}/>
+            <IconButton onClick={this.warn}><DeleteIcon/></IconButton>
+            <IconButton onClick={this.updateChange}><DoneIcon/></IconButton>
+          </div>
+          <div>
+            <Dialog
+              style={{position: "fixed",zIndex:4001}}
+              title="ARE YOU SUUUUURE?"
+              actions={warnActions}
+              modal={false}
+              open={this.state.warning}
+              onRequestClose={this.handleWarnClose}
+            >
+              Are you sure you want to delete this Link?
+            </Dialog>
 
-          <Dialog
-            style={{position: "fixed",zIndex:4001}}
-            title="GONE BABY"
-            actions={confirmActions}
-            modal={false}
-            open={this.state.confirm}
-            onRequestClose={this.handleConfirmClose}
-          >
-            Deleted This Link: {this.state.deleteMessage}
-          </Dialog>
-      
+            <Dialog
+              style={{position: "fixed",zIndex:4001}}
+              title="GONE BABY"
+              actions={confirmActions}
+              modal={false}
+              open={this.state.confirm}
+              onRequestClose={this.handleConfirmClose}
+            >
+              Deleted This Link: {this.state.deleteMessage}
+            </Dialog>
+          </div>
           
 
         </IconMenu>

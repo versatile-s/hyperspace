@@ -255,7 +255,7 @@ var utils = {
         description: req.body.description,
         image: req.body.image
       }).then(function() {
-        res.send("Hyper Updated");
+        res.send("Link Updated");
       });
     });
   },

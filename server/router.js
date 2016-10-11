@@ -67,7 +67,6 @@ module.exports = (router) => {
     .post(function (req, res) {
       console.log('Youre updating this link:', req.body);
       utils.editHyper(req, res);
-      res.send('Received POST at /editLink');
     });
   router.route('/link')
     .post(function (req, res) {
