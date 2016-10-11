@@ -404,13 +404,20 @@ var utils = {
       }
     }).then(function (hypers) {
       var tagStore = {};
-      hypers.forEach(function (hyper) {
-        var singleTags = hyper.dataValues.tags.split(' ');
-        singleTags.forEach(function(tag) {
-          tagStore[tag] = tag;
+      if (hypers) {      
+        hypers.forEach(function (hyper) {
+          var singleTags = hyper.dataValues.tags.split(' ');
+          singleTags.forEach(function(tag) {
+            tagStore[tag] = tag;
+          });
         });
-      });
-      res.send(JSON.stringify(tagStore));
+        res.send(JSON.stringify(tagStore));
+      } else {
+        res.send();
+      }
+    }).catch(function (err) {
+      console.log(err);
+      res.send();
     });
   },
 
