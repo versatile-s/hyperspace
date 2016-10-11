@@ -83,6 +83,13 @@
 .hyperImage{
 
 }
+.editHyper{
+  z-index: 1;
+  position: relative;
+  float:right;
+  top:0;
+  left:0;
+}
 .bored-knob{
   z-index: 100;
   position: fixed;

@@ -28,6 +28,7 @@ class Logout extends Component {
           type: "GET_DATA", payload: []
         });
         context.props.closeMenu();
+        store.dispatch({type: 'EDIT_SWITCH', payload: false});
       }
     })
     .catch((error) => {

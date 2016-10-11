@@ -38,6 +38,12 @@ module.exports = (router) => {
     });
 
   // view category
+
+  router.route('/getCategory')
+    .post(function(req, res) {
+      utils.getCategoryPage(req, res);
+    });
+
   router.route('/category')
     .get(function (req, res) {
       res.send('Received GET at /category');
@@ -52,20 +58,37 @@ module.exports = (router) => {
       utils.updateCategoryPage(req, res);
       res.send('Received PUT at /category');
     });
+
+  // get a user's categories  
+  router.get('/userCategories', function (req, res) {
+    utils.getUserCategories(req, res);
+  });
+
+
   /*********************************/
   /*********************************/
              //HYPERS//
   /*********************************/
   /*********************************/
   //This adds the hyper to the database.
+
+  router.route('/editLink')
+    .post(function (req, res) {
+      console.log('Youre updating this link:', req.body);
+      utils.editHyper(req, res);
+    });
   router.route('/link')
     .post(function (req, res) {
       utils.saveHyper(req, res);
       res.send('Received POST at /link');
     })
+
     // edit link
     .put(function (req, res) {
-      utils.updateHyper(req, res);
+
+
+      console.log('Received PUT at /link');
+      utils.updateHyperViews(req, res);
       res.send('Received PUT at /link');
     });
 

@@ -66,6 +66,7 @@ var getCategoryId = function (userID, category, cb) {
   });
 };
 
+
 var utils = {
   // USERS
   createUser: function (req, res) {
@@ -254,7 +255,7 @@ var utils = {
     }
   },
 
-  updateHyper: function (req, res) {
+  updateHyperViews: function (req, res) {
     Hyper.findOne({
       where: {
         username: req.body.username,
@@ -267,6 +268,23 @@ var utils = {
     });
   },
 
+  editHyper: function (req, res) {
+    Hyper.findOne({
+      where: {
+        username: req.body.username,
+        title:req.body.oldTitle
+      }
+    }).then(function(hyper) {
+      hyper.update({
+        title: req.body.newTitle,
+        description: req.body.description,
+        image: req.body.image
+      }).then(function() {
+        res.send("Link Updated");
+      });
+    });
+  },
+
   removeHyper: function (req, res) {
     Hyper.findOne({
       where: {
@@ -274,8 +292,9 @@ var utils = {
         title: req.body.title
       }
     }).then(function(hyper) {
+      var destroyed = hyper;
       hyper.destroy();
-      console.log('Destroyed this hyperlink: ', hyper);
+      res.send(destroyed);
     });
   },
 
@@ -342,8 +361,10 @@ var utils = {
         }).then(function(hypers) {
           res.send(hypers);
         });
+
       }).catch(function(err) {
         console.log('server error:', err);
+
         res.send(JSON.stringify('Error'));
       });
     }).catch(function(error) {
@@ -393,7 +414,24 @@ var utils = {
     });
   },
 
-  getFeed: function (req, res) {
+  getCategoryPage: function(req,res) {
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function (user) {
+      CategoryPage.findOne({
+        where: {
+          UserId: user.id,
+          name: req.body.title
+        }
+      }).then(function(category) {
+        res.send(category);
+      });
+    });
+  },      
+
+  getFeed: function(req, res) {
     var storage = [];
     var count = 0;
     getUserId(req.body.username, function (userID) {
