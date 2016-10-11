@@ -454,7 +454,7 @@ var utils = {
       }
     }).then(function (hypers) {
       var tagStore = {};
-      if (hypers) {      
+      if (hypers) {
         hypers.forEach(function (hyper) {
           var singleTags = hyper.dataValues.tags.split(' ');
           singleTags.forEach(function(tag) {
