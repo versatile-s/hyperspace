@@ -24,7 +24,7 @@ import EditIcon from 'material-ui/svg-icons/action/build';
 class Side extends Component {
   constructor (props) {
     super(props);
-    this.state={
+    this.state = {
       open: null
     };
     this.clickCategory = this.clickCategory.bind(this);

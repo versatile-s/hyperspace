@@ -3,9 +3,8 @@
     <script type="text/javascript">
       var CLIENT_ID = '957621027327-ind7306mrrdvjqkvvdmt2rjvqo3iq39j.apps.googleusercontent.com';
       var SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
-      /**
-       * Check if current user has authorized this application.
-       */
+
+      // Check if current user has authorized this application.
       function checkAuth() {
         gapi.auth.authorize(
           {
@@ -16,21 +15,19 @@
       }
 
        //Handle response from authorization server.
-
       function handleAuthResult(authResult) {
         var authorizeDiv = document.getElementById('authorize-div');
         if (authResult && !authResult.error) {
           authorizeDiv.style.display = 'none';
           loadGmailApi();
         } else {
-          // Show auth UI, allowing the user to initiate authorization by
+          // Show auth popup from Google, allowing the user to initiate authorization by
           // clicking authorize button.
           authorizeDiv.style.display = 'inline';
         }
       }
 
-
-       //Initiate auth flow in response to user clicking authorize button.
+       //Initiate auth flow in response to user clicking the authorize button.
       function handleAuthClick(event) {
          gapi.auth.authorize(
            {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
@@ -38,39 +35,13 @@
          return false;
       }
 
-      /**
-       * Load Gmail API client library. List email labels once client library
-       * is loaded. Then list all emails sent to add@hyperspace.me
-       */
+      // Load Gmail API client library. List email labels once client library
+      // is loaded. Then list all emails sent to add@hyperspace.me
       function loadGmailApi() {
-        gapi.client.load('gmail', 'v1', listLabels);
         gapi.client.load('gmail', 'v1', listMessages);
       }
 
-      /**
-       * Print all Labels in the authorized user's inbox. If no labels
-       * are found an appropriate message is printed.
-       */
-      function listLabels() {
-        var request = gapi.client.gmail.users.labels.list({
-          'userId': 'me'
-        });
-
-        request.execute(function(resp) {
-          var labels = resp.labels;
-          appendPre('Labels:');
-
-          if (labels && labels.length > 0) {
-            for (i = 0; i < labels.length; i++) {
-              var label = labels[i];
-              appendPre(label.name);
-            }
-          } else {
-            appendPre('No Labels found.');
-          }
-        });
-      }
-
+      // UNCOMMENT and edit this function if you need access to user details/
       // var listUserDetails = function() {
       //   var request = gapi.client.gmail.users.getProfile({
       //     'userId': 'me'
@@ -110,14 +81,6 @@
         });
       };
 
-      // url: req.body.url,
-      //         title: req.body.title,
-      //         description: req.body.description,
-      //         image: req.body.image,
-      //         username: req.body.username,
-      //         tags: tags,
-      //         views: 0,
-      //         CategoryPageId: category.id
 
       function listMessages() {
         var request = gapi.client.gmail.users.messages.list({
@@ -125,15 +88,12 @@
           'q': 'to:add@hyperspace.me'
         });
 
-
         request.execute(function(resp) {
           var messages = resp.messages;
-          appendPre('Messages:');
 
           if (messages && messages.length > 0) {
             for (i = 0; i < messages.length; i++) {
               var message = messages[i];
-              appendPre(message);
               function getMessage(message) {
                 var request = gapi.client.gmail.users.messages.get({
                   'userId': 'me',
@@ -147,22 +107,11 @@
               getMessage(message);
             }
           } else {
-            appendPre('No Messages found.');
+            console.log('no messages found');
           }
         });
       }
 
-      /**
-       * Append a pre element to the body containing the given message
-       * as its text node.
-       *
-       * @param {string} message Text to be placed in pre element.
-       */
-      function appendPre(message) {
-        var pre = document.getElementById('output');
-        var textContent = document.createTextNode(message + '\n');
-        pre.appendChild(textContent);
-      }
 
     </script>
     <script src="https://apis.google.com/js/client.js?onload=checkAuth">
