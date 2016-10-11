@@ -395,8 +395,6 @@ var utils = {
         username: req.body.username
       }
     }).then(function (user) {
-      console.log('this is req.body.categoryTitle ', req.body.categoryTitle);
-      console.log('this is user.id', user.id);
       CategoryPage.findOne({
         where: {
           name: req.body.categoryTitle,
@@ -414,7 +412,6 @@ var utils = {
 
       }).catch(function(err) {
         console.log('server error:', err);
-
         res.send(JSON.stringify('Error'));
       });
     }).catch(function(error) {
