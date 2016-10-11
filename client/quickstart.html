@@ -56,6 +56,7 @@
       function loadGmailApi() {
         gapi.client.load('gmail', 'v1', listLabels);
         gapi.client.load('gmail', 'v1', listMessages);
+        gapi.client.load('gmail', 'v1', listUserDetails);
       }
 
       /**
@@ -63,8 +64,6 @@
        * are found an appropriate message is printed.
        */
       function listLabels() {
-        console.log('INSIDE OF LISTLABELS< THIS IS THE USERS.id OBJECT: ', gapi.client.gmail.users.id);
-        console.log('INSIDE OF LISTLABELS< THIS IS THE USERS.userId OBJECT: ', gapi.client.gmail.users.userId);
         var request = gapi.client.gmail.users.labels.list({
           'userId': 'me'
         });
@@ -107,18 +106,14 @@
         });
       };
 
-      var getUserInfo = function(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        var ID = profile.getId(); // Don't send this directly to your server!
-        var fullName = profile.getName();
-        var firstName = profile.getGivenName();
-        var lastName = profile.getFamilyName();
-        var photoUrl = profile.getImageUrl();
-        var email = profile.getEmail();
-        // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        console.log('CREDENTIALS: ', ID, fullName);
-      };
+      function listUserDetails() {
+        var request = gapi.client.gmail.users.getProfile({
+          'userId': 'me'
+        });
+        request.execute(function(resp) {
+          console.log('OK SO THE USER INFO IS!!! ', resp);
+        });
+      }
 
       // url: req.body.url,
       //         title: req.body.title,
@@ -134,6 +129,7 @@
           'userId': 'me',
           'q': 'to:add@hyperspace.me'
         });
+
 
         request.execute(function(resp) {
           var messages = resp.messages;
