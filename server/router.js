@@ -36,6 +36,7 @@ module.exports = (router) => {
   router.route('/categoryData')
     .post(function (req, res) {
       utils.getCategoryData(req, res);
+      console.log('ok categorydata being hit and here is req.body ', req.body);
     });
 
   // view category

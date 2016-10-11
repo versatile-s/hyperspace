@@ -147,6 +147,7 @@ var utils = {
     var hyperId = 0;
     var name = '';
     var hyper = {};
+    var username = req.body.username;
 
     if (req.body.username) {
       console.log('WE WILL USE USUERNAME BECAUSE WE FOUND ONE')
@@ -180,6 +181,7 @@ var utils = {
             parentCategory: req.body.parents,
             UserId: userId
           }).then(function (category) {
+            console.log('here is the category son!!!', category);
             return Hyper.create({
               url: req.body.url,
               title: req.body.title,
@@ -210,7 +212,7 @@ var utils = {
             title: req.body.title,
             description: req.body.description,
             image: req.body.image,
-            username: req.body.username,
+            username: user.dataValues.username,
             tags: tags,
             views: 0,
             CategoryPageId: category.id
@@ -370,6 +372,8 @@ var utils = {
         username: req.body.username
       }
     }).then(function (user) {
+      console.log('this is req.body.categoryTitle ', req.body.categoryTitle);
+      console.log('this is user.id', user.id);
       CategoryPage.findOne({
         where: {
           name: req.body.categoryTitle,
