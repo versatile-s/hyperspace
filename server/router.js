@@ -44,6 +44,10 @@ module.exports = (router) => {
       utils.getCategoryPage(req, res);
     });
 
+  router.route('/deleteCategory')
+    .post(function(req, res) {
+      utils.deleteCategoryPage(req, res);
+    });  
   router.route('/category')
     .get(function (req, res) {
       res.send('Received GET at /category');
@@ -56,7 +60,6 @@ module.exports = (router) => {
   // update a category
     .put(function (req, res) {
       utils.updateCategoryPage(req, res);
-      res.send('Received PUT at /category');
     });
 
   // get a user's categories  

@@ -328,18 +328,31 @@ var utils = {
   // This will update a category page. On the front end it is important that the req object has all of the fields.
   // Any fields that have not been changed need to remain as they were but still include in the request object.
   updateCategoryPage: function (req, res) {
-    CategoryPage.findById(req.body.id)
-    .then(function(selectedPage) {
-      selectedPage.update({
-        name: req.body.name,
-        parentCategory: req.body.parents,
-        subCategories: req.body.subCategories,
-        hypers: req.body.hypers,
-        widgets: req.body.widgets,
-        preferences: req.body.preferences
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function (user) {
+      CategoryPage.findOne({
+        where: {
+          UserId: user.id,
+          name: req.body.name
+        }
+      }).then(function (categoryPage) {
+        categoryPage.update({
+          name: req.body.newName,
+          backgroundUrl: req.body.backgroundUrl,
+          headerText: req.body.headerText,
+          headerTextBackgroundColor: req.body.headerTextBackgroundColor,
+          headerTextColor: req.body.headerTextColor,
+        }).then(function() {
+          res.send(categoryPage);
+        });
       });
-    });
+    });    
   },
+
+
 
   getCategoryData: function (req, res) {
     User.findOne({
@@ -430,6 +443,25 @@ var utils = {
       });
     });
   },      
+
+  deleteCategoryPage: function (req, res) {
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function (user) {
+      CategoryPage.findOne({
+        where: {
+          UserId: user.id,
+          name: req.body.title
+        }
+      }).then(function(categoryPage) {
+        var destroyed = categoryPage;
+        categoryPage.destroy();
+        res.send(destroyed);
+      });
+    });  
+  },
 
   getFeed: function(req, res) {
     var storage = [];
