@@ -44,6 +44,27 @@ var comparePasswords = function(req, res, storedPass, userInfo) {
   }
 };
 
+var getUserId = function (username, cb) {
+  User.findOne({
+    where: {
+      username: username
+    }
+  }).then(function (user) {
+    cb(user.id);
+  });
+};
+
+var getCategoryId = function (userID, category, cb) {
+  CategoryPage.findOne({
+    where: {
+      name: category,
+      UserId: userID
+    }
+  }).then(function (categoryId) {
+    cb(categoryId);
+  });
+};
+
 var utils = {
   // USERS
   createUser: function (req, res) {
@@ -372,23 +393,40 @@ var utils = {
   },
 
   getFeed: function (req, res) {
-    User.findOne({
-      where: {
-        username: req.body.username
-      }
-    }).then(function (user) {
+    getUserId(req.body.username, function (userID) {
       Friend.findAll({
         where: {
-          userId: user.id
+          userId: userID
         }
-      }).then(function (friends) {
-        var friendsArray = [];
-        friends.forEach(function(friend) {
-          friendsArray.push([friend.name, friend.category]);
-        });
+      }).then(function (allFriends) {
+        
       });
     });
   },
+
+/*  var getUserId = function (username, cb) {
+  User.findOne({
+    where: {
+      username: username
+    }
+  }).then(function (user) {
+    cb(user.id);
+  });
+};
+
+var getCategoryId = function (userID, category, cb) {
+  CategoryPage.findOne({
+    where: {
+      name: category,
+      UserId: userID
+    }
+  }).then(function (categoryId) {
+    cb(categoryId);
+  });
+};*/
+
+
+
 
   getFriends: function (req, res) {
     User.findOne({
