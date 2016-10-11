@@ -210,12 +210,8 @@ var utils = {
         queryString += text.charAt(i);
       }
     }
-<<<<<<< HEAD
-    if (req.body.username && req.body.username !== '') {
-=======
     queryString = queryString + '&size=50';
     if (req.body.username && req.body.username !== "") {
->>>>>>> 1ea79321f16e5eb5ee66472f57ff2233dbbbe4f7
       var username = req.body.username.toLowerCase();
       axios.get('http://localhost:9200/hyperspace/hypers/_search?q=' + queryString, {
       }).then(function (response) {

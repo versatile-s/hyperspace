@@ -52,7 +52,7 @@ server.get('*/styles.css', function (req, res) {
 // This servers for all of our session based authorization for example.
 require('./authenticationRoutes')(server);
 
-router.get('/userCategories', function (req, res) {
+server.get('/userCategories', function (req, res) {
   utils.getUserCategories(req, res);
 });
 
