@@ -17,9 +17,18 @@ class Category extends Component {
     super(props);
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
+    this.focused = this.focused.bind(this);
+    this.filterContent = this.filterContent.bind(this);
     var context = this;
+    this.state = {
+      data: []
+    };
     store.subscribe(() => {
-      context.forceUpdate();
+      context.setState({
+        data: store.getState().data.data
+      }, function() {
+        context.forceUpdate();
+      });
     });
   }
 
@@ -46,6 +55,45 @@ class Category extends Component {
     });
   }
 
+  filterContent (e) {
+    var hypers = store.getState().data.data;
+    if (e.target.value !== '') {
+      var context = this;
+      var q = e.target.value.toLowerCase().split(' ');
+      var result = hypers.reduce((pre, cur) => {
+        var title = cur.title.toLowerCase().split(' ');
+        var description = cur.description.toLowerCase().split(' ');
+        var tags = cur.tags.toLowerCase().split(' ');
+        cur.kScore = 0;
+        for (var i = 0; i < q.length; i++) {
+          if (title.indexOf(q[i]) > -1 && title !== '' && q[i] !== '') {
+            console.log('pre 1', pre);
+            cur.kScore += .11;
+            pre.push(cur);
+          } else if (tags.indexOf(q[i]) > -1 && tags !== '' && q[i] !== '') {
+            console.log('pre 3', pre);
+            cur.kScore += .07;
+            pre.push(cur);
+          } else if (description.indexOf(q[i]) > -1 && description !== '' && q[i] !== '') {
+            console.log('pre 2', pre);
+            cur.kScore += .03;
+            pre.push(cur);
+          }
+        }
+        return pre;
+      }, []);
+      result.sort((a, b) => a.kScore < b.kScore ? 1 : -1);
+      console.log('result after kScore sorting: ', result.map((item) => item.kScore));
+      this.setState({
+        data: result
+      });
+    } else {
+      this.setState({
+        data: hypers
+      });
+    }
+  }
+
   sortData (responseData) {
     var tempData = responseData.sort(function (a, b) {
       return b.views - a.views;
@@ -60,11 +108,13 @@ class Category extends Component {
 
   render () {
     { var context = this; }
+    { var hint = 'Search ' + this.props.params.user + '\'s ' + this.props.params.category + ' stash'; }
     return (
       <div>
+        <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
         <div className="categoryPageContainer">
           <FriendFeed />
-            {store.getState().data.data.map(function (item) {
+            {context.state.data.map(function (item) {
               return (
                 <div className="hyper" style={{order: item.views}} onClick={()=>context.updateViews(item)}>
                   <a href={item.url} target="_blank">
