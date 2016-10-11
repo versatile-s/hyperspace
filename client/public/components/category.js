@@ -17,7 +17,6 @@ class Category extends Component {
     super(props);
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
-    this.focused = this.focused.bind(this);
     this.filterContent = this.filterContent.bind(this);
     var context = this;
     this.state = {
@@ -57,6 +56,22 @@ class Category extends Component {
 
   filterContent (e) {
     var hypers = store.getState().data.data;
+
+    // this splicer function iterates over 
+    // an array and slices each item to the
+    // length of a provided string, which 
+    // is then tested for comparison, returns
+    // a bool value
+    var splicer = function(array, target) {
+      var size = target.length;
+      for(var i = 0; i < array.length; i++) {
+        if (array[i].slice(0, size) === target) {
+          return true;
+        }
+      }
+      return false;
+    };
+
     if (e.target.value !== '') {
       var context = this;
       var q = e.target.value.toLowerCase().split(' ');
@@ -67,23 +82,29 @@ class Category extends Component {
         cur.kScore = 0;
         for (var i = 0; i < q.length; i++) {
           if (title.indexOf(q[i]) > -1 && title !== '' && q[i] !== '') {
-            console.log('pre 1', pre);
-            cur.kScore += .11;
+            cur.kScore += .17;
             pre.push(cur);
           } else if (tags.indexOf(q[i]) > -1 && tags !== '' && q[i] !== '') {
-            console.log('pre 3', pre);
-            cur.kScore += .07;
+            cur.kScore += .13;
             pre.push(cur);
           } else if (description.indexOf(q[i]) > -1 && description !== '' && q[i] !== '') {
-            console.log('pre 2', pre);
+            cur.kScore += .11;
+            pre.push(cur);
+          } else if (splicer(title, q[i]) && title !== '' && q[i] !== '') {
+            cur.kScore += .07;
+            pre.push(cur);
+          } else if (splicer(tags, q[i]) && tags !== '' && q[i] !== '') {
+            cur.kScore += .05;
+            pre.push(cur);
+          } else if (splicer(description, q[i]) && description !== '' && q[i] !== '') {
             cur.kScore += .03;
             pre.push(cur);
           }
         }
+        cur.kScore = cur.kScore.toFixed(2);
         return pre;
       }, []);
       result.sort((a, b) => a.kScore < b.kScore ? 1 : -1);
-      console.log('result after kScore sorting: ', result.map((item) => item.kScore));
       this.setState({
         data: result
       });
