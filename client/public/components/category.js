@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import Side from './side';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -31,12 +30,19 @@ class Category extends Component {
 
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
+    this.filterContent = this.filterContent.bind(this);
     this.categoryPageCategoryCall=this.categoryPageCategoryCall.bind(this);
 
-
     var context = this;
+    this.state = {
+      data: []
+    };
     store.subscribe(() => {
-      context.forceUpdate();
+      context.setState({
+        data: store.getState().data.data
+      }, function() {
+        context.forceUpdate();
+      });
     });
   }
 
@@ -44,9 +50,6 @@ class Category extends Component {
     this.props.categoryCall(this.props.params.user, this.props.params.category);
     this.props.getCategory(this.props.params.user, this.props.params.category);
   }
-
-
-
 
   updateViews (item) {
     var context = this;
@@ -69,70 +72,94 @@ class Category extends Component {
     });
   }
 
+  filterContent (e) {
+    var hypers = store.getState().data.data;
+
+    // this splicer function iterates over 
+    // an array and slices each item to the
+    // length of a provided string, which 
+    // is then tested for comparison, returns
+    // a bool value
+    var splicer = function(array, target) {
+      var size = target.length;
+      for(var i = 0; i < array.length; i++) {
+        if (array[i].slice(0, size) === target) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    if (e.target.value !== '') {
+      var context = this;
+      var q = e.target.value.toLowerCase().split(' ');
+      var result = hypers.reduce((pre, cur) => {
+        var title = cur.title.toLowerCase().split(' ');
+        var description = cur.description.toLowerCase().split(' ');
+        var tags = cur.tags.toLowerCase().split(' ');
+        cur.kScore = 0;
+        for (var i = 0; i < q.length; i++) {
+          if (title.indexOf(q[i]) > -1 && title !== '' && q[i] !== '') {
+            cur.kScore += .17;
+          } else if (tags.indexOf(q[i]) > -1 && tags !== '' && q[i] !== '') {
+            cur.kScore += .13;
+          } else if (description.indexOf(q[i]) > -1 && description !== '' && q[i] !== '') {
+            cur.kScore += .11;
+          } else if (splicer(title, q[i]) && title !== '' && q[i] !== '') {
+            cur.kScore += .07;
+          } else if (splicer(tags, q[i]) && tags !== '' && q[i] !== '') {
+            cur.kScore += .05;
+          } else if (splicer(description, q[i]) && description !== '' && q[i] !== '') {
+            cur.kScore += .03;
+          }
+        }
+        cur.kScore = cur.kScore.toFixed(2);
+        if (cur.kScore > 0.00) {
+          pre.push(cur);
+        }
+        return pre;
+      }, []);
+      result.sort((a, b) => a.kScore < b.kScore ? 1 : -1);
+      this.setState({
+        data: result
+      });
+    } else {
+      this.setState({
+        data: hypers
+      });
+    }
+  }
+
   sortData (responseData) {
     var tempData = responseData.sort(function (a, b) {
       return b.views - a.views;
     });
-
-
-
     store.dispatch({type: 'GET_DATA', payload: tempData});
-
   }
 
   randomizeGradient () {
     let random = Math.ceil(Math.random() * 25);
     return 'gradient' + random;
   }
+
   componentWillUnmount(){
     console.log("Goodbye");
   }
-
 
   categoryPageCategoryCall(){
     this.props.categoryCall(this.props.params.user, this.props.params.category);
     this.props.getCategory(this.props.params.user, this.props.params.category);
   }
 
-  // categoryCall () {
-  //   // var context = this;
-  //   // console.log("categorycall params",this.state.username,this.state.categoryTitle);
-  //   // fetch('/categoryData', {
-  //   //   method: 'POST',
-  //   //   headers: {
-  //   //     'Accept': 'application/json',
-  //   //     'Content-Type': 'application/json'
-  //   //   },
-  //   //   body: JSON.stringify({
-  //   //     username: this.state.username,
-  //   //     categoryTitle: this.state.categoryTitle
-  //   //   })
-  //   // }).then((response) => {
-  //   //   console.log("response from categoryCall",response);
-  //   //   response.json().then(function (data) {
-
-  //   //     if (Array.isArray(data)) {
-           
-  //   //       context.sortData(data);
-          
-  //   //     } else {
-  //   //       store.dispatch({
-  //   //         type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!"}]
-  //   //       });
-  //   //     }
-  //   //   });
-  //   // });
-  // }
-
-
-
   render () {
     { var context = this; }
+    { var hint = 'Search ' + this.props.params.user + '\'s ' + this.props.params.category + ' stash'; }
     return (
       <div>
+        <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
         <div className="categoryPageContainer">
           <FriendFeed />
-            {store.getState().data.data.map(function (item) {
+            {context.state.data.map(function (item) {
               return (
                 <div className="hyper" style={{order: item.views}} >
                   <EditHyper params={context.props.params} categoryCall={context.categoryPageCategoryCall} item={item}/>
