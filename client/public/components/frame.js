@@ -133,11 +133,13 @@ class Frame extends Component {
   }
 
   render () {
+    {var color1 = store.getState().categoryInfo.categoryInfo.headerTextBackgroundColor;
+      var color2 = store.getState().categoryInfo.categoryInfo.headerTextColor}
     return (
       <div>
-        <div className="header">
+        <div style={{background:color1||"blue"}} className="header" >
           <EditCategory params={this.props.params} categoryCall={this.categoryCall} getCategory={this.getCategory}/>
-          <div className="logo">{store.getState().categoryInfo.categoryInfo.headerText || "hyprspace"}</div>
+          <div style={{color:color2||"white"}} className="logo">{store.getState().categoryInfo.categoryInfo.headerText || "hyprspace"}</div>
 
         </div>
         <div className="sideMenu">
@@ -147,7 +149,7 @@ class Frame extends Component {
             {React.cloneElement(this.props.children, {categoryCall: this.categoryCall, getCategory: this.getCategory})}
 
         </div>
-        <div className="footer" />
+        <div style={{background:color1|| "blue"}} className="footer" />
       </div>
     );
   }

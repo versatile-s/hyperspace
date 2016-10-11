@@ -13,6 +13,7 @@ import store from '../../store';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import DoneIcon from 'material-ui/svg-icons/action/done';
 import Dialog from 'material-ui/Dialog';
+import { SketchPicker } from 'react-color';
 
 class EditCategory extends Component {
   constructor (props) {
@@ -21,6 +22,11 @@ class EditCategory extends Component {
       warning: false,
       confirm: false,
       openMenu: false,
+      displayColorPicker1: false,
+      displayColorPicker2: false,
+      color1: store.getState().categoryInfo.categoryInfo.headerTextBackgroundColor ||"#00FF00",
+      color2: store.getState().categoryInfo.categoryInfo.headerTextColor||"#0000FF",
+
       deleteMessage: ''
     };
     this.deleteCategory = this.deleteCategory.bind(this);
@@ -30,6 +36,13 @@ class EditCategory extends Component {
     this.handleConfirmClose = this.handleConfirmClose.bind(this);
     this.updateChange = this.updateChange.bind(this);
     this.toggleOpen = this.toggleOpen.bind(this);
+    this.handleClick1=this.handleClick1.bind(this);
+    this.handleClick2=this.handleClick2.bind(this);
+    this.handleClose1=this.handleClose1.bind(this);
+    this.handleClose2=this.handleClose2.bind(this);
+    this.handleChange1=this.handleChange1.bind(this);
+    this.handleChange2=this.handleChange2.bind(this);
+    this.closeMenu=this.closeMenu.bind(this);
     var context = this;
     store.subscribe(() => {
       context.forceUpdate();
@@ -94,7 +107,29 @@ class EditCategory extends Component {
       openMenu:false
     });
   }
+  handleClick1() {
+    this.setState({ displayColorPicker1: !this.state.displayColorPicker1 });
+    this.forceUpdate();
+  }
+  handleClick2() {
+    this.setState({ displayColorPicker2: !this.state.displayColorPicker2 });
+    this.forceUpdate();
+  }
 
+  handleChange1(color) {
+    this.setState({ color1: color.hex });
+    console.log(this.state.color1);
+  }
+
+  handleChange2(color) {
+    this.setState({ color2: color.hex });
+  }
+  handleClose1(){
+    this.setState({ displayColorPicker1: false });
+  }
+  handleClose2(){
+    this.setState({ displayColorPicker2: false });
+  }
   updateChange(){
     var context = this;
     fetch('/category',{
@@ -108,8 +143,8 @@ class EditCategory extends Component {
         newName: this.refs.newName.getValue(),
         backgroundUrl: this.refs.backgroundUrl.getValue(),
         headerText: this.refs.headerText.getValue(),
-        headerTextBackgroundColor: this.refs.headerTextBackgroundColor.getValue(),
-        headerTextColor: this.refs.headerTextColor.getValue() 
+        headerTextBackgroundColor: this.state.color1,
+        headerTextColor: this.state.color2 
       })
 
     }).then(function(response){
@@ -123,6 +158,11 @@ class EditCategory extends Component {
 
 
    
+  }
+  closeMenu(){
+    this.setState({
+      openMenu:false
+    });
   }
 
   toggleOpen(){
@@ -170,6 +210,7 @@ class EditCategory extends Component {
           disableAutoFocus={true}
           menuStyle={{width:250}}
           touchTapCloseDelay={0}
+          onRequestClose={this.closeMenu}
           initiallyKeyboardFocused={false}
           iconButtonElement={<IconButton onClick={this.toggleOpen}><EditSettingsIcon /></IconButton>}
           anchorOrigin={{horizontal: 'left', vertical: 'top'}}
@@ -179,12 +220,22 @@ class EditCategory extends Component {
           <div>
             <FlatButton label="Header Text" disabled={true}/>
             <TextField ref="headerText" defaultValue={store.getState().categoryInfo.categoryInfo.headerText}/>
-            <FlatButton label="Page Name" disabled={true}/>
-            <TextField ref="newName" defaultValue={store.getState().categoryInfo.categoryInfo.name}/>
+            
+            <FlatButton style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} label="Page Name" disabled={true}/>
+            <TextField style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} ref="newName" defaultValue={store.getState().categoryInfo.categoryInfo.name}/>
             <FlatButton label={"Header Text Backgound Color"} disabled={true}/>
-            <TextField ref="headerTextBackgroundColor" defaultValue={store.getState().categoryInfo.categoryInfo.headerTextBackgroundColor}/>
+            <div style={{position: "relative", zIndex: 3, width:100,height:30,background: this.state.color1}} onClick={this.handleClick1}>
+              <div onClick={this.handleClose1} style={this.state.displayColorPicker1?{}:{display:"none"}}>
+              <SketchPicker color={ this.state.color1 } onChange={this.handleChange1} />
+              </div>
+            </div>
+           
             <FlatButton label={"Header Text Color"} disabled={true}/>
-            <TextField ref="headerTextColor" defaultValue={store.getState().categoryInfo.categoryInfo.headerTextColor}/>
+            <div style={{position: "relative", zIndex: 2, width:100,height:30,background: this.state.color2}} onClick={this.handleClick2}>
+              <div onClick={this.handleClose2} style={this.state.displayColorPicker2?{}:{display:"none"}}>
+              <SketchPicker color={ this.state.color2 } onChange={this.handleChange2} />
+              </div>
+            </div>
             <FlatButton label={"Background URL"} disabled={true}/>
             <TextField ref="backgroundUrl" defaultValue={store.getState().categoryInfo.categoryInfo.backgroundUrl}/>
             <IconButton onClick={this.warn}><DeleteIcon/></IconButton>

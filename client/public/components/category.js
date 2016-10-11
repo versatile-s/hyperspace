@@ -130,7 +130,7 @@ class Category extends Component {
     { var context = this; }
     return (
       <div>
-        <div className="categoryPageContainer">
+        <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer">
           <FriendFeed />
             {store.getState().data.data.map(function (item) {
               return (
