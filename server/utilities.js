@@ -110,7 +110,7 @@ var utils = {
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
-    var tags = req.body.tags.replace(/,/g, " ").toLowerCase();
+    var tags = req.body.tags.replace(/,/g, ' ').toLowerCase();
     var userId = 0;
     var hyperId = 0;
     var name = '';
@@ -189,19 +189,19 @@ var utils = {
   },
 
   searchHypers: function (req, res) {
-    var text = req.body.text.replace(/[^\w\s!?]/g,'').toLowerCase().split(' ').join('*,');
+    var text = req.body.text.replace(/[^\w\s!?]/g, '').toLowerCase().split(' ').join('*,');
     var queryString = '';
     for (var i = 0; i < text.length; i++) {
       if (i === 0 && text.charAt(i) === ',') {
         continue;
       }
-      if (i === text.length-1 && text.charAt(i) === ',') {
+      if (i === text.length - 1 && text.charAt(i) === ',') {
         continue;
       }
-      if (text.charAt(i) === ',' && text.charAt(i+1) === ',') {
+      if (text.charAt(i) === ',' && text.charAt( i + 1 ) === ',') {
         continue;
       }
-      if (text.charAt(i) === ',' && (i+1) >= text.length) {
+      if (text.charAt(i) === ',' && ( i + 1 ) >= text.length) {
         continue;
       }
       if (text.charAt(i) === ',') {
@@ -320,8 +320,8 @@ var utils = {
         }).then(function(hypers) {
           res.send(hypers);
         });
-      }).catch(function(err){
-        console.log("server error:",err);
+      }).catch(function(err) {
+        console.log('server error:', err);
         res.send(JSON.stringify('Error'));
       });
     }).catch(function(error) {
@@ -368,6 +368,25 @@ var utils = {
         });
       });
       res.send(JSON.stringify(tagStore));
+    });
+  },
+
+  getFeed: function (req, res) {
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function (user) {
+      Friend.findAll({
+        where: {
+          userId: user.id
+        }
+      }).then(function (friends) {
+        var friendsArray = [];
+        friends.forEach(function(friend) {
+          friendsArray.push([friend.name, friend.category]);
+        });
+      });
     });
   },
 

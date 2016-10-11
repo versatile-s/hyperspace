@@ -28,9 +28,9 @@ class Category extends Component {
 
   updateViews (item) {
     var context = this;
-    item.views +=1;
+    item.views += 1;
     fetch('/link', {
-      method:'PUT',
+      method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ class Category extends Component {
         title: item.title,
         views: item.views
       })
-    }).then(function(){
+    }).then(function() {
       context.sortData(store.getState().data.data);
     });
   }
@@ -49,7 +49,7 @@ class Category extends Component {
     var tempData = responseData.sort(function (a, b) {
       return b.views - a.views;
     });
-    store.dispatch({type: "GET_DATA", payload: tempData});
+    store.dispatch({type: 'GET_DATA', payload: tempData});
   }
 
   randomizeGradient () {
@@ -58,7 +58,7 @@ class Category extends Component {
   }
 
   render () {
-    { var context = this;  }
+    { var context = this; }
     return (
       <div>
         <div className="categoryPageContainer">
@@ -67,7 +67,7 @@ class Category extends Component {
                 <div className="hyper" style={{order: item.views}} onClick={()=>context.updateViews(item)}>
                   <a href={item.url} target="_blank">
                     <Card>
-                    <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
+                    <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: 'break-word', lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
                       {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
                     </CardMedia>
                     </Card>
