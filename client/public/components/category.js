@@ -83,25 +83,22 @@ class Category extends Component {
         for (var i = 0; i < q.length; i++) {
           if (title.indexOf(q[i]) > -1 && title !== '' && q[i] !== '') {
             cur.kScore += .17;
-            pre.push(cur);
           } else if (tags.indexOf(q[i]) > -1 && tags !== '' && q[i] !== '') {
             cur.kScore += .13;
-            pre.push(cur);
           } else if (description.indexOf(q[i]) > -1 && description !== '' && q[i] !== '') {
             cur.kScore += .11;
-            pre.push(cur);
           } else if (splicer(title, q[i]) && title !== '' && q[i] !== '') {
             cur.kScore += .07;
-            pre.push(cur);
           } else if (splicer(tags, q[i]) && tags !== '' && q[i] !== '') {
             cur.kScore += .05;
-            pre.push(cur);
           } else if (splicer(description, q[i]) && description !== '' && q[i] !== '') {
             cur.kScore += .03;
-            pre.push(cur);
           }
         }
         cur.kScore = cur.kScore.toFixed(2);
+        if (cur.kScore > 0.00) {
+          pre.push(cur);
+        }
         return pre;
       }, []);
       result.sort((a, b) => a.kScore < b.kScore ? 1 : -1);
