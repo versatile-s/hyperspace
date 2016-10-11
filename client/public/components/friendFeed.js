@@ -7,24 +7,33 @@ import MyCategories from './MyCategories';
 class FriendFeed extends Component {
   constructor (props) {
     super(props);
+
+    this.state = {
+      feed: []
+    };
   }
 
-  updateViews (item) {
+  componentWillMount() {
+    this.updateViews();
+  }
+
+  updateViews () {
     var context = this;
-    item.views += 1;
-    fetch('/getFeed=', {
+    fetch('/getFeed', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.props.params.user,
-        title: item.title,
-        views: item.views
+        username: store.getState().username.username,
       })
-    }).then(function() {
-      context.sortData(store.getState().data.data);
+    }).then(function(feed) {
+      feed.json().then(function (feedJSON) {
+        context.setState({feed: feedJSON}, function () {
+          console.log('THIS IS WHAT WE ARE GETTING FROM FRIEND FEED', feedJSON);
+        });
+      });
     });
   }
 
@@ -32,13 +41,13 @@ class FriendFeed extends Component {
     { var context = this; }
     return (
       <div className="friendFeed">
-        {store.getState().data.data.map(function (item) {
+        {context.state.feed.reverse().slice(0, 10).map(function (item) {
           return (
             <div className="feedHyper">
               <a href={item.url} target="_blank">
                 <Card>
                   <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: 'break-word', lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
-                  {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
+                  {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className="gradient2" style={{height: 100}}/>}
                   </CardMedia>
                 </Card>
               </a>

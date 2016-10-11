@@ -10,6 +10,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import store from '../../store';
 import {connect} from 'react-redux';
 import MyCategories from './myCategories';
+import FriendFeed from './friendFeed.js';
 
 class Category extends Component {
   constructor (props) {
@@ -62,6 +63,7 @@ class Category extends Component {
     return (
       <div>
         <div className="categoryPageContainer">
+          <FriendFeed />
             {store.getState().data.data.map(function (item) {
               return (
                 <div className="hyper" style={{order: item.views}} onClick={()=>context.updateViews(item)}>

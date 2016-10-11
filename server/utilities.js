@@ -420,7 +420,9 @@ var utils = {
                 }));
               }).then(function () {
                 if ( count === allFriends.length - 1 ) {
-                  res.send(JSON.stringify(storage));
+                  res.send(JSON.stringify(storage.sort(function(a, b) {
+                    return a.createdAt > b.createdAt ? 1 : -1;
+                  })));
                 } else {
                   count ++;
                 }
