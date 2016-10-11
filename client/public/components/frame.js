@@ -19,10 +19,15 @@ class Frame extends Component {
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
     this.hardRender = this.hardRender.bind(this);
+
+    this.getCategory = this.getCategory.bind(this);
+
   }
 
   componentWillMount () {
     this.categoryCall(this.props.params.user, this.props.params.category);
+    console.log("user params:",this.props.params.user);
+    this.getCategory(this.props.params.user, this.props.params.category);
   }
 
   setCategory(category) {
@@ -69,6 +74,58 @@ class Frame extends Component {
     return 'gradient' + random;
   }
 
+  getCategory (username, title) {
+    fetch('/getCategory', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        title: title
+      })
+
+    }).then(function(res) {
+      res.json().then(function(parsedRes) {
+        store.dispatch({type: "CAT_INFO", payload: parsedRes});
+      });
+    });
+  }      
+
+  categoryCall (username, category){
+    var context = this;
+    store.dispatch({
+      type: "GET_DATA", payload:[]
+    });
+    if (username && username !== '') {
+      fetch('/categoryData', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: username,
+          categoryTitle: category
+        })
+      }).then((response) => {
+        response.json().then(function (data) {
+          if (data === 'Error') {
+            store.dispatch({
+              type: "GET_DATA", payload:[{title: "There seems to be a problem with your request.", description: "The requested page may have been deleted or the user no longer exists.", image: []}]
+            });
+          } else if (Array.isArray(data)) {
+            context.sortData(data);
+          } else {
+            store.dispatch({
+              type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!", description: "Make sure you get the Hyprspace Chrome Extension to start adding Hypers!", image: []}]
+            });
+          }
+        });
+
+      });
+    }
+  }
   categoryCall (username, category) {
     var context = this;
     store.dispatch({
@@ -108,12 +165,14 @@ class Frame extends Component {
       <div>
         <div className="header">
           <div className="logo">hyprspace</div>
+
         </div>
         <div className="sideMenu">
-          <Side categoryCall={this.categoryCall} params={this.props.params} category={this.state.categoryTitle} setCategory={this.setCategory} username={this.state.username}/>  
+          <Side categoryCall={this.categoryCall} getCategory={this.getCategory} params={this.props.params}/>  
         </div>
         <div className="mainContent">
-            {React.cloneElement(this.props.children, {categoryCall: this.categoryCall})}
+            {React.cloneElement(this.props.children, {categoryCall: this.categoryCall, getCategory: this.getCategory})}
+
         </div>
         <div className="footer" />
       </div>

@@ -20,7 +20,7 @@ import Search from './components/search';
 import Warpfield from './components/warpfield';
 import { connect } from 'react-redux';
 
-var loginCheck = function() {
+var loginCheck = function(cb) {
   fetch('/logincheck', {
     credentials: 'same-origin'
   })
@@ -31,7 +31,10 @@ var loginCheck = function() {
       } else {
         // here is where we would want to set the state in the universal store object
         store.dispatch({type: 'USERNAME_UPDATE', payload: resText[0].username});
+             
       }
+    }).then(function(){
+      cb();
     });
   });
 };
@@ -39,40 +42,55 @@ var loginCheck = function() {
 class App extends Component {
   constructor (props) {
     super(props);
-    loginCheck();
+    this.state = {
+      auth:false
+    };
+    var context=this;
     store.dispatch({type: 'AUTH_SUCCESS', payload: null});
     store.dispatch({type: 'GET_CATEGORIES', payload: []});
-    store.dispatch({type: 'CAT_TITLE', payload: 'home'});
+    store.dispatch({type: 'CAT_INFO', payload: {}});
     store.dispatch({type: 'GET_DATA', payload: []});
     store.dispatch({type: 'OPEN', payload: null});
     store.dispatch({type: 'S_HYPERS', payload: []});
     store.dispatch({type: 'SELF', payload: null});
     store.dispatch({type: 'TOGGLE_SWITCH', payload: null});
+    store.dispatch({type: 'EDIT_SWITCH', payload: false});
+    loginCheck(function() {
+      context.setState({
+        auth:true
+      });
+    });
     injectTapEventPlugin();
   }
 
   render() {
-    return (
-      <MuiThemeProvider>
-      <Router history={browserHistory} >
-        <Route component={Frame}>
-          <Route component={Warpfield}>
-            <Route path='/' component={Login} />
-            <Route path='/login' component={Login} />
-            <Route path='/signup' component={Signup} />
-            <Route path='/dashboard' component={Dashboard}/>
-            <Route path='/find' component={Search}/>
+
+    if (this.state.auth) {
+      return (
+        <MuiThemeProvider>
+        <Router history={browserHistory} >
+          <Route component={Frame}>
+            <Route component={Warpfield}>
+              <Route path='/' component={Login} />
+              <Route path='/login' component={Login} />
+              <Route path='/signup' component={Signup} />
+              <Route path='/dashboard' component={Dashboard}/>
+              <Route path='/find' component={Search}/>
+            </Route>
+            <Route path='/:user/:category' component={Category} />
+            <Route path='/:user/:category/bored' component={Bored}/>
           </Route>
-          <Route path='/:user/:category' component={Category} />
-          <Route path='/:user/:category/bored' component={Bored}/>
-        </Route>
-        <Route path='/spacelogin' component={SpaceLogin} />
-        <Route path='/home' component={Home} />
-        <Route path='/layout' component= {Layout} />
-        <Route path='/test' component={Test} />
-      </Router>
-      </MuiThemeProvider>
-    );
+          <Route path='/spacelogin' component={SpaceLogin} />
+          <Route path='/home' component={Home} />
+          <Route path='/layout' component= {Layout} />
+          <Route path='/test' component={Test} />
+        </Router>
+        </MuiThemeProvider>
+      );
+    } else {
+      return null;
+    }
+  
   }
 }
 

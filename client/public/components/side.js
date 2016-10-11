@@ -19,6 +19,7 @@ import store from '../../store';
 import AddFriend from './addFriend';
 import Logout from './logout';
 import HomeIcon from 'material-ui/svg-icons/action/home';
+import EditIcon from 'material-ui/svg-icons/action/build';
 
 class Side extends Component {
   constructor (props) {
@@ -34,6 +35,7 @@ class Side extends Component {
     this.toBored=this.toBored.bind(this);
     this.toHome=this.toHome.bind(this);
     this.closeMenu=this.closeMenu.bind(this);
+    this.startEdit=this.startEdit.bind(this);
   }
 
   clickCategory(e) {
@@ -103,6 +105,7 @@ class Side extends Component {
   toHome(){
     browserHistory.push('/' +store.getState().username.username +'/home');
     this.props.categoryCall(store.getState().username.username,"home");
+    this.props.getCategory(store.getState().username.username,"home");
   }
   closeMenu(){
     var context = this;
@@ -114,6 +117,14 @@ class Side extends Component {
       });
       
     });
+  }
+  startEdit() {
+    if (!store.getState().edit.edit) {
+      store.dispatch({type: 'EDIT_SWITCH', payload: true});
+    } else {
+      store.dispatch({type: 'EDIT_SWITCH', payload: false});
+    }
+    console.log("editing:",store.getState().edit.edit);
   }
 
   render () {
@@ -131,12 +142,14 @@ class Side extends Component {
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
+            {console.log("side user, store user",this.props.params.user,store.getState().username.username)}
             <IconButton onClick={this.toHome} iconStyle={{opacity:.2, width:50}}><HomeIcon /></IconButton>
-            <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall}/>
+            <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall} getCategory={this.props.getCategory}/>
             <MakeCategory params={this.props.params} setCategory={this.props.setCategory} username={store.getState().username.username}/>
             <HyperSearch username={store.getState().username.username}/>
-            <FriendList categoryCall={this.props.categoryCall}/>
+            <FriendList params={this.props.params} getCategory={this.props.getCategory} categoryCall={this.props.categoryCall}/>
             <AddFriend params={this.props.params} username={store.getState().username.username}/>
+            <IconButton onClick={this.startEdit} style={this.props.params.user===store.getState().username.username?{}:{display:"none"}} iconStyle={{opacity:.2, width:50}}><EditIcon/></IconButton>
             <IconButton onClick={this.toBored} iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton>
             <Logout closeMenu={this.closeMenu}/>
         </IconMenu>

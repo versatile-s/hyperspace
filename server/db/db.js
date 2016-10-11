@@ -24,6 +24,10 @@ var Hyper = sequelize.define('Hyper', {
 
 var CategoryPage = sequelize.define('CategoryPage', {
   name: { type: Sequelize.STRING },
+  headerText: { type: Sequelize.STRING },
+  backgroundUrl: { type: Sequelize.STRING },
+  headerTextColor: { type: Sequelize.STRING },
+  headerTextBackgroundColor: { type: Sequelize.STRING },
   parentCategory: { type: Sequelize.STRING },
   subCategories: { type: Sequelize.STRING },
   widgets: { type: Sequelize.STRING },

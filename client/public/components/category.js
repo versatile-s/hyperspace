@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import Side from './side';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -10,14 +9,30 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import store from '../../store';
 import {connect} from 'react-redux';
 import MyCategories from './myCategories';
+
+import EditHyper from './editHyper';
+
 import FriendFeed from './friendFeed.js';
+
 
 class Category extends Component {
   constructor (props) {
     super(props);
+
+    this.state = {
+      username: this.props.params.user,
+      categoryTitle: this.props.params.category,
+      data: [],
+      // currentVisitor: 'guest'
+    };
+    // this.isAuth = this.isAuth.bind(this);
+    // this.categoryCall = this.categoryCall.bind(this);
+
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
     this.filterContent = this.filterContent.bind(this);
+    this.categoryPageCategoryCall=this.categoryPageCategoryCall.bind(this);
+
     var context = this;
     this.state = {
       data: []
@@ -33,6 +48,7 @@ class Category extends Component {
 
   componentWillMount () {
     this.props.categoryCall(this.props.params.user, this.props.params.category);
+    this.props.getCategory(this.props.params.user, this.props.params.category);
   }
 
   updateViews (item) {
@@ -49,7 +65,9 @@ class Category extends Component {
         title: item.title,
         views: item.views
       })
+
     }).then(function() {
+
       context.sortData(store.getState().data.data);
     });
   }
@@ -124,6 +142,15 @@ class Category extends Component {
     return 'gradient' + random;
   }
 
+  componentWillUnmount(){
+    console.log("Goodbye");
+  }
+
+  categoryPageCategoryCall(){
+    this.props.categoryCall(this.props.params.user, this.props.params.category);
+    this.props.getCategory(this.props.params.user, this.props.params.category);
+  }
+
   render () {
     { var context = this; }
     { var hint = 'Search ' + this.props.params.user + '\'s ' + this.props.params.category + ' stash'; }
@@ -134,10 +161,13 @@ class Category extends Component {
           <FriendFeed />
             {context.state.data.map(function (item) {
               return (
-                <div className="hyper" style={{order: item.views}} onClick={()=>context.updateViews(item)}>
+                <div className="hyper" style={{order: item.views}} >
+                  <EditHyper params={context.props.params} categoryCall={context.categoryPageCategoryCall} item={item}/>
                   <a href={item.url} target="_blank">
-                    <Card>
-                    <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: 'break-word', lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
+
+                    <Card onClick={()=>context.updateViews(item)}>
+                    <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
+
                       {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
                     </CardMedia>
                     </Card>

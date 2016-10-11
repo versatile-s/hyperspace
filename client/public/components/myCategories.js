@@ -37,7 +37,10 @@ class MyCategory extends Component {
 
   clickCategory(e) {
     browserHistory.push('/' + this.props.params.user + '/' + e.target.innerHTML);
-    this.props.categoryCall(this.props.params.user,e.target.innerHTML);
+
+    this.props.categoryCall(this.props.params.user, e.target.innerHTML);
+    this.props.getCategory(this.props.params.user, e.target.innerHTML);
+
   }
 
   forceFocus(){
