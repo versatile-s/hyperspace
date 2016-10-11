@@ -23,6 +23,7 @@ class Frame extends Component {
 
   componentWillMount () {
     this.categoryCall(this.props.params.user, this.props.params.category);
+    console.log("user params:",this.props.params.user);
   }
 
   setCategory(category) {

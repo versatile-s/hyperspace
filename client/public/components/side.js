@@ -141,6 +141,7 @@ class Side extends Component {
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
+            {console.log("side user, store user",this.props.params.user,store.getState().username.username)}
             <IconButton onClick={this.toHome} iconStyle={{opacity:.2, width:50}}><HomeIcon /></IconButton>
             <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall}/>
             <MakeCategory params={this.props.params} setCategory={this.props.setCategory} username={store.getState().username.username}/>

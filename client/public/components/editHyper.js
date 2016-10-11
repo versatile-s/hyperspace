@@ -34,7 +34,11 @@ class EditHyper extends Component {
     // });
   }
 
-  
+  componentWillMount(){
+    if(this.props.params.user!==store.getState().username.username){
+      store.dispatch({type: 'EDIT_SWITCH', payload: false});
+    }
+  }
   deleteHyper(){
     var context = this;
     fetch('/removeLink',{

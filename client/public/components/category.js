@@ -118,7 +118,7 @@ class Category extends Component {
             {store.getState().data.data.map(function (item) {
               return (
                 <div className="hyper" style={{order: item.views}} >
-                  <EditHyper categoryCall={context.categoryPageCategoryCall} item={item}/>
+                  <EditHyper params={context.props.params} categoryCall={context.categoryPageCategoryCall} item={item}/>
                   <a href={item.url} target="_blank">
                     <Card onClick={()=>context.updateViews(item)}>
                     <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
