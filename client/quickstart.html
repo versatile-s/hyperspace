@@ -93,10 +93,12 @@
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
+            url: 'https://www.facebook.com/',
             title: 'placeholder',
             description: resp.snippet,
-            username: 'c',
-            tags: 'pehTag'
+            username: 't',
+            tags: 'pehTag',
+            image: 'http://www.mariowiki.com/images/thumb/4/4d/Yoshi_-_Mario_Party_10.png/150px-Yoshi_-_Mario_Party_10.png'
           })
         })
         .then(function(res) {
