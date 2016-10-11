@@ -44,6 +44,29 @@ var comparePasswords = function(req, res, storedPass, userInfo) {
   }
 };
 
+var getUserId = function (username, cb) {
+  console.log('USERNAME HERE IS', username);
+  User.findOne({
+    where: {
+      username: username
+    }
+  }).then(function (user) {
+    cb(user.id);
+  });
+};
+
+var getCategoryId = function (userID, category, cb) {
+  CategoryPage.findOne({
+    where: {
+      name: category,
+      UserId: userID
+    }
+  }).then(function (categoryId) {
+    cb(categoryId);
+  });
+};
+
+
 var utils = {
   // USERS
   createUser: function (req, res) {
@@ -110,7 +133,7 @@ var utils = {
 
   // HYPERS (Post request to /link)
   saveHyper: function (req, res) {
-    var tags = req.body.tags.replace(/,/g, " ").toLowerCase();
+    var tags = req.body.tags.replace(/,/g, ' ').toLowerCase();
     var userId = 0;
     var hyperId = 0;
     var name = '';
@@ -175,6 +198,7 @@ var utils = {
               url: hyper.url,
               title: hyper.title,
               description: hyper.description,
+              image: hyper.image,
               tags: tags,
               username: req.body.username,
               CategoryPageId: hyper.CategoryPageId
@@ -188,19 +212,19 @@ var utils = {
   },
 
   searchHypers: function (req, res) {
-    var text = req.body.text.replace(/[^\w\s!?]/g,'').toLowerCase().split(' ').join('*,');
+    var text = req.body.text.replace(/[^\w\s!?]/g, '').toLowerCase().split(' ').join('*,');
     var queryString = '';
     for (var i = 0; i < text.length; i++) {
       if (i === 0 && text.charAt(i) === ',') {
         continue;
       }
-      if (i === text.length-1 && text.charAt(i) === ',') {
+      if (i === text.length - 1 && text.charAt(i) === ',') {
         continue;
       }
-      if (text.charAt(i) === ',' && text.charAt(i+1) === ',') {
+      if (text.charAt(i) === ',' && text.charAt( i + 1 ) === ',') {
         continue;
       }
-      if (text.charAt(i) === ',' && (i+1) >= text.length) {
+      if (text.charAt(i) === ',' && ( i + 1 ) >= text.length) {
         continue;
       }
       if (text.charAt(i) === ',') {
@@ -209,6 +233,7 @@ var utils = {
         queryString += text.charAt(i);
       }
     }
+    queryString = queryString + '&size=50';
     if (req.body.username && req.body.username !== "") {
       var username = req.body.username.toLowerCase();
       axios.get('http://localhost:9200/hyperspace/hypers/_search?q=' + queryString, {
@@ -336,8 +361,10 @@ var utils = {
         }).then(function(hypers) {
           res.send(hypers);
         });
-      }).catch(function(err){
-        console.log("server error:",err);
+
+      }).catch(function(err) {
+        console.log('server error:', err);
+
         res.send(JSON.stringify('Error'));
       });
     }).catch(function(error) {
@@ -398,8 +425,49 @@ var utils = {
           UserId: user.id,
           name: req.body.title
         }
-      }).then(function(category){
+      }).then(function(category) {
         res.send(category);
+      });
+    });
+  },      
+
+  getFeed: function(req, res) {
+    var storage = [];
+    var count = 0;
+    getUserId(req.body.username, function (userID) {
+      Friend.findAll({
+        where: {
+          userId: userID
+        }
+      }).then(function (allFriends) {
+        allFriends.forEach(function (friend) {
+          getUserId(friend.name, function (friendID) {
+            CategoryPage.findOne({
+              where: {
+                name: friend.category
+              }
+            }).then(function (cat) {
+              Hyper.findAll({
+                where: {
+                  CategoryPageId: cat.id,
+                  username: friend.name
+                }
+              }).then(function (hypers) {
+                storage = storage.concat(hypers.map(function (hyper) {
+                  return hyper.dataValues;
+                }));
+              }).then(function () {
+                if ( count === allFriends.length - 1 ) {
+                  res.send(JSON.stringify(storage.sort(function(a, b) {
+                    return a.createdAt > b.createdAt ? 1 : -1;
+                  })));
+                } else {
+                  count ++;
+                }
+              });
+            });
+          });
+        });
       });
     });
   },

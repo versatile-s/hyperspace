@@ -10,7 +10,11 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import store from '../../store';
 import {connect} from 'react-redux';
 import MyCategories from './myCategories';
+
 import EditHyper from './editHyper';
+
+import FriendFeed from './friendFeed.js';
+
 
 class Category extends Component {
   constructor (props) {
@@ -28,6 +32,8 @@ class Category extends Component {
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
     this.categoryPageCategoryCall=this.categoryPageCategoryCall.bind(this);
+
+
     var context = this;
     store.subscribe(() => {
       context.forceUpdate();
@@ -41,11 +47,12 @@ class Category extends Component {
 
 
 
+
   updateViews (item) {
     var context = this;
-    item.views +=1;
+    item.views += 1;
     fetch('/link', {
-      method:'PUT',
+      method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -55,7 +62,9 @@ class Category extends Component {
         title: item.title,
         views: item.views
       })
-    }).then(function(){
+
+    }).then(function() {
+
       context.sortData(store.getState().data.data);
     });
   }
@@ -64,7 +73,11 @@ class Category extends Component {
     var tempData = responseData.sort(function (a, b) {
       return b.views - a.views;
     });
-    store.dispatch({type: "GET_DATA", payload: tempData});
+
+
+
+    store.dispatch({type: 'GET_DATA', payload: tempData});
+
   }
 
   randomizeGradient () {
@@ -114,17 +127,20 @@ class Category extends Component {
 
 
   render () {
-    { var context = this;  }
+    { var context = this; }
     return (
       <div>
         <div className="categoryPageContainer">
+          <FriendFeed />
             {store.getState().data.data.map(function (item) {
               return (
                 <div className="hyper" style={{order: item.views}} >
                   <EditHyper params={context.props.params} categoryCall={context.categoryPageCategoryCall} item={item}/>
                   <a href={item.url} target="_blank">
+
                     <Card onClick={()=>context.updateViews(item)}>
                     <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
+
                       {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
                     </CardMedia>
                     </Card>

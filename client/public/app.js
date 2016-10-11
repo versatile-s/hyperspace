@@ -16,6 +16,7 @@ import Bored from './components/bored';
 import store from '../store';
 import SpaceLogin from './components/experimental/SpaceLogin';
 import Frame from './components/frame';
+import Search from './components/search';
 import Warpfield from './components/warpfield';
 import { connect } from 'react-redux';
 
@@ -63,6 +64,7 @@ class App extends Component {
   }
 
   render() {
+
     if (this.state.auth) {
       return (
         <MuiThemeProvider>
@@ -73,6 +75,7 @@ class App extends Component {
               <Route path='/login' component={Login} />
               <Route path='/signup' component={Signup} />
               <Route path='/dashboard' component={Dashboard}/>
+              <Route path='/find' component={Search}/>
             </Route>
             <Route path='/:user/:category' component={Category} />
             <Route path='/:user/:category/bored' component={Bored}/>
