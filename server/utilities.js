@@ -149,17 +149,23 @@ var utils = {
     var hyper = {};
 
     if (req.body.username) {
-      var propertyToFindBy = 'username';
-      var toFindBy = req.body.username;
+      console.log('WE WILL USE USUERNAME BECAUSE WE FOUND ONE')
+      var findBy =
+        User.findOne({
+          where: {
+            username: req.body.username
+          }
+        });
     } else {
-      var propertyToFindBy = 'username';
-      var toFindBy = req.body.username;
+      console.log('WE WILL USE EMAIL BECAUSE WE DIDNT FIND USERNAME')
+      var findBy =
+        User.findOne({
+          where: {
+            email: req.body.email
+          }
+        });
     }
-    User.findOne({
-      where: {
-        username: req.body.username
-      }
-    }).then(function (user) {
+    findBy.then(function (user) {
       userId = user.id;
       name = req.body.category || 'home';
       CategoryPage.findOne({

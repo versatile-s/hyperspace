@@ -86,6 +86,7 @@
 
 
       var saveHyper = function(resp) {
+
         fetch('/link', {
           method: 'POST',
           credentials: 'same-origin',
@@ -96,7 +97,7 @@
             url: 'https://www.facebook.com/',
             title: 'placeholder',
             description: resp.snippet,
-            username: 'peh'
+            email: 'ollynov@gmail.com',
             tags: 'NEWTESTTAG',
             image: 'http://www.mariowiki.com/images/thumb/4/4d/Yoshi_-_Mario_Party_10.png/150px-Yoshi_-_Mario_Party_10.png'
           })
