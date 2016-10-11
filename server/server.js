@@ -52,12 +52,17 @@ server.get('*/styles.css', function (req, res) {
 // This servers for all of our session based authorization for example.
 require('./authenticationRoutes')(server);
 
- router.get('/userCategories', function (req, res) {
-    utils.getUserCategories(req, res);
-  });
+router.get('/userCategories', function (req, res) {
+  utils.getUserCategories(req, res);
+});
 
 server.get('/userTags', function (req, res) {
   utils.getUserTags(req, res);
+});
+
+// get a user's categories  
+server.get('/userCategories', function (req, res) {
+  utils.getUserCategories(req, res);
 });
 
 // IMPORTANT any remaining routes that have NOT hit the authRoutes already will be first sent
