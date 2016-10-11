@@ -45,6 +45,7 @@ var comparePasswords = function(req, res, storedPass, userInfo) {
 };
 
 var getUserId = function (username, cb) {
+  console.log('USERNAME HERE IS', username);
   User.findOne({
     where: {
       username: username
@@ -393,13 +394,42 @@ var utils = {
   },
 
   getFeed: function (req, res) {
+    var storage = [];
+    var count = 0;
+    console.log(req.body, 'req.body');
     getUserId(req.body.username, function (userID) {
       Friend.findAll({
         where: {
           userId: userID
         }
       }).then(function (allFriends) {
-        
+        allFriends.forEach(function (friend) {
+          getUserId(friend.name, function (friendID) {
+            CategoryPage.findOne({
+              where: {
+                name: friend.category
+              }
+            }).then(function (cat) {
+              Hyper.findAll({
+                where: {
+                  CategoryPageId: cat.id,
+                  username: friend.name
+                }
+              }).then(function (hypers) {
+                storage = storage.concat(hypers.map(function (hyper) {
+                  return hyper.dataValues;
+                }));
+              }).then(function () {
+                if ( count === allFriends.length - 1 ) {
+                  console.log('STORAGE BEING SENT IS', storage);
+                  res.send(storage);
+                } else {
+                  count ++;
+                }
+              });
+            });
+          });
+        });
       });
     });
   },
