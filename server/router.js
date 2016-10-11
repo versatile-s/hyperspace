@@ -9,7 +9,6 @@ var path = require('path');
 module.exports = (router) => {
   router.route('/signup')
     .post(function (req, res) {
-      console.log('Received POST at /signup');
       utils.createUser(req, res);
     });
 
@@ -36,7 +35,6 @@ module.exports = (router) => {
   router.route('/categoryData')
     .post(function (req, res) {
       utils.getCategoryData(req, res);
-      console.log('ok categorydata being hit and here is req.body ', req.body);
     });
 
   // view category
@@ -81,9 +79,6 @@ module.exports = (router) => {
 
     // edit link
     .put(function (req, res) {
-
-
-      console.log('Received PUT at /link');
       utils.updateHyperViews(req, res);
       res.send('Received PUT at /link');
     });
