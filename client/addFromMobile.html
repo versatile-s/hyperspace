@@ -4,7 +4,6 @@
       // Your Client ID can be retrieved from your project in the Google
       // Developer Console, https://console.developers.google.com
       var CLIENT_ID = '957621027327-ind7306mrrdvjqkvvdmt2rjvqo3iq39j.apps.googleusercontent.com';
-
       var SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 
       /**
@@ -97,7 +96,7 @@
         })
         .execute(function(resp) {
           var userEmail = resp.emailAddress;
-          console.log('here is USEREMAIL FIRST ', userEmail);
+          console.log('here is resp.raw  ', resp.raw);
           fetch('/link', {
             method: 'POST',
             credentials: 'same-origin',
@@ -105,9 +104,9 @@
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              url: 'https://www.hello.com/',
+              url: resp.snippet,
               title: 'Much newer',
-              description: resp.snippet,
+              description: resp.raw,
               email: 'ollynov@gmail.com',
               tags: 'CHICHICHICHI',
               image: 'http://www.mariowiki.com/images/thumb/4/4d/Yoshi_-_Mario_Party_10.png/150px-Yoshi_-_Mario_Party_10.png'
