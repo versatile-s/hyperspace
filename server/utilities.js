@@ -27,7 +27,7 @@ var encrypt = function(req, res, cb) {
             password: hash,
             firstName: firstName,
             lastName: lastName,
-            photoUrl: photoUrl,
+            photo: photo,
             email: email
           });
         });
