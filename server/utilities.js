@@ -563,6 +563,9 @@ var utils = {
           userId: id
         }
       }).then(function (categories) {
+        if (categories.length === 0) {
+          res.send(JSON.stringify(sun));
+        }
         categories.forEach(function (cat) {
           var child = {};
           child.children = [];
@@ -617,16 +620,17 @@ var utils = {
           userId: userID
         }
       }).then(function (allFriends) {
-        allFriends.forEach(function (friend) {
+        allFriends.map((friend) => friend.dataValues).forEach(function (friend) {
           getUserId(friend.name, function (friendID) {
             CategoryPage.findOne({
               where: {
-                name: friend.category
+                name: friend.category,
+                userId: friendID
               }
             }).then(function (cat) {
               Hyper.findAll({
                 where: {
-                  CategoryPageId: cat.id,
+                  CategoryPageId: cat.dataValues.id,
                   username: friend.name
                 }
               }).then(function (hypers) {
