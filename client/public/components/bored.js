@@ -16,25 +16,25 @@ class Bored extends Component {
       playing: false
     };
     
-    this.categoryCall = this.categoryCall.bind(this);
-    this.setCategory = this.setCategory.bind(this);
+    // this.categoryCall = this.categoryCall.bind(this);
+    // this.setCategory = this.setCategory.bind(this);
     this.updateViews = this.updateViews.bind(this);
     this.sortData = this.sortData.bind(this);
     this.play=this.play.bind(this);
   }
 
   componentWillMount () {
-    this.categoryCall();
+    // this.categoryCall();
   }
   componentDidMount(){
     this.play();
   }
 
-  setCategory(category){
-    var context=this;
-    store.dispatcher({type: 'CAT_TITLE', payload: category});
-    context.categoryCall();
-  }
+  // setCategory(category){
+  //   var context=this;
+  //   store.dispatcher({type: 'CAT_TITLE', payload: category});
+  //   context.categoryCall();
+  // }
 
   updateViews (item) {
     var context = this;
@@ -65,29 +65,29 @@ class Bored extends Component {
   }
 
  
-  categoryCall () {
-    var context = this;
-    fetch('/categoryData', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: store.getState().username.username,
-        categoryTitle: store.getState().categoryTitle.categoryTitle
-      })
-    }).then((response) => {
-      response.json().then(function (data) {
-        if (Array.isArray(data)) {
-          store.dispatch({type: 'GET_DATA', payload: data});
-          context.sortData();
-        } else {
-          store.dispatch({type: 'GET_DATA', payload: [{title: "This category doesnt seem to have any links yet!"}]});
-        }  
-      });
-    });
-  }
+  // categoryCall () {
+  //   var context = this;
+  //   fetch('/categoryData', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({
+  //       username: store.getState().username.username,
+  //       categoryTitle: store.getState().categoryTitle.categoryTitle
+  //     })
+  //   }).then((response) => {
+  //     response.json().then(function (data) {
+  //       if (Array.isArray(data)) {
+  //         store.dispatch({type: 'GET_DATA', payload: data});
+  //         context.sortData();
+  //       } else {
+  //         store.dispatch({type: 'GET_DATA', payload: [{title: "This category doesnt seem to have any links yet!"}]});
+  //       }  
+  //     });
+  //   });
+  // }
   play(){
     var context= this;
     if(!context.state.playing){

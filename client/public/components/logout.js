@@ -29,6 +29,7 @@ class Logout extends Component {
         });
         context.props.closeMenu();
         store.dispatch({type: 'EDIT_SWITCH', payload: false});
+        store.dispatch({type: "CAT_INFO", payload: {}});
       }
     })
     .catch((error) => {
