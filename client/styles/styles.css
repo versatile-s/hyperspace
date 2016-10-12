@@ -12,6 +12,36 @@
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
 }
 
+html {
+    background: #f4f4f4;
+}
+
+#content {
+    background: #f4f4f4;
+}
+
+
+span.currLocation {
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+
+.lowerHead {
+    height: 47px;
+    text-align: center;
+    background: #19042D;
+    color: white;
+    font-family: Roboto;
+    font-weight: 100;
+    padding-top: 12px;
+    margin: 0px -30px;
+}
+
+.sunburstContainer {
+    width: 250px;
+}
+
 .mainContent {
     margin: 30px;
 }
@@ -40,7 +70,7 @@
 }
 
 .mainContent {
-    margin-top: 106px;
+    margin-top: 60px;
 }
 
 #content{

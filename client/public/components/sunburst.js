@@ -159,6 +159,7 @@ class Sunburst extends Component {
     let levelStartAngle = [0];
 
     return (
+      <div className="sunburstContainer">
       <svg ref={(c) => this.svg = c} viewBox={`0 0 ${width} ${height}`} data-total={slices[0].size}>
       <g transform={transform}>
       {slices.map((slice, i) => {
@@ -196,6 +197,7 @@ class Sunburst extends Component {
       <text transform={transform} ref={(c) => this.percentage = c}
         textAnchor='middle' className='details-percentage' dy={10}/>
       </svg>
+      </div>
     );
   }
 
