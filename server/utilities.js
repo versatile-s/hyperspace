@@ -206,45 +206,33 @@ var utils = {
             parentCategory: req.body.parents,
             UserId: userId
           }).then(function (newCategory) {
-            console.log('here is the category son!!!', newCategory);
-            Hyper.findOne({
-              where: {
-                url: req.body.url,
-                CategoryPageId: newCategory.id
-              }
-            }).then(function(previousHyper) {
-              if (!previousHyper) {
-                return Hyper.create({
-                  url: req.body.url,
-                  title: req.body.title,
-                  description: req.body.description,
-                  image: req.body.image,
-                  username: req.body.username,
-                  tags: tags,
-                  views: 0,
-                  CategoryPageId: category.id
-                }).then(function (newHyper) {
-                  hyper = newHyper;
-                  axios.post('localhost:9200/hyperspace/hypers', {
-                    id: hyper.id,
-                    url: hyper.url,
-                    title: hyper.title,
-                    description: hyper.description,
-                    tags: tags,
-                    username: req.body.username,
-                    CategoryPageId: hyper.CategoryPageId
-                  }).then(function (response) {
-                    console.log('here is the response after hyper is created ', response);
-                  }).catch(function (err) {
-                  });
-                });
-              } else {
-                console.log('yo that Hyper already exists here it is: ', previousHyper);
-              }
+            return Hyper.create({
+              url: req.body.url,
+              title: req.body.title,
+              description: req.body.description,
+              image: req.body.image,
+              username: req.body.username,
+              tags: tags,
+              views: 0,
+              CategoryPageId: newCategory.dataValues.id
+            }).then(function (newHyper) {
+              hyper = newHyper.dataValues;
+              axios.post('http://localhost:9200/hyperspace/hypers', {
+                id: hyper.id,
+                url: hyper.url,
+                title: hyper.title,
+                description: hyper.description,
+                image: hyper.image,
+                tags: tags,
+                username: req.body.username,
+                CategoryPageId: hyper.CategoryPageId
+              }).then(function () {
+              }).catch(function (err) {
+                console.log('Error! It\'s sad day! D=', err);
+              });
             });
           });
         } else {
-          console.log('ok so we found this category page and now we are checking to see if this hyper is in')
           Hyper.findOne({
             where: {
               url: req.body.url,
@@ -252,7 +240,6 @@ var utils = {
             }
           }).then(function(previousHyper) {
             if (!previousHyper) {
-              console.log('we didnt find this hyper, lets go ahead and make it');
               return Hyper.create({
                 url: req.body.url,
                 title: req.body.title,
@@ -275,10 +262,10 @@ var utils = {
                   CategoryPageId: hyper.CategoryPageId
                 }).then(function (response) {
                 }).catch(function (err) {
+                  console.log('Error! It\'s sad day! D=', err);
                 });
               });
             } else {
-              console.log('yo that Hyper alrady exists here it is ', previousHyper);
             }
           });
         }
@@ -626,16 +613,17 @@ var utils = {
           userId: userID
         }
       }).then(function (allFriends) {
-        allFriends.forEach(function (friend) {
+        allFriends.map((friend) => friend.dataValues).forEach(function (friend) {
           getUserId(friend.name, function (friendID) {
             CategoryPage.findOne({
               where: {
-                name: friend.category
+                name: friend.category,
+                userId: friendID
               }
             }).then(function (cat) {
               Hyper.findAll({
                 where: {
-                  CategoryPageId: cat.id,
+                  CategoryPageId: cat.dataValues.id,
                   username: friend.name
                 }
               }).then(function (hypers) {

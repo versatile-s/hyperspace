@@ -82,21 +82,23 @@ class Frame extends Component {
   }
 
   getCategory (username, title) {
-    fetch('/getCategory', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: username,
-        title: title
-      })
+    if (username && username !== '' && title && title !== '') {
+      fetch('/getCategory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: username,
+          title: title
+        })
 
-    }).then(function(res) {
-      res.json().then(function(parsedRes) {
-        store.dispatch({type: "CAT_INFO", payload: parsedRes});
+      }).then(function(res) {
+        res.json().then(function(parsedRes) {
+          store.dispatch({type: "CAT_INFO", payload: parsedRes});
+        });
       });
-    });
+    }
   }
 
 
