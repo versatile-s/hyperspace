@@ -169,7 +169,6 @@ class Category extends Component {
 
                     <Card onClick={()=>context.updateViews(item)}>
                     <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
-
                       {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
                     </CardMedia>
                     </Card>
