@@ -75,6 +75,33 @@ var getCategoryId = function (userID, category, cb) {
   });
 };
 
+// returns all hypers for a single category
+var getHypers = function (categoryId, cb) {
+  Hyper.findAll({
+    where: {
+      CategoryPageId: categoryId
+    }
+  }).then(function (hypers) {
+    if (hypers.length === 0) {
+      cb([]);
+    } else {
+      cb(hypers.map((hyp) => hyp.dataValues));
+    }
+  });
+};
+
+// returns an array of all the tags on a single hyper
+var getTags = function (hyperId, cb) {
+  var tags = [];
+  Hyper.findOne({
+    where: {
+      id: hyperId
+    }
+  }).then(function (hyper) {
+    tags = tags.concat(hyper.tags.split(' '));
+    cb(tags);
+  });
+};
 
 var utils = {
   // USERS
@@ -179,45 +206,33 @@ var utils = {
             parentCategory: req.body.parents,
             UserId: userId
           }).then(function (newCategory) {
-            console.log('here is the category son!!!', newCategory);
-            Hyper.findOne({
-              where: {
-                url: req.body.url,
-                CategoryPageId: newCategory.id
-              }
-            }).then(function(previousHyper) {
-              if (!previousHyper) {
-                return Hyper.create({
-                  url: req.body.url,
-                  title: req.body.title,
-                  description: req.body.description,
-                  image: req.body.image,
-                  username: req.body.username,
-                  tags: tags,
-                  views: 0,
-                  CategoryPageId: category.id
-                }).then(function (newHyper) {
-                  hyper = newHyper;
-                  axios.post('localhost:9200/hyperspace/hypers', {
-                    id: hyper.id,
-                    url: hyper.url,
-                    title: hyper.title,
-                    description: hyper.description,
-                    tags: tags,
-                    username: req.body.username,
-                    CategoryPageId: hyper.CategoryPageId
-                  }).then(function (response) {
-                    console.log('here is the response after hyper is created ', response);
-                  }).catch(function (err) {
-                  });
-                });
-              } else {
-                console.log('yo that Hyper already exists here it is: ', previousHyper);
-              }
+            return Hyper.create({
+              url: req.body.url,
+              title: req.body.title,
+              description: req.body.description,
+              image: req.body.image,
+              username: req.body.username,
+              tags: tags,
+              views: 0,
+              CategoryPageId: newCategory.dataValues.id
+            }).then(function (newHyper) {
+              hyper = newHyper.dataValues;
+              axios.post('http://localhost:9200/hyperspace/hypers', {
+                id: hyper.id,
+                url: hyper.url,
+                title: hyper.title,
+                description: hyper.description,
+                image: hyper.image,
+                tags: tags,
+                username: req.body.username,
+                CategoryPageId: hyper.CategoryPageId
+              }).then(function () {
+              }).catch(function (err) {
+                console.log('Error! It\'s sad day! D=', err);
+              });
             });
           });
         } else {
-          console.log('ok so we found this category page and now we are checking to see if this hyper is in')
           Hyper.findOne({
             where: {
               url: req.body.url,
@@ -225,7 +240,6 @@ var utils = {
             }
           }).then(function(previousHyper) {
             if (!previousHyper) {
-              console.log('we didnt find this hyper, lets go ahead and make it');
               return Hyper.create({
                 url: req.body.url,
                 title: req.body.title,
@@ -248,10 +262,10 @@ var utils = {
                   CategoryPageId: hyper.CategoryPageId
                 }).then(function (response) {
                 }).catch(function (err) {
+                  console.log('Error! It\'s sad day! D=', err);
                 });
               });
             } else {
-              console.log('yo that Hyper alrady exists here it is ', previousHyper);
             }
           });
         }
@@ -463,7 +477,7 @@ var utils = {
 
   getUserTags: function (req, res) {
     var username = req.query.username;
-    Hyper.find({
+    Hyper.findAll({
       where: {
         username: username
       }
@@ -492,14 +506,16 @@ var utils = {
         username: req.body.username
       }
     }).then(function (user) {
-      CategoryPage.findOne({
-        where: {
-          UserId: user.id,
-          name: req.body.title
-        }
-      }).then(function(category) {
-        res.send(category);
-      });
+      if (user) {
+        CategoryPage.findOne({
+          where: {
+            UserId: user.id,
+            name: req.body.title
+          }
+        }).then(function(category) {
+          res.send(category);
+        });
+      }
     });
   },
 
@@ -522,6 +538,72 @@ var utils = {
     });  
   },
 
+  generateSunburst: function(req, res) {
+    console.log('req ->', req, '<-');
+    console.log('q', req.q);
+    console.log('req.query', req.query);
+    console.log('req.params', req.params);
+    var sun = {};
+    var catCount = 0;
+    var hyperCount = 0;
+    sun.name = req.query.username;
+    sun.children = [];
+    getUserId(sun.name, function (id) {
+      CategoryPage.findAll({
+        where: {
+          userId: id
+        }
+      }).then(function (categories) {
+        if (categories.length === 0) {
+          res.send(JSON.stringify(sun));
+        }
+        categories.forEach(function (cat) {
+          var child = {};
+          child.children = [];
+          child.name = cat.dataValues.name;
+          getHypers(cat.dataValues.id, function (allHypers) {
+            var storage = {};
+            if (allHypers.length === 0) {
+              sun.children.push(child);
+              if (catCount === categories.length - 1) {
+                res.send(sun);
+              } else {
+                catCount++;
+                hyperCount = 0;
+              }
+            } else {
+              allHypers.forEach(function (hyp) {
+                getTags(hyp.id, function (tagsArray) {
+                  for (var i = 0; i < tagsArray.length; i++) {
+                    storage[tagsArray[i]] === undefined ? storage[tagsArray[i]] = 1 : storage[tagsArray[i]]++;
+                  }
+                  if (allHypers.length === 0) {
+                    child.children.push({name: x, size: 0});
+                  } else if (hyperCount === allHypers.length - 1) {
+                    for (var x in storage) {
+                      child.children.push({name: x, size: storage[x]});
+                    }
+                    sun.children.push(child);
+                    if (catCount === categories.length - 1) {
+                      res.send(JSON.stringify(sun));
+                    } else {
+                      catCount++;
+                      hyperCount = 0;
+                    }
+                  } else {
+                    hyperCount++;
+                  }
+                });
+              });
+            }
+          });
+        });
+      }).catch(function (err) {
+        console.log('Error! It\'s sad day! D=', err);
+      });
+    });
+  },
+
   getFeed: function(req, res) {
     var storage = [];
     var count = 0;
@@ -531,16 +613,17 @@ var utils = {
           userId: userID
         }
       }).then(function (allFriends) {
-        allFriends.forEach(function (friend) {
+        allFriends.map((friend) => friend.dataValues).forEach(function (friend) {
           getUserId(friend.name, function (friendID) {
             CategoryPage.findOne({
               where: {
-                name: friend.category
+                name: friend.category,
+                userId: friendID
               }
             }).then(function (cat) {
               Hyper.findAll({
                 where: {
-                  CategoryPageId: cat.id,
+                  CategoryPageId: cat.dataValues.id,
                   username: friend.name
                 }
               }).then(function (hypers) {
@@ -598,6 +681,11 @@ var utils = {
       });
     });
   }
+
 };
+
+
+
+
 
 module.exports = utils;
