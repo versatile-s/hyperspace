@@ -143,11 +143,11 @@ class Category extends Component {
     return 'gradient' + random;
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     console.log("Goodbye");
   }
 
-  categoryPageCategoryCall(){
+  categoryPageCategoryCall() {
     this.props.categoryCall(this.props.params.user, this.props.params.category);
     this.props.getCategory(this.props.params.user, this.props.params.category);
   }
