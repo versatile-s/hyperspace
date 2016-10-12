@@ -13,6 +13,7 @@ import MyCategories from './myCategories';
 import EditHyper from './editHyper';
 
 import FriendFeed from './friendFeed.js';
+import Sunburst from './sunburst.js';
 import SearchBar from './searchbar';
 
 
@@ -143,11 +144,11 @@ class Category extends Component {
     return 'gradient' + random;
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     console.log("Goodbye");
   }
 
-  categoryPageCategoryCall(){
+  categoryPageCategoryCall() {
     this.props.categoryCall(this.props.params.user, this.props.params.category);
     this.props.getCategory(this.props.params.user, this.props.params.category);
   }
@@ -158,8 +159,8 @@ class Category extends Component {
     return (
       <div>
 
+        <Sunburst/>
         <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer">
-
         <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
 
           <FriendFeed  />
@@ -172,7 +173,6 @@ class Category extends Component {
 
                     <Card onClick={()=>context.updateViews(item)}>
                     <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
-
                       {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
                     </CardMedia>
                     </Card>

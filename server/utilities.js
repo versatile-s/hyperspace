@@ -537,6 +537,10 @@ var utils = {
   },
 
   generateSunburst: function(req, res) {
+    console.log('req ->', req, '<-');
+    console.log('q', req.q);
+    console.log('req.query', req.query);
+    console.log('req.params', req.params);
     var sun = {};
     var catCount = 0;
     var hyperCount = 0;
@@ -571,7 +575,9 @@ var utils = {
                   for (var i = 0; i < tagsArray.length; i++) {
                     storage[tagsArray[i]] === undefined ? storage[tagsArray[i]] = 1 : storage[tagsArray[i]]++;
                   }
-                  if (hyperCount === allHypers.length - 1) {
+                  if (allHypers.length === 0) {
+                    child.children.push({name: x, size: 0});
+                  } else if (hyperCount === allHypers.length - 1) {
                     for (var x in storage) {
                       child.children.push({name: x, size: storage[x]});
                     }
@@ -591,7 +597,7 @@ var utils = {
           });
         });
       }).catch(function (err) {
-      console.log('Error! It\'s sad day! D=', err);
+        console.log('Error! It\'s sad day! D=', err);
       });
     });
   },
@@ -671,6 +677,11 @@ var utils = {
       });
     });
   }
+
 };
+
+
+
+
 
 module.exports = utils;

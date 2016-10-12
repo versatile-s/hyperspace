@@ -8,6 +8,8 @@ import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import store from '../../store';
 import EditCategory from './editCategory';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 class Frame extends Component {
   constructor (props) {
@@ -146,16 +148,21 @@ class Frame extends Component {
         <div style={{background:color1||"blue"}} className="header" >
           <EditCategory params={this.props.params} categoryCall={this.categoryCall} getCategory={this.getCategory}/>
           <div style={{color:color2||"white", fontFamily:font, fontSize: fontSize, textAlign:textAlign}} className="logo">{store.getState().categoryInfo.categoryInfo.headerText || "hyprspace"}</div>
-
-        </div>
+        <DropDownMenu value={this.state.value} onChange={this.handleChange}>
+          <MenuItem value={1} primaryText="Never" />
+          <MenuItem value={2} primaryText="Every Night" />
+          <MenuItem value={3} primaryText="Weeknights" />
+          <MenuItem value={4} primaryText="Weekends" />
+          <MenuItem value={5} primaryText="Weekly" />
+        </DropDownMenu>
         <div className="sideMenu">
           <Side categoryCall={this.categoryCall} getCategory={this.getCategory} params={this.props.params}/>
-
         </div>
         <div className="mainContent">
             {React.cloneElement(this.props.children, {categoryCall: this.categoryCall, getCategory: this.getCategory})}
         </div>
         <div style={{background:color1|| "blue"}} className="footer" />
+      </div>
       </div>
     );
   }
