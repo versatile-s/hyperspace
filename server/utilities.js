@@ -82,6 +82,7 @@ var getHypers = function (categoryId, cb) {
       CategoryPageId: categoryId
     }
   }).then(function (hypers) {
+    console.log(hypers.title);
     if (hypers.length === 0) {
       cb([]);
     } else {

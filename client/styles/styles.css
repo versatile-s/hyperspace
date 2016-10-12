@@ -500,3 +500,8 @@ background: -webkit-linear-gradient(to left, #2BC0E4 , #EAECC6); /* Chrome 10-25
 background: linear-gradient(to left, #2BC0E4 , #EAECC6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
           
 }
+
+img.imageLogo {
+    width: 140px;
+    margin-left: 10px;
+}

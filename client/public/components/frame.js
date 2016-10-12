@@ -8,8 +8,6 @@ import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import store from '../../store';
 import EditCategory from './editCategory';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
 
 class Frame extends Component {
   constructor (props) {
@@ -82,23 +80,21 @@ class Frame extends Component {
   }
 
   getCategory (username, title) {
-    if (username && username !== '' && title && title !== '') {
-      fetch('/getCategory', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: username,
-          title: title
-        })
+    fetch('/getCategory', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        title: title
+      })
 
-      }).then(function(res) {
-        res.json().then(function(parsedRes) {
-          store.dispatch({type: "CAT_INFO", payload: parsedRes});
-        });
+    }).then(function(res) {
+      res.json().then(function(parsedRes) {
+        store.dispatch({type: "CAT_INFO", payload: parsedRes});
       });
-    }
+    });
   }
 
 
@@ -145,24 +141,17 @@ class Frame extends Component {
     }
     return (
       <div>
-        <div style={{background:color1||"blue"}} className="header" >
+        <div style={{background:color1 || '#2A0D45'}} className="header" >
           <EditCategory params={this.props.params} categoryCall={this.categoryCall} getCategory={this.getCategory}/>
-          <div style={{color:color2||"white", fontFamily:font, fontSize: fontSize, textAlign:textAlign}} className="logo">{store.getState().categoryInfo.categoryInfo.headerText || "hyprspace"}</div>
-        <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} primaryText="Never" />
-          <MenuItem value={2} primaryText="Every Night" />
-          <MenuItem value={3} primaryText="Weeknights" />
-          <MenuItem value={4} primaryText="Weekends" />
-          <MenuItem value={5} primaryText="Weekly" />
-        </DropDownMenu>
+          <div style={{color:color2||"white", fontFamily:font, fontSize: fontSize, textAlign:textAlign}} className="logo">{store.getState().categoryInfo.categoryInfo.headerText || <img className="imageLogo" src={'../assets/hyprspace-logodraft.png'}/>}</div>
+        </div>
         <div className="sideMenu">
           <Side categoryCall={this.categoryCall} getCategory={this.getCategory} params={this.props.params}/>
         </div>
         <div className="mainContent">
             {React.cloneElement(this.props.children, {categoryCall: this.categoryCall, getCategory: this.getCategory})}
         </div>
-        <div style={{background:color1|| "blue"}} className="footer" />
-      </div>
+        <div style={{background: color1 || '#7F5AA2'}} className="footer" />
       </div>
     );
   }
