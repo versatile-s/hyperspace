@@ -552,6 +552,10 @@ var utils = {
   },
 
   generateSunburst: function(req, res) {
+    console.log('req ->', req, '<-');
+    console.log('q', req.q);
+    console.log('req.query', req.query);
+    console.log('req.params', req.params);
     var sun = {};
     var catCount = 0;
     var hyperCount = 0;
@@ -563,6 +567,9 @@ var utils = {
           userId: id
         }
       }).then(function (categories) {
+        if (categories.length === 0) {
+          res.send(JSON.stringify(sun));
+        }
         categories.forEach(function (cat) {
           var child = {};
           child.children = [];
@@ -583,7 +590,9 @@ var utils = {
                   for (var i = 0; i < tagsArray.length; i++) {
                     storage[tagsArray[i]] === undefined ? storage[tagsArray[i]] = 1 : storage[tagsArray[i]]++;
                   }
-                  if (hyperCount === allHypers.length - 1) {
+                  if (allHypers.length === 0) {
+                    child.children.push({name: x, size: 0});
+                  } else if (hyperCount === allHypers.length - 1) {
                     for (var x in storage) {
                       child.children.push({name: x, size: storage[x]});
                     }
@@ -603,7 +612,7 @@ var utils = {
           });
         });
       }).catch(function (err) {
-      console.log('Error! It\'s sad day! D=', err);
+        console.log('Error! It\'s sad day! D=', err);
       });
     });
   },
@@ -683,223 +692,8 @@ var utils = {
         res.send('Friend Added!');
       });
     });
-  },
-
-//   generateSunburst: function (req, res) {
-//     var JSONstore = {};
-//     JSONstore.name = req.body.username;
-//     JSONstore.children = [];
-
-
-//     getUserId(req.body.username, function (userID) {
-//       CategoryPage.findAll({
-//         where: {
-//           UserId: userID
-//         }
-//       }).then(function (categories) {
-//         categories.forEach(function (category) {
-//           var child = {};
-//           child.name = category.name;
-//           child.children = [];
-
-//           Hyper.findAll({
-//             where: {
-//               CategoryPageId: category.id
-//             }
-//           }).then(function (hypers) {
-//             child.children = mapHyper(hypers);
-//           }).then(function() {
-
-//           });
-//         });
-//       });
-//     });  
-//   }
-// };
-
-// var mapTags = function (hyper) {
-//   var count = 0;
-//   hyper.tags.split(' ').forEach(function(tag) {
-//     var exists = false;
-//     for ( var i = 0; i < child.children.length; i++ ) {
-//       if ( child.children[i].name === tag ) {
-//         child.children[i].size ++;
-//         exists = true;
-//         break;
-//       }
-//     }
-//     if ( !exists ) {
-//       child.children.push({name: tag, size: 1});
-//     }
-//   });
-//   if ( count === hyper.tags.length - 1 ) {
-//     return tags;
-//   }
-// };
-
-// var mapHyper = function (hyperArray) {
-//   var count = 0;
-
-//   hyperArray.forEach(function (hyper) {
-//     mapTags(hyper);
-//   });
-  
-//   if ( count === hyperArray.length - 1 ) {
-//     return hypers;
-//   }
-
-// };
-  generate: function (req, res) {
-    var sunburst = {};
-    sunburst.name = req.query.username;
-    User.findOne({
-      where: {
-        username: req.query.username
-      }
-    }).then(function (user) {
-      CategoryPage.findAll({
-        where: {
-          userId: user.id
-        }
-      }).then(function (allCategories) {
-        var children = allCategories.map((item) => item.dataValues);
-
-      });
-    });
-  },
-
-  generateSunburst: function (req, res) {
-    console.log('GENERATE SUNBURST HIT');
-    console.log(req.query.username);
-
-    // given a hyper as an input,
-    // this function returns an array
-    // of sunburst-structured children
-    var getTags = function (hyper, cb) {
-      var storage = {};
-      var result = [];
-      var tags = hyper.dataValues.tags;
-      for (var i = 0; i < tags.length; i++) {
-        storage[tags[i]] === undefined ? storage[tags[i]] = 1 : storage[tags[i]]++;
-      }
-      for (var x in storage) {
-        result.push({
-          name: x,
-          size: storage[x]
-        });
-      }
-      cb(result);
-    };
-
-    // given an array of hypers,
-    // this function returns an array
-    // of sunburst-structured children
-    // for all hypers in the array
-    var splitHypers = function (hypers, cb) {
-      var result = [];
-      var count = 0;
-
-      hypers.forEach(function (hyp) {
-        getTags(hyp, function (array) {
-          result = result.concat(array);
-          count++;
-        });
-      });
-      if (count === hypers.length - 1) {
-        cb(result);
-      }
-    };
-
-    // given a category Id, this function
-    // returns an array of hypers that are
-    // structured for sunbursts
-    var gatherHypers = function (catId, cb) {
-      Hyper.findAll({
-        where: {
-          CategoryPageId: catId
-        }
-      }).then(function (hypers) {
-        cb(hypers);
-      });
-    };
-
-    // given a category, this function
-    // returns a category object structured
-    // for sunburst representation
-    var makeCat = function (category, cb) {
-      var cat = {};
-      cat.name = category.name;
-      gatherHypers(category.id, function(array) {
-        cat.children = array;
-        cb(cat);
-      });
-    };
-
-    // given an array of categories, this function
-    // returns an array of sunburst-structured
-    // category objects
-    var categoryArray = function (categories, cb) {
-      var results = [];
-      var count = 0;
-      categories.forEach(function (cat) {
-        makeCat(cat, function(obj) {
-          results.push(obj);
-          count++;
-        });
-      });
-      if (count === categories.length - 1) {
-        cb(results);
-      }
-    };
-
-    // given a user Id, this function returns 
-    // an array of categorypages for the user
-    var getCategories = function (userId, cb) {
-      CategoryPage.findAll({ 
-        where: {
-          userId: userId
-        }
-      }).then(function(results) {
-        cb(results);
-      });
-    };
-
-    // get userId, call getCategories with id
-    // make object with returned results
-    var makeObject = function (cb) {
-      var sunburstObject = {};
-      sunburstObject.name = req.query.username;
-      cb(sunburstObject);      
-    };
-
-    // var sunburst = makeObject();
-    // console.log('sunburst: ', sunburst);
-    // res.send(sunburst);
-    makeObject(function (sunburst) {
-      getUserId(req.query.username, function(id) {
-        console.log('id: ', id);
-        getCategories(id, function(categories) {
-          var categoriesMapped = categories.map((category) => category.dataValues);
-          console.log('categories: ', categoriesMapped);
-          // categoryArray(categoriesMapped, function (catArray) {
-            console.log('catArray: ', catArray);
-            makeCat(categoriesMapped, function (cat) {
-              console.log('cat: ', cat);
-              gatherHypers(cat, function (hyps) {
-                console.log('hyps: ', hyps);
-                splitHypers(hyps, function (hyperArray) {
-                  console.log('hyperArray: ', hyperArray);
-                  sunburst.children = catArray;
-                  console.log('sunburst: ', sunburst);
-                  res(sunburst);
-                });
-              });
-            });
-          // });
-        });
-      });
-    });
   }
+
 };
 
 

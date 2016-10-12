@@ -63,6 +63,7 @@ server.get('/userCategories', function (req, res) {
 
 
 server.get('/getSunburst', function (req, res) {
+  console.log('GET SUNBURST WAS HIT')
   utils.generateSunburst(req, res);
 });
 

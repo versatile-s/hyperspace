@@ -4,16 +4,12 @@ import store from '../../store';
 import {scaleLinear} from 'd3-scale';
 import {arc} from 'd3-shape';
 import rmc from 'random-material-color';
-import * as utils from './utils';
+import * as utils from './utils'; 
 
-const data = {
-  'name': 'flare',
-  'children': [
-    { 'name' : 'Category1', 'size': 4 },
-    { 'name' : 'Category2', 'size': 4 }
-  ]
+
+let data = {
+  
 };
-    
 
 const sum = function (node) {
   if (node.children && node.children.length) {
@@ -30,10 +26,11 @@ const sum = function (node) {
 };
 
 
-const flatten = function (data) {
-  let flat = [];
-  let level = 1;
-  let path = '';
+
+const flatten = function (data, level, path) {
+  var flat = [];
+  var level = level || 1;
+  var path = path || '';
 
 
   flat.push({
@@ -97,6 +94,17 @@ class Sunburst extends Component {
 
   }
 
+  componentWillMount () {
+    var context = this;
+    console.log('BOUT TO FETCH AND USERNAME BEING SENT IS', store.getState().username.username);
+    fetch('/getSunburst?username=' + store.getState().username.username)
+      .then(function (response) {
+        response.json().then(function(parsedRes) {
+          console.log(parsedRes, 'PARSED RES IS');
+          data = parsedRes;
+        });
+      }); 
+  }
 
   handleMouseOver(e) {
     let path = e.target.getAttribute('data-path');
@@ -131,6 +139,8 @@ class Sunburst extends Component {
   }
 
   render () {
+
+    console.log('DATA IN RENDER IS', data);
 
     let width = 600;
     let height = 600;
