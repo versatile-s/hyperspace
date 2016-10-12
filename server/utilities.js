@@ -54,7 +54,6 @@ var comparePasswords = function(req, res, storedPass, userInfo) {
 };
 
 var getUserId = function (username, cb) {
-  console.log('USERNAME HERE IS', username);
   User.findOne({
     where: {
       username: username
@@ -85,7 +84,7 @@ var getHypers = function (categoryId, cb) {
     if (hypers.length === 0) {
       cb([]);
     } else {
-      cb(hypers.map((hyp) => hyp.dataValues));
+      cb(hypers);
     }
   });
 };
@@ -214,18 +213,17 @@ var utils = {
               username: req.body.username,
               tags: tags,
               views: 0,
-              CategoryPageId: newCategory.dataValues.id
+              CategoryPageId: newCategory.id
             }).then(function (newHyper) {
-              hyper = newHyper.dataValues;
               axios.post('http://localhost:9200/hyperspace/hypers', {
-                id: hyper.id,
-                url: hyper.url,
-                title: hyper.title,
-                description: hyper.description,
-                image: hyper.image,
-                tags: tags,
+                id: newHyper.id,
+                url: newHyper.url,
+                title: newHyper.title,
+                description: newHyper.description,
+                image: newHyper.image,
+                tags: newHyper.tags,
                 username: req.body.username,
-                CategoryPageId: hyper.CategoryPageId
+                CategoryPageId: newHyper.CategoryPageId
               }).then(function () {
               }).catch(function (err) {
                 console.log('Error! It\'s sad day! D=', err);
@@ -245,7 +243,7 @@ var utils = {
                 title: req.body.title,
                 description: req.body.description,
                 image: req.body.image,
-                username: user.dataValues.username,
+                username: user.username,
                 tags: tags,
                 views: 0,
                 CategoryPageId: category.id
@@ -443,7 +441,7 @@ var utils = {
         });
 
       }).catch(function(err) {
-        console.log('server error:', err);
+        console.log('Error! It\'s sad day! D=', err);
         res.send(JSON.stringify('Error'));
       });
     }).catch(function(error) {
@@ -468,7 +466,7 @@ var utils = {
       }).then(function(categories) {
         var catArray = [];
         categories.forEach(function (category) {
-          catArray.push(category.dataValues.name);
+          catArray.push(category.name);
         });
         res.send(JSON.stringify(catArray));
       });
@@ -485,7 +483,7 @@ var utils = {
       var tagStore = {};
       if (hypers) {
         hypers.forEach(function (hyper) {
-          var singleTags = hyper.dataValues.tags.split(' ');
+          var singleTags = hyper.tags.split(' ');
           singleTags.forEach(function(tag) {
             tagStore[tag] = tag;
           });
@@ -495,7 +493,7 @@ var utils = {
         res.send();
       }
     }).catch(function (err) {
-      console.log(err);
+      console.log('Error! It\'s sad day! D=', err);
       res.send();
     });
   },
@@ -556,8 +554,8 @@ var utils = {
         categories.forEach(function (cat) {
           var child = {};
           child.children = [];
-          child.name = cat.dataValues.name;
-          getHypers(cat.dataValues.id, function (allHypers) {
+          child.name = cat.name;
+          getHypers(cat.id, function (allHypers) {
             var storage = {};
             if (allHypers.length === 0) {
               sun.children.push(child);
@@ -607,7 +605,7 @@ var utils = {
           userId: userID
         }
       }).then(function (allFriends) {
-        allFriends.map((friend) => friend.dataValues).forEach(function (friend) {
+        allFriends.forEach(function (friend) {
           getUserId(friend.name, function (friendID) {
             CategoryPage.findOne({
               where: {
@@ -617,13 +615,11 @@ var utils = {
             }).then(function (cat) {
               Hyper.findAll({
                 where: {
-                  CategoryPageId: cat.dataValues.id,
+                  CategoryPageId: cat.id,
                   username: friend.name
                 }
               }).then(function (hypers) {
-                storage = storage.concat(hypers.map(function (hyper) {
-                  return hyper.dataValues;
-                }));
+                storage = storage.concat(hypers);
               }).then(function () {
                 if ( count === allFriends.length - 1 ) {
                   res.send(JSON.stringify(storage.sort(function(a, b) {
