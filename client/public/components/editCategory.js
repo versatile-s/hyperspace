@@ -14,6 +14,8 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import DoneIcon from 'material-ui/svg-icons/action/done';
 import Dialog from 'material-ui/Dialog';
 import { SketchPicker } from 'react-color';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import Checkbox from 'material-ui/Checkbox';
 
 class EditCategory extends Component {
   constructor (props) {
@@ -26,7 +28,11 @@ class EditCategory extends Component {
       displayColorPicker2: false,
       color1: store.getState().categoryInfo.categoryInfo.headerTextBackgroundColor ||"#00FF00",
       color2: store.getState().categoryInfo.categoryInfo.headerTextColor||"#0000FF",
-
+      fontSize: store.getState().categoryInfo.categoryInfo.fontSize,
+      fontFamily: store.getState().categoryInfo.categoryInfo.fontFamily,
+      textAlign: store.getState().categoryInfo.categoryInfo.textAlign,
+      searchBar: false,
+      feed: false,
       deleteMessage: ''
     };
     this.deleteCategory = this.deleteCategory.bind(this);
@@ -43,6 +49,11 @@ class EditCategory extends Component {
     this.handleChange1=this.handleChange1.bind(this);
     this.handleChange2=this.handleChange2.bind(this);
     this.closeMenu=this.closeMenu.bind(this);
+    this.handleChangefontSize=this.handleChangefontSize.bind(this);
+    this.handleChangefontFamily=this.handleChangefontFamily.bind(this);
+    this.handleChangetextAlign=this.handleChangetextAlign.bind(this);
+    this.handlesearchBar=this.handlesearchBar.bind(this);
+    this.handlefeed=this.handlefeed.bind(this);
     var context = this;
     store.subscribe(() => {
       context.forceUpdate();
@@ -118,17 +129,33 @@ class EditCategory extends Component {
 
   handleChange1(color) {
     this.setState({ color1: color.hex });
-    console.log(this.state.color1);
   }
 
   handleChange2(color) {
     this.setState({ color2: color.hex });
+  }
+
+  handleChangefontSize(event, index, val){
+    this.setState({fontSize: val});
+  }
+  handleChangefontFamily(event, index, val){
+    this.setState({fontFamily: val});
+  }
+  handleChangetextAlign(event, index, val){
+    this.setState({textAlign: val});
   }
   handleClose1(){
     this.setState({ displayColorPicker1: false });
   }
   handleClose2(){
     this.setState({ displayColorPicker2: false });
+  }
+
+  handlesearchBar(){
+    this.setState({ searchBar:!this.state.searchBar});
+  }
+  handlefeed(){
+    this.setState({ feed:!this.state.feed});
   }
   updateChange(){
     var context = this;
@@ -144,7 +171,12 @@ class EditCategory extends Component {
         backgroundUrl: this.refs.backgroundUrl.getValue(),
         headerText: this.refs.headerText.getValue(),
         headerTextBackgroundColor: this.state.color1,
-        headerTextColor: this.state.color2 
+        headerTextColor: this.state.color2, 
+        fontSize: this.state.fontSize,
+        fontFamily: this.state.fontFamily,
+        textAlign: this.state.textAlign,
+        searchBar: this.state.searchBar,
+        feed: this.state.feed
       })
 
     }).then(function(response){
@@ -175,6 +207,15 @@ class EditCategory extends Component {
         openMenu: true
       });
     }
+    this.setState({
+      color1: store.getState().categoryInfo.categoryInfo.headerTextBackgroundColor ||"#00FF00",
+      color2: store.getState().categoryInfo.categoryInfo.headerTextColor||"#0000FF",
+      fontSize: store.getState().categoryInfo.categoryInfo.fontSize,
+      fontFamily: store.getState().categoryInfo.categoryInfo.fontFamily,
+      textAlign: store.getState().categoryInfo.categoryInfo.textAlign,
+      searchBar: store.getState().categoryInfo.categoryInfo.searchBar,
+      feed: store.getState().categoryInfo.categoryInfo.feed,
+    });
   }
 
 
@@ -210,6 +251,7 @@ class EditCategory extends Component {
           disableAutoFocus={true}
           menuStyle={{width:250}}
           touchTapCloseDelay={0}
+          onRequestChange={this.closeMenu}
           onRequestClose={this.closeMenu}
           initiallyKeyboardFocused={false}
           iconButtonElement={<IconButton onClick={this.toggleOpen}><EditSettingsIcon /></IconButton>}
@@ -238,7 +280,44 @@ class EditCategory extends Component {
             </div>
             <FlatButton label={"Background URL"} disabled={true}/>
             <TextField ref="backgroundUrl" defaultValue={store.getState().categoryInfo.categoryInfo.backgroundUrl}/>
-            <IconButton onClick={this.warn}><DeleteIcon/></IconButton>
+            <div style={{position:"relative", zIndex:5000}}>
+              <DropDownMenu listStyle={{width:40, position:"relative", zIndex:3000}} menuStyle={{width:40, position:"relative", zIndex:10001}}value={this.state.fontSize} onChange={this.handleChangefontSize}>
+                <MenuItem value={10} primaryText="10" />
+                <MenuItem value={20} primaryText="20" />
+                <MenuItem value={30} primaryText="30" />
+                <MenuItem value={40} primaryText="40" />
+                <MenuItem value={50} primaryText="50" />
+                <MenuItem value={60} primaryText="60" />
+                <MenuItem value={70} primaryText="70" />
+                <MenuItem value={80} primaryText="80" />
+                <MenuItem value={90} primaryText="90" />
+                <MenuItem value={100} primaryText="100" />
+              </DropDownMenu>
+            </div>
+            <div style={{position:"relative", zIndex:5000}}>
+              <DropDownMenu listStyle={{width:100, position:"relative", zIndex:3000}} menuStyle={{width:100, position:"relative", zIndex:10001}}value={this.state.fontFamily} onChange={this.handleChangefontFamily}>
+                <MenuItem value={"Trebuchet MS"} primaryText="Trebuchet MS" />
+                <MenuItem value={"Tahoma"} primaryText="Tahoma" />
+                <MenuItem value={"Arial"} primaryText="Arial" />
+                <MenuItem value={"Gerogia"} primaryText="Gerogia" />
+                <MenuItem value={"Times New Roman"} primaryText="Times New Roman" />
+                <MenuItem value={"Lucida Sans Unicode"} primaryText="Lucida Sans Unicode" />
+                <MenuItem value={"Impact"} primaryText="Impact" />
+                <MenuItem value={"Veranda"} primaryText="Veranda" />
+                <MenuItem value={"Webdings"} primaryText="Webdings" />
+                <MenuItem value={"Symbol"} primaryText="Symbol" />
+              </DropDownMenu>
+            </div>
+            <div style={{position:"relative", zIndex:5000}}>
+              <DropDownMenu listStyle={{width:100, position:"relative", zIndex:3000}} menuStyle={{width:100, position:"relative", zIndex:10001}}value={this.state.textAlign} onChange={this.handleChangetextAlign}>
+                <MenuItem value={"left"} primaryText="Left" />
+                <MenuItem value={"center"} primaryText="Center" />
+                <MenuItem value={"right"} primaryText="Right" />
+              </DropDownMenu>
+            </div>
+            <Checkbox checked={this.state.searchBar} onCheck={this.handlesearchBar}/>
+            <Checkbox checked={this.state.feed} onCheck={this.handlefeed}/>
+            <IconButton style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} onClick={this.warn}><DeleteIcon/></IconButton>
             <IconButton onClick={this.updateChange}><DoneIcon/></IconButton>
           </div>
             <Dialog

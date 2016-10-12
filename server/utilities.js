@@ -345,6 +345,11 @@ var utils = {
           headerText: req.body.headerText,
           headerTextBackgroundColor: req.body.headerTextBackgroundColor,
           headerTextColor: req.body.headerTextColor,
+          fontSize: req.body.fontSize,
+          fontFamily: req.body.fontFamily,
+          textAlign: req.body.textAlign,
+          searchBar: req.body.searchBar,
+          feed: req.body.feed
         }).then(function() {
           res.send(categoryPage);
         });

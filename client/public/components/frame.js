@@ -134,12 +134,16 @@ class Frame extends Component {
 
   render () {
     {var color1 = store.getState().categoryInfo.categoryInfo.headerTextBackgroundColor;
-      var color2 = store.getState().categoryInfo.categoryInfo.headerTextColor}
+      var color2 = store.getState().categoryInfo.categoryInfo.headerTextColor;
+      var font = store.getState().categoryInfo.categoryInfo.fontFamily;
+      var fontSize = store.getState().categoryInfo.categoryInfo.fontSize;
+      var textAlign = store.getState().categoryInfo.categoryInfo.textAlign;
+    }
     return (
       <div>
         <div style={{background:color1||"blue"}} className="header" >
           <EditCategory params={this.props.params} categoryCall={this.categoryCall} getCategory={this.getCategory}/>
-          <div style={{color:color2||"white"}} className="logo">{store.getState().categoryInfo.categoryInfo.headerText || "hyprspace"}</div>
+          <div style={{color:color2||"white", fontFamily:font, fontSize: fontSize, textAlign:textAlign}} className="logo">{store.getState().categoryInfo.categoryInfo.headerText || "hyprspace"}</div>
 
         </div>
         <div className="sideMenu">
