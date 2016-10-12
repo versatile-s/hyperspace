@@ -32,7 +32,9 @@
     letter-spacing: 1px;
 }
 
-
+.searchbar {
+  text-align: center;
+}
 
 .mainContent {
     margin-top: 106px;
