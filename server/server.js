@@ -61,6 +61,11 @@ server.get('/userCategories', function (req, res) {
   utils.getUserCategories(req, res);
 });
 
+server.get('/getSunburst', function (req, res) {
+  console.log('hit in server');
+  utils.generateSunburst(req, res);
+});
+
 // IMPORTANT any remaining routes that have NOT hit the authRoutes already will be first sent
 // to the client code in app.js and hit the React Router. Only if a request does not hit the react router
 // will it fallback into the server side router.js file.
