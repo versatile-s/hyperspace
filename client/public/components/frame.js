@@ -151,7 +151,14 @@ class Frame extends Component {
         <div className="mainContent">
             {React.cloneElement(this.props.children, {categoryCall: this.categoryCall, getCategory: this.getCategory})}
         </div>
-        <div style={{background: color1 || '#7F5AA2'}} className="footer" />
+        <div style={{background: color1 || '#7F5AA2'}} className="footer row">
+          <div className="footerText col-md-4">
+          Privacy | Legal | Contact
+          </div>
+          <div className="footerText col-md-8">
+            Copyright 2016 HYPRSPACE. All rights reserved.
+          </div>
+        </div>
       </div>
     );
   }
