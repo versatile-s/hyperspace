@@ -75,6 +75,33 @@ var getCategoryId = function (userID, category, cb) {
   });
 };
 
+// returns all hypers for a single category
+var getHypers = function (categoryId, cb) {
+  Hyper.findAll({
+    where: {
+      CategoryPageId: categoryId
+    }
+  }).then(function (hypers) {
+    if (hypers.length === 0) {
+      cb([]);
+    } else {
+      cb(hypers.map((hyp) => hyp.dataValues));
+    }
+  });
+};
+
+// returns an array of all the tags on a single hyper
+var getTags = function (hyperId, cb) {
+  var tags = [];
+  Hyper.findOne({
+    where: {
+      id: hyperId
+    }
+  }).then(function (hyper) {
+    tags = tags.concat(hyper.tags.split(' '));
+    cb(tags);
+  });
+};
 
 var utils = {
   // USERS
@@ -376,18 +403,36 @@ var utils = {
   // This will update a category page. On the front end it is important that the req object has all of the fields.
   // Any fields that have not been changed need to remain as they were but still include in the request object.
   updateCategoryPage: function (req, res) {
-    CategoryPage.findById(req.body.id)
-    .then(function(selectedPage) {
-      selectedPage.update({
-        name: req.body.name,
-        parentCategory: req.body.parents,
-        subCategories: req.body.subCategories,
-        hypers: req.body.hypers,
-        widgets: req.body.widgets,
-        preferences: req.body.preferences
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function (user) {
+      CategoryPage.findOne({
+        where: {
+          UserId: user.id,
+          name: req.body.name
+        }
+      }).then(function (categoryPage) {
+        categoryPage.update({
+          name: req.body.newName,
+          backgroundUrl: req.body.backgroundUrl,
+          headerText: req.body.headerText,
+          headerTextBackgroundColor: req.body.headerTextBackgroundColor,
+          headerTextColor: req.body.headerTextColor,
+          fontSize: req.body.fontSize,
+          fontFamily: req.body.fontFamily,
+          textAlign: req.body.textAlign,
+          searchBar: req.body.searchBar,
+          feed: req.body.feed
+        }).then(function() {
+          res.send(categoryPage);
+        });
       });
-    });
+    });    
   },
+
+
 
   getCategoryData: function (req, res) {
     User.findOne({
@@ -445,7 +490,7 @@ var utils = {
 
   getUserTags: function (req, res) {
     var username = req.query.username;
-    Hyper.find({
+    Hyper.findAll({
       where: {
         username: username
       }
@@ -474,13 +519,91 @@ var utils = {
         username: req.body.username
       }
     }).then(function (user) {
+      if (user) {
+        CategoryPage.findOne({
+          where: {
+            UserId: user.id,
+            name: req.body.title
+          }
+        }).then(function(category) {
+          res.send(category);
+        });
+      }
+    });
+  },
+
+  deleteCategoryPage: function (req, res) {
+    User.findOne({
+      where: {
+        username: req.body.username
+      }
+    }).then(function (user) {
       CategoryPage.findOne({
         where: {
           UserId: user.id,
           name: req.body.title
         }
-      }).then(function(category) {
-        res.send(category);
+      }).then(function(categoryPage) {
+        var destroyed = categoryPage;
+        categoryPage.destroy();
+        res.send(destroyed);
+      });
+    });  
+  },
+
+  generateSunburst: function(req, res) {
+    var sun = {};
+    var catCount = 0;
+    var hyperCount = 0;
+    sun.name = req.query.username;
+    sun.children = [];
+    getUserId(sun.name, function (id) {
+      CategoryPage.findAll({
+        where: {
+          userId: id
+        }
+      }).then(function (categories) {
+        categories.forEach(function (cat) {
+          var child = {};
+          child.children = [];
+          child.name = cat.dataValues.name;
+          getHypers(cat.dataValues.id, function (allHypers) {
+            var storage = {};
+            if (allHypers.length === 0) {
+              sun.children.push(child);
+              if (catCount === categories.length - 1) {
+                res.send(sun);
+              } else {
+                catCount++;
+                hyperCount = 0;
+              }
+            } else {
+              allHypers.forEach(function (hyp) {
+                getTags(hyp.id, function (tagsArray) {
+                  for (var i = 0; i < tagsArray.length; i++) {
+                    storage[tagsArray[i]] === undefined ? storage[tagsArray[i]] = 1 : storage[tagsArray[i]]++;
+                  }
+                  if (hyperCount === allHypers.length - 1) {
+                    for (var x in storage) {
+                      child.children.push({name: x, size: storage[x]});
+                    }
+                    sun.children.push(child);
+                    if (catCount === categories.length - 1) {
+                      res.send(JSON.stringify(sun));
+                    } else {
+                      catCount++;
+                      hyperCount = 0;
+                    }
+                  } else {
+                    hyperCount++;
+                  }
+                });
+              });
+            }
+          });
+        });
+      }).catch(function (err) {
+      console.log('Error! It\'s sad day! D=', err);
       });
     });
   },

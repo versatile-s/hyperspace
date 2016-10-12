@@ -7,6 +7,7 @@ import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import store from '../../store';
+import EditCategory from './editCategory';
 
 class Frame extends Component {
   constructor (props) {
@@ -21,6 +22,10 @@ class Frame extends Component {
     this.hardRender = this.hardRender.bind(this);
 
     this.getCategory = this.getCategory.bind(this);
+    var context = this;
+    store.subscribe(() => {
+      context.forceUpdate();
+    });
 
   }
 
@@ -92,40 +97,7 @@ class Frame extends Component {
     });
   }
 
-  categoryCall (username, category){
-    var context = this;
-    store.dispatch({
-      type: "GET_DATA", payload:[]
-    });
-    if (username && username !== '') {
-      fetch('/categoryData', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: username,
-          categoryTitle: category
-        })
-      }).then((response) => {
-        response.json().then(function (data) {
-          if (data === 'Error') {
-            store.dispatch({
-              type: "GET_DATA", payload:[{title: "There seems to be a problem with your request.", description: "The requested page may have been deleted or the user no longer exists.", image: []}]
-            });
-          } else if (Array.isArray(data)) {
-            context.sortData(data);
-          } else {
-            store.dispatch({
-              type: "GET_DATA", payload:[{title: "This category doesnt seem to have any links yet!", description: "Make sure you get the Hyprspace Chrome Extension to start adding Hypers!", image: []}]
-            });
-          }
-        });
 
-      });
-    }
-  }
   categoryCall (username, category) {
     var context = this;
     store.dispatch({
@@ -161,10 +133,17 @@ class Frame extends Component {
   }
 
   render () {
+    {var color1 = store.getState().categoryInfo.categoryInfo.headerTextBackgroundColor;
+      var color2 = store.getState().categoryInfo.categoryInfo.headerTextColor;
+      var font = store.getState().categoryInfo.categoryInfo.fontFamily;
+      var fontSize = store.getState().categoryInfo.categoryInfo.fontSize;
+      var textAlign = store.getState().categoryInfo.categoryInfo.textAlign;
+    }
     return (
       <div>
-        <div className="header">
-          <div className="logo">hyprspace</div>
+        <div style={{background:color1||"blue"}} className="header" >
+          <EditCategory params={this.props.params} categoryCall={this.categoryCall} getCategory={this.getCategory}/>
+          <div style={{color:color2||"white", fontFamily:font, fontSize: fontSize, textAlign:textAlign}} className="logo">{store.getState().categoryInfo.categoryInfo.headerText || "hyprspace"}</div>
 
         </div>
         <div className="sideMenu">
@@ -173,7 +152,7 @@ class Frame extends Component {
         <div className="mainContent">
             {React.cloneElement(this.props.children, {categoryCall: this.categoryCall, getCategory: this.getCategory})}
         </div>
-        <div className="footer" />
+        <div style={{background:color1|| "blue"}} className="footer" />
       </div>
     );
   }

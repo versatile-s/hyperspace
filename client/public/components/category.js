@@ -14,6 +14,7 @@ import EditHyper from './editHyper';
 
 import FriendFeed from './friendFeed.js';
 import Sunburst from './sunburst.js';
+import SearchBar from './searchbar';
 
 
 class Category extends Component {
@@ -157,10 +158,17 @@ class Category extends Component {
     { var hint = 'Search ' + this.props.params.user + '\'s ' + this.props.params.category + ' stash'; }
     return (
       <div>
+<<<<<<< HEAD
         <Sunburst/>
+=======
+
+        <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer">
+
+>>>>>>> 0a7632d044a774e3174aa6cb4f75af6d82a6a427
         <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
-        <div className="categoryPageContainer">
-          <FriendFeed />
+
+          <FriendFeed  />
+          <SearchBar/>
             {context.state.data.map(function (item) {
               return (
                 <div className="hyper" style={{order: item.views}} >

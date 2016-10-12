@@ -53,7 +53,8 @@ class MakeCategory extends Component {
       })
     }).then(function(){
       browserHistory.push('/' + username + "/"+newCatName);
-      context.props.setCategory(newCatName);
+      context.props.categoryCall(username,newCatName);
+      context.props.getCategory(username,newCatName);
       context.getCategories();
     });
   }

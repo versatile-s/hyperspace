@@ -61,8 +61,8 @@ server.get('/userCategories', function (req, res) {
   utils.getUserCategories(req, res);
 });
 
-// generate user's sunburst chart
-server.get('/userSunburst', function (req, res) {
+
+server.get('/getSunburst', function (req, res) {
   utils.generateSunburst(req, res);
 });
 
