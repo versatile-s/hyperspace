@@ -95,7 +95,7 @@ class Frame extends Component {
         store.dispatch({type: "CAT_INFO", payload: parsedRes});
       });
     });
-  }      
+  }
 
 
   categoryCall (username, category) {
@@ -147,11 +147,11 @@ class Frame extends Component {
 
         </div>
         <div className="sideMenu">
-          <Side setCategory={this.setCategory} categoryCall={this.categoryCall} getCategory={this.getCategory} params={this.props.params}/>  
+          <Side categoryCall={this.categoryCall} getCategory={this.getCategory} params={this.props.params}/>
+
         </div>
         <div className="mainContent">
             {React.cloneElement(this.props.children, {categoryCall: this.categoryCall, getCategory: this.getCategory})}
-
         </div>
         <div style={{background:color1|| "blue"}} className="footer" />
       </div>

@@ -39,6 +39,7 @@ var loginCheck = function(cb) {
   });
 };
 
+
 class App extends Component {
   constructor (props) {
     super(props);
