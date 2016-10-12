@@ -82,7 +82,11 @@ var getHypers = function (categoryId, cb) {
       CategoryPageId: categoryId
     }
   }).then(function (hypers) {
-    cb(hypers.map((hyp) => hyp.dataValues));
+    if (hypers.length === 0) {
+      cb([]);
+    } else {
+      cb(hypers.map((hyp) => hyp.dataValues));
+    }
   });
 };
 
@@ -486,7 +490,7 @@ var utils = {
 
   getUserTags: function (req, res) {
     var username = req.query.username;
-    Hyper.find({
+    Hyper.findAll({
       where: {
         username: username
       }
@@ -515,14 +519,16 @@ var utils = {
         username: req.body.username
       }
     }).then(function (user) {
-      CategoryPage.findOne({
-        where: {
-          UserId: user.id,
-          name: req.body.title
-        }
-      }).then(function(category) {
-        res.send(category);
-      });
+      if (user) {
+        CategoryPage.findOne({
+          where: {
+            UserId: user.id,
+            name: req.body.title
+          }
+        }).then(function(category) {
+          res.send(category);
+        });
+      }
     });
   },
 
@@ -563,29 +569,41 @@ var utils = {
           child.name = cat.dataValues.name;
           getHypers(cat.dataValues.id, function (allHypers) {
             var storage = {};
-            allHypers.forEach(function (hyp) {
-              getTags(hyp.id, function (tagsArray) {
-                for (var i = 0; i < tagsArray.length; i++) {
-                  storage[tagsArray[i]] === undefined ? storage[tagsArray[i]] = 1 : storage[tagsArray[i]]++;
-                }
-                if (hyperCount === allHypers.length - 1) {
-                  for (var x in storage) {
-                    child.children.push({name: x, size: storage[x]});
+            if (allHypers.length === 0) {
+              sun.children.push(child);
+              if (catCount === categories.length - 1) {
+                res.send(sun);
+              } else {
+                catCount++;
+                hyperCount = 0;
+              }
+            } else {
+              allHypers.forEach(function (hyp) {
+                getTags(hyp.id, function (tagsArray) {
+                  for (var i = 0; i < tagsArray.length; i++) {
+                    storage[tagsArray[i]] === undefined ? storage[tagsArray[i]] = 1 : storage[tagsArray[i]]++;
                   }
-                  sun.children.push(child);
-                  if (catCount === categories.length - 1) {
-                    res.send(sun);
+                  if (hyperCount === allHypers.length - 1) {
+                    for (var x in storage) {
+                      child.children.push({name: x, size: storage[x]});
+                    }
+                    sun.children.push(child);
+                    if (catCount === categories.length - 1) {
+                      res.send(JSON.stringify(sun));
+                    } else {
+                      catCount++;
+                      hyperCount = 0;
+                    }
                   } else {
-                    catCount++;
-                    hyperCount = 0;
+                    hyperCount++;
                   }
-                } else {
-                  hyperCount++;
-                }
+                });
               });
-            });
+            }
           });
         });
+      }).catch(function (err) {
+      console.log('Error! It\'s sad day! D=', err);
       });
     });
   },
