@@ -144,7 +144,7 @@ class Side extends Component {
           >
             <IconButton onClick={this.toHome} iconStyle={{opacity:.2, width:50}}><HomeIcon /></IconButton>
             <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall} getCategory={this.props.getCategory}/>
-            <MakeCategory params={this.props.params} setCategory={this.props.setCategory} username={store.getState().username.username}/>
+            <MakeCategory params={this.props.params} categoryCall={this.props.categoryCall} getCategory={this.props.getCategory} />
             <HyperSearch username={store.getState().username.username}/>
             <FriendList params={this.props.params} getCategory={this.props.getCategory} categoryCall={this.props.categoryCall}/>
             <AddFriend params={this.props.params} username={store.getState().username.username}/>

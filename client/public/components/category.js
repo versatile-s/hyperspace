@@ -13,6 +13,7 @@ import MyCategories from './myCategories';
 import EditHyper from './editHyper';
 
 import FriendFeed from './friendFeed.js';
+import SearchBar from './searchbar';
 
 
 class Category extends Component {
@@ -156,9 +157,13 @@ class Category extends Component {
     { var hint = 'Search ' + this.props.params.user + '\'s ' + this.props.params.category + ' stash'; }
     return (
       <div>
+
+        <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer">
+
         <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
-        <div className="categoryPageContainer">
-          <FriendFeed />
+
+          <FriendFeed  />
+          <SearchBar/>
             {context.state.data.map(function (item) {
               return (
                 <div className="hyper" style={{order: item.views}} >
