@@ -75,6 +75,33 @@ var getCategoryId = function (userID, category, cb) {
   });
 };
 
+// returns all hypers for a single category
+var getHypers = function (categoryId, cb) {
+  Hyper.findAll({
+    where: {
+      CategoryPageId: categoryId
+    }
+  }).then(function (hypers) {
+    if (hypers.length === 0) {
+      cb([]);
+    } else {
+      cb(hypers.map((hyp) => hyp.dataValues));
+    }
+  });
+};
+
+// returns an array of all the tags on a single hyper
+var getTags = function (hyperId, cb) {
+  var tags = [];
+  Hyper.findOne({
+    where: {
+      id: hyperId
+    }
+  }).then(function (hyper) {
+    tags = tags.concat(hyper.tags.split(' '));
+    cb(tags);
+  });
+};
 
 var utils = {
   // USERS
@@ -463,7 +490,7 @@ var utils = {
 
   getUserTags: function (req, res) {
     var username = req.query.username;
-    Hyper.find({
+    Hyper.findAll({
       where: {
         username: username
       }
@@ -492,14 +519,16 @@ var utils = {
         username: req.body.username
       }
     }).then(function (user) {
-      CategoryPage.findOne({
-        where: {
-          UserId: user.id,
-          name: req.body.title
-        }
-      }).then(function(category) {
-        res.send(category);
-      });
+      if (user) {
+        CategoryPage.findOne({
+          where: {
+            UserId: user.id,
+            name: req.body.title
+          }
+        }).then(function(category) {
+          res.send(category);
+        });
+      }
     });
   },
 
@@ -520,6 +549,63 @@ var utils = {
         res.send(destroyed);
       });
     });  
+  },
+
+  generateSunburst: function(req, res) {
+    var sun = {};
+    var catCount = 0;
+    var hyperCount = 0;
+    sun.name = req.query.username;
+    sun.children = [];
+    getUserId(sun.name, function (id) {
+      CategoryPage.findAll({
+        where: {
+          userId: id
+        }
+      }).then(function (categories) {
+        categories.forEach(function (cat) {
+          var child = {};
+          child.children = [];
+          child.name = cat.dataValues.name;
+          getHypers(cat.dataValues.id, function (allHypers) {
+            var storage = {};
+            if (allHypers.length === 0) {
+              sun.children.push(child);
+              if (catCount === categories.length - 1) {
+                res.send(sun);
+              } else {
+                catCount++;
+                hyperCount = 0;
+              }
+            } else {
+              allHypers.forEach(function (hyp) {
+                getTags(hyp.id, function (tagsArray) {
+                  for (var i = 0; i < tagsArray.length; i++) {
+                    storage[tagsArray[i]] === undefined ? storage[tagsArray[i]] = 1 : storage[tagsArray[i]]++;
+                  }
+                  if (hyperCount === allHypers.length - 1) {
+                    for (var x in storage) {
+                      child.children.push({name: x, size: storage[x]});
+                    }
+                    sun.children.push(child);
+                    if (catCount === categories.length - 1) {
+                      res.send(JSON.stringify(sun));
+                    } else {
+                      catCount++;
+                      hyperCount = 0;
+                    }
+                  } else {
+                    hyperCount++;
+                  }
+                });
+              });
+            }
+          });
+        });
+      }).catch(function (err) {
+      console.log('Error! It\'s sad day! D=', err);
+      });
+    });
   },
 
   getFeed: function(req, res) {
