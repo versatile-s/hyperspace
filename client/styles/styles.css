@@ -48,6 +48,7 @@ span.currLocation {
     font-weight: 100;
     padding-top: 12px;
     margin: 0px -30px;
+    height:100%;
 }
 
 .sunburstContainer {
@@ -346,10 +347,10 @@ body {
   position: fixed;
 }
 .categoryPageContainer{
-  height: 700px;
+/*  height: 700px;
   background-image: url(/../../assets/catbackground.jpg);
   background-size: 100%;
-  width:100%;
+  width:100%;*/
 }
 
 .hyperImage {

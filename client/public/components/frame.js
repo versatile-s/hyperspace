@@ -143,13 +143,15 @@ class Frame extends Component {
       <div>
         <div style={{background:color1 || '#19042d'}} className="header" >
           <EditCategory params={this.props.params} categoryCall={this.categoryCall} getCategory={this.getCategory}/>
-          <div style={{color: color2 || "white", fontFamily:font, fontSize: fontSize, textAlign:textAlign}} className="logo">{store.getState().categoryInfo.categoryInfo.headerText || <img className="imageLogo" src={'../assets/hyprspace-logodraft.png'}/>}</div>
+          <div style={{color: color2 || "white"}} className="logo"> <img className="imageLogo" src={'../assets/hyprspace-logodraft.png'}/></div>
         </div>
         <div className="sideMenu">
           <Side categoryCall={this.categoryCall} getCategory={this.getCategory} params={this.props.params}/>
         </div>
+        <div className="categoryBackground" style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}}>
         <div className="mainContent">
             {React.cloneElement(this.props.children, {categoryCall: this.categoryCall, getCategory: this.getCategory})}
+        </div>
         </div>
         <div style={{background: color1 || '#7F5AA2'}} className="footer row">
           <div className="footerText col-md-4">
