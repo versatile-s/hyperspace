@@ -178,6 +178,12 @@ span.currLocation {
   top:0;
   left:0;
 }
+.asteroidButton{
+  position: fixed;
+  top:0;
+  left:200;
+  color: white;
+}
 .editCategory{
   z-index: 1;
   position: relative;

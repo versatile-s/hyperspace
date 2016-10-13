@@ -8,19 +8,33 @@ import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Matter from 'matter-js';
 import store from '../../store';
+import IconButton from 'material-ui/IconButton/IconButton';
+import StarIcon from 'material-ui/svg-icons/toggle/star';
 
 class Bored extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      playing: false
+      playing: false,
+      asteroids: false,
+      Bodies: null,
+      World: null,
+      engine: null,
+      defaultCategory: null,
+      wWidth: null,
+      wHeight: null
     };
     
    
     this.play = this.play.bind(this);
+    this.matterTest = this.matterTest.bind(this);
+    this.enableAsteroids = this.enableAsteroids.bind(this);
+    this.meteorshower = this.meteorshower.bind(this);
+    this.toggleAsteroids = this.toggleAsteroids.bind(this);  
   }
 
-  componentWillMount () {
+  componentWillUnmount () {
+    window.clearTimeout(window.showerName);
     
   }
   componentDidMount() {
@@ -149,22 +163,6 @@ class Bored extends Component {
     var wallR = Bodies.rectangle(window.innerWidth+45, 200, 100, window.innerHeight-boundsLimit,  { isStatic: true, collisionFilter:{group:defaultCategory} , render:{visible:false }});
 
   
-    setInterval(function(){
-      var rand1 = Math.random();
-      var rand2 = Math.random();
-      var ball = Bodies.circle( -200*rand1 ,-100*rand2,10*rand1+5,{
-        restitution: 1,
-        mass:.5,
-        collisionFilter: {
-          group: defaultCategory
-        }
-        
-      });
-      console.log("ball inc");
-      World.add(engine.world, ball);
-      Matter.Body.applyForce(ball,{x:wWidth*rand1,y:wHeight*rand2},{x:.5*rand1,y:.5*rand2});
-    }, 1000);
-   
     //zero gravity
     engine.world.gravity.y = 0;
 
@@ -199,14 +197,67 @@ class Bored extends Component {
     render.canvas.style.backgroundSize = 'stretch';
 
     Render.run(render);
+    this.setState({
+      Bodies: Bodies,
+      World: World,
+      engine: engine,
+      defaultCategory: defaultCategory,
+      wWidth:wWidth,
+      wHeight:wHeight
+    });
+
     
 
+
   }
+
+  
+
+  enableAsteroids() {
+    var context = this;
+    this.setState({
+      asteroids: !this.state.asteroids
+    }, context.toggleAsteroids);
+
+  }
+  meteorshower() {
+    var context = this;
+    window.showerName = setInterval(function() {
+      var rand1 = Math.random();
+      var rand2 = Math.random();
+      var ball = context.state.Bodies.circle( -200*rand1 ,-100*rand2,10*rand1+5,{
+        restitution: 1,
+        mass:.5,
+        collisionFilter: {
+          group: context.state.defaultCategory
+        }
+        
+      });
+      console.log("ball inc");
+      context.state.World.add(context.state.engine.world, ball);
+      Matter.Body.applyForce(ball,{x:context.state.wWidth*rand1,y:context.state.wHeight*rand2},{x:.5*rand1,y:.5*rand2});
+    }, 1000);
+    window.showerName();
+  }
+      
+  toggleAsteroids(){
+
+    if(this.state.asteroids){
+      this.meteorshower();
+    } else{
+      window.clearTimeout(window.showerName);
+    }
+  }
+
+  
 
   render () {
     { var context = this; }
     return (
-      <div>
+      <div> 
+        <div>
+        <IconButton style={{zIndex:1000, position:"fixed", top:0, right: 400}} iconStyle={{color:"white"}} className="asteroidButton" onClick={this.enableAsteroids}><StarIcon style= {{color:"white"}}/></IconButton>
+        </div> 
        
          
  
