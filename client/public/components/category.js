@@ -165,15 +165,14 @@ class Category extends Component {
     return (
       <div className="catBody">
         <div className="lowerHead" style={{background:color1, textAlign:textAlign}}>
-        <span style={{fontFamily: font, color: color2, fontSize:fontSize}} className="currLocation">{store.getState().categoryInfo.categoryInfo.headerText || "W E L C O M E"}</span>
-        <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
+          <span style={{fontFamily: font, color: color2, fontSize:fontSize}}>{store.getState().categoryInfo.categoryInfo.headerText || 'You are here: ' + this.props.params.category}</span>
+          <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
         </div>
         <div className="row">
         <FriendFeed />
         <Sunburst />
         </div>
-        <div className="categoryPageContainer row">
-        
+        <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer row">
           <SearchBar />
           <div className="row">
             {context.state.data.map(function (item) {
@@ -181,10 +180,11 @@ class Category extends Component {
                 <div className="hyper col-md-3" style={{order: item.views}} >
                   <EditHyper params={context.props.params} categoryCall={context.categoryPageCategoryCall} item={item}/>
                   <a href={item.url} target="_blank">
-
                     <Card onClick={()=>context.updateViews(item)}>
-                    <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
-                      {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
+                    <div className="hyperBG" style={{background: 'url(' + item.image + ')'}}>
+                    </div>
+                    <CardMedia className="hyperMediaHead" overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
+                      {item.image.length > 3 ? <img className="hyperImage" style={{minWidth:'none'}} src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 175}}/>}
                     </CardMedia>
                     </Card>
                   </a>

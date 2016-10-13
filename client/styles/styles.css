@@ -11,11 +11,11 @@
     z-index: 3;
    
 }
-.filter-content-textbox{
-  position: absolute;
-  top:0;
-  left:100px;
-}
+.filter-content-textbox.filter-conten {
+    position: absolute !important;
+    right: 32px;
+    top: 0px;
+}   
 
 html {
     background: #f4f4f4;
@@ -48,8 +48,16 @@ span.currLocation {
     font-weight: 100;
     padding-top: 12px;
     margin: 0px -30px;
-    height:100%;
+    height: 100%;
+    padding-bottom: 12px;
 }
+
+.hyperImage {
+    height: 175px;
+    width: auto !important;
+}
+
+
 
 .sunburstContainer {
     width: 250px;
@@ -370,6 +378,32 @@ span.addNew div {
     background: #d5dbe6;
 }
 
+.hyperBG {
+    height: 100%;
+    width: 91%;
+    content: "";
+    opacity: .1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    background-repeat: none;
+    background-size: cover;
+    margin-left: 15px;
+    margin-right: -15px;
+    overflow-x: hidden;
+}
+
+img.hyperImage {
+    height: 175px;
+    width: auto !important;
+    min-width: none !important;
+}
+
+.hyperMediaHead {
+    text-align: center;
+}
 
 button.logIn {
     height: 55px;
@@ -408,6 +442,16 @@ button.signUp {
     float: right;
 }
 
+
+.footer {
+    height: 40px;
+    background: #1C344A;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    position: fixed;
+}
 
 
 .gradient1 {
@@ -626,6 +670,15 @@ background: #2BC0E4; /* fallback for old browsers */
 background: -webkit-linear-gradient(to left, #2BC0E4 , #EAECC6); /* Chrome 10-25, Safari 5.1-6 */
 background: linear-gradient(to left, #2BC0E4 , #EAECC6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
           
+}
+
+.sunburst-container.col-md-3 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.friendFeed.col-md-9 {
+    margin-top: 60px;
 }
 
 img.imageLogo {
