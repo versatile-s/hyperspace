@@ -159,14 +159,14 @@ class Category extends Component {
     return (
       <div className="catBody">
         <div className="lowerHead">
-        You are here: <span className="currLocation">{this.props.params.category}</span>
+          You are here: <span className="currLocation">{this.props.params.category}</span>
+          <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
         </div>
         <div className="row">
         <FriendFeed/>
         <Sunburst/>
         </div>
         <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer row">
-        <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
           <SearchBar />
           <div className="row">
             {context.state.data.map(function (item) {
