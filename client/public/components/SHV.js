@@ -10,7 +10,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
 import ReactDOM from 'react-dom';
-import MakeCategory from './makeCategory';
+import MakeCategory from './createCategory';
 import store from '../../store';
 
 class HyperSearch extends Component {
@@ -80,7 +80,7 @@ class HyperSearch extends Component {
 
   openMenu(){
     this.setState({
-      open: true
+      open: !this.state.open
     });
   }
 
@@ -92,45 +92,43 @@ class HyperSearch extends Component {
 
   render () {
     return (
-      <div>
-        <div className="knob-wrapper">
-          <IconMenu onMouseOver={this.openMenu}
-            open={this.state.open}
-            useLayerForClickAway={true}
-            iconStyle={{}}
-            onTouchTap={this.getCategories}
-            // disableAutoFocus={true}
-            menuStyle={{width:250}}
-            touchTapCloseDelay={0}
-            initiallyKeyboardFocused={false}
-            iconButtonElement={<IconButton iconStyle={{color:"white"}} onMouseOver={this.openMenu} ><SearchIcon onMouseOver={this.openMenu} iconStyle={{color:"white"}}/></IconButton>}
-            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-            targetOrigin={{horizontal: 'right', vertical: 'top'}}
-            >
-            <div className="search-hyper-wrapper-shv" onMouseLeave={this.closeMenu}>
-              <FlatButton label="Search Hypers" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} fullWidth="true" disabled={true}/>
-              <div className="wrapper" style={{width: '96%', margin: '0 0 2% 2%'}}>
-                <Checkbox onClick={this.setSelf} style="float: left"/> Show only my Hypers
-                <br/>
-                <TextField style={{width: '96%', margin: '0 0 2% 2%'}} hintText="Search Hypers" ref="hyperInput" onClick={this.forceFocus} onChange={this.elasticSearch}/>
-                {store.getState().searchedHypers.searchedHypers ? store.getState().searchedHypers.searchedHypers.slice(0, 4).map((hyper) => {
-                  return (
-                    <a href={hyper._source.url} target="_blank" style={{width: '96%', margin: '0 0 2% 2%'}}> 
-                      <MenuItem focusState="none" disableAutoFocus={true}>
-                        <div className="search-hyper-results">
-                          <p className="search-hyper-title">{hyper._source.title}</p>
-                          <p className="search-hyper-username"><h5>Submitted by:</h5><h4>{hyper._source.username}</h4></p>
-                          <p className="search-hyper-description">{hyper._source.description}</p>
-                        </div>
-                      </MenuItem>
-                    </a>
-                  );
-                }) : null}
-              </div>
+      <div className="knob" onClick={this.openMenu} >
+        <IconMenu
+          open={this.state.open}
+          useLayerForClickAway={true}
+          iconStyle={{}}
+          onTouchTap={this.getCategories}
+          // disableAutoFocus={true}
+          menuStyle={{width:250}}
+          touchTapCloseDelay={0}
+          initiallyKeyboardFocused={false}
+          iconButtonElement={<IconButton iconStyle={{color:"white"}} ><SearchIcon iconStyle={{color:"white"}}/></IconButton>}
+          anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+          targetOrigin={{horizontal: 'right', vertical: 'top'}}
+          >
+          <div className="search-hyper-wrapper-shv" onMouseLeave={this.closeMenu}>
+            <FlatButton label="Search Hypers" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} fullWidth="true" disabled={true}/>
+            <div className="wrapper" style={{width: '96%', margin: '0 0 2% 2%'}}>
+              <Checkbox onClick={this.setSelf} style="float: left"/> Show only my Hypers
+              <br/>
+              <TextField style={{width: '96%', margin: '0 0 2% 2%'}} hintText="Search Hypers" ref="hyperInput" onClick={this.forceFocus} onChange={this.elasticSearch}/>
+              {store.getState().searchedHypers.searchedHypers ? store.getState().searchedHypers.searchedHypers.slice(0, 4).map((hyper) => {
+                return (
+                  <a href={hyper._source.url} target="_blank" style={{width: '96%', margin: '0 0 2% 2%'}}> 
+                    <MenuItem focusState="none" disableAutoFocus={true}>
+                      <div className="search-hyper-results">
+                        <p className="search-hyper-title">{hyper._source.title}</p>
+                        <p className="search-hyper-username"><h5>Submitted by:</h5><h4>{hyper._source.username}</h4></p>
+                        <p className="search-hyper-description">{hyper._source.description}</p>
+                      </div>
+                    </MenuItem>
+                  </a>
+                );
+              }) : null}
             </div>
-          </IconMenu>
-        </div> 
-      </div>
+          </div>
+        </IconMenu>
+      </div> 
     );
   }
 }

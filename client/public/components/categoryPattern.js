@@ -8,10 +8,8 @@ import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import store from '../../store';
 import {connect} from 'react-redux';
-import MyCategories from './myCategories';
-
+import MyCategories from './userCategories';
 import EditHyper from './editHyper';
-
 import FriendFeed from './friendFeed.js';
 import Sunburst from './sunburst.js';
 import SearchBar from './searchbar';

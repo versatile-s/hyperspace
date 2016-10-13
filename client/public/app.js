@@ -8,7 +8,7 @@ import Layout from './components/experimental/layoutTest';
 import Dashboard from './components/dashboard';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
-import Category from './components/category';
+import Category from './components/categoryPattern';
 import Side from './components/side';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';

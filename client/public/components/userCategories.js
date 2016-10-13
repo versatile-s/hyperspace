@@ -11,7 +11,7 @@ import ReactDOM from 'react-dom';
 import ListIcon from 'material-ui/svg-icons/action/list';
 import store from '../../store';
 import {connect} from 'react-redux';
-import Category from './Category';
+import Category from './categoryPattern';
 
 class MyCategory extends Component {
   constructor (props) {
@@ -54,7 +54,7 @@ class MyCategory extends Component {
   openMenu(){
     this.getCategories();
     this.setState({
-      open: true
+      open: !this.state.open
     });
   }
 
@@ -66,7 +66,7 @@ class MyCategory extends Component {
 
   render () {
     return (
-      <div className="knob" onMouseOver={this.openMenu} >
+      <div className="knob" onClick={this.openMenu} >
           <IconMenu 
             open={this.state.open}
             iconStyle={{}}
@@ -74,7 +74,7 @@ class MyCategory extends Component {
             menuStyle={{width:250}}
             touchTapCloseDelay={0}
             initiallyKeyboardFocused={false}
-            iconButtonElement={<IconButton onMouseOver={this.openMenu} iconStyle={{color:"white"}} onClick={this.getCategories}><ListIcon onMouseOver={this.openMenu} /></IconButton>}
+            iconButtonElement={<IconButton iconStyle={{color:"white"}} onClick={this.getCategories}><ListIcon /></IconButton>}
             anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >

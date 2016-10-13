@@ -66,9 +66,8 @@ class MakeCategory extends Component {
   }
   openMenu(){
     this.setState({
-      open:true
+      open: !this.state.open
     });
-
   }
 
   closeMenu(){
@@ -79,8 +78,8 @@ class MakeCategory extends Component {
 
   render () {
     return (
-      <div>
-        <IconMenu onMouseEnter={this.openMenu}
+      <div className="knob" onClick={this.openMenu} >
+        <IconMenu onClick={this.openMenu}
           style={this.props.params.user===store.getState().username.username?{}:{display:"none"}}
           useLayerForClickAway={true}
           open={this.state.open}
@@ -89,7 +88,7 @@ class MakeCategory extends Component {
           menuStyle={{width:250}}
           touchTapCloseDelay={0}
           initiallyKeyboardFocused={false}
-          iconButtonElement={<IconButton onMouseOver={this.openMenu}><AddIcon onMouseOver={this.openMenu}/></IconButton>}
+          iconButtonElement={<IconButton ><AddIcon /></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import store from '../../store';
 import {connect} from 'react-redux';
-import MyCategories from './MyCategories';
+import MyCategories from './userCategories';
 
 class FriendFeed extends Component {
   constructor (props) {
