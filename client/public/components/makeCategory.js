@@ -90,7 +90,7 @@ class MakeCategory extends Component {
   render () {
     return (
       <div>
-        <IconMenu
+        <IconMenu onMouseEnter={this.openMenu}
           style={this.props.params.user===store.getState().username.username?{}:{display:"none"}}
           useLayerForClickAway={true}
           open={this.state.open}
@@ -99,13 +99,13 @@ class MakeCategory extends Component {
           menuStyle={{width:250}}
           touchTapCloseDelay={0}
           initiallyKeyboardFocused={false}
-          iconButtonElement={<IconButton onMouseEnter={this.openMenu}><AddIcon /></IconButton>}
+          iconButtonElement={<IconButton onMouseOver={this.openMenu}><AddIcon onMouseOver={this.openMenu}/></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
           <div className="createCategory-menu" onMouseLeave={this.closeMenu}>
-            <FlatButton label="add new page" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-            <div ref="catbox">
+            <FlatButton label="add new page" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} fullWidth="true" disabled={true}/>
+            <div ref="catbox" style={{width: '96%', margin: '0 0 2% 2%'}}>
               <TextField hintText="NEW PAGE TITLE" ref="categoryInput"onClick={this.forceFocus} />
               <RaisedButton type="button" fullWidth="true" label="Create New PAge" onClick={this.makeNewCategory}/>
             </div>

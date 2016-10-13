@@ -57,20 +57,20 @@ class FriendList extends Component {
     this.setState({
       open:true
     });
-    console.log("mouseOver");
+    console.log("mouseEnter");
   }
 
   closeMenu(){
     this.setState({
       open:false
     });
-    console.log("mouseleave");
+    console.log("mouseLeave");
   }
 
   render () {
     return (
       <div>
-        <IconMenu
+        <IconMenu onMouseOver={this.openMenu}
           open={this.state.open}
 
           
@@ -80,17 +80,17 @@ class FriendList extends Component {
           menuStyle={{width:250}}
           touchTapCloseDelay={0}
           initiallyKeyboardFocused={false}
-          iconButtonElement={<IconButton iconStyle={{color:"white"}} onMouseEnter= {this.openMenu} ><GroupIcon iconStyle={{color:"white"}}/></IconButton>}
+          iconButtonElement={<IconButton onMouseOver={this.openMenu} iconStyle={{color:"white"}} ><GroupIcon onMouseOver={this.openMenu} iconStyle={{color:"white"}}/></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
           <div onMouseLeave={this.closeMenu} className="friendList-menu" >
-          <FlatButton label="LURK LIST" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-          {this.state.friendsData.map((friend) => {
-            return (
-             <MenuItem iconStyle={{color:"white"}} onClick={()=>this.toFriend(friend)} primaryText={friend[0] + " - " + friend[1]}/>     
-            );
-          })}
+            <FlatButton label="LURK LIST" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} fullWidth="true" disabled={true}/>
+            {this.state.friendsData.map((friend) => {
+              return (
+               <MenuItem iconStyle={{color:"white"}} style={{width: '96%', margin: '0 0 2% 2%'}} onClick={()=>this.toFriend(friend)} primaryText={friend[0] + " - " + friend[1]}/>     
+              );
+            })}
           </div>
         </IconMenu>
       </div>  
