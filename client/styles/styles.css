@@ -3,7 +3,7 @@
 .header {
     height: 60px;
     width: 100%;
-    background: #113B63;
+    background: #19042D;
     position: fixed;
     top: 0;
     left: 0;
@@ -30,7 +30,7 @@ span.currLocation {
 .lowerHead {
     height: 47px;
     text-align: center;
-    background: #19042D;
+    background: #462565;
     color: white;
     font-family: Roboto;
     font-weight: 100;

@@ -141,7 +141,7 @@ class Frame extends Component {
     }
     return (
       <div>
-        <div style={{background:color1 || '#2A0D45'}} className="header" >
+        <div style={{background:color1 || '#19042d'}} className="header" >
           <EditCategory params={this.props.params} categoryCall={this.categoryCall} getCategory={this.getCategory}/>
           <div style={{color: color2 || "white", fontFamily:font, fontSize: fontSize, textAlign:textAlign}} className="logo">{store.getState().categoryInfo.categoryInfo.headerText || <img className="imageLogo" src={'../assets/hyprspace-logodraft.png'}/>}</div>
         </div>
