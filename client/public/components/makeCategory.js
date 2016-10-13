@@ -54,7 +54,17 @@ class MakeCategory extends Component {
       },
       body: JSON.stringify({
         username: username,
-        name: newCatName
+        name: newCatName,
+        headerText: newCatName,
+        headerTextColor: 'grey',
+        backgroundUrl: '/../assets/galaxy3.jpg',
+        headerTextBackgroundColor: '#19042d',
+        fontFamily: 'Roboto',
+        fontSize: 20,
+        textAlign: 'left',
+        sunburst: false,
+        feed: false,
+        searchBar:false
       })
     }).then(function(){
       browserHistory.push('/' + username + "/"+newCatName);

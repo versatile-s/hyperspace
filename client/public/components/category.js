@@ -169,8 +169,8 @@ class Category extends Component {
         <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
         </div>
         <div className="row">
-        <FriendFeed/>
-        <Sunburst/>
+        <FriendFeed />
+        <Sunburst />
         </div>
         <div className="categoryPageContainer row">
         

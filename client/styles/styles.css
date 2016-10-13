@@ -178,12 +178,21 @@ span.currLocation {
   top:0;
   left:0;
 }
+.asteroidButton{
+  position: fixed;
+  top:0;
+  left:200;
+  color: white;
+}
 .editCategory{
   z-index: 1;
   position: relative;
   float:left;
   top:0;
   right:0px;
+}
+.categoryBackground{
+  background-size: cover;
 }
 .bored-knob{
   z-index: 100;
