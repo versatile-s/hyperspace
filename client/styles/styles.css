@@ -399,6 +399,16 @@ button.signUp {
 }
 
 
+.footer {
+    height: 40px;
+    background: #1C344A;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    position: fixed;
+}
+
 
 .gradient1 {
      
