@@ -17,8 +17,13 @@ class HyperSearch extends Component {
   constructor (props) {
     super(props);
     store.dispatch({type: 'SELF', payload: false});
+    this.state={
+      open:false
+    },
     this.elasticSearch = this.elasticSearch.bind(this);
     this.setSelf = this.setSelf.bind(this);
+    this.openMenu = this.openMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
   }
 
   setSelf () {
@@ -72,25 +77,39 @@ class HyperSearch extends Component {
   forceFocus(){
     this.refs.hyperInput.focus();
   }
+  openMenu(){
+    this.setState({
+      open: true
+    });
+    console.log("mouseOver");
+  }
+
+  closeMenu(){
+    this.setState({
+      open: false
+    });
+    console.log("mouseleave");
+  }
 
   render () {
     return (
       <div>
         <div className="knob-wrapper">
           <IconMenu
+            open={this.state.open}
             useLayerForClickAway={true}
-            iconStyle={{opacity:.2, width:50}}
+            iconStyle={{}}
             onTouchTap={this.getCategories}
-            disableAutoFocus={true}
+            // disableAutoFocus={true}
             menuStyle={{width:250}}
             touchTapCloseDelay={0}
             initiallyKeyboardFocused={false}
-            iconButtonElement={<IconButton><SearchIcon /></IconButton>}
-            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+            iconButtonElement={<IconButton iconStyle={{color:"white"}} onMouseEnter={this.openMenu}><SearchIcon iconStyle={{color:"white"}}/></IconButton>}
+            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >
             <FlatButton label="Search Hypers" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-            <div className="wrapper">
+            <div onMouseLeave={this.closeMenu} className="wrapper">
               <Checkbox onClick={this.setSelf} style="float: left"/> Show only my Hypers
               <br/>
               <TextField hintText="Search Hypers" ref="hyperInput" onClick={this.forceFocus} onChange={this.elasticSearch}/>
