@@ -502,11 +502,13 @@ var utils = {
   },
 
   getCategoryPage: function(req,res) {
+    console.log('in getCatPage');
     User.findOne({
       where: {
         username: req.body.username
       }
     }).then(function (user) {
+      console.log(user, 'user');
       if (user) {
         CategoryPage.findOne({
           where: {
@@ -514,6 +516,7 @@ var utils = {
             name: req.body.title
           }
         }).then(function(category) {
+          console.log('sending this: ', category);
           res.send(category);
         });
       }
