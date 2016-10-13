@@ -130,17 +130,15 @@ class Side extends Component {
   render () {
     return (
       <div className ={this.props.params.user?"list-knob":"blank"}>
-       
-            <IconButton onClick={this.toHome} iconStyle={{}}><HomeIcon /></IconButton>
-            <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall} getCategory={this.props.getCategory}/>
-            <MakeCategory params={this.props.params} categoryCall={this.props.categoryCall} getCategory={this.props.getCategory} />
-            <HyperSearch username={store.getState().username.username}/>
-            <FriendList params={this.props.params} getCategory={this.props.getCategory} categoryCall={this.props.categoryCall}/>
-            <AddFriend params={this.props.params} username={store.getState().username.username}/>
-            <IconButton onClick={this.startEdit} style={this.props.params.user===store.getState().username.username?{}:{display:"none"}} iconStyle={{}}><EditIcon/></IconButton>
-            <IconButton onClick={this.toBored} iconStyle={{}}><BoredIcon /></IconButton>
-            <Logout closeMenu={this.closeMenu}/>
-     
+            <IconButton onClick={this.toHome} iconStyle={{color:"white"}}><HomeIcon /></IconButton>
+            <MyCategories iconStyle={{color:"white"}} params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall} getCategory={this.props.getCategory}/>
+            <MakeCategory iconStyle={{color:"white"}} params={this.props.params} categoryCall={this.props.categoryCall} getCategory={this.props.getCategory} />
+            <HyperSearch iconStyle={{color:"white"}} username={store.getState().username.username}/>
+            <FriendList params={this.props.params} iconStyle={{color:"white"}} getCategory={this.props.getCategory} categoryCall={this.props.categoryCall}/>
+            <AddFriend params={this.props.params} iconStyle={{color:"white"}} username={store.getState().username.username}/>
+            <IconButton onClick={this.startEdit} iconStyle={{color:"white"}} style={this.props.params.user===store.getState().username.username?{}:{display:"none"}}><EditIcon iconStyle={{color:"white"}}/></IconButton>
+            <IconButton onClick={this.toBored} iconStyle={{color:"white"}}><BoredIcon iconStyle={{color:"white"}}/></IconButton>
+            <Logout iconStyle={{color:"white"}} closeMenu={this.closeMenu}/>
       </div>
     );
   }

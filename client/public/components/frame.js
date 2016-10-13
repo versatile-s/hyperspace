@@ -8,8 +8,6 @@ import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import store from '../../store';
 import EditCategory from './editCategory';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
 
 class Frame extends Component {
   constructor (props) {
@@ -82,23 +80,21 @@ class Frame extends Component {
   }
 
   getCategory (username, title) {
-    if (username && username !== '' && title && title !== '') {
-      fetch('/getCategory', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: username,
-          title: title
-        })
+    fetch('/getCategory', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        title: title
+      })
 
-      }).then(function(res) {
-        res.json().then(function(parsedRes) {
-          store.dispatch({type: "CAT_INFO", payload: parsedRes});
-        });
+    }).then(function(res) {
+      res.json().then(function(parsedRes) {
+        store.dispatch({type: "CAT_INFO", payload: parsedRes});
       });
-    }
+    });
   }
 
 
@@ -145,25 +141,24 @@ class Frame extends Component {
     }
     return (
       <div>
-        <div style={{background:color1||"#2A0D45"}} className="header" >
-          <div className="sideMenu">
-            <img className="logo-image" src="/../assets/hyperspace1.png"/>
-            <div className="navbar">
-              <Side categoryCall={this.categoryCall} getCategory={this.getCategory} params={this.props.params}/>
-            </div>
-          </div>
+        <div style={{background:color1 || '#19042d'}} className="header" >
+          <EditCategory params={this.props.params} categoryCall={this.categoryCall} getCategory={this.getCategory}/>
+          <div style={{color: color2 || "white", fontFamily:font, fontSize: fontSize, textAlign:textAlign}} className="logo">{store.getState().categoryInfo.categoryInfo.headerText || <img className="imageLogo" src={'../assets/hyprspace-logodraft.png'}/>}</div>
         </div>
-        <div style={{background:color1||"#2A0D45", textAlign:textAlign||"center"}} className={store.getState().username.username?"user-header":"blank"}>  
-          <div style={{color:color2||"white", fontFamily:font, fontSize: fontSize, textAlign:textAlign||"center"}} className="user-header-text">
-            {store.getState().categoryInfo.categoryInfo.headerText || "h y p r s p a c e"}
-          </div>
-            <EditCategory params={this.props.params} categoryCall={this.categoryCall} getCategory={this.getCategory}/>
+        <div className="sideMenu">
+          <Side categoryCall={this.categoryCall} getCategory={this.getCategory} params={this.props.params}/>
         </div>
         <div className="mainContent">
             {React.cloneElement(this.props.children, {categoryCall: this.categoryCall, getCategory: this.getCategory})}
         </div>
-        <div style={{background:color1|| "blue"}} className="footer" />
-      
+        <div style={{background: color1 || '#7F5AA2'}} className="footer row">
+          <div className="footerText col-md-4">
+          Privacy | Legal | Contact
+          </div>
+          <div className="footerText col-md-8">
+            © HYPRSPACE 2016. All rights reserved.
+          </div>
+        </div>
       </div>
     );
   }

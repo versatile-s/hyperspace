@@ -84,7 +84,7 @@ class MakeCategory extends Component {
           style={this.props.params.user===store.getState().username.username?{}:{display:"none"}}
           useLayerForClickAway={true}
           open={this.state.open}
-          iconStyle={{}}
+          iconStyle={{color:"white"}}
           // disableAutoFocus={true}
           menuStyle={{width:250}}
           touchTapCloseDelay={0}

@@ -75,6 +75,16 @@ const findSum = function (data, level) {
 };
 
 
+const hexArray = ['#2A0D45','#251434','#19042D','#733FA2','#7F5AA2','#4B093B','#39132F','#310326','#A5398A','#A55691','#181147','#1B1735','#0B062E','#5246A3','#675FA3'];
+
+const randomizeHex = function () {
+  var randomIndex = Math.floor(Math.random() * hexArray.length);
+  console.log('RANDOM HEX IS', randomIndex);
+  console.log('RETURNING VALUE', hexArray[randomIndex]);
+  return hexArray[randomIndex];
+};
+
+
 class Sunburst extends Component {
   constructor (props) {
     super (props);
@@ -159,7 +169,7 @@ class Sunburst extends Component {
     let levelStartAngle = [0];
 
     return (
-      <div className="sunburst-container">
+      <div className="sunburst-container col-md-3">
         <svg ref={(c) => this.svg = c} viewBox={`0 0 ${width} ${height}`} data-total={slices[0].size}>
         <g transform={transform}>
         {slices.map((slice, i) => {
@@ -178,9 +188,12 @@ class Sunburst extends Component {
           return (    
           <path className='slice' data-path={slice.path}
             data-value={slice.size}
+            stroke={'white'}
+            strokeWidth={8}
             data-name={slice.name}
             display={i === 0 ? 'none' : 'inline'}
-            fill={rmc.getColor()} d={shape({
+            fill={randomizeHex()}
+            d={shape({
               startAngle,
               endAngle,
               innerRadius,
@@ -192,10 +205,10 @@ class Sunburst extends Component {
           );
         })}
         </g>
-        <text transform={transform} ref={(c) => this.details = c}
-          textAnchor='middle' className='details' dy={-10}/>
-        <text transform={transform} ref={(c) => this.percentage = c}
-          textAnchor='middle' className='details-percentage' dy={10}/>
+          <text transform={transform} ref={(c) => this.details = c}
+            textAnchor='middle' className='details' dy={-20}/>
+          <text transform={transform} ref={(c) => this.percentage = c}
+            textAnchor='middle' className='details-percentage' dy={30}/>
         </svg>
       </div>
     );
