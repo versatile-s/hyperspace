@@ -185,6 +185,9 @@ span.currLocation {
   top:0;
   right:0px;
 }
+.categoryBackground{
+  background-size: cover;
+}
 .bored-knob{
   z-index: 100;
   position: fixed;
