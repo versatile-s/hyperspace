@@ -20,13 +20,10 @@ const sum = function (node) {
   return node.size;
 };
 
-
-
 const flatten = function (data, level, path) {
   var flat = [];
   var level = level || 1;
   var path = path || '';
-
 
   flat.push({
     name: data.name,
@@ -91,18 +88,18 @@ class Sunburst extends Component {
       return deg > 359 ? deg % 360 : deg;
     };
 
+    this.handleMouseOver = this.handleMouseOver.bind(this);
+    this.handleMouseOut = this.handleMouseOut.bind(this);
+
   }
 
   componentWillMount () {
     var context = this;
-    console.log('BOUT TO FETCH AND USERNAME BEING SENT IS', store.getState().username.username);
     fetch('/getSunburst?username=' + store.getState().username.username)
       .then(function (response) {
         response.json().then(function(parsedRes) {
-          console.log(parsedRes, 'PARSED RES IS');
           return parsedRes;
         }).then(function (parsed) {
-          console.log('parsed: ', parsed);
           context.setState({
             data: parsed
           });
@@ -131,6 +128,7 @@ class Sunburst extends Component {
   }
 
   handleMouseOut(e) {
+    var context = this;
     let slices = this.svg.querySelectorAll('path.slice');
 
     let i = -1;
@@ -146,19 +144,15 @@ class Sunburst extends Component {
 
   render () {
     var context = this;
-    console.log('DATA IN RENDER IS', this.state.data);
-
     let width = 600;
     let height = 600;
     let radius = 400;
     let donutRadius = 100;
     let transform = `translate(${width * .5},${.5 * height})`;
     let slices = utils.flatten(utils.findSum(context.state.data));
-    // slices = utils.findSum(data),
     let scale = scaleLinear().domain([0, slices[0].size]).range([0, 2 * Math.PI]);
     let shape = arc();
     let depth = utils.depth(context.state.data);
-
     let currentStartAngle = 0;
     let currentLevel = 1;
     let arcWidth = (radius - donutRadius)/depth;
