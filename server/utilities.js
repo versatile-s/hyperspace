@@ -59,7 +59,9 @@ var getUserId = function (username, cb) {
       username: username
     }
   }).then(function (user) {
-    cb(user.id);
+    if (user && user !== undefined) {
+      cb(user.id);
+    }
   });
 };
 
@@ -537,10 +539,7 @@ var utils = {
   },
 
   generateSunburst: function(req, res) {
-    console.log('req ->', req, '<-');
     console.log('q', req.q);
-    console.log('req.query', req.query);
-    console.log('req.params', req.params);
     var sun = {};
     var catCount = 0;
     var hyperCount = 0;
@@ -611,33 +610,39 @@ var utils = {
           userId: userID
         }
       }).then(function (allFriends) {
-        allFriends.forEach(function (friend) {
-          getUserId(friend.name, function (friendID) {
-            CategoryPage.findOne({
-              where: {
-                name: friend.category,
-                userId: friendID
-              }
-            }).then(function (cat) {
-              Hyper.findAll({
+        if (allFriends && allFriends.length !== 0) {
+          allFriends.forEach(function (friend) {
+            getUserId(friend.name, function (friendID) {
+              CategoryPage.findOne({
                 where: {
-                  CategoryPageId: cat.id,
-                  username: friend.name
+                  name: friend.category,
+                  userId: friendID
                 }
-              }).then(function (hypers) {
-                storage = storage.concat(hypers);
-              }).then(function () {
-                if ( count === allFriends.length - 1 ) {
-                  res.send(JSON.stringify(storage.sort(function(a, b) {
-                    return a.createdAt > b.createdAt ? 1 : -1;
-                  })));
-                } else {
-                  count ++;
-                }
+              }).then(function (cat) {
+                Hyper.findAll({
+                  where: {
+                    CategoryPageId: cat.id,
+                    username: friend.name
+                  }
+                }).then(function (hypers) {
+                  if (hypers && hypers.length !== 0) {
+                    storage = storage.concat(hypers);
+                  }
+                }).then(function () {
+                  if ( count === allFriends.length - 1 ) {
+                    res.send(JSON.stringify(storage.sort(function(a, b) {
+                      return a.createdAt > b.createdAt ? 1 : -1;
+                    })));
+                  } else {
+                    count ++;
+                  }
+                });
               });
             });
           });
-        });
+        } else {
+          res.send(storage);
+        }
       });
     });
   },

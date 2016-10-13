@@ -6,11 +6,6 @@ import {arc} from 'd3-shape';
 import rmc from 'random-material-color';
 import * as utils from './utils'; 
 
-
-let data = {
-  
-};
-
 const sum = function (node) {
   if (node.children && node.children.length) {
     let d = 0;
@@ -87,6 +82,10 @@ class Sunburst extends Component {
   constructor (props) {
     super (props);
 
+    this.state = {
+      data: {}
+    };
+
     let toDegrees = function (rad) {
       let deg = rad * 180 / Math.PI;
       return deg > 359 ? deg % 360 : deg;
@@ -101,7 +100,14 @@ class Sunburst extends Component {
       .then(function (response) {
         response.json().then(function(parsedRes) {
           console.log(parsedRes, 'PARSED RES IS');
-          data = parsedRes;
+          return parsedRes;
+        }).then(function (parsed) {
+          console.log('parsed: ', parsed);
+          context.setState({
+            data: parsed
+          });
+        }).then(function () {
+          context.forceUpdate();
         });
       }); 
   }
@@ -139,19 +145,19 @@ class Sunburst extends Component {
   }
 
   render () {
-
-    console.log('DATA IN RENDER IS', data);
+    var context = this;
+    console.log('DATA IN RENDER IS', this.state.data);
 
     let width = 600;
     let height = 600;
     let radius = 400;
     let donutRadius = 100;
-    let transform = `translate(${width * 0.45},${0.55 * height})`;
-    let slices = utils.flatten(utils.findSum(data));
+    let transform = `translate(${width * .5},${.5 * height})`;
+    let slices = utils.flatten(utils.findSum(context.state.data));
     // slices = utils.findSum(data),
     let scale = scaleLinear().domain([0, slices[0].size]).range([0, 2 * Math.PI]);
     let shape = arc();
-    let depth = utils.depth(data);
+    let depth = utils.depth(context.state.data);
 
     let currentStartAngle = 0;
     let currentLevel = 1;
@@ -159,43 +165,45 @@ class Sunburst extends Component {
     let levelStartAngle = [0];
 
     return (
-      <svg ref={(c) => this.svg = c} viewBox={`0 0 ${width} ${height}`} data-total={slices[0].size}>
-      <g transform={transform}>
-      {slices.map((slice, i) => {
-        let { level, size, name} = slice;
-        let startAngle = currentStartAngle;
-        let endAngle = startAngle + scale(slice.size);
-        let innerRadius = (slice.level - 1) * arcWidth;
-        let outerRadius = innerRadius + arcWidth;
+      <div className="sunburst-container">
+        <svg ref={(c) => this.svg = c} viewBox={`0 0 ${width} ${height}`} data-total={slices[0].size}>
+        <g transform={transform}>
+        {slices.map((slice, i) => {
+          let { level, size, name} = slice;
+          let startAngle = currentStartAngle;
+          let endAngle = startAngle + scale(slice.size);
+          let innerRadius = (slice.level - 1) * arcWidth;
+          let outerRadius = innerRadius + arcWidth;
 
-        if (slices[i + 1] && (slices[i + 1].level <= level)) {
-          currentStartAngle = endAngle;
-        }
-        
-        currentLevel = slice.level;
+          if (slices[i + 1] && (slices[i + 1].level <= level)) {
+            currentStartAngle = endAngle;
+          }
+          
+          currentLevel = slice.level;
 
-        return (    
-        <path className='slice' data-path={slice.path}
-          data-value={slice.size}
-          data-name={slice.name}
-          display={i === 0 ? 'none' : 'inline'}
-          fill={rmc.getColor()} d={shape({
-            startAngle,
-            endAngle,
-            innerRadius,
-            outerRadius
-          })} onMouseOver={this.handleMouseOver}
-          onMouseOut={this.handleMouseOut}>
-          <title>{`${slice.name}\n${slice.size}`}</title>
-          </path>
-        );
-      })}
-      </g>
-      <text transform={transform} ref={(c) => this.details = c}
-        textAnchor='middle' className='details' dy={-10}/>
-      <text transform={transform} ref={(c) => this.percentage = c}
-        textAnchor='middle' className='details-percentage' dy={10}/>
-      </svg>
+          return (    
+          <path className='slice' data-path={slice.path}
+            data-value={slice.size}
+            data-name={slice.name}
+            display={i === 0 ? 'none' : 'inline'}
+            fill={rmc.getColor()} d={shape({
+              startAngle,
+              endAngle,
+              innerRadius,
+              outerRadius
+            })} onMouseOver={this.handleMouseOver}
+            onMouseOut={this.handleMouseOut}>
+            <title>{`${slice.name}\n${slice.size}`}</title>
+            </path>
+          );
+        })}
+        </g>
+        <text transform={transform} ref={(c) => this.details = c}
+          textAnchor='middle' className='details' dy={-10}/>
+        <text transform={transform} ref={(c) => this.percentage = c}
+          textAnchor='middle' className='details-percentage' dy={10}/>
+        </svg>
+      </div>
     );
   }
 
