@@ -154,17 +154,24 @@ class Category extends Component {
   render () {
     { var context = this; }
     { var hint = 'Search ' + this.props.params.user + '\'s ' + this.props.params.category + ' stash'; }
+    {var color1 = store.getState().categoryInfo.categoryInfo.headerTextBackgroundColor;
+      var color2 = store.getState().categoryInfo.categoryInfo.headerTextColor;
+      var font = store.getState().categoryInfo.categoryInfo.fontFamily;
+      var fontSize = store.getState().categoryInfo.categoryInfo.fontSize;
+      var textAlign = store.getState().categoryInfo.categoryInfo.textAlign;
+    }
     return (
       <div className="catBody">
-        <div className="lowerHead">
-        You are here: <span className="currLocation">{this.props.params.category}</span>
+        <div className="lowerHead" style={{background:color1, textAlign:textAlign}}>
+        <span style={{fontFamily: font, color: color2, fontSize:fontSize}} className="currLocation">{store.getState().categoryInfo.categoryInfo.headerText || "W E L C O M E"}</span>
+        <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
         </div>
         <div className="row">
         <FriendFeed/>
         <Sunburst/>
         </div>
-        <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer row">
-        <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
+        <div className="categoryPageContainer row">
+        
           <SearchBar />
           <div className="row">
             {context.state.data.map(function (item) {
