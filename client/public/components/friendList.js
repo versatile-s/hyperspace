@@ -85,7 +85,7 @@ class FriendList extends Component {
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
           <div onMouseLeave={this.closeMenu} className="friendList-menu" >
-          <FlatButton label="LURK LIST" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
+          <FlatButton onMouseLeave={this.closeMenu} label="LURK LIST" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
           {this.state.friendsData.map((friend) => {
             return (
              <MenuItem onClick={()=>this.toFriend(friend)} primaryText={friend[0] + " - " + friend[1]}/>     
