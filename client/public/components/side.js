@@ -129,32 +129,20 @@ class Side extends Component {
 
   render () {
     return (
-      <div className = "list-knob">
-         <IconMenu
-          open={this.state.open}
-          style={this.props.params.user?{}:{display:"none"}}
-          useLayerForClickAway={true}
-          disableAutoFocus={true}
-          menuStyle={{width:0, opacity:.2}}
-          touchTapCloseDelay={0}
-          initiallyKeyboardFocused={false}
-          iconButtonElement={<IconButton><SettingsIcon /></IconButton>}
-          anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-          targetOrigin={{horizontal: 'right', vertical: 'top'}}
-          >
-            <IconButton onClick={this.toHome} iconStyle={{opacity:.2, width:50}}><HomeIcon /></IconButton>
+      <div className ={this.props.params.user?"list-knob":"blank"}>
+       
+            <IconButton onClick={this.toHome} iconStyle={{}}><HomeIcon /></IconButton>
             <MyCategories params={this.props.params} username={store.getState().username.username} categoryCall={this.props.categoryCall} getCategory={this.props.getCategory}/>
             <MakeCategory params={this.props.params} categoryCall={this.props.categoryCall} getCategory={this.props.getCategory} />
             <HyperSearch username={store.getState().username.username}/>
             <FriendList params={this.props.params} getCategory={this.props.getCategory} categoryCall={this.props.categoryCall}/>
             <AddFriend params={this.props.params} username={store.getState().username.username}/>
-            <IconButton onClick={this.startEdit} style={this.props.params.user===store.getState().username.username?{}:{display:"none"}} iconStyle={{opacity:.2, width:50}}><EditIcon/></IconButton>
-            <IconButton onClick={this.toBored} iconStyle={{opacity:.2, width:50}}><BoredIcon /></IconButton>
+            <IconButton onClick={this.startEdit} style={this.props.params.user===store.getState().username.username?{}:{display:"none"}} iconStyle={{}}><EditIcon/></IconButton>
+            <IconButton onClick={this.toBored} iconStyle={{}}><BoredIcon /></IconButton>
             <Logout closeMenu={this.closeMenu}/>
-        </IconMenu>
+     
       </div>
     );
   }
 }
-
 export default Side;

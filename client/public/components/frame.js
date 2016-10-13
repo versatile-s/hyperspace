@@ -145,24 +145,25 @@ class Frame extends Component {
     }
     return (
       <div>
-        <div style={{background:color1||"blue"}} className="header" >
-          <EditCategory params={this.props.params} categoryCall={this.categoryCall} getCategory={this.getCategory}/>
-          <div style={{color:color2||"white", fontFamily:font, fontSize: fontSize, textAlign:textAlign}} className="logo">{store.getState().categoryInfo.categoryInfo.headerText || "hyprspace"}</div>
-        <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} primaryText="Never" />
-          <MenuItem value={2} primaryText="Every Night" />
-          <MenuItem value={3} primaryText="Weeknights" />
-          <MenuItem value={4} primaryText="Weekends" />
-          <MenuItem value={5} primaryText="Weekly" />
-        </DropDownMenu>
-        <div className="sideMenu">
-          <Side categoryCall={this.categoryCall} getCategory={this.getCategory} params={this.props.params}/>
+        <div style={{background:color1||"#2A0D45"}} className="header" >
+          <div className="sideMenu">
+            <img className="logo-image" src="/../assets/hyperspace1.png"/>
+            <div className="navbar">
+              <Side categoryCall={this.categoryCall} getCategory={this.getCategory} params={this.props.params}/>
+            </div>
+          </div>
+        </div>
+        <div style={{background:color1||"#2A0D45", textAlign:textAlign||"center"}} className={store.getState().username.username?"user-header":"blank"}>  
+          <div style={{color:color2||"white", fontFamily:font, fontSize: fontSize, textAlign:textAlign||"center"}} className="user-header-text">
+            {store.getState().categoryInfo.categoryInfo.headerText || "h y p r s p a c e"}
+          </div>
+            <EditCategory params={this.props.params} categoryCall={this.categoryCall} getCategory={this.getCategory}/>
         </div>
         <div className="mainContent">
             {React.cloneElement(this.props.children, {categoryCall: this.categoryCall, getCategory: this.getCategory})}
         </div>
         <div style={{background:color1|| "blue"}} className="footer" />
-      </div>
+      
       </div>
     );
   }

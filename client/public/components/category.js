@@ -158,10 +158,10 @@ class Category extends Component {
     { var hint = 'Search ' + this.props.params.user + '\'s ' + this.props.params.category + ' stash'; }
     return (
       <div>
+        <TextField style={{position:"fixed", top:0, left:250, zIndex:100}} hintText={hint} className="filter-content-textbox" ref="filterSearch" onChange={this.filterContent}/>
 
         <Sunburst/>
         <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer">
-        <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
 
           <FriendFeed  />
           <SearchBar/>

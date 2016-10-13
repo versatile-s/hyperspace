@@ -18,9 +18,12 @@ class AddFriend extends Component {
     this.state = {
       username: this.props.username,
       categoryTitle: this.props.category,
-      lurked: "lurk this user"
+      lurked: "lurk this user",
+      open: false
     };
     this.addFriend = this.addFriend.bind(this);
+    this.openMenu=this.openMenu.bind(this);
+    this.closeMenu=this.closeMenu.bind(this);
   }
 
   addFriend() {
@@ -43,22 +46,39 @@ class AddFriend extends Component {
         
     });
   }
+  openMenu(){
+    this.setState({
+      open:true
+    });
+    console.log("mouseOver");
+  }
+
+  closeMenu(){
+    this.setState({
+      open:false
+    });
+    console.log("mouseleave");
+  }
 
   render () {
     return (
       <div>
         <IconMenu
-         style={this.props.params.user===store.getState().username.username?{display:"none"}:{}}
-          iconStyle={{opacity:.2, width:50}}
-          disableAutoFocus={true}
+          style={this.props.params.user===store.getState().username.username?{display:"none"}:{}}
+          iconStyle={{}}
+          open={this.state.open}
+          // disableAutoFocus={true}
           menuStyle={{width:250}}
           touchTapCloseDelay={0}
           initiallyKeyboardFocused={false}
-          iconButtonElement={<IconButton><AddFriendIcon /></IconButton>}
-          anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+          iconButtonElement={<IconButton onMouseEnter={this.openMenu}><AddFriendIcon /></IconButton>}
+          anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
+          <div className="addFriend-menu" onMouseLeave={this.closeMenu}>
             <RaisedButton type="button" fullWidth="true" onClick={this.addFriend} label={this.state.lurked} />
+          </div>
+          
         </IconMenu>
       </div>  
     );
