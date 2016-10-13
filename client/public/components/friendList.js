@@ -74,13 +74,13 @@ class FriendList extends Component {
           open={this.state.open}
 
           
-          iconStyle={{}}
+          iconStyle={{color:"white"}}
           onTouchTap={this.fetchFriends}
           // disableAutoFocus={true}
           menuStyle={{width:250}}
           touchTapCloseDelay={0}
           initiallyKeyboardFocused={false}
-          iconButtonElement={<IconButton onMouseEnter= {this.openMenu} ><GroupIcon /></IconButton>}
+          iconButtonElement={<IconButton iconStyle={{color:"white"}} onMouseEnter= {this.openMenu} ><GroupIcon iconStyle={{color:"white"}}/></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
@@ -88,7 +88,7 @@ class FriendList extends Component {
           <FlatButton onMouseLeave={this.closeMenu} label="LURK LIST" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
           {this.state.friendsData.map((friend) => {
             return (
-             <MenuItem onClick={()=>this.toFriend(friend)} primaryText={friend[0] + " - " + friend[1]}/>     
+             <MenuItem iconStyle={{color:"white"}} onClick={()=>this.toFriend(friend)} primaryText={friend[0] + " - " + friend[1]}/>     
             );
           })}
           </div>

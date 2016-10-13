@@ -45,6 +45,7 @@
     "history": "^4.2.0",
     "material-ui": "^0.15.4",
     "morgan": "^1.7.0",
+    "muicss": "^0.9.1",
     "mysql": "^2.11.1",
     "nodemon": "^1.10.2",
     "passport-facebook": "^2.1.1",

@@ -76,7 +76,7 @@ class MyCategory extends Component {
             menuStyle={{width:250}}
             touchTapCloseDelay={0}
             initiallyKeyboardFocused={false}
-            iconButtonElement={<IconButton onMouseEnter={this.openMenu} onClick={this.getCategories}><ListIcon /></IconButton>}
+            iconButtonElement={<IconButton iconStyle={{color:"white"}} onMouseEnter={this.openMenu} onClick={this.getCategories}><ListIcon /></IconButton>}
             anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >

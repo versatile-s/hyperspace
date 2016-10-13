@@ -104,7 +104,7 @@ class HyperSearch extends Component {
             menuStyle={{width:250}}
             touchTapCloseDelay={0}
             initiallyKeyboardFocused={false}
-            iconButtonElement={<IconButton onMouseEnter={this.openMenu}><SearchIcon /></IconButton>}
+            iconButtonElement={<IconButton iconStyle={{color:"white"}} onMouseEnter={this.openMenu}><SearchIcon iconStyle={{color:"white"}}/></IconButton>}
             anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >
