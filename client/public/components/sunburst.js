@@ -110,8 +110,8 @@ class Sunburst extends Component {
     let path = e.target.getAttribute('data-path');
     let name = e.target.getAttribute('data-name');
     let size = e.target.getAttribute('data-value');
-    let total = this.svg.getAttribute('data-total');
-    let slices = this.svg.querySelectorAll(`path.slice:not([data-path^='${path}'])`);
+    let total = context.svg.getAttribute('data-total');
+    let slices = context.svg.querySelectorAll(`path.slice:not([data-path^='${path}'])`);
 
     let i = -1;
     let n = slices.length;
@@ -120,8 +120,8 @@ class Sunburst extends Component {
       slices[i].style.opacity = '0.3';
     }
 
-    this.details.textContent = name;
-    this.percentage.textContent = `${(size * 100 / total).toFixed(2)}%`;
+    context.details.textContent = name;
+    context.percentage.textContent = `${(size * 100 / total).toFixed(2)}%`;
   }
 
   handleMouseOut(e) {
@@ -134,19 +134,19 @@ class Sunburst extends Component {
       slices[i].style.opacity = '1';
     }
 
-    this.details.textContent = '';
-    this.percentage.textContent = '';
+    context.details.textContent = '';
+    context.percentage.textContent = '';
   }
 
   render () {
-
+    var context = this;
     console.log('DATA IN RENDER IS', data);
 
     let width = 600;
     let height = 600;
     let radius = 400;
     let donutRadius = 100;
-    let transform = `translate(${width * 0.45},${0.55 * height})`;
+    let transform = `translate(${width * 0.5},${0.5 * height})`;
     let slices = utils.flatten(utils.findSum(data));
     // slices = utils.findSum(data),
     let scale = scaleLinear().domain([0, slices[0].size]).range([0, 2 * Math.PI]);
@@ -159,7 +159,7 @@ class Sunburst extends Component {
     let levelStartAngle = [0];
 
     return (
-      <div className="sunburstContainer">
+      <div className="sunburstContainer col-md-3">
       <svg ref={(c) => this.svg = c} viewBox={`0 0 ${width} ${height}`} data-total={slices[0].size}>
       <g transform={transform}>
       {slices.map((slice, i) => {
@@ -185,8 +185,8 @@ class Sunburst extends Component {
             endAngle,
             innerRadius,
             outerRadius
-          })} onMouseOver={this.handleMouseOver}
-          onMouseOut={this.handleMouseOut}>
+          })} onMouseOver={context.handleMouseOver}
+          onMouseOut={context.handleMouseOut}>
           <title>{`${slice.name}\n${slice.size}`}</title>
           </path>
         );

@@ -40,10 +40,10 @@ class FriendFeed extends Component {
   render () {
     { var context = this; }
     return (
-      <div className="friendFeed" style={store.getState().categoryInfo.categoryInfo.feed?{}:{display:"none"}}>
+      <div className="friendFeed col-md-9" style={store.getState().categoryInfo.categoryInfo.feed?{}:{display:""}}>
         {context.state.feed.reverse().slice(0, 10).map(function (item) {
           return (
-            <div className="feedHyper">
+            <div className="feedHyper col-md-3">
               <a href={item.url} target="_blank">
                 <Card>
                   <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: 'break-word', lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>

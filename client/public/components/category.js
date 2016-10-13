@@ -161,16 +161,17 @@ class Category extends Component {
         <div className="lowerHead">
         You are here: <span className="currLocation">{this.props.params.category}</span>
         </div>
-        <FriendFeed className="col-md-8"/>
-        <Sunburst className="col-md-4"/>
-        <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer">
+        <div className="row">
+        <FriendFeed/>
+        <Sunburst/>
+        </div>
+        <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer row">
         <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
           <SearchBar />
           <div className="row">
             {context.state.data.map(function (item) {
               return (
-
-                <div className="hyper col-md-2" style={{order: item.views}} >
+                <div className="hyper col-md-3" style={{order: item.views}} >
                   <EditHyper params={context.props.params} categoryCall={context.categoryPageCategoryCall} item={item}/>
                   <a href={item.url} target="_blank">
 
@@ -181,7 +182,6 @@ class Category extends Component {
                     </Card>
                   </a>
                 </div>
-
               );
             })}
           </div>
