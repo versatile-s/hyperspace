@@ -31,7 +31,6 @@ class FriendFeed extends Component {
     }).then(function(feed) {
       feed.json().then(function (feedJSON) {
         context.setState({feed: feedJSON}, function () {
-          console.log('THIS IS WHAT WE ARE GETTING FROM FRIEND FEED', feedJSON);
         });
       });
     });
