@@ -178,7 +178,7 @@ class Category extends Component {
         <div className="catBody">
           <div className="lowerHead" style={{background:color1, textAlign:textAlign}}>
             <span style={{fontFamily: font, color: color2, fontSize:fontSize}}>{store.getState().categoryInfo.categoryInfo.headerText || 'You are here: ' + this.props.params.category}</span>
-            <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
+            <TextField name="content-filter-textbox" hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
           </div>
           <SearchBar />
           <div className="row">

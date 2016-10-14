@@ -154,11 +154,11 @@ class EditHyper extends Component {
           >
           <div>
             <FlatButton label="Title" disabled={true}/>
-            <TextField ref="title" defaultValue={this.props.item.title}/>
+            <TextField name="item-title-textfield" ref="title" defaultValue={this.props.item.title}/>
             <FlatButton label={"Description"} disabled={true}/>
-            <TextField ref="description" defaultValue={this.props.item.description}/>
+            <TextField name="item-description-textfield" ref="description" defaultValue={this.props.item.description}/>
             <FlatButton label={"Image URL"} disabled={true}/>
-            <TextField ref="image" defaultValue={this.props.item.image}/>
+            <TextField name="item-image-textfield" ref="image" defaultValue={this.props.item.image}/>
             <IconButton tooltip={"Delete Hyperlink"} tooltipPosition={"top-right"} onClick={this.warn}><DeleteIcon/></IconButton>
             <IconButton tooltip={"Save Changes"} tooltipPosition={"top-right"} onClick={this.updateChange}><DoneIcon/></IconButton>
           </div>

@@ -685,16 +685,16 @@ var utils = {
           friends.forEach(function(friend) {
             friendsArray.push([friend.name, friend.category]);
           });
-          res.send(friendsArray);
+          res.send(JSON.stringify(friendsArray));
         } else {
-          res.send('No friends were found!');
+          res.send(JSON.stringify('No friends were found!'));
         }
       }).catch(function (err) {
-        res.send('No friends were found');
+        res.send(JSON.stringify('No friends were found'));
         console.log('Error! It\'s sad day! D=', err);
       });
     }).catch(function (err) {
-      res.send('No friends were found');
+      res.send(JSON.stringify('No friends were found'));
       console.log('Error! It\'s sad day! D=', err);
     });
   },

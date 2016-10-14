@@ -58,7 +58,8 @@ class EditCategory extends Component {
     this.handlesunburst=this.handlesunburst.bind(this);
     var context = this;
     store.subscribe(() => {
-      context.forceUpdate();
+      // 
+      // context.forceUpdate();
     });
   }
 
@@ -67,6 +68,7 @@ class EditCategory extends Component {
       store.dispatch({type: 'EDIT_SWITCH', payload: false});
     }
   }
+
   deleteCategory(){
     var context = this;
     fetch('/deleteCategory',{
@@ -86,7 +88,6 @@ class EditCategory extends Component {
         }, function() {
           context.handleWarnClose();
           context.confirm();
-
         });
       });
     });
@@ -120,10 +121,12 @@ class EditCategory extends Component {
       openMenu:false
     });
   }
+
   handleClick1() {
     this.setState({ displayColorPicker1: !this.state.displayColorPicker1 });
     this.forceUpdate();
   }
+
   handleClick2() {
     this.setState({ displayColorPicker2: !this.state.displayColorPicker2 });
     this.forceUpdate();
@@ -140,15 +143,19 @@ class EditCategory extends Component {
   handleChangefontSize(event, index, val){
     this.setState({fontSize: val});
   }
+
   handleChangefontFamily(event, index, val){
     this.setState({fontFamily: val});
   }
+
   handleChangetextAlign(event, index, val){
     this.setState({textAlign: val});
   }
+
   handleClose1(){
     this.setState({ displayColorPicker1: false });
   }
+
   handleClose2(){
     this.setState({ displayColorPicker2: false });
   }
@@ -156,12 +163,15 @@ class EditCategory extends Component {
   handlesearchBar(){
     this.setState({ searchBar:!this.state.searchBar});
   }
+
   handlefeed(){
     this.setState({ feed:!this.state.feed});
   }
+
   handlesunburst(){
     this.setState({ sunburst:!this.state.sunburst});
   }
+
   updateChange(){
     var context = this;
     fetch('/category',{
@@ -184,7 +194,6 @@ class EditCategory extends Component {
         feed: this.state.feed,
         sunburst: this.state.sunburst
       })
-
     }).then(function(response){
       response.json().then(function(parsedRes){
         console.log(parsedRes);
@@ -193,13 +202,11 @@ class EditCategory extends Component {
         context.toggleOpen();
       });
     });
-
-
-   
   }
+
   closeMenu(){
     this.setState({
-      openMenu:false
+      openMenu: false
     });
   }
 
@@ -213,6 +220,7 @@ class EditCategory extends Component {
         openMenu: true
       });
     }
+    
     this.setState({
       color1: store.getState().categoryInfo.categoryInfo.headerTextBackgroundColor ||"#00FF00",
       color2: store.getState().categoryInfo.categoryInfo.headerTextColor||"#0000FF",
@@ -268,10 +276,10 @@ class EditCategory extends Component {
           <div className="editContents1">
           <div className="editContents2">
             <FlatButton label="Header Text" disabled={true}/>
-            <TextField ref="headerText" defaultValue={store.getState().categoryInfo.categoryInfo.headerText}/>
+            <TextField name="header-text" ref="headerText" defaultValue={store.getState().categoryInfo.categoryInfo.headerText}/>
             
             <FlatButton style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} label="Page Name" disabled={true}/>
-            <TextField style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} ref="newName" defaultValue={store.getState().categoryInfo.categoryInfo.name}/>
+            <TextField name="category-info-textfield" style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} ref="newName" defaultValue={store.getState().categoryInfo.categoryInfo.name}/>
             <FlatButton label={"Header Text Backgound Color"} disabled={true}/>
             <div style={{position: "relative", zIndex: 3, width:'100%',height:30,background: this.state.color1}} onClick={this.handleClick1}>
               <div onClick={this.handleClose1} style={this.state.displayColorPicker1?{}:{display:"none"}}>
@@ -287,7 +295,7 @@ class EditCategory extends Component {
               </div>
             </div>
             <FlatButton label={"Background URL"} disabled={true}/>
-            <TextField ref="backgroundUrl" defaultValue={store.getState().categoryInfo.categoryInfo.backgroundUrl}/>
+            <TextField name="category-info-background-textfield" ref="backgroundUrl" defaultValue={store.getState().categoryInfo.categoryInfo.backgroundUrl}/>
 
         
               <DropDownMenu value={this.state.fontSize} onChange={this.handleChangefontSize}>

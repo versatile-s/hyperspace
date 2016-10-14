@@ -29,9 +29,10 @@ class FriendFeed extends Component {
         username: store.getState().username.username,
       })
     }).then(function(feed) {
-      feed.json().then(function (feedJSON) {
-        context.setState({feed: feedJSON}, function () {
-        });
+      feed.json().then(function (feedText) {
+        context.setState({
+          feed: feedText
+        })
       });
     });
   }

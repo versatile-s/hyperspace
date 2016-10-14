@@ -24,6 +24,7 @@ class HyperSearch extends Component {
     this.setSelf = this.setSelf.bind(this);
     this.openMenu = this.openMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
+    this.forceFocus = this.forceFocus.bind(this);
   }
 
   setSelf () {
@@ -107,11 +108,11 @@ class HyperSearch extends Component {
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
           <div className="search-hyper-wrapper-shv" onMouseLeave={this.closeMenu}>
-            <FlatButton label="Search Hypers" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} fullWidth="true" disabled={true}/>
+            <FlatButton label="Search Hypers" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} disabled={true}/>
             <div className="wrapper" style={{width: '96%', margin: '0 0 2% 2%'}}>
               <Checkbox onClick={this.setSelf} style={{float: "left"}}/> Show only my Hypers
               <br/>
-              <TextField style={{width: '96%', margin: '0 0 2% 2%'}} hintText="Search Hypers" ref="hyperInput" onClick={this.forceFocus} onChange={this.elasticSearch}/>
+              <TextField name="shv-textfield" style={{width: '96%', margin: '0 0 2% 2%'}} hintText="Search Hypers" ref="hyperInput" onClick={this.forceFocus} onChange={this.elasticSearch}/>
               {store.getState().searchedHypers.searchedHypers ? store.getState().searchedHypers.searchedHypers.slice(0, 4).map((hyper) => {
                 return (
                   <a href={hyper._source.url} target="_blank" style={{width: '96%', margin: '0 0 2% 2%'}}> 
