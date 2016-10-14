@@ -40,6 +40,8 @@ class FriendFeed extends Component {
     { var context = this; }
     return (
       <div className="friendFeed col-md-9" style={store.getState().categoryInfo.categoryInfo.feed?{}:{display:"none"}}>
+        <div className="friendWrap">
+          <div className="widgetHead">FriendFeed</div>
         {context.state.feed.reverse().slice(0, 10).map(function (item) {
           return (
             <div className="feedHyper col-md-3">
@@ -53,6 +55,7 @@ class FriendFeed extends Component {
             </div>
           );
         })}
+        </div>
       </div>  
     );
   }

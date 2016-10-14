@@ -34,7 +34,7 @@ class Dashboard extends Component {
         textAlign: 'center',
         sunburst: true,
         feed: true,
-        searchBar:true
+        searchBar: false
       })
     }).then(browserHistory.push('/' + username + "/home"));
   }

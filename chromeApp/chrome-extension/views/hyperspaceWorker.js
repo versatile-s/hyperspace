@@ -261,7 +261,7 @@ class HyperspaceWorker extends Component {
   render () {
     const context = this;
     return (
-        !this.state.fullyLoaded ? <CircularProgress size={60} thickness={7} /> : <div className="workerBody">  
+        <div className="workerBody">  
           <IconMenu className="miniMenu"
            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
