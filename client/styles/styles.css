@@ -29,6 +29,8 @@ html {
     background: #f4f4f4;
 }
 
+
+
 .sunburstContainer.col-md-3 {
     border: 2px solid #e8e8e8;
     border-radius: 3px;
@@ -42,6 +44,9 @@ span.currLocation {
     text-transform: uppercase;
 }
 
+.categoryBackground {
+    height: 93vh;
+}
 
 .searchbar {
     text-align: center;
