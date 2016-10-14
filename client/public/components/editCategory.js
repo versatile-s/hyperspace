@@ -16,6 +16,7 @@ import Dialog from 'material-ui/Dialog';
 import { SketchPicker } from 'react-color';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import Checkbox from 'material-ui/Checkbox';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
 
 
 class EditCategory extends Component {
@@ -32,7 +33,11 @@ class EditCategory extends Component {
       fontSize: store.getState().categoryInfo.categoryInfo.fontSize,
       fontFamily: store.getState().categoryInfo.categoryInfo.fontFamily,
       textAlign: store.getState().categoryInfo.categoryInfo.textAlign,
-      searchBar: false,
+      name: store.getState().categoryInfo.categoryInfo.name,
+      headerText: store.getState().categoryInfo.categoryInfo.headerText,
+      backgroundUrl: store.getState().categoryInfo.categoryInfo.backgroundUrl,
+
+      searchBar: store.getState().categoryInfo.categoryInfo.searchBar,
       feed: false,
       sunburst: true,
       deleteMessage: ''
@@ -57,9 +62,12 @@ class EditCategory extends Component {
     this.handlesearchBar=this.handlesearchBar.bind(this);
     this.handlefeed=this.handlefeed.bind(this);
     this.handlesunburst=this.handlesunburst.bind(this);
+    this.headerTextChange=this.headerTextChange.bind(this);
+    this.backgroundChange=this.backgroundChange.bind(this);
     var context = this;
     store.subscribe(() => {
       context.forceUpdate();
+      context.toggleOpen();
     });
   }
 
@@ -67,6 +75,7 @@ class EditCategory extends Component {
     if(this.props.params.user!==store.getState().username.username){
       store.dispatch({type: 'EDIT_SWITCH', payload: false});
     }
+    this.toggleOpen();
   }
   deleteCategory(){
     var context = this;
@@ -163,6 +172,13 @@ class EditCategory extends Component {
   handlesunburst(){
     this.setState({ sunburst:!this.state.sunburst});
   }
+
+  headerTextChange(){
+    this.setState({ headerText: this.refs.headerText.getValue()});
+  }
+  backgroundChange(){
+    this.setState({ backgroundUrl: this.refs.backgroundUrl.getValue()});
+  }
   updateChange(){
     var context = this;
     fetch('/category',{
@@ -173,7 +189,7 @@ class EditCategory extends Component {
       body: JSON.stringify({
         username: store.getState().username.username,
         name: store.getState().categoryInfo.categoryInfo.name,
-        newName: this.refs.newName.getValue(),
+
         backgroundUrl: this.refs.backgroundUrl.getValue(),
         headerText: this.refs.headerText.getValue(),
         headerTextBackgroundColor: this.state.color1,
@@ -189,7 +205,7 @@ class EditCategory extends Component {
     }).then(function(response){
       response.json().then(function(parsedRes){
         console.log(parsedRes);
-        context.props.getCategory(store.getState().username.username, context.refs.newName.getValue());
+        context.props.getCategory(store.getState().username.username, store.getState().categoryInfo.categoryInfo.name);
         context.forceUpdate();
         context.toggleOpen();
       });
@@ -205,6 +221,7 @@ class EditCategory extends Component {
   }
 
   toggleOpen(){
+    var context=this;
     if(this.state.openMenu){
       this.setState({
         openMenu: false
@@ -222,7 +239,12 @@ class EditCategory extends Component {
       textAlign: store.getState().categoryInfo.categoryInfo.textAlign,
       searchBar: store.getState().categoryInfo.categoryInfo.searchBar,
       feed: store.getState().categoryInfo.categoryInfo.feed,
-      sunburst: store.getState().categoryInfo.categoryInfo.sunburst
+      sunburst: store.getState().categoryInfo.categoryInfo.sunburst,
+      name: store.getState().categoryInfo.categoryInfo.name,
+      headerText: store.getState().categoryInfo.categoryInfo.headerText,
+      backgroundUrl: store.getState().categoryInfo.categoryInfo.backgroundUrl
+    },function(){
+      console.log("edit state",context.state);
     });
   }
 
@@ -251,46 +273,62 @@ class EditCategory extends Component {
 
     return (
       <div className="editCategory">
-        <IconMenu
-          style={store.getState().edit.edit ? {zIndex: 100} : {display:"none"}}
-          iconStyle={{opacity:.5, width:50}}
-          // onTouchTap={this.getCategories}
-          open={this.state.openMenu}
-          disableAutoFocus={true}
-          menuStyle={{width:250, zIndex:100}}
-          touchTapCloseDelay={0}
-          onRequestChange={this.closeMenu}
-          onRequestClose={this.closeMenu}
-          initiallyKeyboardFocused={false}
-          iconButtonElement={<IconButton onClick={this.toggleOpen}><EditSettingsIcon /></IconButton>}
-          anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-          targetOrigin={{horizontal: 'left', vertical: 'top'}}
-          >
-          <div className="editContents1">
-          <div className="editContents2">
-            <FlatButton label="Header Text" disabled={true}/>
-            <TextField ref="headerText" defaultValue={store.getState().categoryInfo.categoryInfo.headerText}/>
+      
+        <Toolbar style={store.getState().edit.edit ? {zIndex: 100, width: '100%', height: '100%'} : {display:"none"}}>
+          <div >
+          <div style={{display:'flex', alignContent: 'space-between'}}>
+          <ToolbarGroup firstChild={true}>
+          <div style={{display: 'flex', flexDirection:'column'}}>
+             <FlatButton label={"Header Text"} disabled={true}/>
+           
+            <TextField style={{width:'100%'}} ref="headerText" onChange={this.headerTextChange} value={this.state.headerText} defaultValue={store.getState().categoryInfo.categoryInfo.headerText} />
+          </div>
+          </ToolbarGroup>
+
+
+          <ToolbarGroup>
+          <div style={{display: 'flex', flexDirection:'column'}}>
+             <FlatButton label={"Header Color"} disabled={true}/>
+           
+           
             
-            <FlatButton style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} label="Page Name" disabled={true}/>
-            <TextField style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} ref="newName" defaultValue={store.getState().categoryInfo.categoryInfo.name}/>
-            <FlatButton label={"Header Text Backgound Color"} disabled={true}/>
-            <div style={{position: "relative", zIndex: 3, width:'100%',height:30,background: this.state.color1}} onClick={this.handleClick1}>
-              <div onClick={this.handleClose1} style={this.state.displayColorPicker1?{}:{display:"none"}}>
+            <div style={{position: "relative", zIndex: 3, width:'100%',height:50,background: this.state.color1}} onClick={this.handleClick1}>
+              <div onClick={this.handleClose1} style={this.state.displayColorPicker1?{position: 'absolute', top:-305}:{display:"none"}}>
               <SketchPicker color={ this.state.color1 } onChange={this.handleChange1} />
               </div>
             </div>
+          </div> 
+          </ToolbarGroup>
+          <ToolbarGroup> 
+          <div style={{display: 'flex', flexDirection:'column'}}>
+             <FlatButton label={"Text Color"} disabled={true}/>
            
-            <FlatButton label={"Header Text Color"} disabled={true}/>
             
-            <div style={{position: "relative", zIndex: 2, width:'100%',height:30,background: this.state.color2}} onClick={this.handleClick2}>
-              <div onClick={this.handleClose2} style={this.state.displayColorPicker2?{}:{display:"none"}}>
+            
+            
+            <div style={{position: "relative", zIndex: 2, width:'100%',height:50,background: this.state.color2}} onClick={this.handleClick2}>
+              <div onClick={this.handleClose2} style={this.state.displayColorPicker2?{position: 'absolute', top:-305}:{display:"none"}}>
               <SketchPicker color={ this.state.color2 } onChange={this.handleChange2} />
               </div>
             </div>
-            <FlatButton label={"Background URL"} disabled={true}/>
-            <TextField ref="backgroundUrl" defaultValue={store.getState().categoryInfo.categoryInfo.backgroundUrl}/>
-
-        
+          </div>
+          </ToolbarGroup>
+          <ToolbarGroup >  
+          <div style={{display: 'flex', flexDirection:'column'}}>
+             <FlatButton label={"Background URL"} disabled={true}/>
+           
+           
+           
+            <TextField style={{width:'100%'}} ref="backgroundUrl" onChange={this.backgroundChange} value={this.state.backgroundUrl} defaultValue={store.getState().categoryInfo.categoryInfo.backgroundUrl}/>
+          </div>
+          </ToolbarGroup>
+          <ToolbarGroup>
+          <div style={{display: 'flex', flexDirection:'column'}}>
+             <FlatButton label={"Font size"} disabled={true}/>
+           
+           
+           
+            
               <DropDownMenu value={this.state.fontSize} onChange={this.handleChangefontSize}>
 
                 <MenuItem value={10} primaryText="10" />
@@ -304,10 +342,16 @@ class EditCategory extends Component {
                 <MenuItem value={90} primaryText="90" />
                 <MenuItem value={100} primaryText="100" />
               </DropDownMenu>
-
-       
-          
-              <DropDownMenu value={this.state.fontFamily} onChange={this.handleChangefontFamily}>
+          </div>
+          </ToolbarGroup>
+          <ToolbarGroup>  
+          <div style={{display: 'flex', flexDirection:'column'}}>
+             <FlatButton label={"font"} disabled={true}/>
+           
+           
+           
+           
+              <DropDownMenu style={{width: '100%'}} value={this.state.fontFamily} onChange={this.handleChangefontFamily}>
 
                 <MenuItem value={"Trebuchet MS"} primaryText="Trebuchet MS" />
                 <MenuItem value={"Tahoma"} primaryText="Tahoma" />
@@ -317,27 +361,44 @@ class EditCategory extends Component {
                 <MenuItem value={"Lucida Sans Unicode"} primaryText="Lucida Sans Unicode" />
                 <MenuItem value={"Impact"} primaryText="Impact" />
                 <MenuItem value={"Veranda"} primaryText="Veranda" />
-                <MenuItem value={"Webdings"} primaryText="Webdings" />
-                <MenuItem value={"Symbol"} primaryText="Symbol" />
+                <MenuItem value={"CBold"} primaryText="CBold" />
+                <MenuItem value={"CBook"} primaryText="CBook" />
               </DropDownMenu>
-
-         
-              <DropDownMenu value={this.state.textAlign} onChange={this.handleChangetextAlign}>
+          </div>
+          </ToolbarGroup>
+          <ToolbarGroup>
+          <div style={{display: 'flex', flexDirection:'column'}}>
+             <FlatButton label={"Text Align"} disabled={true}/>
+           
+           
+           
+          
+              <DropDownMenu  style={{width: '100%'}} value={this.state.textAlign} onChange={this.handleChangetextAlign}>
 
                 <MenuItem value={"left"} primaryText="Left" />
                 <MenuItem value={"center"} primaryText="Center" />
-                <MenuItem value={"right"} primaryText="Right" />
+               
               </DropDownMenu>
-
+          </div>
+          </ToolbarGroup>
  
             
-             
-            <Checkbox labelStyle={{color:'lightgray'}} label={"GOOGLE SEARCH BAR"} checked={this.state.searchBar} onCheck={this.handlesearchBar}/>
+          <ToolbarGroup>
+          <div style={{display: 'flex', width:200, flexDirection:'column'}}>
+            <Checkbox labelStyle={{color:'lightgray'}} label={"GOOGLE SEARCH"} checked={this.state.searchBar} onCheck={this.handlesearchBar}/>
             <Checkbox labelStyle={{color:'lightgray'}} label={"FRIEND FEED"} checked={this.state.feed} onCheck={this.handlefeed}/>
             <Checkbox labelStyle={{color:'lightgray'}} label={"SUNBURST CHART"}checked={this.state.sunburst} onCheck={this.handlesunburst}/>
-            <IconButton tooltip={"Delete Page"} tooltipPosition={"top-right"} style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} onClick={this.warn}><DeleteIcon/></IconButton>
-            <IconButton tooltip={"Save Changes"} tooltipPosition={"top-right"} onClick={this.updateChange}><DoneIcon/></IconButton>
           </div>
+          </ToolbarGroup>
+          <ToolbarGroup lastChild={true}>
+            <div style={{display: 'flex', flexDirection:'column'}}>
+              <IconButton tooltip={"Save Changes"} tooltipPosition={"top-right"} onClick={this.updateChange}><DoneIcon/></IconButton>
+              <IconButton tooltip={"Delete Page"} tooltipPosition={"top-right"} style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} onClick={this.warn}><DeleteIcon/></IconButton>
+            </div>
+          </ToolbarGroup>
+          </div>
+          </div>
+        </Toolbar>
             <Dialog
               style={{position: "fixed",zIndex:4001}}
               title="ARE YOU SURE?"
@@ -362,10 +423,22 @@ class EditCategory extends Component {
           </div>
           
 
-        </IconMenu>
-
-      </div>  
     );
   }
 }
 export default EditCategory; 
+        // <IconMenu
+        //   style={store.getState().edit.edit ? {zIndex: 100} : {display:"none"}}
+        //   iconStyle={{opacity:.5, width:50}}
+        //   // onTouchTap={this.getCategories}
+        //   open={this.state.openMenu}
+        //   disableAutoFocus={true}
+        //   menuStyle={{width:250, zIndex:100}}
+        //   touchTapCloseDelay={0}
+        //   onRequestChange={this.closeMenu}
+        //   onRequestClose={this.closeMenu}
+        //   initiallyKeyboardFocused={false}
+        //   iconButtonElement={<IconButton onClick={this.toggleOpen}><EditSettingsIcon /></IconButton>}
+        //   anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+        //   targetOrigin={{horizontal: 'left', vertical: 'top'}}
+        //   >
