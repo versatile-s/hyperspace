@@ -180,7 +180,7 @@ class Category extends Component {
             <span style={{fontFamily: font, color: color2, fontSize:fontSize}}>{store.getState().categoryInfo.categoryInfo.headerText || 'You are here: ' + this.props.params.category}</span>
             <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
           </div>
-          <SearchBar />
+            <SearchBar />
           <div className="row">
             <FriendFeed/>
             <Sunburst categoryCall={context.props.categoryCall} getCategory={context.props.getCategory}/>
