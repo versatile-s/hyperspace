@@ -115,6 +115,8 @@ class ChromeApp extends Component {
               autoHideDuration={2500}
               className="invalidPass"
             />
+        <div className="footer">
+        </div>
         </div>
       </MuiThemeProvider>
     );
