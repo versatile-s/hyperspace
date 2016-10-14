@@ -45,14 +45,16 @@ span.currLocation {
 }
 
 .categoryBackground {
-    height: 93vh;
+  min-height: 92vh;
+/*    height: 93vh;*/
+  height: 100%;
 }
 
 .searchbar {
     text-align: center;
     background: white;
     border-radius: 5px;
-    margin-top: 2px;
+    margin: 5px 0 5px 0;
 }
 
 .lowerHead {
@@ -568,7 +570,8 @@ background: linear-gradient(to left, #EFEFBB , #D4D3DD); /* W3C, IE 10+/ Edge, F
 .spinner-container {
     width: 210px;
     margin: 0 auto;
-    margin-top: 200px;
+    margin-top: 0px;
+    padding-top: 100px;
 }
 
 

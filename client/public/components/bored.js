@@ -91,9 +91,9 @@ class Bored extends Component {
     //search bar box
     var ysearchDrop=0;
     if(store.getState().categoryInfo.categoryInfo.searchBar) {
-      var ysearch=100;
-      var xsearch=600;
-      var ysearchmargins = 10;
+      var ysearch=48;
+      var xsearch=wWidth-(2*30) - 10;
+      var ysearchmargins = 5;
       var y = ysearch / 2+5;
       ysearchDrop = ysearch + (2 * ysearchmargins);
       var search = Bodies.rectangle(wWidth / 2, y, xsearch, ysearch,{restitution: 1} );
