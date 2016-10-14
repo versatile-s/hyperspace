@@ -13,30 +13,19 @@ import EditHyper from './editHyper';
 import FriendFeed from './friendFeed.js';
 import Sunburst from './sunburst.js';
 import SearchBar from './searchbar';
-
+import Spinner from './loading';
 
 class Category extends Component {
   constructor (props) {
     super(props);
-
     this.state = {
       username: this.props.params.user,
       categoryTitle: this.props.params.category,
       data: [],
-      // currentVisitor: 'guest'
+      loading: true
     };
-    // this.isAuth = this.isAuth.bind(this);
-    // this.categoryCall = this.categoryCall.bind(this);
-
-    this.updateViews = this.updateViews.bind(this);
-    this.sortData = this.sortData.bind(this);
-    this.filterContent = this.filterContent.bind(this);
-    this.categoryPageCategoryCall=this.categoryPageCategoryCall.bind(this);
 
     var context = this;
-    this.state = {
-      data: []
-    };
     store.subscribe(() => {
       context.setState({
         data: store.getState().data.data
@@ -44,11 +33,26 @@ class Category extends Component {
         context.forceUpdate();
       });
     });
+
+    this.updateViews = this.updateViews.bind(this);
+    this.sortData = this.sortData.bind(this);
+    this.filterContent = this.filterContent.bind(this);
+    this.categoryPageCategoryCall=this.categoryPageCategoryCall.bind(this);
+
+    props.categoryCall(props.params.user, props.params.category);
+    props.getCategory(props.params.user, props.params.category);
   }
 
-  componentWillMount () {
-    this.props.categoryCall(this.props.params.user, this.props.params.category);
-    this.props.getCategory(this.props.params.user, this.props.params.category);
+  componentWillReceiveProps (newProps) {
+    var context = this;
+    if (this.props.params.user !== newProps.params.user || this.props.params.category !== newProps.params.category) {
+      this.setState({
+        loading: true
+      }, function () {
+        context.props.categoryCall(newProps.params.user, newProps.params.category);
+        context.props.getCategory(newProps.params.user, newProps.params.category);
+      });
+    }
   }
 
   updateViews (item) {
@@ -67,7 +71,6 @@ class Category extends Component {
       })
 
     }).then(function() {
-
       context.sortData(store.getState().data.data);
     });
   }
@@ -147,51 +150,62 @@ class Category extends Component {
   }
 
   categoryPageCategoryCall() {
+    this.setState({
+      loading: true
+    });
     this.props.categoryCall(this.props.params.user, this.props.params.category);
     this.props.getCategory(this.props.params.user, this.props.params.category);
   }
 
   render () {
-    { var context = this; }
-    { var hint = 'Search ' + this.props.params.user + '\'s ' + this.props.params.category + ' stash'; }
-    {var color1 = store.getState().categoryInfo.categoryInfo.headerTextBackgroundColor;
-      var color2 = store.getState().categoryInfo.categoryInfo.headerTextColor;
-      var font = store.getState().categoryInfo.categoryInfo.fontFamily;
-      var fontSize = store.getState().categoryInfo.categoryInfo.fontSize;
-      var textAlign = store.getState().categoryInfo.categoryInfo.textAlign;
+    var context = this;
+    var hint = 'Search ' + this.props.params.user + '\'s ' + this.props.params.category + ' stash';
+    var color1 = store.getState().categoryInfo.categoryInfo.headerTextBackgroundColor;
+    var color2 = store.getState().categoryInfo.categoryInfo.headerTextColor;
+    var font = store.getState().categoryInfo.categoryInfo.fontFamily;
+    var fontSize = store.getState().categoryInfo.categoryInfo.fontSize;
+    var textAlign = store.getState().categoryInfo.categoryInfo.textAlign;
+    if (this.state.loading) {
+      setTimeout(function () {
+        context.setState({
+          loading: false
+        });
+      }, 1100);
     }
     return (
-      <div className="catBody">
-        <div className="lowerHead" style={{background:color1, textAlign:textAlign}}>
-        <span style={{fontFamily: font, color: color2, fontSize:fontSize}} className="currLocation">{store.getState().categoryInfo.categoryInfo.headerText || "W E L C O M E"}</span>
-        <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
-        </div>
-        <div className="row">
-        <FriendFeed/>
-        <Sunburst/>
-        </div>
-        <div className="categoryPageContainer row">
-        
-          <SearchBar />
+      this.state.loading === true ? 
+        <Spinner style={{margin: "-20px 0 0 0"}}/> : 
+        <div className="catBody">
+          <div className="lowerHead" style={{background:color1, textAlign:textAlign}}>
+            <span style={{fontFamily: font, color: color2, fontSize:fontSize}} className="currLocation">{store.getState().categoryInfo.categoryInfo.headerText || "W E L C O M E"}</span>
+            <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
+          </div>
           <div className="row">
-            {context.state.data.map(function (item) {
-              return (
-                <div className="hyper col-md-3" style={{order: item.views}} >
-                  <EditHyper params={context.props.params} categoryCall={context.categoryPageCategoryCall} item={item}/>
-                  <a href={item.url} target="_blank">
+            <FriendFeed/>
+            <Sunburst/>
+          </div>
+          <div className="categoryPageContainer row">
+          
+            <SearchBar />
+            <div className="row">
+              {context.state.data.map(function (item) {
+                return (
+                  <div className="hyper col-md-3" style={{order: item.views}} >
+                    <EditHyper params={context.props.params} categoryCall={context.categoryPageCategoryCall} item={item}/>
+                    <a href={item.url} target="_blank">
 
-                    <Card onClick={()=>context.updateViews(item)}>
-                    <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
-                      {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
-                    </CardMedia>
-                    </Card>
-                  </a>
-                </div>
-              );
-            })}
+                      <Card onClick={()=>context.updateViews(item)}>
+                        <CardMedia overlay={<CardTitle titleStyle={{fontSize: 10, wordWrap: "break-word",lineHeight: 1.1}} title={item.title} subtitle={item.description}/>}>
+                          {item.image.length > 3 ? <img className="hyperImage" src={item.image}/> : <div className={context.randomizeGradient()} style={{height: 100}}/>}
+                        </CardMedia>
+                      </Card>
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
     );
   }
 }

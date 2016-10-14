@@ -24,12 +24,19 @@ class Logout extends Component {
     }).then((response) => {
       if (response.status === 200) {
         browserHistory.push('/');
-        store.dispatch({
-          type: "GET_DATA", payload: []
-        });
         context.props.closeMenu();
         store.dispatch({type: 'EDIT_SWITCH', payload: false});
         store.dispatch({type: "CAT_INFO", payload: {}});
+        store.dispatch({type: 'USERNAME_UPDATE', payload: ''});
+        store.dispatch({type: 'AUTH_SUCCESS', payload: null});
+        store.dispatch({type: 'GET_CATEGORIES', payload: []});
+        store.dispatch({type: 'CAT_INFO', payload: {}});
+        store.dispatch({type: 'GET_DATA', payload: []});
+        store.dispatch({type: 'OPEN', payload: null});
+        store.dispatch({type: 'S_HYPERS', payload: []});
+        store.dispatch({type: 'SELF', payload: null});
+        store.dispatch({type: 'TOGGLE_SWITCH', payload: null});
+        store.dispatch({type: 'EDIT_SWITCH', payload: false});
       }
     })
     .catch((error) => {
