@@ -62,7 +62,7 @@ class MakeCategory extends Component {
         fontFamily: 'Roboto',
         fontSize: 20,
         textAlign: 'center',
-        sunburst: false,
+        sunburst: true,
         feed: false,
         searchBar:false
       })
