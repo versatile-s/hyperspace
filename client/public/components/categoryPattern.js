@@ -182,7 +182,7 @@ class Category extends Component {
           </div>
           <div className="row">
             <FriendFeed/>
-            <Sunburst/>
+            <Sunburst categoryCall={context.props.categoryCall} getCategory={context.props.getCategory}/>
           </div>
           <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer row">
           
