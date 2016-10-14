@@ -33,7 +33,7 @@ class EditCategory extends Component {
       textAlign: store.getState().categoryInfo.categoryInfo.textAlign,
       searchBar: false,
       feed: false,
-      sunburst: false,
+      sunburst: true,
       deleteMessage: ''
     };
     this.deleteCategory = this.deleteCategory.bind(this);
