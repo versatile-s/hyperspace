@@ -23,6 +23,7 @@ class Login extends Component {
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
+    
   }
 
   login (e) {
