@@ -792,7 +792,15 @@ img.imageLogo {
     margin-top: 160px !important;
 }
 
+.alreadyMember p {
+    margin-bottom: -10px;
+}
 
+.alreadyMember {
+    margin-top: 40px !important;
+    float: right;
+    margin-bottom: 40px;
+}
 
 .signUpWrapper {
     margin-top: 160px !important;

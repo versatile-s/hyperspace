@@ -107,7 +107,7 @@ class Signup extends Component {
               <input name="email" inputStyle={{textAlign: 'center'}} onChange={this.handleEmail} value={this.state.email} type="text" placeholder="email" />
               <input name="password" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
               <button className="signUp" onClick={this.signup}>Sign Up</button>
-              <div style={{marginTop: 40} }class="alreadyMember">
+              <div style={{marginTop: 40} } className="alreadyMember">
                 <p>Already a hyprspace member?</p>
                 <Link to="/login"><button className="signUp">Log In</button></Link>
               </div>
