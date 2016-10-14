@@ -180,11 +180,12 @@ class Category extends Component {
             <span style={{fontFamily: font, color: color2, fontSize:fontSize}}>{store.getState().categoryInfo.categoryInfo.headerText || 'You are here: ' + this.props.params.category}</span>
             <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
           </div>
+
           <div className="row">
             <FriendFeed/>
-            <Sunburst/>
+            <Sunburst categoryCall={context.props.categoryCall} getCategory={context.props.getCategory}/>
           </div>
-          <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer row">
+          <div className="categoryPageContainer row">
           
             <SearchBar />
             <div className="row">
@@ -211,5 +212,6 @@ class Category extends Component {
     );
   }
 }
+
 
 export default Category;

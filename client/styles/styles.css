@@ -11,6 +11,10 @@
     z-index: 3;
    
 }
+.boredField{
+  margin-left: -30px; 
+}
+
 .filter-content-textbox.filter-conten {
     position: absolute !important;
     right: 32px;
@@ -176,7 +180,7 @@ span.currLocation {
 }
 
 .mainContent {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .sunburst-container.col-md-3 {

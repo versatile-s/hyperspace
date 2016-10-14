@@ -506,7 +506,7 @@ var utils = {
         });
         res.send(JSON.stringify(tagStore));
       } else {
-        res.send(JSON.stringify({none: none}));
+        res.send(JSON.stringify({none: 'none'}));
       }
     }).catch(function (err) {
       res.send(JSON.stringify('Start adding tags!'));

@@ -150,6 +150,23 @@ class Sunburst extends Component {
     this.percentage.textContent = '';
   }
 
+  handleClick (e) {
+    var context = this;
+    var username = store.getState().username.username;
+    var level = e.target.getAttribute('data-level');
+    var name = e.target.getAttribute('data-name');
+    var destination = '/' + username + '/'; 
+    if (level === 1) {
+      browserHistory.push(destination + 'home');
+      this.props.categoryCall(username, 'home');
+      this.props.getCategory(username, 'home');
+    } else {
+      browserHistory.push(destination + name);
+      this.props.categoryCall(username, name);
+      this.props.getCategory(username, name);
+    }
+  }
+
   render () {
     var context = this;
     let width = 600;
@@ -189,7 +206,7 @@ class Sunburst extends Component {
             stroke={'white'}
             strokeWidth={8}
             data-name={slice.name}
-            display={i === 0 ? 'none' : 'inline'}
+            display={i < 1 ? 'none' : 'inline'}
             fill={randomizeHex()}
             d={shape({
               startAngle,
@@ -197,7 +214,8 @@ class Sunburst extends Component {
               innerRadius,
               outerRadius
             })} onMouseOver={this.handleMouseOver}
-            onMouseOut={this.handleMouseOut}>
+            onMouseOut={this.handleMouseOut}
+            onClick={level < 3 ? context.handleClick : null}>
             <title>{`${slice.name}\n${slice.size}`}</title>
             </path>
           );
