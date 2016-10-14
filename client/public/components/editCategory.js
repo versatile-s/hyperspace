@@ -392,8 +392,8 @@ class EditCategory extends Component {
           </ToolbarGroup>
           <ToolbarGroup lastChild={true}>
             <div style={{display: 'flex', flexDirection:'column'}}>
-              <IconButton tooltip={"Save Changes"} tooltipPosition={"top-right"} onClick={this.updateChange}><DoneIcon/></IconButton>
-              <IconButton tooltip={"Delete Page"} tooltipPosition={"top-right"} style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} onClick={this.warn}><DeleteIcon/></IconButton>
+              <IconButton tooltip={"Save Changes"} tooltipPosition={"top-right"} onClick={this.updateChange}><DoneIcon color={"black"}/></IconButton>
+              <IconButton tooltip={"Delete Page"} tooltipPosition={"top-right"} style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{ position:'relative', top:-10}} onClick={this.warn}><DeleteIcon color={"black"}/></IconButton>
             </div>
           </ToolbarGroup>
           </div>
