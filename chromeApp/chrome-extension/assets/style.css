@@ -1,3 +1,21 @@
+@font-face {
+  font-family: 'CBook';
+  src: url('.CircularStd-Book.woff') format('woff'), /* Pretty Modern Browsers */
+       url('.CircularStd-Book.ttf') format('truetype')
+}
+
+
+
+@font-face {
+  font-family: 'CBold';
+  src: url('./CircularStd-Bold.woff') format('woff'), /* Pretty Modern Browsers */
+       url('./CircularStd-Bold.ttf') format('truetype')
+}
+
+
+body {
+    font-family: "CBook", Helvetica, Arial, sans-serif !important;
+}
 
 html {
    
