@@ -705,8 +705,12 @@ background: linear-gradient(to left, #2BC0E4 , #EAECC6); /* W3C, IE 10+/ Edge, F
 }
 
 img.imageLogo {
-    width: 140px;
-    margin-left: 10px;
+    width: 137px;
+    /* padding: 17px; */
+    margin-top: 6px;
+    padding-left: 17px;
+    padding-top: 14px;
+    padding-bottom: 14px;
 }
 
 
