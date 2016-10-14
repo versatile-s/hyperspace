@@ -46,7 +46,7 @@ window.onload = function() {
 
       // must used XMLHttpRequest in extension 
       var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'http://ec2-54-71-25-187.us-west-2.compute.amazonaws.com/link', true);
+      xhr.open('POST', 'http://localhost:3000/link', true);
       xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
       xhr.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags));
     });
@@ -64,7 +64,7 @@ window.onload = function() {
     var toSend = {username: username, password: password};
     
     // second, true argument below means send async
-    xhr.open('POST', 'http://ec2-54-71-25-187.us-west-2.compute.amazonaws.com/login', true);
+    xhr.open('POST', 'http://localhost:3000/login', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send(encodeURI('username=' + username + '&password=' + password));
     // xhr.send(JSON.stringify({username: username, password: password}));
