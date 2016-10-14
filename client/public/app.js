@@ -14,10 +14,10 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Bored from './components/bored';
 import store from '../store';
-import SpaceLogin from './components/experimental/SpaceLogin';
+// import SpaceLogin from './components/experimental/SpaceLogin';
 import Frame from './components/frame';
 import Search from './components/search';
-import Warpfield from './components/warpfield';
+// import Warpfield from './components/warpfield';
 import { connect } from 'react-redux';
 
 var loginCheck = function(cb) {
@@ -71,20 +71,23 @@ class App extends Component {
         <MuiThemeProvider>
         <Router history={browserHistory} >
           <Route component={Frame}>
-            <Route component={Warpfield}>
+            {// <Route component={Warpfield}>
+            }
               <Route path='/' component={Login} />
               <Route path='/login' component={Login} />
               <Route path='/signup' component={Signup} />
               <Route path='/dashboard' component={Dashboard}/>
               <Route path='/find' component={Search}/>
-            </Route>
+            {// </Route>
+            }
             <Route path='/:user/:category' component={Category} />
             <Route path='/:user/:category/bored' component={Bored}/>
           </Route>
-          <Route path='/spacelogin' component={SpaceLogin} />
+          {/* <Route path='/spacelogin' component={SpaceLogin} />
           <Route path='/home' component={Home} />
           <Route path='/layout' component= {Layout} />
           <Route path='/test' component={Test} />
+          */}
         </Router>
         </MuiThemeProvider>
       );

@@ -103,10 +103,10 @@ class MakeCategory extends Component {
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
           <div className="createCategory-menu" onMouseLeave={this.closeMenu}>
-            <FlatButton label="add new page" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} fullWidth="true" disabled={true}/>
+            <FlatButton label="add new page" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} disabled={true}/>
             <div ref="catbox" style={{width: '96%', margin: '0 0 2% 2%'}}>
-              <TextField hintText="NEW PAGE TITLE" ref="categoryInput"onClick={this.forceFocus} />
-              <RaisedButton type="button" fullWidth="true" label="Create New PAge" onClick={this.makeNewCategory}/>
+              <TextField name="new-category-title-textfield" hintText="NEW PAGE TITLE" ref="categoryInput" onClick={this.forceFocus} />
+              <RaisedButton type="button" label="Create New PAge" onClick={this.makeNewCategory}/>
             </div>
           </div>  
         </IconMenu>

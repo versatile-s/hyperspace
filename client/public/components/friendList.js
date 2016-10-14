@@ -42,6 +42,11 @@ class FriendList extends Component {
         context.setState({
           friendsData: parsedData
         });
+      }).catch(function (err) {
+        context.setState({
+          friendsData: []
+        });
+        console.log(err);
       });
     });
   }
@@ -82,12 +87,12 @@ class FriendList extends Component {
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
           <div onMouseLeave={this.closeMenu} className="friendList-menu" >
-            <FlatButton label="LURK LIST" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} fullWidth="true" disabled={true}/>
-            {this.state.friendsData.map((friend) => {
+            <FlatButton label="LURK LIST" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} disabled={true}/>
+            { (Array.isArray(this.state.friendsData) && this.state.friendsData.length > 0) ? this.state.friendsData.map((friend) => {
               return (
-               <MenuItem iconStyle={{color:"white"}} style={{width: '96%', margin: '0 0 2% 2%'}} onClick={()=>this.toFriend(friend)} primaryText={friend[0] + " - " + friend[1]}/>     
+               <MenuItem key={friend[0] + friend[1]} iconStyle={{color:"white"}} style={{width: '96%', margin: '0 0 2% 2%'}} onClick={()=>this.toFriend(friend)} primaryText={friend[0] + " - " + friend[1]}/>     
               );
-            })}
+            }) : null}
           </div>
         </IconMenu>
       </div>  

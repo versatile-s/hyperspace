@@ -24,7 +24,9 @@ class Frame extends Component {
     this.getCategory = this.getCategory.bind(this);
     var context = this;
     store.subscribe(() => {
-      context.forceUpdate();
+      // after adding loader spinner,
+      // this doesnt seem to be necessary
+      // context.forceUpdate();
     });
   }
   

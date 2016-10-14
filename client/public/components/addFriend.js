@@ -74,7 +74,7 @@ class AddFriend extends Component {
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
           <div className="addFriend-menu" onMouseLeave={this.closeMenu}>
-            <RaisedButton type="button" style={{width: '96%', margin: '0 0 2% 2%'}} fullWidth="true" onClick={this.addFriend} label={this.state.lurked} />
+            <RaisedButton type="button" style={{width: '96%', margin: '0 0 2% 2%'}} fullWidth={true} onClick={this.addFriend} label={this.state.lurked} />
           </div>
         </IconMenu>
       </div>  
