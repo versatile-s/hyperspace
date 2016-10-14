@@ -185,7 +185,7 @@ class Category extends Component {
 
           <div className="row">
             <FriendFeed/>
-            <Sunburst/>
+            <Sunburst categoryCall={context.props.categoryCall} getCategory={context.props.getCategory}/>
           </div>
           <div className="categoryPageContainer row">
           
