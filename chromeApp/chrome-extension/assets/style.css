@@ -26,6 +26,20 @@ body {
         max-width: 400px; 
 }
 
+@font-face {
+  font-family: 'CBook';
+  src: url('http://109.73.227.32/~mktproj/CircularStd-Book.woff') format('woff'), /* Pretty Modern Browsers */
+       url('http://109.73.227.32/~mktproj/CircularStd-Book.ttf') format('truetype')
+}
+
+
+
+@font-face {
+  font-family: 'CBold';
+  src: url('http://109.73.227.32/~mktproj/CircularStd-Bold.woff') format('woff'), /* Pretty Modern Browsers */
+       url('http://109.73.227.32/~mktproj/CircularStd-Bold.ttf') format('truetype')
+}
+
 
 .sendLinkSnack {
     bottom: 20px !important;

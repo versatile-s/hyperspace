@@ -1,4 +1,16 @@
+@font-face {
+  font-family: 'CBook';
+  src: url('../assets/CircularStd-Book.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../assets/CircularStd-Book.ttf') format('truetype')
+}
 
+
+
+@font-face {
+  font-family: 'CBold';
+  src: url('../assets/CircularStd-Bold.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../assets/CircularStd-Bold.ttf') format('truetype')
+}
 
 .header {
     height: 50px;
@@ -8,12 +20,28 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 3;
-   
+    z-index: 3;  
 }
+
+body {
+    font-family: "CBook", Helvetica, Arial, sans-serif !important;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+}
+
+h {
+  font-family: "CBold", Helvetica, Arial, sans-serif !important;
+}
+
+
 .boredField{
   margin-left: -30px; 
 }
+
+
+
 
 .filter-content-textbox.filter-conten {
     position: absolute !important;
@@ -133,24 +161,24 @@ span.currLocation {
 
 }
 
-.footerText.col-md-4 {
+.footerText.col-xs-4 {
     text-align: left;
     padding-left: 30px;
     color: #ba8be6;
     padding-top: 15px;
     font-weight: 400;
     font-size: 10px;
-    font-family: Roboto;
+    font-family: "CBook", Helvetica, Arial, sans-serif !important;
 }
 
-.footerText.col-md-8 {
+.footerText.col-xs-8 {
     text-align: right;
     padding-right: 30px;
     color: #ba8be6;
     padding-top: 15px;
     font-weight: 400;
     font-size: 10px;
-    font-family: Roboto;
+    font-family: "CBook", Helvetica, Arial, sans-serif !important;
 }
 
 .hyperTitle{
