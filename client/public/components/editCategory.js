@@ -327,6 +327,8 @@ class EditCategory extends Component {
                 <MenuItem value={"center"} primaryText="Center" />
                 <MenuItem value={"right"} primaryText="Right" />
               </DropDownMenu>
+            
+             
             <Checkbox labelStyle={{color:'lightgray'}} label={"GOOGLE SEARCH BAR"} checked={this.state.searchBar} onCheck={this.handlesearchBar}/>
             <Checkbox labelStyle={{color:'lightgray'}} label={"FRIEND FEED"} checked={this.state.feed} onCheck={this.handlefeed}/>
             <Checkbox labelStyle={{color:'lightgray'}} label={"SUNBURST CHART"}checked={this.state.sunburst} onCheck={this.handlesunburst}/>

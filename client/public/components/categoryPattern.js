@@ -187,6 +187,7 @@ class Category extends Component {
           </div>
           <div className="categoryPageContainer row">
           
+          
             <SearchBar />
             <div className="row">
               {context.state.data.map(function (item) {
