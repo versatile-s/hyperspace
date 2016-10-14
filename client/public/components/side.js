@@ -9,10 +9,10 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactDOM from 'react-dom';
-import MakeCategory from './makeCategory';
+import MakeCategory from './createCategory';
 import HyperSearch from './SHV';
 import FriendList from './friendList';
-import MyCategories from './myCategories';
+import MyCategories from './userCategories';
 import ListIcon from 'material-ui/svg-icons/action/list';
 import BoredIcon from 'material-ui/svg-icons/hardware/videogame-asset';
 import store from '../../store';
@@ -102,6 +102,7 @@ class Side extends Component {
   toBored(){
     browserHistory.push('/' +this.props.params.user +'/'+this.props.params.category +'/bored');
   }
+  
   toHome(){
     browserHistory.push('/' +store.getState().username.username +'/home');
     this.props.categoryCall(store.getState().username.username,"home");

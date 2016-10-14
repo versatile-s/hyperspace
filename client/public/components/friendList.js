@@ -52,35 +52,32 @@ class FriendList extends Component {
     this.props.getCategory(friend[0],friend[1]);
     this.closeMenu();
   }
+  
   openMenu(){
     this.fetchFriends();
     this.setState({
-      open:true
+      open: !this.state.open
     });
-    console.log("mouseEnter");
   }
 
   closeMenu(){
     this.setState({
       open:false
     });
-    console.log("mouseLeave");
   }
 
   render () {
     return (
-      <div>
-        <IconMenu onMouseOver={this.openMenu}
+      <div className="knob" onClick={this.openMenu} >
+        <IconMenu onClick={this.openMenu}
           open={this.state.open}
-
-          
           iconStyle={{color:"white"}}
           onTouchTap={this.fetchFriends}
           // disableAutoFocus={true}
           menuStyle={{width:250}}
           touchTapCloseDelay={0}
           initiallyKeyboardFocused={false}
-          iconButtonElement={<IconButton onMouseOver={this.openMenu} iconStyle={{color:"white"}} ><GroupIcon onMouseOver={this.openMenu} iconStyle={{color:"white"}}/></IconButton>}
+          iconButtonElement={<IconButton iconStyle={{color:"white"}} ><GroupIcon iconStyle={{color:"white"}}/></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
