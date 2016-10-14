@@ -181,7 +181,7 @@ class Category extends Component {
             <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
           </div>
             <SearchBar />
-          <div className="row">
+          <div className="topRow row">
             <FriendFeed/>
             <Sunburst categoryCall={context.props.categoryCall} getCategory={context.props.getCategory}/>
           </div>

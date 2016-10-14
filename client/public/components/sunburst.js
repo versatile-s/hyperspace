@@ -185,47 +185,50 @@ class Sunburst extends Component {
 
     return (
       <div style={store.getState().categoryInfo.categoryInfo.sunburst?{}:{display: 'none'}} className="sunburst-container col-md-3">
-        <svg ref={(c) => this.svg = c} viewBox={`0 0 ${width} ${height}`} data-total={slices[0].size}>
-        <g transform={transform}>
-        {slices.map((slice, i) => {
-          let { level, size, name} = slice;
-          let startAngle = currentStartAngle;
-          let endAngle = startAngle + scale(slice.size);
-          let innerRadius = (slice.level - 1) * arcWidth;
-          let outerRadius = innerRadius + arcWidth;
+        <div className ="sunburstWrap">
+          <div className="sunBurst widgetHead">TagAnalytics</div>
+          <svg ref={(c) => this.svg = c} viewBox={`0 0 ${width} ${height}`} data-total={slices[0].size}>
+          <g transform={transform}>
+          {slices.map((slice, i) => {
+            let { level, size, name} = slice;
+            let startAngle = currentStartAngle;
+            let endAngle = startAngle + scale(slice.size);
+            let innerRadius = (slice.level - 1) * arcWidth;
+            let outerRadius = innerRadius + arcWidth;
 
-          if (slices[i + 1] && (slices[i + 1].level <= level)) {
-            currentStartAngle = endAngle;
-          }
-          
-          currentLevel = slice.level;
+            if (slices[i + 1] && (slices[i + 1].level <= level)) {
+              currentStartAngle = endAngle;
+            }
+            
+            currentLevel = slice.level;
 
-          return (    
-          <path className='slice' data-path={slice.path}
-            data-value={slice.size}
-            stroke={'white'}
-            strokeWidth={8}
-            data-name={slice.name}
-            display={i < 1 ? 'none' : 'inline'}
-            fill={randomizeHex()}
-            d={shape({
-              startAngle,
-              endAngle,
-              innerRadius,
-              outerRadius
-            })} onMouseOver={this.handleMouseOver}
-            onMouseOut={this.handleMouseOut}
-            onClick={level < 3 ? context.handleClick : null}>
-            <title>{`${slice.name}\n${slice.size}`}</title>
-            </path>
-          );
-        })}
-        </g>
-          <text transform={transform} ref={(c) => this.details = c}
-            textAnchor='middle' className='details' dy={-20}/>
-          <text transform={transform} ref={(c) => this.percentage = c}
-            textAnchor='middle' className='details-percentage' dy={30}/>
-        </svg>
+            return (    
+            <path className='slice' data-path={slice.path}
+              data-value={slice.size}
+              stroke={'white'}
+              strokeWidth={8}
+              data-name={slice.name}
+              display={i < 1 ? 'none' : 'inline'}
+              fill={randomizeHex()}
+              d={shape({
+                startAngle,
+                endAngle,
+                innerRadius,
+                outerRadius
+              })} onMouseOver={this.handleMouseOver}
+              onMouseOut={this.handleMouseOut}
+              onClick={level < 3 ? context.handleClick : null}>
+              <title>{`${slice.name}\n${slice.size}`}</title>
+              </path>
+            );
+          })}
+          </g>
+            <text transform={transform} ref={(c) => this.details = c}
+              textAnchor='middle' className='details' dy={-20}/>
+            <text transform={transform} ref={(c) => this.percentage = c}
+              textAnchor='middle' className='details-percentage' dy={30}/>
+          </svg>
+        </div>
       </div>
     );
   }
