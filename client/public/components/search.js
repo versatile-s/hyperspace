@@ -8,7 +8,7 @@ import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import store from '../../store';
-import MyCategories from './myCategories';
+import MyCategories from './userCategories';
 
 class Search extends Component {
   constructor (props) {

@@ -126,7 +126,7 @@ class Bored extends Component {
 
       var xfriendbox = (wWidth - (2 * xStart)) * .75;
       var yfriendbox = 441;
-      var yfriend = 175.5;
+      var yfriend = 173;
       var friendboxLeftMargin = 50;
       var friendboxTopMargin = 50;
       var friendMarginL = 15;
@@ -161,8 +161,8 @@ class Bored extends Component {
     var yStart = 5 + drop +ysearchDrop;
     
     var boxMargin = 15;
-    var boxWidth = ((wWidth - (xStart * 2) - (boxMargin * 2 * 3)) / 4);
-    var boxHeight = 175;
+    var boxWidth = ((wWidth - (xStart * 2) - (boxMargin * 2 * 3)) / 4)- 4;
+    var boxHeight = 165;
     
     //number of hypers
     var boxnum = store.getState().data.data.length;

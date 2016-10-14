@@ -8,7 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactDOM from 'react-dom';
-import EditSettingsIcon from 'material-ui/svg-icons/action/perm-data-setting';
+import EditSettingsIcon from 'material-ui/svg-icons/editor/mode-edit';
 import store from '../../store';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import DoneIcon from 'material-ui/svg-icons/action/done';
@@ -142,7 +142,7 @@ class EditHyper extends Component {
       <div className="editHyper">
         <IconMenu
           style={store.getState().edit.edit?{}:{display:"none"}}
-          iconStyle={{opacity:.2, width:50}}
+          iconStyle={{opacity:.5, width:50}}
           // onTouchTap={this.getCategories}
           disableAutoFocus={true}
           menuStyle={{width:250}}
