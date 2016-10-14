@@ -105,6 +105,9 @@ class ChromeApp extends Component {
     return (
       <MuiThemeProvider>
         <div className="chromeApp">
+          <div className="header">
+            <img className="imageLogo" src={'./assets/hyprspace-logodraft.png'}/>
+          </div>
           {this.state.authenticated ? <HyperspaceWorker props={this.props} logOutUser={this.logOutUser.bind(this)} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>}
             <Snackbar
               open={this.state.failedLogin && !this.state.authenticated}

@@ -266,6 +266,8 @@ class HyperspaceWorker extends Component {
            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+           style={{color: 'white'}}
+           iconStyle={{color: 'white'}}
           >
              <MenuItem className="logout" onClick={this.props.logOutUser} primaryText="Logout" />
           </IconMenu>

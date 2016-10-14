@@ -3,10 +3,10 @@ html {
    
 
 
-background: #757F9A; /* fallback for old browsers */
-background: -webkit-linear-gradient(to left, #757F9A , #D7DDE8); /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to left, #757F9A , #D7DDE8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-                    
+background: #FF5F6D; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #FF5F6D , #FFC371); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #FF5F6D , #FFC371); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+             
          color: #fff;
 }
 
@@ -20,6 +20,21 @@ body {
         text-overflow: ellipsis;
         overflow: hidden;
         max-width: 400px; 
+}
+
+img.imageLogo {
+    width: 137px;
+    padding: 17px;
+    margin-top: 1px;
+}
+
+
+
+.header {
+    background: rgb(25, 4, 45);
+    margin-top: -8px;
+    margin-left: -8px;
+    margin-right: -9px;
 }
 
 .chromeApp {
