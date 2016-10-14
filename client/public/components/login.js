@@ -14,11 +14,11 @@ class Login extends Component {
     this.state = {
       username:'',
       password:'',
-      failedLogin: false,
-      warp:false
+      failedLogin: false
+      // warp:false
     };
-    this.warpfield = this.warpfield.bind(this);
-    this.accelerate = this.accelerate.bind(this);
+    // this.warpfield = this.warpfield.bind(this);
+    // this.accelerate = this.accelerate.bind(this);
     this.login = this.login.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
@@ -81,34 +81,34 @@ class Login extends Component {
     });
   }
 
-  warpfield() {
-    if (this.state.warp) {
-      new WarpSpeed("warpfield",{'speed':5, 'density':8});
-    } else {
-      new WarpSpeed("warpfield",{'speed':.2, 'density':8});
-    }   
-  }
+  // warpfield() {
+  //   if (this.state.warp) {
+  //     new WarpSpeed("warpfield",{'speed':5, 'density':8});
+  //   } else {
+  //     new WarpSpeed("warpfield",{'speed':.2, 'density':8});
+  //   }   
+  // }
 
-  accelerate() {
-    var context= this;
-    if (this.state.warp) {
-      this.setState({
-        warp: false
-      },function(){ 
-        context.warpfield();
-      });
-    } else {
-      this.setState({
-        warp: true
-      }, function(){ 
-        context.warpfield();
-      });
-    }
-  }
+  // accelerate() {
+  //   var context= this;
+  //   if (this.state.warp) {
+  //     this.setState({
+  //       warp: false
+  //     },function(){ 
+  //       context.warpfield();
+  //     });
+  //   } else {
+  //     this.setState({
+  //       warp: true
+  //     }, function(){ 
+  //       context.warpfield();
+  //     });
+  //   }
+  // }
 
-  componentDidMount(){
-    this.warpfield();
-  }
+  // componentDidMount(){
+  //   this.warpfield();
+  // }
 
   render() {
     return (
@@ -124,9 +124,9 @@ class Login extends Component {
                 autoHideDuration={3000}
                 onRequestClose={this.handleRequestClose}
               />
-              <FlatButton label="LOGIN" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-              <input fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
-              <input fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
+              <FlatButton label="LOGIN" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} disabled={true}/>
+              <input onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
+              <input onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
               <button className="logIn" onClick={this.login}>Login </button>
               <Link to="/signup"><button className="signUp">Sign Up</button></Link>
               {/*<RaisedButton type="button" fullWidth="true" label="Login" onClick={this.login} />*/}
