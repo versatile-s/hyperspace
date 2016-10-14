@@ -33,6 +33,7 @@ class EditCategory extends Component {
       textAlign: store.getState().categoryInfo.categoryInfo.textAlign,
       searchBar: false,
       feed: false,
+      sunburst: false,
       deleteMessage: ''
     };
     this.deleteCategory = this.deleteCategory.bind(this);
@@ -54,6 +55,7 @@ class EditCategory extends Component {
     this.handleChangetextAlign=this.handleChangetextAlign.bind(this);
     this.handlesearchBar=this.handlesearchBar.bind(this);
     this.handlefeed=this.handlefeed.bind(this);
+    this.handlesunburst=this.handlesunburst.bind(this);
     var context = this;
     store.subscribe(() => {
       context.forceUpdate();
@@ -157,6 +159,9 @@ class EditCategory extends Component {
   handlefeed(){
     this.setState({ feed:!this.state.feed});
   }
+  handlesunburst(){
+    this.setState({ sunburst:!this.state.sunburst});
+  }
   updateChange(){
     var context = this;
     fetch('/category',{
@@ -176,7 +181,8 @@ class EditCategory extends Component {
         fontFamily: this.state.fontFamily,
         textAlign: this.state.textAlign,
         searchBar: this.state.searchBar,
-        feed: this.state.feed
+        feed: this.state.feed,
+        sunburst: this.state.sunburst
       })
 
     }).then(function(response){
@@ -215,6 +221,7 @@ class EditCategory extends Component {
       textAlign: store.getState().categoryInfo.categoryInfo.textAlign,
       searchBar: store.getState().categoryInfo.categoryInfo.searchBar,
       feed: store.getState().categoryInfo.categoryInfo.feed,
+      sunburst: store.getState().categoryInfo.categoryInfo.sunburst
     });
   }
 
@@ -317,6 +324,7 @@ class EditCategory extends Component {
             </div>
             <Checkbox checked={this.state.searchBar} onCheck={this.handlesearchBar}/>
             <Checkbox checked={this.state.feed} onCheck={this.handlefeed}/>
+            <Checkbox checked={this.state.sunburst} onCheck={this.handlesunburst}/>
             <IconButton style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} onClick={this.warn}><DeleteIcon/></IconButton>
             <IconButton onClick={this.updateChange}><DoneIcon/></IconButton>
           </div>

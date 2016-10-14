@@ -167,7 +167,7 @@ class Sunburst extends Component {
     let levelStartAngle = [0];
 
     return (
-      <div className="sunburst-container col-md-3">
+      <div style={store.getState().categoryInfo.categoryInfo.sunburst?{}:{display: 'none'}} className="sunburst-container col-md-3">
         <svg ref={(c) => this.svg = c} viewBox={`0 0 ${width} ${height}`} data-total={slices[0].size}>
         <g transform={transform}>
         {slices.map((slice, i) => {

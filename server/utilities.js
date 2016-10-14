@@ -381,7 +381,18 @@ var utils = {
             return CategoryPage.create({
               name: req.body.name,
               parentCategory: req.body.parents,
-              UserId: user.id
+              UserId: user.id,
+              headerText: req.body.headerText,
+              headerTextColor: req.body.headerTextColor,
+              backgroundUrl: req.body.backgroundUrl,
+              headerTextBackgroundColor: req.body.headerTextBackgroundColor,
+              fontFamily: req.body.fontFamily,
+              fontSize: req.body.fontSize,
+              textAlign: req.body.textAlign,
+              sunburst: req.body.sunburst,
+              feed: req.body.feed,
+              searchBar: req.body.searchBar
+
             });
           });
         }
@@ -413,7 +424,8 @@ var utils = {
           fontFamily: req.body.fontFamily,
           textAlign: req.body.textAlign,
           searchBar: req.body.searchBar,
-          feed: req.body.feed
+          feed: req.body.feed,
+          sunburst: req.body.sunburst
         }).then(function() {
           res.send(categoryPage);
         });

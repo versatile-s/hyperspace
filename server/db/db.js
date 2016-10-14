@@ -33,6 +33,7 @@ var CategoryPage = sequelize.define('CategoryPage', {
   textAlign: {type: Sequelize.STRING},
   searchBar: {type: Sequelize.BOOLEAN},
   feed: {type: Sequelize.BOOLEAN},
+  sunburst: {type: Sequelize.BOOLEAN},
   parentCategory: { type: Sequelize.STRING },
   subCategories: { type: Sequelize.STRING },
   widgets: { type: Sequelize.STRING },
