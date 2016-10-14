@@ -22,6 +22,15 @@ body {
         max-width: 400px; 
 }
 
+
+.sendLinkSnack {
+    bottom: 20px !important;
+}
+
+.invalidPass {
+  bottom: 20px !important;
+}
+
 img.imageLogo {
     width: 137px;
     padding: 17px;
@@ -156,6 +165,13 @@ h5.welcome {
     font-size: 10px;
     text-transform: uppercase;
     color: #ffe9e9;
+}
+
+.authBody {
+    margin-top: 50px;
+    text-align: center;
+    padding-left: 15px;
+    padding-right: 20px;
 }
 
 
