@@ -172,7 +172,7 @@ class Category extends Component {
         <FriendFeed />
         <Sunburst />
         </div>
-        <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer row">
+        <div className="categoryPageContainer row">
           <SearchBar />
           <div className="row">
             {context.state.data.map(function (item) {

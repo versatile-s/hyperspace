@@ -287,8 +287,8 @@ class EditCategory extends Component {
             </div>
             <FlatButton label={"Background URL"} disabled={true}/>
             <TextField ref="backgroundUrl" defaultValue={store.getState().categoryInfo.categoryInfo.backgroundUrl}/>
-            <div style={{position:"relative", zIndex:5000}}>
-              <DropDownMenu listStyle={{width:40, position:"relative", zIndex:3000}} menuStyle={{width:40, position:"relative", zIndex:10001}}value={this.state.fontSize} onChange={this.handleChangefontSize}>
+        
+              <DropDownMenu value={this.state.fontSize} onChange={this.handleChangefontSize}>
                 <MenuItem value={10} primaryText="10" />
                 <MenuItem value={20} primaryText="20" />
                 <MenuItem value={30} primaryText="30" />
@@ -300,9 +300,9 @@ class EditCategory extends Component {
                 <MenuItem value={90} primaryText="90" />
                 <MenuItem value={100} primaryText="100" />
               </DropDownMenu>
-            </div>
-            <div style={{position:"relative", zIndex:5000}}>
-              <DropDownMenu listStyle={{width:100, position:"relative", zIndex:3000}} menuStyle={{width:100, position:"relative", zIndex:10001}}value={this.state.fontFamily} onChange={this.handleChangefontFamily}>
+       
+          
+              <DropDownMenu value={this.state.fontFamily} onChange={this.handleChangefontFamily}>
                 <MenuItem value={"Trebuchet MS"} primaryText="Trebuchet MS" />
                 <MenuItem value={"Tahoma"} primaryText="Tahoma" />
                 <MenuItem value={"Arial"} primaryText="Arial" />
@@ -314,14 +314,13 @@ class EditCategory extends Component {
                 <MenuItem value={"Webdings"} primaryText="Webdings" />
                 <MenuItem value={"Symbol"} primaryText="Symbol" />
               </DropDownMenu>
-            </div>
-            <div style={{position:"relative", zIndex:5000}}>
-              <DropDownMenu listStyle={{width:100, position:"relative", zIndex:3000}} menuStyle={{width:100, position:"relative", zIndex:10001}}value={this.state.textAlign} onChange={this.handleChangetextAlign}>
+         
+              <DropDownMenu value={this.state.textAlign} onChange={this.handleChangetextAlign}>
                 <MenuItem value={"left"} primaryText="Left" />
                 <MenuItem value={"center"} primaryText="Center" />
                 <MenuItem value={"right"} primaryText="Right" />
               </DropDownMenu>
-            </div>
+        
             <Checkbox checked={this.state.searchBar} onCheck={this.handlesearchBar}/>
             <Checkbox checked={this.state.feed} onCheck={this.handlefeed}/>
             <Checkbox checked={this.state.sunburst} onCheck={this.handlesunburst}/>
