@@ -79,10 +79,10 @@ class MyCategory extends Component {
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >
             <div onMouseLeave={this.closeMenu} className="myCategories-menu">
-              <FlatButton label={this.props.params.user===store.getState().username.username?"My pages":this.props.params.user+"'s pages"} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} fullWidth="true" disabled={true}/>
+              <FlatButton label={this.props.params.user===store.getState().username.username?"My pages":this.props.params.user+"'s pages"} labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} disabled={true}/>
               {store.getState().categories.categories.map((category) => {
                 return (
-                  <MenuItem style={{width: '96%', margin: '0 0 2% 2%'}} focusState="none" disableAutoFocus={true} ref={category} onClick={this.clickCategory} primaryText={category}/>     
+                  <MenuItem key={category} style={{width: '96%', margin: '0 0 2% 2%'}} ref={category} onClick={this.clickCategory} primaryText={category}/>     
                 );
               })}
             </div>  

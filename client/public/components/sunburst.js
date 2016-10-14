@@ -98,7 +98,6 @@ class Sunburst extends Component {
 
     this.handleMouseOver = this.handleMouseOver.bind(this);
     this.handleMouseOut = this.handleMouseOut.bind(this);
-
   }
 
   componentWillMount () {
@@ -184,6 +183,7 @@ class Sunburst extends Component {
     let levelStartAngle = [0];
 
     return (
+      typeof slices[0].size !== 'number' ? null :
       <div style={store.getState().categoryInfo.categoryInfo.sunburst?{}:{display: 'none'}} className="sunburst-container col-md-3">
         <div className ="sunburstWrap">
           <div className="sunBurst widgetHead">TagAnalytics</div>
@@ -205,6 +205,7 @@ class Sunburst extends Component {
             return (    
             <path className='slice' data-path={slice.path}
               data-value={slice.size}
+              key={slice.path}
               stroke={'white'}
               strokeWidth={8}
               data-name={slice.name}

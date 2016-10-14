@@ -330,7 +330,7 @@ class Bored extends Component {
       <div> 
         <div className="lowerHead" style={{background:color1, textAlign:textAlign}}>
           <span style={{fontFamily: font, color: color2, fontSize:fontSize}}>{store.getState().categoryInfo.categoryInfo.headerText || 'You are here: ' + this.props.params.category}</span>
-          <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" />
+          <TextField name="bored-content-filter" hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" />
         </div>
         <div>
         <IconButton style={{zIndex:1000, position:"fixed", top:0, right: 400}} iconStyle={{color:"white"}} className="asteroidButton" onClick={this.enableAsteroids}><StarIcon style= {{color:"white"}}/></IconButton>

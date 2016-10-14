@@ -66,8 +66,10 @@ class EditCategory extends Component {
     this.backgroundChange=this.backgroundChange.bind(this);
     var context = this;
     store.subscribe(() => {
+
       context.forceUpdate();
       context.toggleOpen();
+
     });
   }
 
@@ -77,6 +79,7 @@ class EditCategory extends Component {
     }
     this.toggleOpen();
   }
+
   deleteCategory(){
     var context = this;
     fetch('/deleteCategory',{
@@ -96,7 +99,6 @@ class EditCategory extends Component {
         }, function() {
           context.handleWarnClose();
           context.confirm();
-
         });
       });
     });
@@ -130,10 +132,12 @@ class EditCategory extends Component {
       openMenu:false
     });
   }
+
   handleClick1() {
     this.setState({ displayColorPicker1: !this.state.displayColorPicker1 });
     this.forceUpdate();
   }
+
   handleClick2() {
     this.setState({ displayColorPicker2: !this.state.displayColorPicker2 });
     this.forceUpdate();
@@ -150,15 +154,19 @@ class EditCategory extends Component {
   handleChangefontSize(event, index, val){
     this.setState({fontSize: val});
   }
+
   handleChangefontFamily(event, index, val){
     this.setState({fontFamily: val});
   }
+
   handleChangetextAlign(event, index, val){
     this.setState({textAlign: val});
   }
+
   handleClose1(){
     this.setState({ displayColorPicker1: false });
   }
+
   handleClose2(){
     this.setState({ displayColorPicker2: false });
   }
@@ -166,12 +174,15 @@ class EditCategory extends Component {
   handlesearchBar(){
     this.setState({ searchBar:!this.state.searchBar});
   }
+
   handlefeed(){
     this.setState({ feed:!this.state.feed});
   }
+
   handlesunburst(){
     this.setState({ sunburst:!this.state.sunburst});
   }
+
 
   headerTextChange(){
     this.setState({ headerText: this.refs.headerText.getValue()});
@@ -179,6 +190,7 @@ class EditCategory extends Component {
   backgroundChange(){
     this.setState({ backgroundUrl: this.refs.backgroundUrl.getValue()});
   }
+
   updateChange(){
     var context = this;
     fetch('/category',{
@@ -201,7 +213,6 @@ class EditCategory extends Component {
         feed: this.state.feed,
         sunburst: this.state.sunburst
       })
-
     }).then(function(response){
       response.json().then(function(parsedRes){
         console.log(parsedRes);
@@ -210,13 +221,11 @@ class EditCategory extends Component {
         context.toggleOpen();
       });
     });
-
-
-   
   }
+
   closeMenu(){
     this.setState({
-      openMenu:false
+      openMenu: false
     });
   }
 
@@ -231,6 +240,7 @@ class EditCategory extends Component {
         openMenu: true
       });
     }
+    
     this.setState({
       color1: store.getState().categoryInfo.categoryInfo.headerTextBackgroundColor ||"#00FF00",
       color2: store.getState().categoryInfo.categoryInfo.headerTextColor||"#0000FF",
@@ -271,6 +281,7 @@ class EditCategory extends Component {
 
     return (
       <div className="editCategory">
+
       
         <Toolbar style={store.getState().edit.edit ? {zIndex: 100, width: '100%', height: '100%', justifyContent: 'center'} : {display:"none"}}>
           <div >
@@ -292,6 +303,7 @@ class EditCategory extends Component {
             
             <div style={{position: "relative", zIndex: 3, width:'100%',height:50,background: this.state.color1}} onClick={this.handleClick1}>
               <div onClick={this.handleClose1} style={this.state.displayColorPicker1?{position: 'absolute', top:-305}:{display:"none"}}>
+
               <SketchPicker color={ this.state.color1 } onChange={this.handleChange1} />
               </div>
             </div>
@@ -309,6 +321,7 @@ class EditCategory extends Component {
               <SketchPicker color={ this.state.color2 } onChange={this.handleChange2} />
               </div>
             </div>
+
           </div>
           </ToolbarGroup>
           <ToolbarGroup >  
@@ -327,6 +340,7 @@ class EditCategory extends Component {
            
            
             
+
               <DropDownMenu value={this.state.fontSize} onChange={this.handleChangefontSize}>
 
                 <MenuItem value={10} primaryText="10" />

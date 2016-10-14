@@ -74,7 +74,7 @@ class Search extends Component {
     { var context = this;  }
     return (
       <div>
-      <TextField hintText="Search Hyprspace" ref="hyperInputSearch" onClick={this.forceFocus} onChange={this.elasticSearch}/>
+      <TextField name="search-textfield" hintText="Search Hyprspace" ref="hyperInputSearch" onClick={this.forceFocus} onChange={this.elasticSearch}/>
         <div className="categoryPageContainer">
             {this.state.searchResults.map(function (item) {
               return (

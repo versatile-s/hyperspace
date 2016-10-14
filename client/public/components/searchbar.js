@@ -29,14 +29,15 @@ class SearchBar extends Component {
   render () {
     return (
 
+
       <div className="searchbar" style={store.getState().categoryInfo.categoryInfo.searchBar?{}:{display:"none"}}>
          <TextField hintText={"SEARCH GOOGLE"} style={{background: "#FFFFFF", width:'75%'}} ref="searchInput" onChange={this.handleSearchChange}/>
          <a href={"https://www.google.com/#safe=off&q="+this.state.searchInput} target="_blank"><RaisedButton style={{width:"10%"}} label="GO" onClick={this.toSearch}/></a>
+
 
       </div>
     );
   }
 }
-
 
 export default SearchBar;

@@ -66,11 +66,7 @@ h {
 }
 
 
-.lowerHead span {
-    text-transform: uppercase;
-    font-size: 14px !important;
-    font-weight: 200;
-}
+
 
 
 
@@ -830,9 +826,9 @@ html {
 
 .lowerHead span {
     text-transform: uppercase;
-    font-size: 14px !important;
+  
     font-weight: 200;
-    font-family: CBold !important;
+
     letter-spacing: 1px;
 }
 /* STAR ANIM */
