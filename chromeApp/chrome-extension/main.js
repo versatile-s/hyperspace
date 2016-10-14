@@ -35,12 +35,6 @@ class ChromeApp extends Component {
         });
       }
     });
-
-    setTimeout(function() {
-      context.setState({
-        loading: false
-      });
-    }, 500);
   }
 
   persistToLocalStorage() {
@@ -57,43 +51,59 @@ class ChromeApp extends Component {
   authenticateUser(e) {
     e.preventDefault();
     var context = this;
-
     var request = new XMLHttpRequest();
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     var authenticated = false;
     
-    // second, true argument below means send async
-    request.open('POST', 'http://127.0.0.1:3000/login', true);
-    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    request.send(encodeURI('username=' + username + '&password=' + password));
-    console.log('username and pass are', username + password);
-   
-    request.onreadystatechange = function () {
-      console.log('status here is', this.status);
-      console.log('RESPONSE TEXT IS', this.responseText);
-      console.log('we received a change in status!');
-      if (this.status === 200 && this.responseText === 'Login successful!') {
-        context.setState({
-          authenticated: true,
-          username: username
-        });
-        console.log('authenticated val is now', context.state.authenticated);
-        context.persistToLocalStorage();
-      } else {
-        console.log ('authenticated val is now', context.state.authenticated);
-        context.setState({
-          failedLogin: true
-        });
-      }
-    };
+    this.setState({
+      loading: true, 
+      failedLogin: false,
+      authentcated: false
+    }, function () {
+      setTimeout(function () {
+
+        // second, true argument below means send async
+        request.open('POST', 'http://127.0.0.1:3000/login', true);
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.send(encodeURI('username=' + username + '&password=' + password));
+        console.log('username and pass are', username + password);
+       
+        request.onreadystatechange = function () {
+          console.log('status here is', this.status);
+          console.log('RESPONSE TEXT IS', this.responseText);
+          console.log('we received a change in status!');
+          if (this.status === 200 && this.responseText === 'Login successful!') {
+            context.setState({
+              authenticated: true,
+              username: username
+            });
+            console.log('authenticated val is now', context.state.authenticated);
+            context.persistToLocalStorage();
+          } else {
+            console.log ('authenticated val is now', context.state.authenticated);
+            setTimeout(function () {
+              context.setState({
+                failedLogin: true
+              });
+            }, 250);            
+          }
+        };
+
+      }, 600);
+
+    });
+
   }
 
   logOutUser(e) {
     e.preventDefault();
+
     var context = this;
 
-    context.setState({
+    this.setState({
+      loading: true,
+      failedLogin: false,
       authenticated: false
     }, function () {
       chrome.storage.sync.set({'username': null});
@@ -102,13 +112,24 @@ class ChromeApp extends Component {
   }
 
   render () {
+    var context = this;
+    if (this.state.loading) {
+      setTimeout(function() {
+        context.setState({
+          loading: false
+        });
+      }, 850);
+    }
+    console.log('this.state.loading: ', this.state.loading);
     return (
       <MuiThemeProvider>
         <div className="chromeApp">
           <div className="header">
             <img className="imageLogo" src={'./assets/hyprspace-logodraft.png'}/>
           </div>
-          {this.state.authenticated ? <HyperspaceWorker props={this.props} logOutUser={this.logOutUser.bind(this)} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>}
+          {this.state.loading ? <CircularProgress /> :
+            this.state.authenticated ? <HyperspaceWorker props={this.props} logOutUser={this.logOutUser.bind(this)} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>
+          }
             <Snackbar
               open={this.state.failedLogin && !this.state.authenticated}
               message="Sorry, the login you entered is incorrect."
