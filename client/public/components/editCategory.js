@@ -273,14 +273,15 @@ class EditCategory extends Component {
             <FlatButton style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} label="Page Name" disabled={true}/>
             <TextField style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} ref="newName" defaultValue={store.getState().categoryInfo.categoryInfo.name}/>
             <FlatButton label={"Header Text Backgound Color"} disabled={true}/>
-            <div style={{position: "relative", zIndex: 3, width:100,height:30,background: this.state.color1}} onClick={this.handleClick1}>
+            <div style={{position: "relative", zIndex: 3, width:'100%',height:30,background: this.state.color1}} onClick={this.handleClick1}>
               <div onClick={this.handleClose1} style={this.state.displayColorPicker1?{}:{display:"none"}}>
               <SketchPicker color={ this.state.color1 } onChange={this.handleChange1} />
               </div>
             </div>
            
             <FlatButton label={"Header Text Color"} disabled={true}/>
-            <div style={{position: "relative", zIndex: 2, width:100,height:30,background: this.state.color2}} onClick={this.handleClick2}>
+            
+            <div style={{position: "relative", zIndex: 2, width:'100%',height:30,background: this.state.color2}} onClick={this.handleClick2}>
               <div onClick={this.handleClose2} style={this.state.displayColorPicker2?{}:{display:"none"}}>
               <SketchPicker color={ this.state.color2 } onChange={this.handleChange2} />
               </div>
@@ -321,15 +322,15 @@ class EditCategory extends Component {
                 <MenuItem value={"right"} primaryText="Right" />
               </DropDownMenu>
         
-            <Checkbox checked={this.state.searchBar} onCheck={this.handlesearchBar}/>
-            <Checkbox checked={this.state.feed} onCheck={this.handlefeed}/>
-            <Checkbox checked={this.state.sunburst} onCheck={this.handlesunburst}/>
-            <IconButton style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} onClick={this.warn}><DeleteIcon/></IconButton>
-            <IconButton onClick={this.updateChange}><DoneIcon/></IconButton>
+            <Checkbox labelStyle={{color:'lightgray'}} label={"GOOGLE SEARCH BAR"} checked={this.state.searchBar} onCheck={this.handlesearchBar}/>
+            <Checkbox labelStyle={{color:'lightgray'}} label={"FRIEND FEED"} checked={this.state.feed} onCheck={this.handlefeed}/>
+            <Checkbox labelStyle={{color:'lightgray'}} label={"SUNBURST CHART"}checked={this.state.sunburst} onCheck={this.handlesunburst}/>
+            <IconButton tooltip={"Delete Page"} tooltipPosition={"top-right"} style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} onClick={this.warn}><DeleteIcon/></IconButton>
+            <IconButton tooltip={"Save Changes"} tooltipPosition={"top-right"} onClick={this.updateChange}><DoneIcon/></IconButton>
           </div>
             <Dialog
               style={{position: "fixed",zIndex:4001}}
-              title="ARE YOU SUUUUURE?"
+              title="ARE YOU SURE?"
               actions={warnActions}
               modal={false}
               open={this.state.warning}
@@ -340,7 +341,7 @@ class EditCategory extends Component {
 
             <Dialog
               style={{position: "fixed",zIndex:4001}}
-              title="GONE BABY"
+              title="PAGE DELETED"
               actions={confirmActions}
               modal={false}
               open={this.state.confirm}
