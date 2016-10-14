@@ -173,6 +173,8 @@ class Category extends Component {
       }, 1100);
     }
     return (
+
+
       this.state.loading === true ? 
         <Spinner style={{margin: "-20px 0 0 0"}}/> : 
         <div className="catBody">
@@ -180,11 +182,12 @@ class Category extends Component {
             <span style={{fontFamily: font, color: color2, fontSize:fontSize}}>{store.getState().categoryInfo.categoryInfo.headerText || 'You are here: ' + this.props.params.category}</span>
             <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
           </div>
+
           <div className="row">
             <FriendFeed/>
             <Sunburst categoryCall={context.props.categoryCall} getCategory={context.props.getCategory}/>
           </div>
-          <div style={{backgroundImage: "url("+store.getState().categoryInfo.categoryInfo.backgroundUrl+")"}} className="categoryPageContainer row">
+          <div className="categoryPageContainer row">
           
             <SearchBar />
             <div className="row">

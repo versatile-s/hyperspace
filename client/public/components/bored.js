@@ -73,47 +73,108 @@ class Bored extends Component {
 
 
 
+    var xStart=15;
 
-    // create a renderer
+    // header/footer
     var navbar = 50;
-    var headerText = 100;
+    var headerText = store.getState().categoryInfo.categoryInfo.fontSize;
     var footer = 50;
 
+    //empty array to push shapes into
+    var boxArray = [];
 
-    var xwheel = 0;
-    var ywheel = 0;
-    var wheelmargins = 0;
-    if (store.getState().categoryInfo.categoryInfo.wheel) {
-      xwheel += 300;
-      ywheel += 300;
-      wheelmargins += 20;
-    }
-
-
-    var xfeed = 0;
-    var yfeed = 0;
-    if (store.getState().categoryInfo.categoryInfo.feed) {
-      xfeed += 300;
-      yfeed += 300;
-    }
-
-    var boxWidth = 200;
-    var boxHeight = 200;
-    var boxMargin = 10;
-
-    var yStart = navbar + headerText + ywheel + yfeed; 
     var wHeight = window.innerHeight;
     var wWidth = window.innerWidth;
+
+    //search bar box
+    var ysearchDrop=0;
+    if(store.getState().categoryInfo.categoryInfo.searchBar) {
+      var ysearch=100;
+      var xsearch=600;
+      var ysearchmargins = 10;
+      var y = ysearch / 2+5;
+      ysearchDrop = ysearch + (2 * ysearchmargins);
+      var search = Bodies.rectangle(wWidth / 2, y, xsearch, ysearch,{restitution: 1} );
+      search.render.fillStyle = '#FFFFFF';
+      search.render.strokeStyle = '#FFFFFF';
+      boxArray.push(search);
+    }
+
+
+    var sunburstYdrop = 0;
+    //sunburst circle
+    if (store.getState().categoryInfo.categoryInfo.sunburst) {
+      var sunburstmargins = 30;
+      var xsunburst = wWidth / 4 - sunburstmargins * 2;
+      var ysunburst = xsunburst;
+      var sunburstRad = xsunburst / 2;
+      var x = (wWidth-(xStart*2)) - ((wWidth-xStart*2) / 8) ;
+      var y = ysearchDrop +sunburstRad + sunburstmargins;
+      sunburstYdrop = ysunburst + 2 * sunburstmargins;
+     
+      var sunburst = Bodies.circle(x, y, sunburstRad, {restitution: 1});
+      sunburst.render.fillStyle = '#FFFFFF';
+      sunburst.render.strokeStyle = '#FFFFFF';
+      boxArray.push(sunburst);
+      
+    }
+
+
+    //friends feed
+    var yfeedDrop = 0;
+    if (store.getState().categoryInfo.categoryInfo.feed) {
+
+      var xfriendbox = (wWidth - (2 * xStart)) * .75;
+      var yfriendbox = 441;
+      var yfriend = 173;
+      var friendboxLeftMargin = 50;
+      var friendboxTopMargin = 50;
+      var friendMarginL = 15;
+      var friendMarginT = 15;
+      var xfriend = (xfriendbox - (8 * friendMarginL) - friendboxLeftMargin) / 4;
+      yfeedDrop = yfriendbox;
+      for (var p = 0; p < 4; p++) { 
+        var x = friendboxLeftMargin + (xfriend / 2) + ( p * ((friendMarginL * 2)+xfriend));
+        var y = ysearchDrop + (yfriend / 2) + friendboxTopMargin + friendMarginT;
+
+        var boxTop = Bodies.rectangle(x, y, xfriend, yfriend, {restitution: 1});
+        boxTop.render.fillStyle = '#FFFFFF';
+        boxTop.render.strokeStyle = '#FFFFFF';
+        console.log("boxtop", x, y, boxTop);
+        boxArray.push(boxTop);
+        var boxBottom = Bodies.rectangle(x, y+yfriend+friendMarginT, xfriend, yfriend, {restitution: 1});
+        boxBottom.render.fillStyle = '#FFFFFF';
+        boxBottom.render.strokeStyle = '#FFFFFF';
+        console.log("boxBottom", boxBottom);
+        boxArray.push(boxBottom);
+
+      }
+
+    }
+
+
+
+
+
+    // var yStart = navbar + headerText + ystarburst + yfeed; 
+    var drop = Math.max(sunburstYdrop, yfeedDrop);
+    var yStart = 5 + drop +ysearchDrop;
+    
+    var boxMargin = 15;
+    var boxWidth = ((wWidth - (xStart * 2) - (boxMargin * 2 * 3)) / 4)- 4;
+    var boxHeight = 165;
     
     //number of hypers
     var boxnum = store.getState().data.data.length;
-    console.log('Boxnum', boxnum);    
+
 
     var boxesX = Math.floor(wWidth / (boxWidth + boxMargin));
     var boxesY = Math.floor(boxnum / boxesX);
     var leftovers = boxnum - (boxesX * boxesY);
-    console.log('boxes x,y,leftovers', boxesX, boxesY, leftovers);
 
+
+    var leftoverBoolean = leftovers ? 1 : 0;
+    var totalHeight = yStart + ((boxesY + leftoverBoolean) * (boxHeight + (2 * boxMargin))) - (2 * boxMargin) + 5;
     //if we only have 1 row of boxes, use leftover loop instead
     if (boxesY === 0) {
       leftovers = boxnum;
@@ -126,17 +187,16 @@ class Bored extends Component {
       engine: engine,
       options: {  
         width: window.innerWidth,
-        height: window.innerHeight - boundsLimit
+        height: totalHeight
       }
     });
 
     //hypers
-    var boxArray = [];
 
     for (var i = 0; i < boxesY; i ++) {
       for ( var j = 0; j < boxesX; j ++) {
-        var x = (j * boxWidth) + (j * boxMargin) + (boxMargin + boxWidth / 2);
-        var y = (i * boxHeight) + (i * boxMargin) + (boxMargin + boxHeight / 2);
+        var x = xStart + (j * boxWidth) + (j * 2 * boxMargin) + ( boxWidth / 2);
+        var y = yStart + (i * boxHeight) + (i * 2 * boxMargin) + (boxHeight / 2);
         var box = Bodies.rectangle(x, y, boxWidth, boxHeight, {restitution: 1});
         box.render.fillStyle = '#FFFFFF';
         box.render.strokeStyle = '#FFFFFF';
@@ -147,8 +207,8 @@ class Bored extends Component {
 
     //adds trailing leftovers from grid
     for (var k = 0; k < leftovers; k++) {
-      var x = (k * boxWidth) + (k * boxMargin) + (boxMargin + boxWidth / 2);
-      var y = (boxesY * (boxMargin + boxHeight)) + (boxMargin + boxWidth / 2);
+      var x = xStart + (k * boxWidth) + (k * 2 *boxMargin) + (boxWidth / 2);
+      var y = yStart + (boxesY * ((boxMargin*2) + boxHeight)) + (boxHeight / 2);
       var box = Bodies.rectangle(x, y, boxWidth, boxHeight, {restitution: 1});
       box.render.fillStyle = '#FFFFFF';
       box.render.strokeStyle = '#FFFFFF';
@@ -158,9 +218,9 @@ class Bored extends Component {
     var defaultCategory = -0x0001;
     //walls and floor    
     var ceil = Bodies.rectangle(window.innerWidth/2, -45, window.innerWidth, 100,  { isStatic: true, collisionFilter:{group:defaultCategory}, render:{visible:false }});
-    var floor = Bodies.rectangle(window.innerWidth/2, window.innerHeight-boundsLimit+45, window.innerWidth, 100, { isStatic: true, collisionFilter:{group:defaultCategory}, render:{visible:false }});
-    var wallL = Bodies.rectangle(-45, 200, 100, window.innerHeight-boundsLimit, { isStatic: true, collisionFilter:{group:defaultCategory}, render:{visible:false }});
-    var wallR = Bodies.rectangle(window.innerWidth+45, 200, 100, window.innerHeight-boundsLimit,  { isStatic: true, collisionFilter:{group:defaultCategory} , render:{visible:false }});
+    var floor = Bodies.rectangle(window.innerWidth/2, totalHeight+45, window.innerWidth, 100, { isStatic: true, collisionFilter:{group:defaultCategory}, render:{visible:false }});
+    var wallL = Bodies.rectangle(-45, 200, 100, totalHeight, { isStatic: true, collisionFilter:{group:defaultCategory}, render:{visible:false }});
+    var wallR = Bodies.rectangle(window.innerWidth+45, 200, 100, totalHeight,  { isStatic: true, collisionFilter:{group:defaultCategory} , render:{visible:false }});
 
   
     //zero gravity
@@ -179,6 +239,7 @@ class Bored extends Component {
 
     //concat all items to add to world
     var itemsToAdd = [ wallL, wallR, floor, ceil, mouseConstraint];
+    console.log("boxArray",boxArray);
     itemsToAdd = itemsToAdd.concat(boxArray);
 
     // add all of the bodies to the world
@@ -225,7 +286,7 @@ class Bored extends Component {
     window.showerName = setInterval(function() {
       var rand1 = Math.random();
       var rand2 = Math.random();
-      var ball = context.state.Bodies.circle( -200*rand1 ,-100*rand2,10*rand1+5,{
+      var ball = context.state.Bodies.circle( context.state.wWidth*rand1 ,-100*rand2,10*rand1+5,{
         restitution: 1,
         mass:.5,
         collisionFilter: {
@@ -233,9 +294,11 @@ class Bored extends Component {
         }
         
       });
+      ball.render.fillStyle="#FFFFFF";
+      ball.render.strokeStyle="#FFFFFF";
       console.log("ball inc");
       context.state.World.add(context.state.engine.world, ball);
-      Matter.Body.applyForce(ball,{x:context.state.wWidth*rand1,y:context.state.wHeight*rand2},{x:.5*rand1,y:.5*rand2});
+      Matter.Body.applyForce(ball,{x:context.state.wWidth*rand1,y:-200*rand2},{x:0,y:.5*rand2});
     }, 1000);
     window.showerName();
   }
@@ -253,15 +316,26 @@ class Bored extends Component {
 
   render () {
     { var context = this; }
+    { var hint = 'Search ' + this.props.params.user + '\'s ' + this.props.params.category + ' stash'; }
+    {var color1 = store.getState().categoryInfo.categoryInfo.headerTextBackgroundColor;
+      var color2 = store.getState().categoryInfo.categoryInfo.headerTextColor;
+      var font = store.getState().categoryInfo.categoryInfo.fontFamily;
+      var fontSize = store.getState().categoryInfo.categoryInfo.fontSize;
+      var textAlign = store.getState().categoryInfo.categoryInfo.textAlign;
+    }
     return (
       <div> 
+        <div className="lowerHead" style={{background:color1, textAlign:textAlign}}>
+          <span style={{fontFamily: font, color: color2, fontSize:fontSize}}>{store.getState().categoryInfo.categoryInfo.headerText || 'You are here: ' + this.props.params.category}</span>
+          <TextField hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" />
+        </div>
         <div>
         <IconButton style={{zIndex:1000, position:"fixed", top:0, right: 400}} iconStyle={{color:"white"}} className="asteroidButton" onClick={this.enableAsteroids}><StarIcon style= {{color:"white"}}/></IconButton>
         </div> 
        
          
  
-        <div id="sandbox" className="categoryPageContainer">
+        <div id="sandbox" className="boredField">
        
         </div>    
       </div>
