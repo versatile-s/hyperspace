@@ -98,7 +98,6 @@ class Sunburst extends Component {
 
     this.handleMouseOver = this.handleMouseOver.bind(this);
     this.handleMouseOut = this.handleMouseOut.bind(this);
-
   }
 
   componentWillMount () {

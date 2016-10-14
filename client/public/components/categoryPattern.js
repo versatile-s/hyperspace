@@ -189,7 +189,7 @@ class Category extends Component {
             <div className="row">
               {context.state.data.map(function (item) {
                 return (
-                  <div className="hyper col-md-3" style={{order: item.views}} >
+                  <div className="hyper col-md-3" key={item} style={{order: item.views}} >
                     <EditHyper params={context.props.params} categoryCall={context.categoryPageCategoryCall} item={item}/>
                     <a href={item.url} target="_blank">
 
