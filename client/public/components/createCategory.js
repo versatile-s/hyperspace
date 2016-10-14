@@ -18,14 +18,14 @@ class MakeCategory extends Component {
       open:false
     },
     this.makeNewCategory = this.makeNewCategory.bind(this);
-    this.forceFocus = this.forceFocus.bind(this);
+    // this.forceFocus = this.forceFocus.bind(this);
     this.openMenu = this.openMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
   }
 
-  forceFocus(){
-    this.refs.categoryInput.focus();
-  }
+  // forceFocus(){
+  //   this.refs.categoryInput.focus();
+  // }
 
   getCategories () {
     var context = this;
@@ -89,7 +89,7 @@ class MakeCategory extends Component {
   render () {
     return (
       <div className="knob" onClick={this.openMenu} >
-        <IconMenu onClick={this.openMenu}
+        <IconMenu 
           style={this.props.params.user===store.getState().username.username?{}:{display:"none"}}
           useLayerForClickAway={true}
           open={this.state.open}
@@ -105,8 +105,10 @@ class MakeCategory extends Component {
           <div className="createCategory-menu" onMouseLeave={this.closeMenu}>
             <FlatButton label="add new page" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} disabled={true}/>
             <div ref="catbox" style={{width: '96%', margin: '0 0 2% 2%'}}>
-              <TextField name="new-category-title-textfield" hintText="NEW PAGE TITLE" ref="categoryInput" onClick={this.forceFocus} />
+
+              <TextField hintText="NEW PAGE TITLE" ref="categoryInput" />
               <RaisedButton type="button" label="Create New PAge" onClick={this.makeNewCategory}/>
+
             </div>
           </div>  
         </IconMenu>

@@ -26,7 +26,7 @@ class Frame extends Component {
     store.subscribe(() => {
       // after adding loader spinner,
       // this doesnt seem to be necessary
-      // context.forceUpdate();
+      context.forceUpdate();
     });
   }
   

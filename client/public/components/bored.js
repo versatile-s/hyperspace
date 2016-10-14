@@ -80,6 +80,8 @@ class Bored extends Component {
     var headerText = store.getState().categoryInfo.categoryInfo.fontSize;
     var footer = 50;
 
+    var frame= headerText;
+
     //empty array to push shapes into
     var boxArray = [];
 
@@ -89,9 +91,9 @@ class Bored extends Component {
     //search bar box
     var ysearchDrop=0;
     if(store.getState().categoryInfo.categoryInfo.searchBar) {
-      var ysearch=100;
-      var xsearch=600;
-      var ysearchmargins = 10;
+      var ysearch=48;
+      var xsearch=wWidth-(2*30) - 10;
+      var ysearchmargins = 5;
       var y = ysearch / 2+5;
       ysearchDrop = ysearch + (2 * ysearchmargins);
       var search = Bodies.rectangle(wWidth / 2, y, xsearch, ysearch,{restitution: 1} );
@@ -162,7 +164,7 @@ class Bored extends Component {
     
     var boxMargin = 15;
     var boxWidth = ((wWidth - (xStart * 2) - (boxMargin * 2 * 3)) / 4)- 4;
-    var boxHeight = 165;
+    var boxHeight = 173;
     
     //number of hypers
     var boxnum = store.getState().data.data.length;
@@ -175,6 +177,7 @@ class Bored extends Component {
 
     var leftoverBoolean = leftovers ? 1 : 0;
     var totalHeight = yStart + ((boxesY + leftoverBoolean) * (boxHeight + (2 * boxMargin))) - (2 * boxMargin) + 5;
+    totalHeight=Math.max(wHeight-frame,totalHeight);
     //if we only have 1 row of boxes, use leftover loop instead
     if (boxesY === 0) {
       leftovers = boxnum;

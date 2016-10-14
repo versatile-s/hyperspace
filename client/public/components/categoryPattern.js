@@ -27,6 +27,7 @@ class Category extends Component {
 
     var context = this;
     store.subscribe(() => {
+
       context.setState({
         data: store.getState().data.data
       });
@@ -176,7 +177,7 @@ class Category extends Component {
         <div className="catBody">
           <div className="lowerHead" style={{background:color1, textAlign:textAlign}}>
             <span style={{fontFamily: font, color: color2, fontSize:fontSize}}>{store.getState().categoryInfo.categoryInfo.headerText || 'You are here: ' + this.props.params.category}</span>
-            <TextField name="content-filter-textbox" hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
+            <TextField style={{width:'25%'}} name="content-filter-textbox" hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" onChange={this.filterContent}/>
           </div>
             <SearchBar />
           <div className="topRow row">
@@ -184,6 +185,7 @@ class Category extends Component {
             <Sunburst categoryCall={context.props.categoryCall} getCategory={context.props.getCategory}/>
           </div>
           <div className="categoryPageContainer row">
+
             <div className="row">
               {context.state.data.map(function (item) {
                 return (

@@ -50,6 +50,7 @@
     "nodemon": "^1.10.2",
     "passport-facebook": "^2.1.1",
     "random-material-color": "^1.0.2",
+    "react-bootstrap": "^0.30.5",
     "react-color": "^2.3.3",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
