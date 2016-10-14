@@ -204,7 +204,7 @@ class EditCategory extends Component {
 
     }).then(function(response){
       response.json().then(function(parsedRes){
-        console.log(parsedRes);
+
         context.props.getCategory(store.getState().username.username, store.getState().categoryInfo.categoryInfo.name);
         context.forceUpdate();
         context.toggleOpen();
@@ -243,8 +243,6 @@ class EditCategory extends Component {
       name: store.getState().categoryInfo.categoryInfo.name,
       headerText: store.getState().categoryInfo.categoryInfo.headerText,
       backgroundUrl: store.getState().categoryInfo.categoryInfo.backgroundUrl
-    },function(){
-      console.log("edit state",context.state);
     });
   }
 
