@@ -30,8 +30,8 @@ class Dashboard extends Component {
         backgroundUrl: '',
         headerTextBackgroundColor: '#462565',
         fontFamily: 'Roboto',
-        fontSize: 20,
-        textAlign: 'left',
+        fontSize: 12,
+        textAlign: 'center',
         sunburst: true,
         feed: true,
         searchBar:true
