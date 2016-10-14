@@ -216,6 +216,8 @@ span.currLocation {
   position: fixed;
   bottom:40px;
   left:0px;
+  display: :flex;
+  align-content: center;
 /*  width:100%;*/
   height:80px;
   width: 100%;

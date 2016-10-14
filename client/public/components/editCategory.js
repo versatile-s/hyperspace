@@ -204,7 +204,7 @@ class EditCategory extends Component {
 
     }).then(function(response){
       response.json().then(function(parsedRes){
-
+        console.log(parsedRes);
         context.props.getCategory(store.getState().username.username, store.getState().categoryInfo.categoryInfo.name);
         context.forceUpdate();
         context.toggleOpen();
@@ -272,7 +272,7 @@ class EditCategory extends Component {
     return (
       <div className="editCategory">
       
-        <Toolbar style={store.getState().edit.edit ? {zIndex: 100, width: '100%', height: '100%'} : {display:"none"}}>
+        <Toolbar style={store.getState().edit.edit ? {zIndex: 100, width: '100%', height: '100%', justifyContent: 'center'} : {display:"none"}}>
           <div >
           <div style={{display:'flex', alignContent: 'space-between'}}>
           <ToolbarGroup firstChild={true}>
