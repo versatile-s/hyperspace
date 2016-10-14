@@ -80,7 +80,7 @@ class Bored extends Component {
     var headerText = store.getState().categoryInfo.categoryInfo.fontSize;
     var footer = 50;
 
-    var frame= navbar + footer+ headerText*2;
+    var frame= headerText;
 
     //empty array to push shapes into
     var boxArray = [];
