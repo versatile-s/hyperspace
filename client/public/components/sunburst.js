@@ -98,7 +98,6 @@ class Sunburst extends Component {
 
     this.handleMouseOver = this.handleMouseOver.bind(this);
     this.handleMouseOut = this.handleMouseOut.bind(this);
-
   }
 
   componentWillMount () {
@@ -184,6 +183,7 @@ class Sunburst extends Component {
     let levelStartAngle = [0];
 
     return (
+      typeof slices[0].size !== 'number' ? null :
       <div style={store.getState().categoryInfo.categoryInfo.sunburst?{}:{display: 'none'}} className="sunburst-container col-md-3">
         <svg ref={(c) => this.svg = c} viewBox={`0 0 ${width} ${height}`} data-total={slices[0].size}>
         <g transform={transform}>
@@ -205,6 +205,7 @@ class Sunburst extends Component {
             data-value={slice.size}
             stroke={'white'}
             strokeWidth={8}
+            key={slice.path}
             data-name={slice.name}
             display={i < 1 ? 'none' : 'inline'}
             fill={randomizeHex()}
