@@ -10,6 +10,10 @@ background: linear-gradient(to left, #FF5F6D , #FFC371); /* W3C, IE 10+/ Edge, F
          color: #fff;
 }
 
+html {
+    min-width: 304px !important;
+}
+
 body {
         font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
         font-size: 100%;
