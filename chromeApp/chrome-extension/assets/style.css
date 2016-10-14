@@ -3,10 +3,10 @@ html {
    
 
 
-background: #757F9A; /* fallback for old browsers */
-background: -webkit-linear-gradient(to left, #757F9A , #D7DDE8); /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to left, #757F9A , #D7DDE8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-                    
+background: #FF5F6D; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #FF5F6D , #FFC371); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #FF5F6D , #FFC371); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+             
          color: #fff;
 }
 
@@ -20,6 +20,21 @@ body {
         text-overflow: ellipsis;
         overflow: hidden;
         max-width: 400px; 
+}
+
+img.imageLogo {
+    width: 137px;
+    padding: 17px;
+    margin-top: 1px;
+}
+
+
+
+.header {
+    background: rgb(25, 4, 45);
+    margin-top: -8px;
+    margin-left: -8px;
+    margin-right: -9px;
 }
 
 .chromeApp {
@@ -77,9 +92,29 @@ line-height: 24px;
     border: none; height: 40px; margin-top: 15px;
 }
 
+
+
 div.submit {
 text-align:right;
 }
+
+.imageToggle {
+    margin-top: 10px;
+}
+
+.addTo {
+    margin-bottom: 40px;
+    float: right;
+    margin-right: 0px;
+}
+
+
+.workerBody {
+    padding-left: 15px;
+    padding-right: 17px;
+}
+
+
 
 button .submit {
     border-radius: 0px !important;
@@ -114,6 +149,29 @@ button.submit:hover {
     margin-bottom: 10px;
 }
 
+h5.welcome {
+    margin-top: 5px;
+    font-weight: 100;
+    text-align: right;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #ffe9e9;
+}
+
+
+.footer {
+    height: 20px;
+    background: #19042d;
+    margin-left: -10px;
+    /* margin-right: -10px; */
+    /* margin-bottom: 10px; */
+    position: fixed;
+    bottom: 0px !important;
+    z-index: 10000;
+    width: 325px;
+    background: linear-gradient(#5a4271, #19042d);
+}
+
 button.submit {
     color: #fff;
     font-weight: 600;
@@ -130,6 +188,11 @@ p.failedLoginPrompt {
     margin-bottom: 14px;
     color: white;
     font-weight: bold;
+}
+
+section.image-gallery {
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
 
 .submit {
@@ -150,6 +213,12 @@ img.imageSelection {
 
 span.addNew {
     background: #d3edff;
+}
+
+.addTo {
+    margin-bottom: 35px;
+    float: right;
+    margin-right: 5px;
 }
 
 @charset "UTF-8";

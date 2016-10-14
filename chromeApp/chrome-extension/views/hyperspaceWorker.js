@@ -194,7 +194,7 @@ class HyperspaceWorker extends Component {
 
         let description = context.state.description;
 
-        let tags = context.state.tags;
+        let tags = context.state.tags || 'none';
 
         let firstImage = context.state.images[0];
         let image;
@@ -266,6 +266,8 @@ class HyperspaceWorker extends Component {
            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+           style={{color: 'white'}}
+           iconStyle={{color: 'white'}}
           >
              <MenuItem className="logout" onClick={this.props.logOutUser} primaryText="Logout" />
           </IconMenu>

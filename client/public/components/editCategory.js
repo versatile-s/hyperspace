@@ -8,7 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactDOM from 'react-dom';
-import EditSettingsIcon from 'material-ui/svg-icons/action/perm-data-setting';
+import EditSettingsIcon from 'material-ui/svg-icons/editor/mode-edit';
 import store from '../../store';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import DoneIcon from 'material-ui/svg-icons/action/done';
@@ -251,12 +251,12 @@ class EditCategory extends Component {
     return (
       <div className="editCategory">
         <IconMenu
-          style={store.getState().edit.edit?{}:{display:"none"}}
-          iconStyle={{opacity:.2, width:50}}
+          style={store.getState().edit.edit ? {zIndex: 100} : {display:"none"}}
+          iconStyle={{opacity:.5, width:50}}
           // onTouchTap={this.getCategories}
           open={this.state.openMenu}
           disableAutoFocus={true}
-          menuStyle={{width:250}}
+          menuStyle={{width:250, zIndex:100}}
           touchTapCloseDelay={0}
           onRequestChange={this.closeMenu}
           onRequestClose={this.closeMenu}
@@ -265,8 +265,8 @@ class EditCategory extends Component {
           anchorOrigin={{horizontal: 'left', vertical: 'top'}}
           targetOrigin={{horizontal: 'left', vertical: 'top'}}
           >
-          <div>
-          <div>
+          <div className="editContents1">
+          <div className="editContents2">
             <FlatButton label="Header Text" disabled={true}/>
             <TextField ref="headerText" defaultValue={store.getState().categoryInfo.categoryInfo.headerText}/>
             
@@ -287,8 +287,10 @@ class EditCategory extends Component {
             </div>
             <FlatButton label={"Background URL"} disabled={true}/>
             <TextField ref="backgroundUrl" defaultValue={store.getState().categoryInfo.categoryInfo.backgroundUrl}/>
+            
+            
             <div style={{position:"relative", zIndex:5000}}>
-              <DropDownMenu listStyle={{width:40, position:"relative", zIndex:3000}} menuStyle={{width:40, position:"relative", zIndex:10001}}value={this.state.fontSize} onChange={this.handleChangefontSize}>
+              <DropDownMenu listStyle={{width:40, position:"relative", zIndex:3000}} style={{zIndex:2200, marginLeft: 300}} menuStyle={{width:40, position:"relative", zIndex:10001}}value={this.state.fontSize} onChange={this.handleChangefontSize}>
                 <MenuItem value={10} primaryText="10" />
                 <MenuItem value={20} primaryText="20" />
                 <MenuItem value={30} primaryText="30" />
@@ -302,7 +304,7 @@ class EditCategory extends Component {
               </DropDownMenu>
             </div>
             <div style={{position:"relative", zIndex:5000}}>
-              <DropDownMenu listStyle={{width:100, position:"relative", zIndex:3000}} menuStyle={{width:100, position:"relative", zIndex:10001}}value={this.state.fontFamily} onChange={this.handleChangefontFamily}>
+              <DropDownMenu listStyle={{width:100, position:"relative", zIndex:3000}} style={{zIndex:2200, position: 'absolute', marginLeft: 600}} menuStyle={{width:100, position:"relative", zIndex:10001}}value={this.state.fontFamily} onChange={this.handleChangefontFamily}>
                 <MenuItem value={"Trebuchet MS"} primaryText="Trebuchet MS" />
                 <MenuItem value={"Tahoma"} primaryText="Tahoma" />
                 <MenuItem value={"Arial"} primaryText="Arial" />
@@ -316,7 +318,7 @@ class EditCategory extends Component {
               </DropDownMenu>
             </div>
             <div style={{position:"relative", zIndex:5000}}>
-              <DropDownMenu listStyle={{width:100, position:"relative", zIndex:3000}} menuStyle={{width:100, position:"relative", zIndex:10001}}value={this.state.textAlign} onChange={this.handleChangetextAlign}>
+              <DropDownMenu listStyle={{width:100, position:"relative", zIndex:3000}} style={{zIndex:2200, marginLeft: 40}} menuStyle={{width:100, position:"relative", zIndex:10001}}value={this.state.textAlign} onChange={this.handleChangetextAlign}>
                 <MenuItem value={"left"} primaryText="Left" />
                 <MenuItem value={"center"} primaryText="Center" />
                 <MenuItem value={"right"} primaryText="Right" />
