@@ -115,7 +115,7 @@ class Login extends Component {
       <div className="loginWrapper">
         <div className="logIn row">
           <div className="featureRoll col-sm-8">
-          <h4>Snazzy Tagline Here</h4>
+          <img className="feature" src={'../assets/hypr-feature.png'}/>
           </div>
           <div className="logIn col-sm-4">
              <Snackbar

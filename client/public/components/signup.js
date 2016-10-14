@@ -90,24 +90,28 @@ class Signup extends Component {
 
   render() {
     return (
-
-      <div>
-        <div>
-          <Paper className="loginPaper" zDepth={5}>
-           <Snackbar
-              open={this.state.failedSignin}
-              message={"I'm sorry "+this.state.username+", it looks like you are not the first " + this.state.username + "."}
-              autoHideDuration={3000}
-              onRequestClose={this.handleRequestClose}
-            />
-            <FlatButton label="signup" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-            <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
-            <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleEmail} value={this.state.email} type="text" placeholder="email" />
-            <TextField fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
-            <RaisedButton type="button" fullWidth="true" label="signup" onClick={this.signup} />
-            <Link to="/login"><RaisedButton fullWidth="true" label="login page"/></Link>
-
-          </Paper>
+      <div className="signUpWrapper">
+        <div className="signUp row">
+          <div className="featureRoll col-sm-8">
+          <img className="feature" src={'../assets/hypr-feature.png'}/>
+          </div>
+          <div className="logIn col-sm-4">
+             <Snackbar
+                open={this.state.failedSignin}
+                message={"I'm sorry "+this.state.username+", it looks like you are not the first " + this.state.username + "."}
+                autoHideDuration={3000}
+                onRequestClose={this.handleRequestClose}
+              />
+              <FlatButton label="signup" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
+              <input fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
+              <input fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handleEmail} value={this.state.email} type="text" placeholder="email" />
+              <input fullWidth="true" inputStyle={{textAlign: 'center'}} onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
+              <button className="signUp" onClick={this.signup}>Sign Up</button>
+              <div style={{marginTop: 40} }class="alreadyMember">
+                <p>Already a hyprspace member?</p>
+                <Link to="/login"><button className="signUp">Log In</button></Link>
+              </div>
+          </div>
         </div>
       </div>
     );
