@@ -127,7 +127,7 @@ class ChromeApp extends Component {
           <div className="header">
             <img className="imageLogo" src={'./assets/hyprspace-logodraft.png'}/>
           </div>
-          {this.state.loading ? <CircularProgress /> :
+          {this.state.loading ? <CircularProgress style={{margin:'0 auto'}} color={'#4A148C'} /> :
             this.state.authenticated ? <HyperspaceWorker props={this.props} logOutUser={this.logOutUser.bind(this)} username={this.state.username}/> : <UserSignIn props={this.props} authenticateUser={this.authenticateUser.bind(this)}/>
           }
             <Snackbar

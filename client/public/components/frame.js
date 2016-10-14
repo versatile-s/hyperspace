@@ -146,10 +146,10 @@ class Frame extends Component {
         </div>
         </div>
         <div style={{background: color1 || '#7F5AA2'}} className="footer row">
-          <div className="footerText col-md-4">
+          <div className="footerText col-xs-4">
           Privacy | Legal | Contact
           </div>
-          <div className="footerText col-md-8">
+          <div className="footerText col-xs-8">
             © HYPRSPACE 2016. All rights reserved.
           </div>
         </div>
