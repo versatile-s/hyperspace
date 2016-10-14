@@ -42,7 +42,7 @@ class MakeCategory extends Component {
     });
   }
 
-  makeNewCategory(){
+  makeNewCategory() {
     var username = store.getState().username.username;
     var context = this;
     var newCatName = this.refs.categoryInput.getValue();
@@ -57,11 +57,11 @@ class MakeCategory extends Component {
         name: newCatName,
         headerText: newCatName,
         headerTextColor: 'grey',
-        backgroundUrl: '/../assets/galaxy3.jpg',
-        headerTextBackgroundColor: '#19042d',
+        backgroundUrl: '',
+        headerTextBackgroundColor: '#462565',
         fontFamily: 'Roboto',
         fontSize: 20,
-        textAlign: 'left',
+        textAlign: 'center',
         sunburst: false,
         feed: false,
         searchBar:false
