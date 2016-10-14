@@ -194,7 +194,7 @@ class HyperspaceWorker extends Component {
 
         let description = context.state.description;
 
-        let tags = context.state.tags;
+        let tags = context.state.tags || 'none';
 
         let firstImage = context.state.images[0];
         let image;
