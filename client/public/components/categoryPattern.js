@@ -170,11 +170,11 @@ class Category extends Component {
         context.setState({
           loading: false
         });
-      }, 1100);
+      }, 1300);
     }
     return (
       this.state.loading === true ? 
-        <Spinner style={{margin: "-20px 0 0 0"}}/> : 
+        <Spinner style={{margin: "0 auto", color: "purple"}}/> : 
         <div className="catBody">
           <div className="lowerHead" style={{background:color1, textAlign:textAlign}}>
             <span style={{fontFamily: font, color: color2, fontSize:fontSize}}>{store.getState().categoryInfo.categoryInfo.headerText || 'You are here: ' + this.props.params.category}</span>
