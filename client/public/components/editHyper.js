@@ -159,13 +159,13 @@ class EditHyper extends Component {
             <TextField ref="description" defaultValue={this.props.item.description}/>
             <FlatButton label={"Image URL"} disabled={true}/>
             <TextField ref="image" defaultValue={this.props.item.image}/>
-            <IconButton onClick={this.warn}><DeleteIcon/></IconButton>
-            <IconButton onClick={this.updateChange}><DoneIcon/></IconButton>
+            <IconButton tooltip={"Delete Hyperlink"} tooltipPosition={"top-right"} onClick={this.warn}><DeleteIcon/></IconButton>
+            <IconButton tooltip={"Save Changes"} tooltipPosition={"top-right"} onClick={this.updateChange}><DoneIcon/></IconButton>
           </div>
           <div>
             <Dialog
               style={{position: "fixed",zIndex:4001}}
-              title="ARE YOU SUUUUURE?"
+              title="ARE YOU SURE?"
               actions={warnActions}
               modal={false}
               open={this.state.warning}
@@ -176,7 +176,7 @@ class EditHyper extends Component {
 
             <Dialog
               style={{position: "fixed",zIndex:4001}}
-              title="GONE BABY"
+              title="LINK DELETED"
               actions={confirmActions}
               modal={false}
               open={this.state.confirm}
