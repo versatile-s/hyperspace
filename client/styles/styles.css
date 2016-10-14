@@ -25,6 +25,9 @@
     z-index: 3;  
 }
 
+img.feature {
+    width: 100% !important;
+}
 
 
 .sunburstWrap {
@@ -33,6 +36,9 @@
     border: 1px solid #d8d8d8;
 }
 
+.featureRoll.col-sm-8 {
+    margin-top: -60px;
+}
 
 .friendWrap {
 
@@ -783,6 +789,12 @@ img.imageLogo {
 }
 
 .loginWrapper {
+    margin-top: 160px !important;
+}
+
+
+
+.signUpWrapper {
     margin-top: 160px !important;
 }
 
