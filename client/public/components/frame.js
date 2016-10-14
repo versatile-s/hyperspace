@@ -26,15 +26,8 @@ class Frame extends Component {
     store.subscribe(() => {
       context.forceUpdate();
     });
-
   }
-
-  componentWillMount () {
-    this.categoryCall(this.props.params.user, this.props.params.category);
-    console.log("user params:",this.props.params.user);
-    this.getCategory(this.props.params.user, this.props.params.category);
-  }
-
+  
   setCategory(category) {
     var context = this;
     this.setState({
@@ -63,6 +56,7 @@ class Frame extends Component {
       context.sortData();
     });
   }
+
   hardRender(){
     this.children.forceUpdate();
   }
@@ -97,12 +91,8 @@ class Frame extends Component {
     });
   }
 
-
   categoryCall (username, category) {
     var context = this;
-    store.dispatch({
-      type: "GET_DATA", payload:[]
-    });
     if (username && username !== '') {
       fetch('/categoryData', {
         method: 'POST',
@@ -141,7 +131,7 @@ class Frame extends Component {
     }
     return (
       <div>
-        <div style={{background:color1 || '#19042d'}} className="header" >
+        <div style={{background: '#19042d'}} className="header" >
           <EditCategory params={this.props.params} categoryCall={this.categoryCall} getCategory={this.getCategory}/>
           <div style={{color: color2 || "white"}} className="logo"> <img className="imageLogo" src={'../assets/hyprspace-logodraft.png'}/></div>
         </div>

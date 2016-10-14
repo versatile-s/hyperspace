@@ -79,8 +79,6 @@ const hexArray = ['#2A0D45','#251434','#19042D','#733FA2','#7F5AA2','#4B093B','#
 
 const randomizeHex = function () {
   var randomIndex = Math.floor(Math.random() * hexArray.length);
-  console.log('RANDOM HEX IS', randomIndex);
-  console.log('RETURNING VALUE', hexArray[randomIndex]);
   return hexArray[randomIndex];
 };
 
@@ -169,7 +167,7 @@ class Sunburst extends Component {
     let levelStartAngle = [0];
 
     return (
-      <div className="sunburst-container col-md-3">
+      <div style={store.getState().categoryInfo.categoryInfo.sunburst?{}:{display: 'none'}} className="sunburst-container col-md-3">
         <svg ref={(c) => this.svg = c} viewBox={`0 0 ${width} ${height}`} data-total={slices[0].size}>
         <g transform={transform}>
         {slices.map((slice, i) => {

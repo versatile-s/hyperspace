@@ -48,22 +48,20 @@ class AddFriend extends Component {
   }
   openMenu(){
     this.setState({
-      open:true
+      open: !this.state.open
     });
-    console.log("mouseOver");
   }
 
   closeMenu(){
     this.setState({
       open:false
     });
-    console.log("mouseleave");
   }
 
   render () {
     return (
-      <div>
-        <IconMenu
+      <div className="knob" onClick={this.openMenu} >
+        <IconMenu onClick={this.openMenu}
           style={this.props.params.user===store.getState().username.username?{display:"none"}:{}}
           iconStyle={{}}
           open={this.state.open}
@@ -71,14 +69,13 @@ class AddFriend extends Component {
           menuStyle={{width:250}}
           touchTapCloseDelay={0}
           initiallyKeyboardFocused={false}
-          iconButtonElement={<IconButton onMouseEnter={this.openMenu}><AddFriendIcon /></IconButton>}
+          iconButtonElement={<IconButton iconStyle={{color:"white"}} ><AddFriendIcon /></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
           <div className="addFriend-menu" onMouseLeave={this.closeMenu}>
-            <RaisedButton type="button" fullWidth="true" onClick={this.addFriend} label={this.state.lurked} />
+            <RaisedButton type="button" style={{width: '96%', margin: '0 0 2% 2%'}} fullWidth="true" onClick={this.addFriend} label={this.state.lurked} />
           </div>
-          
         </IconMenu>
       </div>  
     );

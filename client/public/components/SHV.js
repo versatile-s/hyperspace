@@ -10,7 +10,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
 import ReactDOM from 'react-dom';
-import MakeCategory from './makeCategory';
+import MakeCategory from './createCategory';
 import store from '../../store';
 
 class HyperSearch extends Component {
@@ -18,7 +18,7 @@ class HyperSearch extends Component {
     super(props);
     store.dispatch({type: 'SELF', payload: false});
     this.state={
-      open:false
+      open: false
     },
     this.elasticSearch = this.elasticSearch.bind(this);
     this.setSelf = this.setSelf.bind(this);
@@ -77,45 +77,44 @@ class HyperSearch extends Component {
   forceFocus(){
     this.refs.hyperInput.focus();
   }
+
   openMenu(){
     this.setState({
-      open: true
+      open: !this.state.open
     });
-    console.log("mouseOver");
   }
 
   closeMenu(){
     this.setState({
       open: false
     });
-    console.log("mouseleave");
   }
 
   render () {
     return (
-      <div>
-        <div className="knob-wrapper">
-          <IconMenu
-            open={this.state.open}
-            useLayerForClickAway={true}
-            iconStyle={{}}
-            onTouchTap={this.getCategories}
-            // disableAutoFocus={true}
-            menuStyle={{width:250}}
-            touchTapCloseDelay={0}
-            initiallyKeyboardFocused={false}
-            iconButtonElement={<IconButton iconStyle={{color:"white"}} onMouseEnter={this.openMenu}><SearchIcon iconStyle={{color:"white"}}/></IconButton>}
-            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-            targetOrigin={{horizontal: 'right', vertical: 'top'}}
-            >
-            <FlatButton label="Search Hypers" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-            <div onMouseLeave={this.closeMenu} className="wrapper">
+      <div className="knob" onClick={this.openMenu} >
+        <IconMenu
+          open={this.state.open}
+          useLayerForClickAway={true}
+          iconStyle={{}}
+          onTouchTap={this.getCategories}
+          // disableAutoFocus={true}
+          menuStyle={{width:250}}
+          touchTapCloseDelay={0}
+          initiallyKeyboardFocused={false}
+          iconButtonElement={<IconButton iconStyle={{color:"white"}} ><SearchIcon iconStyle={{color:"white"}}/></IconButton>}
+          anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+          targetOrigin={{horizontal: 'right', vertical: 'top'}}
+          >
+          <div className="search-hyper-wrapper-shv" onMouseLeave={this.closeMenu}>
+            <FlatButton label="Search Hypers" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} fullWidth="true" disabled={true}/>
+            <div className="wrapper" style={{width: '96%', margin: '0 0 2% 2%'}}>
               <Checkbox onClick={this.setSelf} style="float: left"/> Show only my Hypers
               <br/>
-              <TextField hintText="Search Hypers" ref="hyperInput" onClick={this.forceFocus} onChange={this.elasticSearch}/>
+              <TextField style={{width: '96%', margin: '0 0 2% 2%'}} hintText="Search Hypers" ref="hyperInput" onClick={this.forceFocus} onChange={this.elasticSearch}/>
               {store.getState().searchedHypers.searchedHypers ? store.getState().searchedHypers.searchedHypers.slice(0, 4).map((hyper) => {
                 return (
-                  <a href={hyper._source.url} target="_blank"> 
+                  <a href={hyper._source.url} target="_blank" style={{width: '96%', margin: '0 0 2% 2%'}}> 
                     <MenuItem focusState="none" disableAutoFocus={true}>
                       <div className="search-hyper-results">
                         <p className="search-hyper-title">{hyper._source.title}</p>
@@ -127,9 +126,9 @@ class HyperSearch extends Component {
                 );
               }) : null}
             </div>
-          </IconMenu>
-        </div> 
-      </div>
+          </div>
+        </IconMenu>
+      </div> 
     );
   }
 }

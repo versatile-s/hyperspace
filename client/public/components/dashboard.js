@@ -24,7 +24,17 @@ class Dashboard extends Component {
       },
       body: JSON.stringify({
         username: username,
-        name: this.state.category
+        name: this.state.category,
+        headerText: 'Home',
+        headerTextColor: 'white',
+        backgroundUrl: '',
+        headerTextBackgroundColor: '#462565',
+        fontFamily: 'Roboto',
+        fontSize: 20,
+        textAlign: 'left',
+        sunburst: true,
+        feed: true,
+        searchBar:true
       })
     }).then(browserHistory.push('/' + username + "/home"));
   }
@@ -34,11 +44,8 @@ class Dashboard extends Component {
       <div className="dashContainer">
         <div className="dashboardPaperContainer">
           <Paper className="dashboardPaperL" zDepth={5} >
-            <FlatButton onClick={this.createHome} labelStyle={{fontSize: 30}} style={{height: "20%",width:"100%"}} label=""/>
-            <FlatButton onClick={this.createHome} labelStyle={{fontSize: 30}} style={{height: "20%",width:"100%"}} label="Create"/>
-            <FlatButton onClick={this.createHome} labelStyle={{fontSize: 30}} style={{height: "20%",width:"100%"}} label="My   First"/>
-            <FlatButton onClick={this.createHome} labelStyle={{fontSize: 30}} style={{height: "20%",width:"100%"}} label="Home   Page"/>
-            <FlatButton onClick={this.createHome} labelStyle={{fontSize: 30}} style={{height: "20%",width:"100%"}} label=""/>
+            <FlatButton onClick={this.createHome} labelStyle={{fontSize: 30, textAlign: 'center'}} style={{height: "100%",width:"100%"}} label="Create My First Home Page!"/>
+           
           </Paper>
           <Paper className="dashboardPaperR" zDepth={5}>
           <div className="dashboard-welcome-info">

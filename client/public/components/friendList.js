@@ -52,45 +52,42 @@ class FriendList extends Component {
     this.props.getCategory(friend[0],friend[1]);
     this.closeMenu();
   }
+  
   openMenu(){
     this.fetchFriends();
     this.setState({
-      open:true
+      open: !this.state.open
     });
-    console.log("mouseOver");
   }
 
   closeMenu(){
     this.setState({
       open:false
     });
-    console.log("mouseleave");
   }
 
   render () {
     return (
-      <div>
-        <IconMenu
+      <div className="knob" onClick={this.openMenu} >
+        <IconMenu onClick={this.openMenu}
           open={this.state.open}
-
-          
           iconStyle={{color:"white"}}
           onTouchTap={this.fetchFriends}
           // disableAutoFocus={true}
           menuStyle={{width:250}}
           touchTapCloseDelay={0}
           initiallyKeyboardFocused={false}
-          iconButtonElement={<IconButton iconStyle={{color:"white"}} onMouseEnter= {this.openMenu} ><GroupIcon iconStyle={{color:"white"}}/></IconButton>}
+          iconButtonElement={<IconButton iconStyle={{color:"white"}} ><GroupIcon iconStyle={{color:"white"}}/></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
           <div onMouseLeave={this.closeMenu} className="friendList-menu" >
-          <FlatButton label="LURK LIST" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '100%'}} fullWidth="true" disabled={true}/>
-          {this.state.friendsData.map((friend) => {
-            return (
-             <MenuItem iconStyle={{color:"white"}} onClick={()=>this.toFriend(friend)} primaryText={friend[0] + " - " + friend[1]}/>     
-            );
-          })}
+            <FlatButton label="LURK LIST" labelStyle={{textAlign: 'center', fontSize: 15}} style={{width: '90%', margin: '0 0 5% 5%'}} fullWidth="true" disabled={true}/>
+            {this.state.friendsData.map((friend) => {
+              return (
+               <MenuItem iconStyle={{color:"white"}} style={{width: '96%', margin: '0 0 2% 2%'}} onClick={()=>this.toFriend(friend)} primaryText={friend[0] + " - " + friend[1]}/>     
+              );
+            })}
           </div>
         </IconMenu>
       </div>  

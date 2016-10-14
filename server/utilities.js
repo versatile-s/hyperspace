@@ -83,7 +83,6 @@ var getHypers = function (categoryId, cb) {
       CategoryPageId: categoryId
     }
   }).then(function (hypers) {
-    console.log(hypers.title);
     if (hypers.length === 0) {
       cb([]);
     } else {
@@ -229,6 +228,7 @@ var utils = {
                 CategoryPageId: newHyper.CategoryPageId
               }).then(function () {
               }).catch(function (err) {
+                res.send('Error adding to ES');
                 console.log('Error! It\'s sad day! D=', err);
               });
             });
@@ -263,10 +263,10 @@ var utils = {
                   CategoryPageId: hyper.CategoryPageId
                 }).then(function (response) {
                 }).catch(function (err) {
+                  res.send('Error adding to ES');
                   console.log('Error! It\'s sad day! D=', err);
                 });
               });
-            } else {
             }
           });
         }
@@ -313,6 +313,7 @@ var utils = {
         var hits = response.data.hits.hits;
         res.send(hits);
       }).catch(function (err) {
+        res.send('Error searching...');
         console.log('Error! It\'s sad day! D=', err);
       });
     }
@@ -380,7 +381,18 @@ var utils = {
             return CategoryPage.create({
               name: req.body.name,
               parentCategory: req.body.parents,
-              UserId: user.id
+              UserId: user.id,
+              headerText: req.body.headerText,
+              headerTextColor: req.body.headerTextColor,
+              backgroundUrl: req.body.backgroundUrl,
+              headerTextBackgroundColor: req.body.headerTextBackgroundColor,
+              fontFamily: req.body.fontFamily,
+              fontSize: req.body.fontSize,
+              textAlign: req.body.textAlign,
+              sunburst: req.body.sunburst,
+              feed: req.body.feed,
+              searchBar: req.body.searchBar
+
             });
           });
         }
@@ -412,7 +424,8 @@ var utils = {
           fontFamily: req.body.fontFamily,
           textAlign: req.body.textAlign,
           searchBar: req.body.searchBar,
-          feed: req.body.feed
+          feed: req.body.feed,
+          sunburst: req.body.sunburst
         }).then(function() {
           res.send(categoryPage);
         });
@@ -444,12 +457,12 @@ var utils = {
         });
 
       }).catch(function(err) {
-        console.log('Error! It\'s sad day! D=', err);
         res.send(JSON.stringify('Error'));
+        console.log('Error! It\'s sad day! D=', err);
       });
     }).catch(function(error) {
-      console.log('Error! It\'s sad day! D=');
       res.send(JSON.stringify('Error'));
+      console.log('Error! It\'s sad day! D=');
     });
   },
 
@@ -493,33 +506,33 @@ var utils = {
         });
         res.send(JSON.stringify(tagStore));
       } else {
-        res.send();
+        res.send(JSON.stringify({none: none}));
       }
     }).catch(function (err) {
+      res.send(JSON.stringify('Start adding tags!'));
       console.log('Error! It\'s sad day! D=', err);
-      res.send();
     });
   },
 
   getCategoryPage: function(req,res) {
-    console.log('in getCatPage');
     User.findOne({
       where: {
         username: req.body.username
       }
     }).then(function (user) {
-      console.log(user, 'user');
-      if (user) {
+      if (user && user.id !== undefined) {
         CategoryPage.findOne({
           where: {
             UserId: user.id,
             name: req.body.title
           }
         }).then(function(category) {
-          console.log('sending this: ', category);
           res.send(category);
         });
       }
+    }).catch(function (err) {
+      res.send('That user doesn\'t exist');
+      console.error('Error! It\'s sad day! D=', err);
     });
   },
 
@@ -543,66 +556,71 @@ var utils = {
   },
 
   generateSunburst: function(req, res) {
-    console.log('q', req.q);
-    var sun = {};
-    var catCount = 0;
-    var hyperCount = 0;
-    sun.name = req.query.username;
-    sun.children = [];
-    getUserId(sun.name, function (id) {
-      CategoryPage.findAll({
-        where: {
-          userId: id
-        }
-      }).then(function (categories) {
-        if (categories.length === 0) {
-          res.send(JSON.stringify(sun));
-        }
-        categories.forEach(function (cat) {
-          var child = {};
-          child.children = [];
-          child.name = cat.name;
-          getHypers(cat.id, function (allHypers) {
-            var storage = {};
-            if (allHypers.length === 0) {
-              sun.children.push(child);
-              if (catCount === categories.length - 1) {
-                res.send(sun);
+    console.log('sunburst query: ', req.query);
+    if (req && req.query !== undefined) {
+      var sun = {};
+      var catCount = 0;
+      var hyperCount = 0;
+      sun.name = req.query.username;
+      sun.children = [];
+      getUserId(sun.name, function (id) {
+        CategoryPage.findAll({
+          where: {
+            userId: id
+          }
+        }).then(function (categories) {
+          if (categories.length === 0) {
+            res.send(JSON.stringify(sun));
+          }
+          categories.forEach(function (cat) {
+            var child = {};
+            child.children = [];
+            child.name = cat.name;
+            getHypers(cat.id, function (allHypers) {
+              var storage = {};
+              if (allHypers.length === 0) {
+                sun.children.push(child);
+                if (catCount === categories.length - 1) {
+                  res.send(sun);
+                } else {
+                  catCount++;
+                  hyperCount = 0;
+                }
               } else {
-                catCount++;
-                hyperCount = 0;
-              }
-            } else {
-              allHypers.forEach(function (hyp) {
-                getTags(hyp.id, function (tagsArray) {
-                  for (var i = 0; i < tagsArray.length; i++) {
-                    storage[tagsArray[i]] === undefined ? storage[tagsArray[i]] = 1 : storage[tagsArray[i]]++;
-                  }
-                  if (allHypers.length === 0) {
-                    child.children.push({name: x, size: 0});
-                  } else if (hyperCount === allHypers.length - 1) {
-                    for (var x in storage) {
-                      child.children.push({name: x, size: storage[x]});
+                allHypers.forEach(function (hyp) {
+                  getTags(hyp.id, function (tagsArray) {
+                    for (var i = 0; i < tagsArray.length; i++) {
+                      storage[tagsArray[i]] === undefined ? storage[tagsArray[i]] = 1 : storage[tagsArray[i]]++;
                     }
-                    sun.children.push(child);
-                    if (catCount === categories.length - 1) {
-                      res.send(JSON.stringify(sun));
+                    if (allHypers.length === 0) {
+                      child.children.push({name: x, size: 0});
+                    } else if (hyperCount === allHypers.length - 1) {
+                      for (var x in storage) {
+                        child.children.push({name: x, size: storage[x]});
+                      }
+                      sun.children.push(child);
+                      if (catCount === categories.length - 1) {
+                        res.send(JSON.stringify(sun));
+                      } else {
+                        catCount++;
+                        hyperCount = 0;
+                      }
                     } else {
-                      catCount++;
-                      hyperCount = 0;
+                      hyperCount++;
                     }
-                  } else {
-                    hyperCount++;
-                  }
+                  });
                 });
-              });
-            }
+              }
+            });
           });
+        }).catch(function (err) {
+          res.send(JSON.stringify('Start adding Hypers!'));
+          console.log('Error! It\'s sad day! D=', err);
         });
-      }).catch(function (err) {
-        console.log('Error! It\'s sad day! D=', err);
       });
-    });
+    } else {
+      res.send(JSON.stringify('Start adding Hypers!'));
+    }
   },
 
   getFeed: function(req, res) {
@@ -662,12 +680,22 @@ var utils = {
           UserId: user.id
         }
       }).then(function(friends) {
-        var friendsArray = [];
-        friends.forEach(function(friend) {
-          friendsArray.push([friend.name, friend.category]);
-        });
-        res.send(friendsArray);
+        if (friends && friends.length !== 0) {
+          var friendsArray = [];
+          friends.forEach(function(friend) {
+            friendsArray.push([friend.name, friend.category]);
+          });
+          res.send(friendsArray);
+        } else {
+          res.send('No friends were found!');
+        }
+      }).catch(function (err) {
+        res.send('No friends were found');
+        console.log('Error! It\'s sad day! D=', err);
       });
+    }).catch(function (err) {
+      res.send('No friends were found');
+      console.log('Error! It\'s sad day! D=', err);
     });
   },
 

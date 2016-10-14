@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import store from '../../store';
 import {connect} from 'react-redux';
-import MyCategories from './MyCategories';
+import MyCategories from './userCategories';
 
 class FriendFeed extends Component {
   constructor (props) {
@@ -31,7 +31,6 @@ class FriendFeed extends Component {
     }).then(function(feed) {
       feed.json().then(function (feedJSON) {
         context.setState({feed: feedJSON}, function () {
-          console.log('THIS IS WHAT WE ARE GETTING FROM FRIEND FEED', feedJSON);
         });
       });
     });
@@ -40,7 +39,7 @@ class FriendFeed extends Component {
   render () {
     { var context = this; }
     return (
-      <div className="friendFeed col-md-9" style={store.getState().categoryInfo.categoryInfo.feed?{}:{display:""}}>
+      <div className="friendFeed col-md-9" style={store.getState().categoryInfo.categoryInfo.feed?{}:{display:"none"}}>
         {context.state.feed.reverse().slice(0, 10).map(function (item) {
           return (
             <div className="feedHyper col-md-3">
