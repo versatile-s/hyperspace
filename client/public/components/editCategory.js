@@ -273,24 +273,25 @@ class EditCategory extends Component {
             <FlatButton style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} label="Page Name" disabled={true}/>
             <TextField style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} ref="newName" defaultValue={store.getState().categoryInfo.categoryInfo.name}/>
             <FlatButton label={"Header Text Backgound Color"} disabled={true}/>
-            <div style={{position: "relative", zIndex: 3, width:100,height:30,background: this.state.color1}} onClick={this.handleClick1}>
+            <div style={{position: "relative", zIndex: 3, width:'100%',height:30,background: this.state.color1}} onClick={this.handleClick1}>
               <div onClick={this.handleClose1} style={this.state.displayColorPicker1?{}:{display:"none"}}>
               <SketchPicker color={ this.state.color1 } onChange={this.handleChange1} />
               </div>
             </div>
            
             <FlatButton label={"Header Text Color"} disabled={true}/>
-            <div style={{position: "relative", zIndex: 2, width:100,height:30,background: this.state.color2}} onClick={this.handleClick2}>
+            
+            <div style={{position: "relative", zIndex: 2, width:'100%',height:30,background: this.state.color2}} onClick={this.handleClick2}>
               <div onClick={this.handleClose2} style={this.state.displayColorPicker2?{}:{display:"none"}}>
               <SketchPicker color={ this.state.color2 } onChange={this.handleChange2} />
               </div>
             </div>
             <FlatButton label={"Background URL"} disabled={true}/>
             <TextField ref="backgroundUrl" defaultValue={store.getState().categoryInfo.categoryInfo.backgroundUrl}/>
-            
-            
-            <div style={{position:"relative", zIndex:5000}}>
-              <DropDownMenu listStyle={{width:40, position:"relative", zIndex:3000}} style={{zIndex:2200, marginLeft: 300}} menuStyle={{width:40, position:"relative", zIndex:10001}}value={this.state.fontSize} onChange={this.handleChangefontSize}>
+
+        
+              <DropDownMenu value={this.state.fontSize} onChange={this.handleChangefontSize}>
+
                 <MenuItem value={10} primaryText="10" />
                 <MenuItem value={20} primaryText="20" />
                 <MenuItem value={30} primaryText="30" />
@@ -302,9 +303,11 @@ class EditCategory extends Component {
                 <MenuItem value={90} primaryText="90" />
                 <MenuItem value={100} primaryText="100" />
               </DropDownMenu>
-            </div>
-            <div style={{position:"relative", zIndex:5000}}>
-              <DropDownMenu listStyle={{width:100, position:"relative", zIndex:3000}} style={{zIndex:2200, position: 'absolute', marginLeft: 600}} menuStyle={{width:100, position:"relative", zIndex:10001}}value={this.state.fontFamily} onChange={this.handleChangefontFamily}>
+
+       
+          
+              <DropDownMenu value={this.state.fontFamily} onChange={this.handleChangefontFamily}>
+
                 <MenuItem value={"Trebuchet MS"} primaryText="Trebuchet MS" />
                 <MenuItem value={"Tahoma"} primaryText="Tahoma" />
                 <MenuItem value={"Arial"} primaryText="Arial" />
@@ -316,23 +319,24 @@ class EditCategory extends Component {
                 <MenuItem value={"Webdings"} primaryText="Webdings" />
                 <MenuItem value={"Symbol"} primaryText="Symbol" />
               </DropDownMenu>
-            </div>
-            <div style={{position:"relative", zIndex:5000}}>
-              <DropDownMenu listStyle={{width:100, position:"relative", zIndex:3000}} style={{zIndex:2200, marginLeft: 40}} menuStyle={{width:100, position:"relative", zIndex:10001}}value={this.state.textAlign} onChange={this.handleChangetextAlign}>
+
+         
+              <DropDownMenu value={this.state.textAlign} onChange={this.handleChangetextAlign}>
+
                 <MenuItem value={"left"} primaryText="Left" />
                 <MenuItem value={"center"} primaryText="Center" />
                 <MenuItem value={"right"} primaryText="Right" />
               </DropDownMenu>
-            </div>
-            <Checkbox checked={this.state.searchBar} onCheck={this.handlesearchBar}/>
-            <Checkbox checked={this.state.feed} onCheck={this.handlefeed}/>
-            <Checkbox checked={this.state.sunburst} onCheck={this.handlesunburst}/>
-            <IconButton style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} onClick={this.warn}><DeleteIcon/></IconButton>
-            <IconButton onClick={this.updateChange}><DoneIcon/></IconButton>
+        
+            <Checkbox labelStyle={{color:'lightgray'}} label={"GOOGLE SEARCH BAR"} checked={this.state.searchBar} onCheck={this.handlesearchBar}/>
+            <Checkbox labelStyle={{color:'lightgray'}} label={"FRIEND FEED"} checked={this.state.feed} onCheck={this.handlefeed}/>
+            <Checkbox labelStyle={{color:'lightgray'}} label={"SUNBURST CHART"}checked={this.state.sunburst} onCheck={this.handlesunburst}/>
+            <IconButton tooltip={"Delete Page"} tooltipPosition={"top-right"} style={store.getState().categoryInfo.categoryInfo.name ==="home"?{display:"none"}:{}} onClick={this.warn}><DeleteIcon/></IconButton>
+            <IconButton tooltip={"Save Changes"} tooltipPosition={"top-right"} onClick={this.updateChange}><DoneIcon/></IconButton>
           </div>
             <Dialog
               style={{position: "fixed",zIndex:4001}}
-              title="ARE YOU SUUUUURE?"
+              title="ARE YOU SURE?"
               actions={warnActions}
               modal={false}
               open={this.state.warning}
@@ -343,7 +347,7 @@ class EditCategory extends Component {
 
             <Dialog
               style={{position: "fixed",zIndex:4001}}
-              title="GONE BABY"
+              title="PAGE DELETED"
               actions={confirmActions}
               modal={false}
               open={this.state.confirm}
