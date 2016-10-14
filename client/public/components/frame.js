@@ -131,7 +131,7 @@ class Frame extends Component {
     }
     return (
       <div>
-        <div style={{background:color1 || '#19042d'}} className="header" >
+        <div style={{background: '#19042d'}} className="header" >
           <EditCategory params={this.props.params} categoryCall={this.categoryCall} getCategory={this.getCategory}/>
           <div style={{color: color2 || "white"}} className="logo"> <img className="imageLogo" src={'../assets/hyprspace-logodraft.png'}/></div>
         </div>

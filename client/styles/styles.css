@@ -49,7 +49,7 @@ span.currLocation {
     background: #462565;
     color: white;
     font-family: Roboto;
-    font-weight: 100;
+    font-weight: bold;
     padding-top: 12px;
     margin: 0px -30px;
     height: 100%;
@@ -88,7 +88,7 @@ span.currLocation {
 .logo {
     color: white;
     font-family: Roboto;
-    margin-top: 18px;
+    margin-top: 13px;
     margin-left: 18px;
     font-weight: 100;
     letter-spacing: 1px;
@@ -96,6 +96,10 @@ span.currLocation {
 
 .searchbar {
   text-align: center;
+}
+
+.searchbar {
+    display: none;
 }
 
 .mainContent {
@@ -203,10 +207,7 @@ span.currLocation {
   top:0;
   right:0px;
 }
-.categoryBackground{
-  background-size: cover;
-  height: 100%;
-}
+
 .bored-knob{
   z-index: 100;
   position: fixed;
@@ -554,6 +555,14 @@ background: -webkit-linear-gradient(to left, #EFEFBB , #D4D3DD); /* Chrome 10-25
 background: linear-gradient(to left, #EFEFBB , #D4D3DD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         
 }
+
+.spinner-container {
+    width: 210px;
+    margin: 0 auto;
+    margin-top: 200px;
+}
+
+
 .gradient13 {
 
 

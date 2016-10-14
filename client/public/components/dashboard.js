@@ -25,13 +25,13 @@ class Dashboard extends Component {
       body: JSON.stringify({
         username: username,
         name: this.state.category,
-        headerText: 'HOME PAGE',
+        headerText: 'Home',
         headerTextColor: 'white',
-        backgroundUrl: '/../assets/galaxy1.jpg',
-        headerTextBackgroundColor: '#19042d',
+        backgroundUrl: '',
+        headerTextBackgroundColor: '#462565',
         fontFamily: 'Roboto',
-        fontSize: 20,
-        textAlign: 'left',
+        fontSize: 12,
+        textAlign: 'center',
         sunburst: true,
         feed: true,
         searchBar:true
