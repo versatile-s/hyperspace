@@ -47,7 +47,7 @@ class Logout extends Component {
   render() {
     return (
       <div className="logout-knob">
-        <IconButton onTouchTap={this.logout} iconStyle={{color:"white"}}><LogoutIcon /></IconButton>
+        <IconButton tooltip={"LOGOUT"} tooltipPosition={"bottom-right"} onTouchTap={this.logout} iconStyle={{color:"white"}}><LogoutIcon /></IconButton>
       </div>
     );
   }

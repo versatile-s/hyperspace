@@ -69,7 +69,7 @@ class AddFriend extends Component {
           menuStyle={{width:250}}
           touchTapCloseDelay={0}
           initiallyKeyboardFocused={false}
-          iconButtonElement={<IconButton iconStyle={{color:"white"}} ><AddFriendIcon /></IconButton>}
+          iconButtonElement={<IconButton tooltip={"LURK"} tooltipPosition={"bottom-right"} iconStyle={{color:"white"}} ><AddFriendIcon /></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >
