@@ -23,7 +23,12 @@ class Login extends Component {
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePass = this.handlePass.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.demo= this.demo.bind(this);
     
+  }
+
+  demo () {
+    this.props.history.push('/demo/home');
   }
 
   login (e) {
@@ -129,6 +134,7 @@ class Login extends Component {
               <input onChange={this.handleUsername} value={this.state.username} type="text" placeholder="username" />
               <input onChange={this.handlePass} value={this.state.password} type="password" placeholder="password" />
               <button className="logIn" onClick={this.login}>Login </button>
+              <button className="signUp" onClick={this.demo}>Demo </button>
               <Link to="/signup"><button className="signUp">Sign Up</button></Link>
               {/*<RaisedButton type="button" fullWidth="true" label="Login" onClick={this.login} />*/}
               {/*<Link to="/signup"><RaisedButton fullWidth="true" label="signup page"/></Link>*/}

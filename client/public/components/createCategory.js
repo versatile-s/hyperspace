@@ -98,7 +98,7 @@ class MakeCategory extends Component {
           menuStyle={{width:250}}
           touchTapCloseDelay={0}
           initiallyKeyboardFocused={false}
-          iconButtonElement={<IconButton ><AddIcon /></IconButton>}
+          iconButtonElement={<IconButton tooltip={"NEW PAGE"} tooltipPosition={"bottom-right"} ><AddIcon /></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           >

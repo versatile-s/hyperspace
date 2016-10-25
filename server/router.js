@@ -122,6 +122,10 @@ module.exports = (router) => {
       utils.getFriends(req, res);
     });
 
+  router.route('/deleteFriend')
+    .post(function (req, res){
+      utils.deleteFriend(req,res);
+    }); 
   router.route('/getfeed')
     .post(function (req, res) {
       console.log('Received POST at /getFeed');

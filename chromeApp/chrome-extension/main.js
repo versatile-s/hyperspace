@@ -64,7 +64,7 @@ class ChromeApp extends Component {
       setTimeout(function () {
 
         // second, true argument below means send async
-        request.open('POST', 'http://127.0.0.1:3000/login', true);
+        request.open('POST', 'http://54.71.25.187/login', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         request.send(encodeURI('username=' + username + '&password=' + password));
         console.log('username and pass are', username + password);

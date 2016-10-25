@@ -713,6 +713,26 @@ var utils = {
         res.send('Friend Added!');
       });
     });
+  },
+
+  deleteFriend: function(req, res){
+    User.findOne({
+      where: {
+        username:req.body.username
+      }
+    }).then(function(user){
+      Friend.findOne({
+        where: {
+          name: req.body.friend,
+          category: req.body.page,
+          UserId: user.id
+        }
+      }).then(function(friend){
+        var destroyed = friend;
+        friend.destroy();
+        res.send(friend);
+      });
+    });
   }
 
 };

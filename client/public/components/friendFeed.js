@@ -32,7 +32,7 @@ class FriendFeed extends Component {
       feed.json().then(function (feedText) {
         context.setState({
           feed: feedText
-        })
+        });
       });
     });
   }

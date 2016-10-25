@@ -333,7 +333,7 @@ class Bored extends Component {
           <TextField name="bored-content-filter" hintText={hint} className="filter-content-textbox filter-conten" ref="filterSearch" />
         </div>
         <div>
-        <IconButton style={{zIndex:1000, position:"fixed", top:0, right: 400}} iconStyle={{color:"white"}} className="asteroidButton" onClick={this.enableAsteroids}><StarIcon style= {{color:"white"}}/></IconButton>
+        <IconButton tooltip={"ASTEROIDS"} tooltipPosition={"bottom-right"} style={{zIndex:1000, position:"fixed", top:0, right: 400}} iconStyle={{color:"white"}} className="asteroidButton" onClick={this.enableAsteroids}><StarIcon style= {{color:"white"}}/></IconButton>
         </div> 
        
          

@@ -62,7 +62,7 @@ class HyperspaceWorker extends Component {
     let context = this;
     // hit DB and pull categories for given user
     let request = new XMLHttpRequest();
-    let url = 'http://127.0.0.1:3000/usercategories';
+    let url = 'http://54.71.25.187/usercategories';
     let params = '?username=' + this.props.username;
 
     request.onreadystatechange = function () {
@@ -84,7 +84,7 @@ class HyperspaceWorker extends Component {
     let context = this;
     // hit DB and pull tags for given user
     let request = new XMLHttpRequest();
-    let url = 'http://127.0.0.1:3000/usertags';
+    let url = 'http://54.71.25.187/usertags';
     let params = '?username=' + this.props.username;
 
     request.onreadystatechange = function () {
@@ -204,7 +204,7 @@ class HyperspaceWorker extends Component {
 
         console.log('TAGS TO BE SENT ARE', tags, '& HIGHLIGHTED TO BE SENT IS', highlighted);
         let request = new XMLHttpRequest();
-        request.open('POST', 'http://127.0.0.1:3000/link', true);
+        request.open('POST', 'http://54.71.25.187/link', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         request.send(encodeURI('url=' + url + '&title=' + title + '&category=' + category + '&tags=' + tags + '&username=' + username + '&description=' + description + '&image=' + image));
         console.log('EVERYTHING SENT HERE IS', url, title, description, image, category, tags);
