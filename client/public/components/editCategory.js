@@ -280,7 +280,7 @@ class EditCategory extends Component {
     ];
 
     return (
-      <div className="editCategory">
+      <div className="editCategory" style={store.getState().edit.edit?{height:80}:{display:"none"}}>
 
       
         <Toolbar style={store.getState().edit.edit ? {zIndex: 100, width: '100%', height: '100%', justifyContent: 'center'} : {display:"none"}}>

@@ -14,6 +14,8 @@
     min-height: 125px;
 }
 
+
+
 .header {
     height: 50px;
     width: 100%;
@@ -276,7 +278,7 @@ span.currLocation {
   display: :flex;
   align-content: center;
 /*  width:100%;*/
-  height:80px;
+  
   width: 100%;
 }
 
@@ -839,6 +841,18 @@ html {
 
     letter-spacing: 1px;
 }
+
+.feedHyper .hyperImage img {
+    height: 170px;
+    width: auto !important;
+}
+
+.feedHyper img.hyperImage {
+    height: 114px;
+    width: auto !important;
+    min-width: none !important;
+}
+
 /* STAR ANIM */
 
 /*html {
