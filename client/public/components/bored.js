@@ -92,7 +92,7 @@ class Bored extends Component {
     var ysearchDrop=0;
     if(store.getState().categoryInfo.categoryInfo.searchBar) {
       var ysearch=48;
-      var xsearch=wWidth-(2*30) - 10;
+      var xsearch=wWidth-(2*30);
       var ysearchmargins = 5;
       var y = ysearch / 2+5;
       ysearchDrop = ysearch + (2 * ysearchmargins);
@@ -127,12 +127,12 @@ class Bored extends Component {
     if (store.getState().categoryInfo.categoryInfo.feed) {
 
       var xfriendbox = (wWidth - (2 * xStart)) * .75;
-      var yfriendbox = 441;
-      var yfriend = 173;
-      var friendboxLeftMargin = 50;
-      var friendboxTopMargin = 50;
+      var yfriendbox = 333;
+      var yfriend = 114;
+      var friendboxLeftMargin = 65;
+      var friendboxTopMargin = 40;
       var friendMarginL = 15;
-      var friendMarginT = 15;
+      var friendMarginT = 30;
       var xfriend = (xfriendbox - (8 * friendMarginL) - friendboxLeftMargin) / 4;
       yfeedDrop = yfriendbox;
       for (var p = 0; p < 4; p++) { 
@@ -160,7 +160,7 @@ class Bored extends Component {
 
     // var yStart = navbar + headerText + ystarburst + yfeed; 
     var drop = Math.max(sunburstYdrop, yfeedDrop);
-    var yStart = 5 + drop +ysearchDrop;
+    var yStart = 25 + drop +ysearchDrop;
     
     var boxMargin = 15;
     var boxWidth = ((wWidth - (xStart * 2) - (boxMargin * 2 * 3)) / 4)- 4;
